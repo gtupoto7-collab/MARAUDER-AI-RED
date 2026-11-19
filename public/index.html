@@ -649,14 +649,59 @@
       });
     }
 
+    function compressImage(file, maxDim = 1280, quality = 0.82) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          let { width, height } = img;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL("image/jpeg", quality);
+          resolve({
+            mimeType: "image/jpeg",
+            base64: dataUrl.split(",")[1]
+          });
+        };
+        img.onerror = async () => {
+          URL.revokeObjectURL(url);
+          const base64 = await fileToBase64(file);
+          resolve({ mimeType: file.type || "image/jpeg", base64 });
+        };
+        img.src = url;
+      });
+    }
+
     async function handleFileList(fileList) {
       for (const file of Array.from(fileList)) {
-        const base64 = await fileToBase64(file);
-        pendingAttachments.push({
-          name: file.name,
-          mimeType: file.type || "application/octet-stream",
-          base64
-        });
+        if (file.type && file.type.startsWith("image/")) {
+          const compressed = await compressImage(file);
+          pendingAttachments.push({
+            name: file.name,
+            mimeType: compressed.mimeType,
+            base64: compressed.base64
+          });
+        } else {
+          const base64 = await fileToBase64(file);
+          pendingAttachments.push({
+            name: file.name,
+            mimeType: file.type || "application/octet-stream",
+            base64
+          });
+        }
       }
       renderAttachments();
     }
@@ -745,6 +790,8 @@
       }
       if (text) {
         parts.push({ text });
+      } else {
+        parts.push({ text: "Опиши и анализирай прикачения файл на български." });
       }
 
       promptInput.value = "";
@@ -754,6 +801,9 @@
       const thinkingMsg = { role: "ai", text: "Мисля..." };
       currentChat.messages.push(thinkingMsg);
       renderMessages();
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
 
       try {
         const historyContents = currentChat.messages
@@ -771,16 +821,28 @@
         const resp = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
           body: JSON.stringify({
             accessKey,
             contents: historyContents
           })
         });
 
-        const data = await resp.json();
+        const rawText = await resp.text();
+        let data = {};
+        try {
+          data = JSON.parse(rawText);
+        } catch {
+          throw new Error("Сървърът се презарежда. Опитай отново след няколко секунди.");
+        }
+
         thinkingMsg.text = data?.reply || data?.error || "Няма отговор.";
       } catch (err) {
-        thinkingMsg.text = "Грешка при връзката със сървъра: " + err.message;
+        thinkingMsg.text = err.name === "AbortError"
+          ? "Времето за изчакване изтече. Опитай пак."
+          : "Грешка при връзката със сървъра: " + err.message;
+      } finally {
+        clearTimeout(timeoutId);
       }
 
       saveChats(chats);
