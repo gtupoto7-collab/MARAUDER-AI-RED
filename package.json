@@ -1,0 +1,12 @@
+{
+  "name": "marauder-ai-platform",
+  "version": "1.0.0",
+  "description": "MARAUDER-AI by RED-SOFTWARE-TEAM-BG",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
