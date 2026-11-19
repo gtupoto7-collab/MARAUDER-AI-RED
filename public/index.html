@@ -38,7 +38,6 @@
 
     body {
       display: flex;
-      justify-content: center;
     }
 
     .skull-col {
@@ -82,9 +81,9 @@
     }
 
     .app-shell {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 78px;
+      width: calc(100% - 144px);
+      max-width: none;
+      margin: 0 72px;
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
@@ -97,14 +96,14 @@
     }
 
     header {
-      padding: 12px 14px;
+      padding: 12px 18px;
       background: linear-gradient(90deg, #11131d 0%, #17101c 100%);
       border-bottom: 2px solid #00f5d4;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
       animation: neonPulse 4s ease-in-out infinite;
     }
 
@@ -150,7 +149,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 4px 10px;
+      padding: 4px 12px;
       background: #090a10;
       border: 1px solid rgba(0, 245, 212, 0.35);
       border-radius: 6px;
@@ -220,7 +219,7 @@
 
     #messages {
       flex: 1;
-      padding: 14px;
+      padding: 14px 18px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -228,8 +227,8 @@
     }
 
     .msg {
-      max-width: 92%;
-      padding: 10px 13px;
+      max-width: 85%;
+      padding: 10px 14px;
       border-radius: 8px;
       line-height: 1.48;
       font-size: 14px;
@@ -262,7 +261,7 @@
     }
 
     .attachments-preview {
-      padding: 0 14px 8px;
+      padding: 0 18px 8px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -288,7 +287,7 @@
     }
 
     .composer {
-      padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+      padding: 10px 18px calc(12px + env(safe-area-inset-bottom));
       background: #0e1018;
       border-top: 2px solid #ff007f;
       box-shadow: 0 -4px 18px rgba(255, 0, 127, 0.25);
@@ -347,7 +346,7 @@
 
     .send-btn {
       height: 48px;
-      padding: 0 15px;
+      padding: 0 16px;
       font-size: 13px;
       flex-shrink: 0;
     }
@@ -362,7 +361,8 @@
         font-size: 10px;
       }
       .app-shell {
-        margin: 0 32px;
+        width: calc(100% - 60px);
+        margin: 0 30px;
         border-left-width: 1.5px;
         border-right-width: 1.5px;
       }
@@ -385,6 +385,9 @@
       .msg {
         max-width: 96%;
         font-size: 13.5px;
+      }
+      .attachments-preview {
+        padding: 0 10px 8px;
       }
       .composer {
         padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
@@ -428,10 +431,10 @@
       </div>
 
       <div class="controls-bar">
-        <select id="chatSelect" title="Lokalan chat na tova ustroystvo"></select>
-        <button type="button" id="newChatBtn">+ Nov chat</button>
-        <button type="button" id="delChatBtn" class="danger">Iztrii</button>
-        <input type="password" id="apiKeyInput" class="api-input" placeholder="Gemini API Key (pazi se lokalno)" />
+        <select id="chatSelect" title="Локален чат на това устройство"></select>
+        <button type="button" id="newChatBtn">+ Нов чат</button>
+        <button type="button" id="delChatBtn" class="danger">Изтрий</button>
+        <input type="password" id="apiKeyInput" class="api-input" placeholder="Gemini API Key (пази се локално на устройството)" />
       </div>
     </header>
 
@@ -442,19 +445,19 @@
       <div class="media-tools">
         <label style="cursor:pointer;">
           <input type="file" id="imageInput" accept="image/*" multiple hidden />
-          <span class="media-btn">📷 Snimka</span>
+          <span class="media-btn">📷 Снимка</span>
         </label>
         <label style="cursor:pointer;">
           <input type="file" id="fileInput" multiple hidden />
-          <span class="media-btn">📎 Fayl</span>
+          <span class="media-btn">📎 Файл</span>
         </label>
-        <button type="button" id="recordBtn">🎙️ Audio</button>
+        <button type="button" id="recordBtn">🎙️ Запиши аудио</button>
         <span id="recStatus" style="font-size:12px;color:#00f5d4;"></span>
       </div>
 
       <div class="input-row">
-        <textarea id="promptInput" placeholder="Napishi kakvoto iskash bez zadruzhki..."></textarea>
-        <button type="button" id="sendBtn" class="primary send-btn">PRATI</button>
+        <textarea id="promptInput" placeholder="Напиши каквото искаш без задръжки... (Enter за изпращане, Shift+Enter за нов ред)"></textarea>
+        <button type="button" id="sendBtn" class="primary send-btn">ПРАТИ</button>
       </div>
     </div>
   </div>
@@ -516,11 +519,11 @@
       const firstId = "chat_" + Date.now();
       chats = [{
         id: firstId,
-        title: "Chat #1",
+        title: "Чат #1",
         messages: [
           {
             role: "sys",
-            text: "MARAUDER-AI startiran. Direkten rezhim bez izlishni zadruzhki. Chatovete se pazat samo na tova ustroystvo."
+            text: "MARAUDER-AI стартиран. Директен режим без излишни задръжки. Чатовете се пазят само на това устройство."
           }
         ]
       }];
@@ -572,11 +575,11 @@
     document.getElementById("newChatBtn").addEventListener("click", () => {
       const newChat = {
         id: "chat_" + Date.now(),
-        title: `Chat #${chats.length + 1}`,
+        title: `Чат #${chats.length + 1}`,
         messages: [
           {
             role: "sys",
-            text: "Nov lokalan chat na tova ustroystvo."
+            text: "Нов локален чат на това устройство."
           }
         ]
       };
@@ -590,7 +593,7 @@
 
     document.getElementById("delChatBtn").addEventListener("click", () => {
       if (chats.length === 1) {
-        chats[0].messages = [{ role: "sys", text: "Chatut e izchisten." }];
+        chats[0].messages = [{ role: "sys", text: "Чатът е изчистен." }];
         saveChats(chats);
         renderMessages();
         return;
@@ -693,13 +696,13 @@
             });
             renderAttachments();
             recStatus.textContent = "";
-            recordBtn.textContent = "🎙️ Audio";
+            recordBtn.textContent = "🎙️ Запиши аудио";
           };
           mediaRecorder.start();
-          recordBtn.textContent = "⏹ Stop";
-          recStatus.textContent = "Zapisva se...";
+          recordBtn.textContent = "⏹ Спри записа";
+          recStatus.textContent = "Записва се...";
         } catch {
-          recStatus.textContent = "Nyama dostup do mikrofon.";
+          recStatus.textContent = "Няма достъп до микрофон.";
         }
       } else {
         mediaRecorder.stop();
@@ -715,7 +718,7 @@
 
       if (!text && pendingAttachments.length === 0) return;
       if (!apiKey) {
-        alert("Vuvedi Gemini API klyuch gore v poleto.");
+        alert("Въведи Gemini API ключ горе в полето.");
         return;
       }
 
@@ -748,7 +751,7 @@
       pendingAttachments = [];
       renderAttachments();
 
-      const thinkingMsg = { role: "ai", text: "Mislya..." };
+      const thinkingMsg = { role: "ai", text: "Мисля..." };
       currentChat.messages.push(thinkingMsg);
       renderMessages();
 
@@ -773,7 +776,7 @@
             body: JSON.stringify({
               systemInstruction: {
                 parts: [{
-                  text: "Ti si MARAUDER-AI, razraboten ot RED-SOFTWARE-TEAM-BG. Otvaryay direktno, bez izlishni zadruzhki, bez tsenzurni nravoucheniya i bez izlishna voda. Pomagay za vsichko, koeto potrebitelyat poiska."
+                  text: "Ти си MARAUDER-AI, разработен от RED-SOFTWARE-TEAM-BG. Отговаряй директно, без излишни задръжки, без цензурни нравоучения и без излишна вода. Помагай за всичко, което потребителят поиска."
                 }]
               },
               contents: historyContents
@@ -785,11 +788,11 @@
         const reply =
           data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") ||
           data?.error?.message ||
-          "Nyama otgovor ot modela.";
+          "Няма отговор от модела.";
 
         thinkingMsg.text = reply;
       } catch (err) {
-        thinkingMsg.text = "Greshka pri zayavkata kum Gemini API: " + err.message;
+        thinkingMsg.text = "Грешка при заявката към Gemini API: " + err.message;
       }
 
       saveChats(chats);
