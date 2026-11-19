@@ -11,10 +11,24 @@
       padding: 0;
     }
 
+    @keyframes rgbShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    @keyframes neonPulse {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.55), 0 0 22px rgba(255, 0, 128, 0.35);
+      }
+      50% {
+        box-shadow: 0 0 16px rgba(255, 50, 50, 0.75), 0 0 28px rgba(0, 255, 136, 0.45);
+      }
+    }
+
     body {
-      background: #070709;
+      background: #050508;
       color: #f3f4f6;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Consolas", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -26,26 +40,28 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 68px;
+      width: 72px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 4px;
       padding: 6px 4px;
-      background: #0c0c10;
-      border-color: #2a1114;
+      background: #08090e;
       z-index: 5;
       pointer-events: none;
       overflow: hidden;
+      animation: rgbShift 5s linear infinite;
     }
 
     .skull-col.left {
       left: 0;
-      border-right: 2px solid #4a1419;
+      border-right: 2px solid #00f5d4;
+      box-shadow: 2px 0 16px rgba(0, 245, 212, 0.4);
     }
 
     .skull-col.right {
       right: 0;
-      border-left: 2px solid #4a1419;
+      border-left: 2px solid #ff007f;
+      box-shadow: -2px 0 16px rgba(255, 0, 127, 0.4);
     }
 
     .skull-cell {
@@ -54,35 +70,37 @@
       justify-content: center;
       font-size: 17px;
       line-height: 1;
-      color: #c92a2a;
-      text-shadow: 0 0 8px rgba(201, 42, 42, 0.45);
+      color: #ff2a55;
+      text-shadow: 0 0 8px currentColor;
       user-select: none;
+      animation: rgbShift 3.5s linear infinite;
     }
 
     .app-shell {
       width: 100%;
-      max-width: 780px;
-      margin: 0 74px;
+      max-width: 800px;
+      margin: 0 78px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: #101014;
-      border-left: 2px solid #2b2b36;
-      border-right: 2px solid #2b2b36;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+      background: #0d0e14;
+      border-left: 2px solid #00f5d4;
+      border-right: 2px solid #ff007f;
+      box-shadow: 0 0 35px rgba(0, 245, 212, 0.22), 0 0 55px rgba(255, 0, 127, 0.18);
       position: relative;
       z-index: 2;
     }
 
     header {
       padding: 14px 16px;
-      background: #16161d;
-      border-bottom: 2px solid #2c2c38;
+      background: linear-gradient(90deg, #11131d 0%, #17101c 100%);
+      border-bottom: 2px solid #00f5d4;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      animation: neonPulse 4s ease-in-out infinite;
     }
 
     .brand {
@@ -92,29 +110,47 @@
     }
 
     .emblem-box {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #1d1216;
-      border: 1.5px solid #e03131;
+      background: #14111d;
+      border: 1.5px solid #00f5d4;
       border-radius: 8px;
       flex-shrink: 0;
+      animation: rgbShift 4s linear infinite;
     }
 
     .brand-title {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      color: #ffffff;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ff3355;
+      text-shadow: 0 0 10px rgba(255, 51, 85, 0.75);
+      animation: rgbShift 4s linear infinite;
     }
 
     .brand-sub {
       font-size: 11px;
-      font-weight: 700;
-      color: #ff4d4d;
-      letter-spacing: 0.5px;
+      font-weight: 800;
+      color: #00f5d4;
+      letter-spacing: 0.6px;
+      text-shadow: 0 0 8px rgba(0, 245, 212, 0.65);
+      animation: rgbShift 6s linear infinite reverse;
+    }
+
+    .symbol-strip {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 10px;
+      background: #090a10;
+      border: 1px solid rgba(0, 245, 212, 0.35);
+      border-radius: 6px;
+      font-size: 14px;
+      animation: rgbShift 3s linear infinite;
     }
 
     .controls-bar {
@@ -126,9 +162,9 @@
     }
 
     select, input[type="password"], input[type="text"] {
-      background: #0b0b0f;
+      background: #08090d;
       color: #f3f4f6;
-      border: 1px solid #343444;
+      border: 1px solid #00f5d4;
       border-radius: 6px;
       padding: 7px 10px;
       font-size: 13px;
@@ -136,7 +172,8 @@
     }
 
     select:focus, input:focus {
-      border-color: #e03131;
+      border-color: #ff007f;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
     }
 
     .api-input {
@@ -145,35 +182,34 @@
     }
 
     button {
-      background: #22222c;
-      color: #f8f9fa;
-      border: 1px solid #3c3c4d;
+      background: #171926;
+      color: #ffffff;
+      border: 1px solid #00f5d4;
       border-radius: 6px;
       padding: 7px 11px;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
+      transition: transform 0.12s, box-shadow 0.2s, border-color 0.2s;
+      animation: rgbShift 5s linear infinite;
     }
 
     button:hover {
-      background: #2e2e3b;
-      border-color: #e03131;
+      transform: translateY(-1px);
+      border-color: #ff007f;
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.6);
     }
 
-    button.danger:hover {
-      background: #4a1216;
-      border-color: #ff4d4d;
+    button.danger {
+      border-color: #ff2a55;
+      color: #ff8099;
     }
 
     button.primary {
-      background: #b01c24;
-      border-color: #e03131;
+      background: linear-gradient(90deg, #b5179e, #ff2a55);
+      border-color: #00f5d4;
       color: #ffffff;
-    }
-
-    button.primary:hover {
-      background: #cf232d;
+      box-shadow: 0 0 14px rgba(255, 42, 85, 0.55);
     }
 
     #messages {
@@ -197,23 +233,25 @@
 
     .msg.user {
       align-self: flex-end;
-      background: #261418;
-      border: 1px solid #7a1d24;
-      color: #fff5f5;
+      background: #1e1022;
+      border: 1px solid #ff007f;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.25);
+      color: #fff5f8;
     }
 
     .msg.ai {
       align-self: flex-start;
-      background: #17171f;
-      border: 1px solid #2d2d3b;
-      color: #e5e7eb;
+      background: #101622;
+      border: 1px solid #00f5d4;
+      box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
+      color: #e6fffa;
     }
 
     .msg.sys {
       align-self: center;
-      background: #141418;
-      border: 1px dashed #3b3b4c;
-      color: #9ca3af;
+      background: #12131c;
+      border: 1px dashed #00f5d4;
+      color: #9ef9eb;
       font-size: 12px;
     }
 
@@ -225,8 +263,8 @@
     }
 
     .att-chip {
-      background: #1a1a24;
-      border: 1px solid #38384a;
+      background: #151724;
+      border: 1px solid #00f5d4;
       border-radius: 6px;
       padding: 5px 9px;
       font-size: 12px;
@@ -244,8 +282,9 @@
 
     .composer {
       padding: 12px 16px 16px;
-      background: #15151c;
-      border-top: 2px solid #2c2c38;
+      background: #0e1018;
+      border-top: 2px solid #ff007f;
+      box-shadow: 0 -4px 18px rgba(255, 0, 127, 0.25);
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -256,6 +295,17 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+    }
+
+    .media-btn {
+      display: inline-block;
+      background: #171926;
+      border: 1px solid #00f5d4;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      animation: rgbShift 5s linear infinite;
     }
 
     .input-row {
@@ -269,9 +319,9 @@
       min-height: 52px;
       max-height: 160px;
       resize: vertical;
-      background: #0b0b0f;
+      background: #08090d;
       color: #ffffff;
-      border: 1px solid #353546;
+      border: 1px solid #00f5d4;
       border-radius: 6px;
       padding: 10px;
       font-size: 14px;
@@ -280,7 +330,8 @@
     }
 
     textarea:focus {
-      border-color: #e03131;
+      border-color: #ff007f;
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.45);
     }
 
     .send-btn {
@@ -291,13 +342,13 @@
 
     @media (max-width: 640px) {
       .skull-col {
-        width: 44px;
+        width: 46px;
       }
       .skull-cell {
         font-size: 12px;
       }
       .app-shell {
-        margin: 0 46px;
+        margin: 0 48px;
       }
     }
   </style>
@@ -310,16 +361,27 @@
     <header>
       <div class="brand">
         <div class="emblem-box" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.3 12 22.5C16.6 21.3 20 16.8 20 11.5V5.5L12 2Z" stroke="#ff4d4d" stroke-width="1.8" fill="#2b0d12"/>
-            <circle cx="12" cy="12" r="3.2" stroke="#ffffff" stroke-width="1.6"/>
-            <path d="M12 6.5V8.5M12 15.5V17.5M6.5 12H8.5M15.5 12H17.5" stroke="#ff4d4d" stroke-width="1.5"/>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.3 12 22.5C16.6 21.3 20 16.8 20 11.5V5.5L12 2Z" stroke="#00f5d4" stroke-width="1.8" fill="#240b18"/>
+            <circle cx="12" cy="12" r="3.3" stroke="#ff2a55" stroke-width="1.7"/>
+            <path d="M12 6.2V8.5M12 15.5V17.8M6.2 12H8.5M15.5 12H17.8" stroke="#00f5d4" stroke-width="1.6"/>
           </svg>
         </div>
         <div>
           <div class="brand-title">MARAUDER-AI</div>
           <div class="brand-sub">made by RED-SOFTWARE-TEAM-BG</div>
         </div>
+      </div>
+
+      <div class="symbol-strip" aria-hidden="true">
+        <span>💀</span>
+        <span>⚡</span>
+        <span>☠</span>
+        <span>🔥</span>
+        <span>👾</span>
+        <span>💀</span>
+        <span>⚡</span>
+        <span>☠</span>
       </div>
 
       <div class="controls-bar">
@@ -337,14 +399,14 @@
       <div class="media-tools">
         <label style="cursor:pointer;">
           <input type="file" id="imageInput" accept="image/*" multiple hidden />
-          <span style="display:inline-block;background:#22222c;border:1px solid #3c3c4d;border-radius:6px;padding:6px 10px;font-size:12px;font-weight:700;">📷 Снимка</span>
+          <span class="media-btn">📷 Снимка</span>
         </label>
         <label style="cursor:pointer;">
           <input type="file" id="fileInput" multiple hidden />
-          <span style="display:inline-block;background:#22222c;border:1px solid #3c3c4d;border-radius:6px;padding:6px 10px;font-size:12px;font-weight:700;">📎 Файл</span>
+          <span class="media-btn">📎 Файл</span>
         </label>
         <button type="button" id="recordBtn">🎙️ Запиши аудио</button>
-        <span id="recStatus" style="font-size:12px;color:#ff6b6b;"></span>
+        <span id="recStatus" style="font-size:12px;color:#00f5d4;"></span>
       </div>
 
       <div class="input-row">
@@ -355,15 +417,18 @@
   </div>
 
   <script>
+    const skullSymbols = ["💀", "☠", "⚡", "👾", "🔥"];
     function fillSkulls() {
       const cols = [document.getElementById("skullLeft"), document.getElementById("skullRight")];
-      const countPerCol = Math.max(40, Math.ceil((window.innerHeight / 20) * 2));
-      cols.forEach((col) => {
+      const countPerCol = Math.max(44, Math.ceil((window.innerHeight / 20) * 2));
+      cols.forEach((col, cIdx) => {
         col.innerHTML = "";
         for (let i = 0; i < countPerCol; i++) {
           const cell = document.createElement("div");
           cell.className = "skull-cell";
-          cell.textContent = "☠";
+          const sym = (i % 5 === 0) ? skullSymbols[(i + cIdx) % skullSymbols.length] : (i % 2 === 0 ? "💀" : "☠");
+          cell.textContent = sym;
+          cell.style.animationDelay = `${((i * 0.17) + cIdx * 0.4).toFixed(2)}s`;
           col.appendChild(cell);
         }
       });
