@@ -2,13 +2,14 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>MARAUDER-AI made by RED-SOFTWARE-TEAM-BG</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     @keyframes rgbShift {
@@ -25,15 +26,19 @@
       }
     }
 
-    body {
+    html, body {
       background: #050508;
       color: #f3f4f6;
       font-family: "Consolas", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
+      min-height: 100dvh;
+      width: 100%;
       overflow-x: hidden;
       position: relative;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
     }
 
     .skull-col {
@@ -80,7 +85,7 @@
       width: 100%;
       max-width: 800px;
       margin: 0 78px;
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       background: #0d0e14;
@@ -92,14 +97,14 @@
     }
 
     header {
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: linear-gradient(90deg, #11131d 0%, #17101c 100%);
       border-bottom: 2px solid #00f5d4;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       animation: neonPulse 4s ease-in-out infinite;
     }
 
@@ -110,8 +115,8 @@
     }
 
     .emblem-box {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -123,9 +128,9 @@
     }
 
     .brand-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 900;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       color: #ff3355;
       text-shadow: 0 0 10px rgba(255, 51, 85, 0.75);
       animation: rgbShift 4s linear infinite;
@@ -135,7 +140,7 @@
       font-size: 11px;
       font-weight: 800;
       color: #00f5d4;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
       text-shadow: 0 0 8px rgba(0, 245, 212, 0.65);
       animation: rgbShift 6s linear infinite reverse;
     }
@@ -149,7 +154,7 @@
       background: #090a10;
       border: 1px solid rgba(0, 245, 212, 0.35);
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 13px;
       animation: rgbShift 3s linear infinite;
     }
 
@@ -166,9 +171,10 @@
       color: #f3f4f6;
       border: 1px solid #00f5d4;
       border-radius: 6px;
-      padding: 7px 10px;
-      font-size: 13px;
+      padding: 8px 10px;
+      font-size: 14px;
       outline: none;
+      max-width: 100%;
     }
 
     select:focus, input:focus {
@@ -177,8 +183,8 @@
     }
 
     .api-input {
-      flex: 1;
-      min-width: 190px;
+      flex: 1 1 200px;
+      min-width: 0;
     }
 
     button {
@@ -186,7 +192,7 @@
       color: #ffffff;
       border: 1px solid #00f5d4;
       border-radius: 6px;
-      padding: 7px 11px;
+      padding: 8px 11px;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
@@ -194,8 +200,8 @@
       animation: rgbShift 5s linear infinite;
     }
 
-    button:hover {
-      transform: translateY(-1px);
+    button:active {
+      transform: scale(0.98);
       border-color: #ff007f;
       box-shadow: 0 0 12px rgba(255, 0, 127, 0.6);
     }
@@ -214,18 +220,18 @@
 
     #messages {
       flex: 1;
-      padding: 16px;
+      padding: 14px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .msg {
-      max-width: 90%;
-      padding: 11px 14px;
+      max-width: 92%;
+      padding: 10px 13px;
       border-radius: 8px;
-      line-height: 1.5;
+      line-height: 1.48;
       font-size: 14px;
       white-space: pre-wrap;
       word-break: break-word;
@@ -256,7 +262,7 @@
     }
 
     .attachments-preview {
-      padding: 0 16px 8px;
+      padding: 0 14px 8px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -271,6 +277,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      max-width: 100%;
     }
 
     .att-chip img {
@@ -281,19 +288,22 @@
     }
 
     .composer {
-      padding: 12px 16px 16px;
+      padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
       background: #0e1018;
       border-top: 2px solid #ff007f;
       box-shadow: 0 -4px 18px rgba(255, 0, 127, 0.25);
       display: flex;
       flex-direction: column;
       gap: 8px;
+      position: sticky;
+      bottom: 0;
+      z-index: 4;
     }
 
     .media-tools {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
     }
 
@@ -302,7 +312,7 @@
       background: #171926;
       border: 1px solid #00f5d4;
       border-radius: 6px;
-      padding: 6px 10px;
+      padding: 7px 10px;
       font-size: 12px;
       font-weight: 700;
       animation: rgbShift 5s linear infinite;
@@ -316,15 +326,16 @@
 
     textarea {
       flex: 1;
-      min-height: 52px;
-      max-height: 160px;
+      min-width: 0;
+      min-height: 48px;
+      max-height: 140px;
       resize: vertical;
       background: #08090d;
       color: #ffffff;
       border: 1px solid #00f5d4;
       border-radius: 6px;
       padding: 10px;
-      font-size: 14px;
+      font-size: 15px;
       font-family: inherit;
       outline: none;
     }
@@ -335,20 +346,52 @@
     }
 
     .send-btn {
-      height: 52px;
-      padding: 0 18px;
+      height: 48px;
+      padding: 0 15px;
       font-size: 13px;
+      flex-shrink: 0;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 720px) {
       .skull-col {
-        width: 46px;
+        width: 30px;
+        gap: 2px;
+        padding: 4px 2px;
       }
       .skull-cell {
-        font-size: 12px;
+        font-size: 10px;
       }
       .app-shell {
-        margin: 0 48px;
+        margin: 0 32px;
+        border-left-width: 1.5px;
+        border-right-width: 1.5px;
+      }
+      header {
+        padding: 10px;
+      }
+      .brand-title {
+        font-size: 14px;
+      }
+      .brand-sub {
+        font-size: 10px;
+      }
+      .symbol-strip {
+        font-size: 11px;
+        padding: 3px 6px;
+      }
+      #messages {
+        padding: 10px;
+      }
+      .msg {
+        max-width: 96%;
+        font-size: 13.5px;
+      }
+      .composer {
+        padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+      }
+      .send-btn {
+        padding: 0 12px;
+        font-size: 12px;
       }
     }
   </style>
@@ -361,7 +404,7 @@
     <header>
       <div class="brand">
         <div class="emblem-box" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.3 12 22.5C16.6 21.3 20 16.8 20 11.5V5.5L12 2Z" stroke="#00f5d4" stroke-width="1.8" fill="#240b18"/>
             <circle cx="12" cy="12" r="3.3" stroke="#ff2a55" stroke-width="1.7"/>
             <path d="M12 6.2V8.5M12 15.5V17.8M6.2 12H8.5M15.5 12H17.8" stroke="#00f5d4" stroke-width="1.6"/>
@@ -385,10 +428,10 @@
       </div>
 
       <div class="controls-bar">
-        <select id="chatSelect" title="Локални чатове за това устройство"></select>
-        <button type="button" id="newChatBtn">+ Нов чат</button>
-        <button type="button" id="delChatBtn" class="danger">Изтрий</button>
-        <input type="password" id="apiKeyInput" class="api-input" placeholder="Gemini API Key (пази се локално на устройството)" />
+        <select id="chatSelect" title="Lokalan chat na tova ustroystvo"></select>
+        <button type="button" id="newChatBtn">+ Nov chat</button>
+        <button type="button" id="delChatBtn" class="danger">Iztrii</button>
+        <input type="password" id="apiKeyInput" class="api-input" placeholder="Gemini API Key (pazi se lokalno)" />
       </div>
     </header>
 
@@ -399,19 +442,19 @@
       <div class="media-tools">
         <label style="cursor:pointer;">
           <input type="file" id="imageInput" accept="image/*" multiple hidden />
-          <span class="media-btn">📷 Снимка</span>
+          <span class="media-btn">📷 Snimka</span>
         </label>
         <label style="cursor:pointer;">
           <input type="file" id="fileInput" multiple hidden />
-          <span class="media-btn">📎 Файл</span>
+          <span class="media-btn">📎 Fayl</span>
         </label>
-        <button type="button" id="recordBtn">🎙️ Запиши аудио</button>
+        <button type="button" id="recordBtn">🎙️ Audio</button>
         <span id="recStatus" style="font-size:12px;color:#00f5d4;"></span>
       </div>
 
       <div class="input-row">
-        <textarea id="promptInput" placeholder="Напиши каквото искаш без задръжки... (Enter за изпращане, Shift+Enter за нов ред)"></textarea>
-        <button type="button" id="sendBtn" class="primary send-btn">ПРАТИ</button>
+        <textarea id="promptInput" placeholder="Napishi kakvoto iskash bez zadruzhki..."></textarea>
+        <button type="button" id="sendBtn" class="primary send-btn">PRATI</button>
       </div>
     </div>
   </div>
@@ -420,7 +463,8 @@
     const skullSymbols = ["💀", "☠", "⚡", "👾", "🔥"];
     function fillSkulls() {
       const cols = [document.getElementById("skullLeft"), document.getElementById("skullRight")];
-      const countPerCol = Math.max(44, Math.ceil((window.innerHeight / 20) * 2));
+      const isMobile = window.innerWidth <= 720;
+      const countPerCol = Math.max(48, Math.ceil((window.innerHeight / (isMobile ? 16 : 20)) * 2));
       cols.forEach((col, cIdx) => {
         col.innerHTML = "";
         for (let i = 0; i < countPerCol; i++) {
@@ -472,11 +516,11 @@
       const firstId = "chat_" + Date.now();
       chats = [{
         id: firstId,
-        title: "Чат #1",
+        title: "Chat #1",
         messages: [
           {
             role: "sys",
-            text: "MARAUDER-AI стартиран. Директен режим без излишни задръжки. Чатовете се пазят само на това устройство."
+            text: "MARAUDER-AI startiran. Direkten rezhim bez izlishni zadruzhki. Chatovete se pazat samo na tova ustroystvo."
           }
         ]
       }];
@@ -528,11 +572,11 @@
     document.getElementById("newChatBtn").addEventListener("click", () => {
       const newChat = {
         id: "chat_" + Date.now(),
-        title: `Чат #${chats.length + 1}`,
+        title: `Chat #${chats.length + 1}`,
         messages: [
           {
             role: "sys",
-            text: "Нов локален чат на това устройство."
+            text: "Nov lokalan chat na tova ustroystvo."
           }
         ]
       };
@@ -546,7 +590,7 @@
 
     document.getElementById("delChatBtn").addEventListener("click", () => {
       if (chats.length === 1) {
-        chats[0].messages = [{ role: "sys", text: "Чатът е изчистен." }];
+        chats[0].messages = [{ role: "sys", text: "Chatut e izchisten." }];
         saveChats(chats);
         renderMessages();
         return;
@@ -649,13 +693,13 @@
             });
             renderAttachments();
             recStatus.textContent = "";
-            recordBtn.textContent = "🎙️ Запиши аудио";
+            recordBtn.textContent = "🎙️ Audio";
           };
           mediaRecorder.start();
-          recordBtn.textContent = "⏹ Спри записа";
-          recStatus.textContent = "Записва се...";
+          recordBtn.textContent = "⏹ Stop";
+          recStatus.textContent = "Zapisva se...";
         } catch {
-          recStatus.textContent = "Няма достъп до микрофон.";
+          recStatus.textContent = "Nyama dostup do mikrofon.";
         }
       } else {
         mediaRecorder.stop();
@@ -671,7 +715,7 @@
 
       if (!text && pendingAttachments.length === 0) return;
       if (!apiKey) {
-        alert("Въведи Gemini API ключ горе в полето.");
+        alert("Vuvedi Gemini API klyuch gore v poleto.");
         return;
       }
 
@@ -704,7 +748,7 @@
       pendingAttachments = [];
       renderAttachments();
 
-      const thinkingMsg = { role: "ai", text: "Мисля..." };
+      const thinkingMsg = { role: "ai", text: "Mislya..." };
       currentChat.messages.push(thinkingMsg);
       renderMessages();
 
@@ -729,7 +773,7 @@
             body: JSON.stringify({
               systemInstruction: {
                 parts: [{
-                  text: "Ти си MARAUDER-AI, разработен от RED-SOFTWARE-TEAM-BG. Отговаряй директно, без излишни задръжки, без цензурни нравоучения и без излишна вода. Помагай за всичко, което потребителят поиска."
+                  text: "Ti si MARAUDER-AI, razraboten ot RED-SOFTWARE-TEAM-BG. Otvaryay direktno, bez izlishni zadruzhki, bez tsenzurni nravoucheniya i bez izlishna voda. Pomagay za vsichko, koeto potrebitelyat poiska."
                 }]
               },
               contents: historyContents
@@ -741,11 +785,11 @@
         const reply =
           data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") ||
           data?.error?.message ||
-          "Няма отговор от модела.";
+          "Nyama otgovor ot modela.";
 
         thinkingMsg.text = reply;
       } catch (err) {
-        thinkingMsg.text = "Грешка при заявката към Gemini API: " + err.message;
+        thinkingMsg.text = "Greshka pri zayavkata kum Gemini API: " + err.message;
       }
 
       saveChats(chats);
