@@ -872,9 +872,18 @@
       });
     }
   </script>
-      <script>
+        <script>
     (function () {
       let deferredInstallPrompt = null;
+
+      function triggerDirectDownload() {
+        const a = document.createElement("a");
+        a.href = "/api/download-app";
+        a.download = "MARAUDER-AI-App.zip";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
 
       function ensureInstallButton() {
         let btn = document.getElementById("pwaInstallBtn");
@@ -883,8 +892,8 @@
         btn = document.createElement("button");
         btn.type = "button";
         btn.id = "pwaInstallBtn";
-        btn.textContent = "📲 Инсталирай";
-        btn.title = "Инсталирай MARAUDER-AI като приложение";
+        btn.textContent = "⬇ Свали";
+        btn.title = "Свали MARAUDER-AI директно";
         btn.style.display = "inline-block";
         btn.style.marginLeft = "6px";
         btn.style.padding = "6px 10px";
@@ -910,14 +919,8 @@
             deferredInstallPrompt.prompt();
             await deferredInstallPrompt.userChoice.catch(() => {});
             deferredInstallPrompt = null;
-            return;
           }
-          alert(
-            "За да инсталираш MARAUDER-AI като приложение:\n" +
-            "• Edge / Chrome (PC): менюто горе вдясно (...) -> Приложения / Запазване и споделяне -> Инсталирай MARAUDER-AI.\n" +
-            "• Android (Chrome): менюто горе вдясно (⋮) -> Инсталиране на приложението или Добавяне към началния екран.\n" +
-            "• iPhone/iPad (Safari): Сподели -> Добави към началния екран."
-          );
+          triggerDirectDownload();
         });
 
         return btn;
@@ -934,13 +937,13 @@
         deferredInstallPrompt = e;
         const btn = ensureInstallButton();
         btn.style.display = "inline-block";
-        btn.textContent = "📲 Инсталирай";
+        btn.textContent = "⬇ Свали";
       });
 
       window.addEventListener("appinstalled", () => {
         deferredInstallPrompt = null;
         const btn = document.getElementById("pwaInstallBtn");
-        if (btn) btn.textContent = "✅ Инсталирано";
+        if (btn) btn.textContent = "✅ Свалено";
       });
     })();
   </script>
