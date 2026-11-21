@@ -1,7 +1,5 @@
-const CACHE_NAME = 'marauder-ai-v1';
+const CACHE_NAME = 'marauder-ai-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
   '/manifest.json',
   '/red-software-logo.jpg'
 ];
@@ -27,13 +25,20 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET' || url.pathname.startsWith('/api/')) {
     return;
   }
+  if (url.pathname === '/' || url.pathname.endsWith('.html')) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
   event.respondWith(
-    fetch(event.request)
-      .then((resp) => {
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).then((resp) => {
         const clone = resp.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
         return resp;
-      })
-      .catch(() => caches.match(event.request).then((r) => r || caches.match('/index.html')))
+      });
+    })
   );
 });

@@ -872,7 +872,7 @@
       });
     }
   </script>
-  <script>
+    <script>
     (function () {
       let deferredInstallPrompt = null;
       const installBtn = document.createElement("button");
@@ -881,24 +881,33 @@
       installBtn.textContent = "📲 Инсталирай приложението";
       installBtn.style.display = "none";
       installBtn.style.marginLeft = "6px";
-      installBtn.style.padding = "4px 10px";
+      installBtn.style.padding = "5px 11px";
       installBtn.style.fontSize = "12px";
+      installBtn.style.fontWeight = "bold";
       installBtn.style.borderRadius = "6px";
       installBtn.style.cursor = "pointer";
-      installBtn.style.background = "rgba(255, 45, 85, 0.16)";
+      installBtn.style.background = "#e11d48";
       installBtn.style.color = "#ffffff";
-      installBtn.style.border = "1px solid rgba(255, 45, 85, 0.55)";
+      installBtn.style.border = "1px solid #fda4af";
 
-      window.addEventListener("DOMContentLoaded", () => {
+      function mountInstallBtn() {
+        if (document.getElementById("pwaInstallBtn")) return;
         const anchor = document.getElementById("recStatus") || document.querySelector(".voice-bar") || document.body;
         if (anchor && anchor.parentNode) {
           anchor.parentNode.insertBefore(installBtn, anchor.nextSibling);
         }
-      });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", mountInstallBtn, { once: true });
+      } else {
+        mountInstallBtn();
+      }
 
       window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredInstallPrompt = e;
+        mountInstallBtn();
         installBtn.style.display = "inline-block";
       });
 
