@@ -107,6 +107,112 @@ app.post('/api/chat', async (req, res) => {
 
 const KEEP_ALIVE_URL = (process.env.KEEP_ALIVE_URL || 'https://marauder-ai-hacker.onrender.com/').replace(/\/+$/, '');
 
+const IMAGE_MODELS = [
+  'imagen-3.0-generate-002',
+  'gemini-2.5-flash-image',
+  'gemini-2.0-flash-exp'
+];
+
+async function generateImageWithGemini(model, geminiKey, prompt) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 45000);
+
+  try {
+    if (model.startsWith('imagen-')) {
+      const resp = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${encodeURIComponent(geminiKey)}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
+          body: JSON.stringify({
+            instances: [{ prompt }],
+            parameters: { sampleCount: 1 }
+          })
+        }
+      );
+      const data = await resp.json();
+      const pred = data?.predictions?.[0];
+      const b64 = pred?.bytesBase64Encoded || pred?.b64Json;
+      const mimeType = pred?.mimeType || 'image/png';
+      if (resp.ok && b64) {
+        return { ok: true, status: 200, imageUrl: `data:${mimeType};base64,${b64}`, model };
+      }
+      return { ok: false, status: resp.status || 502, error: data?.error?.message || 'Неуспешно генериране на изображение.' };
+    }
+
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(geminiKey)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: `Generate an image: ${prompt}` }] }],
+          generationConfig: { responseModalities: ['IMAGE', 'TEXT'] }
+        })
+      }
+    );
+    const data = await resp.json();
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    for (const part of parts) {
+      const inline = part.inlineData || part.inline_data;
+      if (inline && inline.data) {
+        const mimeType = inline.mimeType || inline.mime_type || 'image/png';
+        return { ok: true, status: 200, imageUrl: `data:${mimeType};base64,${inline.data}`, model };
+      }
+    }
+    return { ok: false, status: resp.status || 502, error: data?.error?.message || 'Моделът не върна изображение.' };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+app.post('/api/image', async (req, res) => {
+  try {
+    const { accessKey, prompt } = req.body || {};
+    const validKeys = getValidAccessKeys();
+
+    if (!accessKey || !validKeys.includes(String(accessKey).trim())) {
+      return res.status(401).json({
+        error: 'Невалиден код за достъп на RED SOFTWARE TEAM. Купи ключ от сайта.'
+      });
+    }
+
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      return res.status(500).json({
+        error: 'Липсва настроен сървърен ключ (GEMINI_API_KEY).'
+      });
+    }
+
+    if (!prompt || !String(prompt).trim()) {
+      return res.status(400).json({ error: 'Въведи описание за изображението.' });
+    }
+
+    let lastError = 'Неуспешно генериране на изображение.';
+    let lastStatus = 502;
+
+    for (const model of IMAGE_MODELS) {
+      try {
+        const out = await generateImageWithGemini(model, geminiKey, String(prompt).trim());
+        if (out.ok && out.imageUrl) {
+          return res.json({ imageUrl: out.imageUrl, model: out.model });
+        }
+        lastStatus = out.status || lastStatus;
+        if (out.error) lastError = out.error;
+      } catch (e) {
+        lastStatus = 504;
+        lastError = e?.name === 'AbortError' ? 'Изтече времето за генериране на снимката.' : e.message;
+      }
+    }
+
+    return res.status(lastStatus).json({ error: lastError });
+  } catch (err) {
+    return res.status(500).json({ error: 'Грешка при генериране на изображение: ' + err.message });
+  }
+});
+
 app.get(['/health', '/api/health'], (req, res) => {
   res.status(200).json({
     ok: true,
