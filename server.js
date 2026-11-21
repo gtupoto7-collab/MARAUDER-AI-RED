@@ -105,10 +105,35 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+const KEEP_ALIVE_URL = (process.env.KEEP_ALIVE_URL || 'https://marauder-ai-hacker.onrender.com/').replace(/\/+$/, '');
+
+app.get(['/health', '/api/health'], (req, res) => {
+  res.status(200).json({
+    ok: true,
+    service: 'marauder-ai',
+    url: KEEP_ALIVE_URL,
+    uptimeSec: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
   console.log(`MARAUDER-AI server running on port ${PORT}`);
+const KEEP_ALIVE_INTERVAL_MS = Number(process.env.KEEP_ALIVE_INTERVAL_MS) || 10 * 60 * 1000;
+  const pingUrl = `${KEEP_ALIVE_URL}/health`;
+  const KEEP_ALIVE_INTERVAL = setInterval(async () => {
+    try {
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), 10000);
+      await fetch(pingUrl, { signal: controller.signal }).catch(() => {});
+      clearTimeout(t);
+    } catch {}
+  }, KEEP_ALIVE_INTERVAL_MS);
+  if (typeof KEEP_ALIVE_INTERVAL.unref === 'function') {
+    KEEP_ALIVE_INTERVAL.unref();
+  }
 });
