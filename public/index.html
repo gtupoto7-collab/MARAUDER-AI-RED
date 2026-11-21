@@ -872,56 +872,75 @@
       });
     }
   </script>
-    <script>
+      <script>
     (function () {
       let deferredInstallPrompt = null;
-      const installBtn = document.createElement("button");
-      installBtn.type = "button";
-      installBtn.id = "pwaInstallBtn";
-      installBtn.textContent = "📲 Инсталирай приложението";
-      installBtn.style.display = "none";
-      installBtn.style.marginLeft = "6px";
-      installBtn.style.padding = "5px 11px";
-      installBtn.style.fontSize = "12px";
-      installBtn.style.fontWeight = "bold";
-      installBtn.style.borderRadius = "6px";
-      installBtn.style.cursor = "pointer";
-      installBtn.style.background = "#e11d48";
-      installBtn.style.color = "#ffffff";
-      installBtn.style.border = "1px solid #fda4af";
 
-      function mountInstallBtn() {
-        if (document.getElementById("pwaInstallBtn")) return;
-        const anchor = document.getElementById("recStatus") || document.querySelector(".voice-bar") || document.body;
+      function ensureInstallButton() {
+        let btn = document.getElementById("pwaInstallBtn");
+        if (btn) return btn;
+
+        btn = document.createElement("button");
+        btn.type = "button";
+        btn.id = "pwaInstallBtn";
+        btn.textContent = "📲 Инсталирай";
+        btn.title = "Инсталирай MARAUDER-AI като приложение";
+        btn.style.display = "inline-block";
+        btn.style.marginLeft = "6px";
+        btn.style.padding = "6px 10px";
+        btn.style.fontSize = "12px";
+        btn.style.fontWeight = "bold";
+        btn.style.borderRadius = "6px";
+        btn.style.cursor = "pointer";
+        btn.style.background = "#e11d48";
+        btn.style.color = "#ffffff";
+        btn.style.border = "1px solid #fda4af";
+
+        const delBtn = document.getElementById("delChatBtn");
+        const newBtn = document.getElementById("newChatBtn");
+        const anchor = delBtn || newBtn || document.getElementById("recStatus");
         if (anchor && anchor.parentNode) {
-          anchor.parentNode.insertBefore(installBtn, anchor.nextSibling);
+          anchor.parentNode.insertBefore(btn, anchor.nextSibling);
+        } else {
+          document.body.appendChild(btn);
         }
+
+        btn.addEventListener("click", async () => {
+          if (deferredInstallPrompt) {
+            deferredInstallPrompt.prompt();
+            await deferredInstallPrompt.userChoice.catch(() => {});
+            deferredInstallPrompt = null;
+            return;
+          }
+          alert(
+            "За да инсталираш MARAUDER-AI като приложение:\n" +
+            "• Edge / Chrome (PC): менюто горе вдясно (...) -> Приложения / Запазване и споделяне -> Инсталирай MARAUDER-AI.\n" +
+            "• Android (Chrome): менюто горе вдясно (⋮) -> Инсталиране на приложението или Добавяне към началния екран.\n" +
+            "• iPhone/iPad (Safari): Сподели -> Добави към началния екран."
+          );
+        });
+
+        return btn;
       }
 
       if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", mountInstallBtn, { once: true });
+        document.addEventListener("DOMContentLoaded", ensureInstallButton, { once: true });
       } else {
-        mountInstallBtn();
+        ensureInstallButton();
       }
 
       window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredInstallPrompt = e;
-        mountInstallBtn();
-        installBtn.style.display = "inline-block";
-      });
-
-      installBtn.addEventListener("click", async () => {
-        if (!deferredInstallPrompt) return;
-        deferredInstallPrompt.prompt();
-        await deferredInstallPrompt.userChoice.catch(() => {});
-        deferredInstallPrompt = null;
-        installBtn.style.display = "none";
+        const btn = ensureInstallButton();
+        btn.style.display = "inline-block";
+        btn.textContent = "📲 Инсталирай";
       });
 
       window.addEventListener("appinstalled", () => {
         deferredInstallPrompt = null;
-        installBtn.style.display = "none";
+        const btn = document.getElementById("pwaInstallBtn");
+        if (btn) btn.textContent = "✅ Инсталирано";
       });
     })();
   </script>
