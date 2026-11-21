@@ -23,7 +23,7 @@ function getValidAccessKeys() {
 
 async function callModel(model, geminiKey, contents) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 35000);
+  const timer = setTimeout(() => controller.abort(), 12000);
 
   try {
     const resp = await fetch(
