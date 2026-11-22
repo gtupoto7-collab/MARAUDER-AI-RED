@@ -1655,9 +1655,9 @@ run_${safeIdent(nameRaw)}();
       </div>
     </div>
 
-    <div id="torVpnDiagStatus" style="padding:10px 12px;border-radius:8px;background:#0b0814;border:1px solid #2e264a;color:#ffd166;font-size:13px;margin-bottom:18px;white-space:pre-line;">Статус: Изчаква проверка на локален прокси / VPN.</div>
+    <div id="torVpnDiagStatus" style="padding:10px 12px;border-radius:8px;background:#0b0814;border:1px solid #2e264a;color:#ffd166;font-size:13px;margin-bottom:18px;white-space:pre-line;;display:none;">Статус: Изчаква проверка на локален прокси / VPN.</div>
 
-    <div id="vpnPageContent" style="display:none;display:grid;gap:14px;line-height:1.55;font-size:14px;">
+    <div id="vpnPageContent" style="display:none;display:none;gap:14px;line-height:1.55;font-size:14px;">
 
       <section style="background:#1c1124;border:1px solid #ff2a4b;border-radius:10px;padding:14px;">
         <h3 style="margin:0 0 8px;color:#ff758f;font-size:15px;">Важна бележка за анонимност и проследимост</h3>
@@ -2075,5 +2075,47 @@ window.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  function findVpnPanel() {
+    const candidates = Array.from(document.querySelectorAll("div, section, aside"));
+    return candidates.find(el => {
+      const txt = (el.textContent || "");
+      return (txt.includes("WireGuard") || txt.includes("Realen WireGuard VPN")) && el.offsetHeight > 80;
+    }) || document.getElementById("vpnDrawerPanel");
+  }
+
+  function placeBelowDescriptions(panel, btn) {
+    if (!panel) return;
+    panel.style.display = "none";
+    const descAnchor = Array.from(document.querySelectorAll("p, .subtitle, .desc, .description")).find(el =>
+      (el.textContent || "").toLowerCase().includes("red-software-team") ||
+      (el.textContent || "").toLowerCase().includes("ustroystvo")
+    );
+    if (descAnchor && descAnchor.parentNode) {
+      descAnchor.insertAdjacentElement("afterend", panel);
+    } else if (btn && btn.parentNode) {
+      btn.insertAdjacentElement("afterend", panel);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const allBtns = Array.from(document.querySelectorAll("button, a"));
+    const vpnBtn = allBtns.find(b => (b.textContent || "").trim().toUpperCase() === "VPN");
+    const panel = findVpnPanel();
+    if (panel) {
+      placeBelowDescriptions(panel, vpnBtn);
+    }
+    if (vpnBtn && panel) {
+      vpnBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        const isHidden = window.getComputedStyle(panel).display === "none";
+        panel.style.display = isHidden ? "block" : "none";
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>
