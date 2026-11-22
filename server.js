@@ -848,3 +848,20 @@ app.use("/api", async (req, res, next) => {
 });
 
 try { const { mountWalletRoutes } = require("./routes/wallet"); mountWalletRoutes(app); } catch (e) { console.error("WALLET_ROUTE_HOOK_ERR:", e && e.message); }
+
+
+// Direct binary/package downloads from public/downloads
+app.get("/download/:platform", (req, res) => {
+  const p = String(req.params.platform || "").toLowerCase();
+  const dlDir = path.join(__dirname, "public", "downloads");
+  const map = {
+    windows: ["MARAUDER-AI-Windows.zip", "MARAUDER-AI.exe"],
+    android: ["MARAUDER-AI.apk", "MARAUDER-AI-signed.apk"],
+    ios: ["MARAUDER-AI.ipa", "MARAUDER-AI-iOS-INFO.txt"]
+  };
+  const candidates = map[p];
+  if (!candidates) return res.status(400).send("Invalid platform");
+  const found = candidates.map((name) => path.join(dlDir, name)).find((full) => fs.existsSync(full));
+  if (!found) return res.status(404).send("File not found in public/downloads");
+  return res.download(found);
+});

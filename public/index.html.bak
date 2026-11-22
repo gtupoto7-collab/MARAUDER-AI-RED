@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MARAUDER-AI made by RED-SOFTWARE-TEAM-BG</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @keyframes rgbShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    @keyframes neonPulse {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.55), 0 0 22px rgba(255, 0, 128, 0.35);
+      }
+      50% {
+        box-shadow: 0 0 16px rgba(255, 50, 50, 0.75), 0 0 28px rgba(0, 255, 136, 0.45);
+      }
+    }
+
+    html, body {
+      background: #050508;
+      color: #f3f4f6;
+      font-family: "Consolas", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100dvh;
+      width: 100%;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+    }
+
+    .skull-col {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 72px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      padding: 6px 4px;
+      background: #08090e;
+      z-index: 5;
+      pointer-events: none;
+      overflow: hidden;
+      animation: rgbShift 5s linear infinite;
+    }
+
+    .skull-col.left {
+      left: 0;
+      border-right: 2px solid #00f5d4;
+      box-shadow: 2px 0 16px rgba(0, 245, 212, 0.4);
+    }
+
+    .skull-col.right {
+      right: 0;
+      border-left: 2px solid #ff007f;
+      box-shadow: -2px 0 16px rgba(255, 0, 127, 0.4);
+    }
+
+    .skull-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      line-height: 1;
+      color: #ff2a55;
+      text-shadow: 0 0 8px currentColor;
+      user-select: none;
+      animation: rgbShift 3.5s linear infinite;
+    }
+
+    .app-shell {
+      width: calc(100% - 144px);
+      margin: 0 72px;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: #0d0e14;
+      border-left: 2px solid #00f5d4;
+      border-right: 2px solid #ff007f;
+      box-shadow: 0 0 35px rgba(0, 245, 212, 0.22), 0 0 55px rgba(255, 0, 127, 0.18);
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      padding: 12px 18px;
+      background: linear-gradient(90deg, #11131d 0%, #17101c 100%);
+      border-bottom: 2px solid #00f5d4;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      animation: neonPulse 4s ease-in-out infinite;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .emblem-box {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #14111d;
+      border: 1.5px solid #00f5d4;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: #ff3355;
+      text-shadow: 0 0 10px rgba(255, 51, 85, 0.75);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 800;
+      color: #00f5d4;
+      letter-spacing: 0.5px;
+    }
+
+    .feature-row, .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      width: 100%;
+    }
+
+    select, input[type="password"], input[type="text"] {
+      background: #08090d;
+      color: #f3f4f6;
+      border: 1px solid #00f5d4;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 13px;
+      outline: none;
+      max-width: 100%;
+    }
+
+    .api-input {
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+
+    button, .nav-pill {
+      background: #171926;
+      color: #ffffff;
+      border: 1px solid #00f5d4;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    button:hover, .nav-pill:hover {
+      border-color: #ff007f;
+    }
+
+    button.danger {
+      border-color: #ff2a55;
+      color: #ff8099;
+    }
+
+    button.primary {
+      background: linear-gradient(90deg, #b5179e, #ff2a55);
+      border-color: #00f5d4;
+      color: #ffffff;
+    }
+
+    #messages {
+      flex: 1;
+      padding: 14px 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      line-height: 1.48;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      background: #1e1022;
+      border: 1px solid #ff007f;
+      color: #fff5f8;
+    }
+
+    .msg.ai {
+      align-self: flex-start;
+      background: #101622;
+      border: 1px solid #00f5d4;
+      color: #e6fffa;
+    }
+
+    .msg.sys {
+      align-self: center;
+      background: #12131c;
+      border: 1px dashed #00f5d4;
+      color: #9ef9eb;
+      font-size: 12px;
+    }
+
+    .attachments-preview {
+      padding: 0 18px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .att-chip {
+      background: #151724;
+      border: 1px solid #00f5d4;
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .att-chip img {
+      width: 34px;
+      height: 34px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .composer {
+      padding: 10px 18px calc(12px + env(safe-area-inset-bottom));
+      background: #0e1018;
+      border-top: 2px solid #ff007f;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: sticky;
+      bottom: 0;
+      z-index: 4;
+    }
+
+    .media-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .media-btn {
+      display: inline-block;
+      background: #171926;
+      border: 1px solid #00f5d4;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    textarea {
+      flex: 1;
+      min-width: 0;
+      min-height: 48px;
+      max-height: 140px;
+      resize: vertical;
+      background: #08090d;
+      color: #ffffff;
+      border: 1px solid #00f5d4;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .send-btn {
+      height: 48px;
+      padding: 0 16px;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 720px) {
+      .skull-col { width: 28px; }
+      .skull-cell { font-size: 10px; }
+      .app-shell { width: calc(100% - 56px); margin: 0 28px; }
+      .msg { max-width: 96%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="skull-col left" id="skullLeft"></div>
+  <div class="skull-col right" id="skullRight"></div>
+
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="emblem-box" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.3 12 22.5C16.6 21.3 20 16.8 20 11.5V5.5L12 2Z" stroke="#00f5d4" stroke-width="1.8" fill="#240b18"/>
+            <circle cx="12" cy="12" r="3.3" stroke="#ff2a55" stroke-width="1.7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">MARAUDER-AI</div>
+          <div class="brand-sub">made by RED-SOFTWARE-TEAM-BG</div>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <button type="button" id="botBtn">+ BOT (TG/MAIL/FB/DC)</button>
+        <button type="button" id="alOptBtn">MARAUDER-AL Опции</button>
+        <a href="/kali-root.html" class="nav-pill">MARAUDER-LINUX-CONSOLE</a>
+        <button type="button" id="fenixBtn">MARAUDER-AI 4.8 FENIX / 5.3 / 6.2</button>
+        <button type="button" id="devanBtn">DEVANPORT-AI (CODE STUDIO)</button>
+        <button type="button" id="vpnBtn">VPN</button>
+        <a href="/mining-optin.html" class="nav-pill" style="border-color:#22c55e;color:#86efac;">Pool &amp; 24h</a>
+        <button type="button" id="secretBtn" style="border-color:#ef4444;color:#f87171;">[ RED SECRET CHAT ]</button>
+        <button type="button" id="dareniyaBtn" style="border-color:#facc15;color:#facc15;">DARENIYA (PayPal / TON)</button>
+
+        <span id="marauderDropdownWrap" style="position:relative;display:inline-block;">
+          <button type="button" id="marauderDropdownBtn" style="border-color:#22c55e;background:#052e16;color:#bbf7d0;">Меню ▾</button>
+<button id="marauderPortfolioBtn" type="button" onclick="window.open('/portfolio','_blank','noopener,noreferrer')" style="background:#182436;color:#e6edf3;border:1px solid #58a6ff;padding:6px 10px;border-radius:6px;font-weight:700;cursor:pointer;">[ PORTOFEIL ]</button>
+          <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:295px;max-height:78vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:7px;box-shadow:0 10px 28px rgba(0,0,0,0.85);">
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">СТРАНИЦИ &amp; КОНЗОЛА</div>
+            <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;">MARAUDER LINUX CONSOLE (/kali-root.html)</a>
+            <a href="/devanport-studio.html" style="display:block;padding:6px 10px;color:#fbbf24;text-decoration:none;font-size:12px;">DEVANPORT-AI Studio (/devanport-studio.html)</a>
+            <a href="/bot-studio.html" style="display:block;padding:6px 10px;color:#4ade80;text-decoration:none;font-size:12px;">BOT Studio (/bot-studio.html)</a>
+            <a href="/red-secret-chat.html" style="display:block;padding:6px 10px;color:#f87171;text-decoration:none;font-size:12px;">RED SECRET CHAT + QR (/red-secret-chat.html)</a>
+            <a href="/payments-plans.html" style="display:block;padding:6px 10px;color:#facc15;text-decoration:none;font-size:12px;">Плащания &amp; Нива (/payments-plans.html)</a>
+            <a href="/downloads.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;">Downloads (/downloads.html)</a>
+            <a href="/tools-hub.html" style="display:block;padding:6px 10px;color:#c084fc;text-decoration:none;font-size:12px;">Модули (/tools-hub.html)</a>
+            <a href="/mining-optin.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;">Pool &amp; 24h (/mining-optin.html)</a>
+
+            <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">РЕЖИМИ</div>
+            <button type="button" data-mode="MARAUDER OPCI: Активни пълни опции." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;">MARAUDER OPCI</button>
+            <button type="button" data-mode="OFFLINE РЕЖИМ: Локален режим." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#fbbf24;font-size:12px;">Offline Режим</button>
+            <button type="button" data-mode="INLINE РЕЖИМ: Бързи inline команди." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#4ade80;font-size:12px;">Inline Режим</button>
+
+            <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">ПЛАЩАНЕ (KEPER / PAYPAL / STARS / TON)</div>
+            <button type="button" data-pay="Keper (Keplr)" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#a78bfa;font-size:12px;">Keper (Keplr)</button>
+            <button type="button" data-pay="PayPal" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#fde047;font-size:12px;">PayPal</button>
+            <button type="button" data-pay="Telegram Stars" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#38bdf8;font-size:12px;">Telegram Stars</button>
+            <button type="button" data-pay="TON" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#22d3ee;font-size:12px;">TON</button>
+
+            <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">DOWNLOAD</div>
+            <a href="/downloads.html" style="display:block;padding:5px 10px;color:#86efac;text-decoration:none;font-size:12px;">Android / iOS / Windows 11</a>
+          </div>
+        </span>
+      </div>
+
+      <div class="controls-bar">
+        <select id="chatSelect" title="Локален чат на това устройство"></select>
+        <button type="button" id="newChatBtn">+ Нов чат</button>
+        <button type="button" id="delChatBtn" class="danger">Изтрий</button>
+        <input type="password" id="apiKeyInput" class="api-input" placeholder="RED SOFTWARE Access Key (купен от сайта)" />
+      </div>
+    </header>
+
+    <div id="messages"></div>
+    <div class="attachments-preview" id="attachmentsPreview"></div>
+
+    <div class="composer">
+      <div class="media-tools">
+        <label style="cursor:pointer;">
+          <input type="file" id="imageInput" accept="image/*" multiple hidden />
+          <span class="media-btn">📷 Снимка</span>
+        </label>
+        <label style="cursor:pointer;">
+          <input type="file" id="fileInput" multiple hidden />
+          <span class="media-btn">📎 Файл</span>
+        </label>
+        <button type="button" id="recordBtn">🎙️ Запиши аудио</button>
+        <span id="recStatus" style="font-size:12px;color:#00f5d4;"></span>
+      </div>
+
+      <div class="input-row">
+        <textarea id="promptInput" placeholder="Напиши каквото искаш без задръжки... (Enter за изпращане, Shift+Enter за нов ред)"></textarea>
+        <button type="button" id="sendBtn" class="primary send-btn">ПРАТИ</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const skullSymbols = ["💀", "☠", "⚡", "👾", "🔥"];
+    function fillSkulls() {
+      const cols = [document.getElementById("skullLeft"), document.getElementById("skullRight")];
+      if (!cols[0] || !cols[1]) return;
+      const isMobile = window.innerWidth <= 720;
+      const countPerCol = Math.max(48, Math.ceil((window.innerHeight / (isMobile ? 16 : 20)) * 2));
+      cols.forEach((col, cIdx) => {
+        col.innerHTML = "";
+        for (let i = 0; i < countPerCol; i++) {
+          const cell = document.createElement("div");
+          cell.className = "skull-cell";
+          cell.textContent = (i % 5 === 0) ? skullSymbols[(i + cIdx) % skullSymbols.length] : (i % 2 === 0 ? "💀" : "☠");
+          cell.style.animationDelay = `${((i * 0.17) + cIdx * 0.4).toFixed(2)}s`;
+          col.appendChild(cell);
+        }
+      });
+    }
+    fillSkulls();
+    window.addEventListener("resize", fillSkulls);
+
+    const DEVICE_ID_KEY = "marauder_ai_device_id_v1";
+    let deviceId = localStorage.getItem(DEVICE_ID_KEY);
+    if (!deviceId) {
+      deviceId = "dev_" + Math.random().toString(36).slice(2, 12) + "_" + Date.now().toString(36);
+      localStorage.setItem(DEVICE_ID_KEY, deviceId);
+    }
+
+    const CHATS_KEY = `marauder_ai_chats_${deviceId}`;
+    const ACTIVE_CHAT_KEY = `marauder_ai_active_${deviceId}`;
+    const ACCESS_KEY_STORAGE = `marauder_ai_rst_key_${deviceId}`;
+
+    const apiKeyInput = document.getElementById("apiKeyInput");
+    apiKeyInput.value = localStorage.getItem(ACCESS_KEY_STORAGE) || "";
+    apiKeyInput.addEventListener("input", () => {
+      localStorage.setItem(ACCESS_KEY_STORAGE, apiKeyInput.value.trim());
+    });
+
+    function loadChats() {
+      try {
+        const raw = localStorage.getItem(CHATS_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveChats(chats) {
+      localStorage.setItem(CHATS_KEY, JSON.stringify(chats));
+    }
+
+    let chats = loadChats();
+    if (chats.length === 0) {
+      const firstId = "chat_" + Date.now();
+      chats = [{
+        id: firstId,
+        title: "Чат #1",
+        messages: [{
+          role: "sys",
+          text: "MARAUDER-AI стартиран. Въведи ключ от RED SOFTWARE TEAM за достъп. Чатовете се пазят само на това устройство."
+        }]
+      }];
+      saveChats(chats);
+    }
+
+    let activeChatId = localStorage.getItem(ACTIVE_CHAT_KEY);
+    if (!chats.some((c) => c.id === activeChatId)) {
+      activeChatId = chats[0].id;
+      localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
+    }
+
+    const chatSelect = document.getElementById("chatSelect");
+    const messagesEl = document.getElementById("messages");
+
+    function getActiveChat() {
+      return chats.find((c) => c.id === activeChatId) || chats[0];
+    }
+
+    function appendSystemNote(text) {
+      const current = getActiveChat();
+      current.messages.push({ role: "sys", text });
+      saveChats(chats);
+      renderMessages();
+    }
+    window.appendSystemNote = appendSystemNote;
+
+    function renderChatSelect() {
+      chatSelect.innerHTML = "";
+      chats.forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.title;
+        if (c.id === activeChatId) opt.selected = true;
+        chatSelect.appendChild(opt);
+      });
+    }
+
+    function renderMessages() {
+      const current = getActiveChat();
+      messagesEl.innerHTML = "";
+      current.messages.forEach((m) => {
+        const div = document.createElement("div");
+        div.className = `msg ${m.role}`;
+        div.textContent = m.text;
+        messagesEl.appendChild(div);
+      });
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    chatSelect.addEventListener("change", () => {
+      activeChatId = chatSelect.value;
+      localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
+      renderMessages();
+    });
+
+    document.getElementById("newChatBtn").addEventListener("click", () => {
+      const newChat = {
+        id: "chat_" + Date.now(),
+        title: `Чат #${chats.length + 1}`,
+        messages: [{ role: "sys", text: "Нов локален чат на това устройство." }]
+      };
+      chats.unshift(newChat);
+      activeChatId = newChat.id;
+      saveChats(chats);
+      localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
+      renderChatSelect();
+      renderMessages();
+    });
+
+    document.getElementById("delChatBtn").addEventListener("click", () => {
+      if (chats.length === 1) {
+        chats[0].messages = [{ role: "sys", text: "Чатът е изчистен." }];
+        saveChats(chats);
+        renderMessages();
+        return;
+      }
+      chats = chats.filter((c) => c.id !== activeChatId);
+      activeChatId = chats[0].id;
+      saveChats(chats);
+      localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
+      renderChatSelect();
+      renderMessages();
+    });
+
+    function openSeparateWindow(url) {
+      try {
+        const w = window.open(url, "_blank", "noopener,noreferrer,width=980,height=720");
+        if (!w) window.location.href = url;
+      } catch {
+        window.location.href = url;
+      }
+    }
+
+    document.getElementById("botBtn").addEventListener("click", () => openSeparateWindow("/bot-studio.html"));
+    document.getElementById("devanBtn").addEventListener("click", () => openSeparateWindow("/devanport-studio.html"));
+    document.getElementById("vpnBtn").addEventListener("click", () => openSeparateWindow("/orbot-vpn.html"));
+    document.getElementById("secretBtn").addEventListener("click", () => openSeparateWindow("/red-secret-chat.html"));
+    document.getElementById("dareniyaBtn").addEventListener("click", () => openSeparateWindow("/payments-plans.html"));
+    document.getElementById("alOptBtn").addEventListener("click", () => appendSystemNote("MARAUDER-AL Опции: активен профил RED-SOFTWARE-TEAM-BG."));
+    document.getElementById("fenixBtn").addEventListener("click", () => appendSystemNote("MARAUDER-AI профил: 4.8 FENIX / 5.3 / 6.2 готов."));
+
+    const ddBtn = document.getElementById("marauderDropdownBtn");
+    const ddMenu = document.getElementById("marauderDropdownMenu");
+    if (ddBtn && ddMenu) {
+      ddBtn.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        ddMenu.style.display = (ddMenu.style.display === "block") ? "none" : "block";
+      });
+      document.addEventListener("click", () => {
+        ddMenu.style.display = "none";
+      });
+      ddMenu.querySelectorAll(".m-mode-act").forEach((el) => {
+        el.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          ddMenu.style.display = "none";
+          appendSystemNote(el.getAttribute("data-mode") || "Режим активиран");
+        });
+      });
+      ddMenu.querySelectorAll(".m-pay-act").forEach((el) => {
+        el.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          ddMenu.style.display = "none";
+          appendSystemNote("Избран начин на плащане: " + (el.getAttribute("data-pay") || "Плащане"));
+        });
+      });
+    }
+
+    let pendingAttachments = [];
+    const attachmentsPreview = document.getElementById("attachmentsPreview");
+
+    function renderAttachments() {
+      attachmentsPreview.innerHTML = "";
+      pendingAttachments.forEach((att, idx) => {
+        const chip = document.createElement("div");
+        chip.className = "att-chip";
+        if (att.mimeType && att.mimeType.startsWith("image/")) {
+          const img = document.createElement("img");
+          img.src = `data:${att.mimeType};base64,${att.base64}`;
+          chip.appendChild(img);
+        }
+        const label = document.createElement("span");
+        label.textContent = att.name;
+        chip.appendChild(label);
+
+        const rm = document.createElement("button");
+        rm.type = "button";
+        rm.textContent = "×";
+        rm.style.padding = "2px 6px";
+        rm.addEventListener("click", () => {
+          pendingAttachments.splice(idx, 1);
+          renderAttachments();
+        });
+        chip.appendChild(rm);
+        attachmentsPreview.appendChild(chip);
+      });
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = String(reader.result || "");
+          resolve(res.includes(",") ? res.split(",")[1] : res);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleFileList(fileList) {
+      for (const file of Array.from(fileList)) {
+        const base64 = await fileToBase64(file);
+        pendingAttachments.push({
+          name: file.name,
+          mimeType: file.type || "application/octet-stream",
+          base64
+        });
+      }
+      renderAttachments();
+    }
+
+    document.getElementById("imageInput").addEventListener("change", (e) => {
+      handleFileList(e.target.files);
+      e.target.value = "";
+    });
+
+    document.getElementById("fileInput").addEventListener("change", (e) => {
+      handleFileList(e.target.files);
+      e.target.value = "";
+    });
+
+    let mediaRecorder = null;
+    let audioChunks = [];
+    const recordBtn = document.getElementById("recordBtn");
+    const recStatus = document.getElementById("recStatus");
+
+    recordBtn.addEventListener("click", async () => {
+      if (!mediaRecorder || mediaRecorder.state === "inactive") {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          audioChunks = [];
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.ondataavailable = (ev) => {
+            if (ev.data.size > 0) audioChunks.push(ev.data);
+          };
+          mediaRecorder.onstop = async () => {
+            stream.getTracks().forEach((t) => t.stop());
+            const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || "audio/webm" });
+            const base64 = await fileToBase64(blob);
+            pendingAttachments.push({
+              name: "audio_record.webm",
+              mimeType: blob.type || "audio/webm",
+              base64
+            });
+            renderAttachments();
+            recStatus.textContent = "";
+            recordBtn.textContent = "🎙️ Запиши аудио";
+          };
+          mediaRecorder.start();
+          recordBtn.textContent = "⏹ Спри записа";
+          recStatus.textContent = "Записва се...";
+        } catch {
+          recStatus.textContent = "Няма достъп до микрофон.";
+        }
+      } else {
+        mediaRecorder.stop();
+      }
+    });
+
+    const promptInput = document.getElementById("promptInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    async function sendMessage() {
+      const text = promptInput.value.trim();
+      const accessKey = apiKeyInput.value.trim();
+
+      if (!text && pendingAttachments.length === 0) return;
+
+      const currentChat = getActiveChat();
+      const displayUserText = text || pendingAttachments.map((a) => `[${a.name}]`).join(" ");
+
+      if (currentChat.messages.filter((m) => m.role === "user").length === 0) {
+        currentChat.title = (text || pendingAttachments[0].name).slice(0, 26);
+        renderChatSelect();
+      }
+
+      currentChat.messages.push({ role: "user", text: displayUserText });
+      saveChats(chats);
+      renderMessages();
+
+      promptInput.value = "";
+      const attachmentsToSend = pendingAttachments.slice();
+      pendingAttachments = [];
+      renderAttachments();
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            accessKey,
+            deviceId,
+            attachments: attachmentsToSend
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const reply = data.reply || data.message || JSON.stringify(data);
+          currentChat.messages.push({ role: "ai", text: reply });
+        } else {
+          currentChat.messages.push({
+            role: "ai",
+            text: `Сървърът върна статус ${res.status}. Ключът или маршрутът /api/chat изискват проверка.`
+          });
+        }
+      } catch {
+        currentChat.messages.push({
+          role: "ai",
+          text: "Локален отговор: няма връзка с /api/chat (провери дали сървърът работи на порт 3000)."
+        });
+      }
+
+      saveChats(chats);
+      renderMessages();
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    promptInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    renderChatSelect();
+    renderMessages();
+  </script>
+  <script src="/universal-back.js"></script>
+  <script src="/shield-live.js"></script>
+
+<div id="marauder-full-bot-builder" style="margin-top:14px;padding:12px;border:1px solid #22c55e;border-radius:10px;background:#0b1318;">
+  <div style="font-weight:700;margin-bottom:8px;color:#4ade80;">Pulen Syzdatel na Botove (TG / WhatsApp / Discord / Web / Mail / Custom)</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;">
+    <select id="mfb-platform"><option value="Telegram">Telegram Bot</option><option value="Discord">Discord Bot</option><option value="WhatsApp">WhatsApp Bot</option><option value="WebWidget">Web Chat Bot</option><option value="EmailAuto">Email Auto-Bot</option><option value="CustomAPI">Custom Webhook Bot</option></select>
+    <input id="mfb-name" type="text" placeholder="Ime na bota (napr. brokerfree_bot)" />
+    <input id="mfb-role" type="text" placeholder="Nisha / Cel (napr. Imoti, Avtochasti, Poddruzhka)" />
+    <input id="mfb-token" type="text" placeholder="Token / Webhook URL (po jelanie)" />
+    <input id="mfb-cmds" type="text" placeholder="Komandi (napr. /start, /help, /cena, /kontakt)" />
+    <input id="mfb-lang" type="text" placeholder="Ezik i ton (napr. BG, barz i konkreten)" />
+  </div>
+  <div style="margin-top:8px;">
+    <textarea id="mfb-desc" rows="2" placeholder="Pulno opisanie i logika na bota: kak posreshta klienta, kakvi danni sybira i kak otgovarya..." style="width:100%;box-sizing:border-box;"></textarea>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+    <button type="button" id="mfb-create-btn">Suzdai i Zapazi Bota</button>
+    <button type="button" id="mfb-copy-json">Kopirai Konfig JSON</button>
+    <button type="button" id="mfb-clear-btn">Izchisti Spisyka</button>
+  </div>
+  <div id="mfb-list" style="margin-top:10px;font-size:12px;"></div>
+</div>
+<script id="MARAUDER_FULL_BOT_BUILDER_JS">
+(function(){
+  const KEY = "marauder_full_bots_v1";
+  function readBots(){ try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(_) { return []; } }
+  function writeBots(v){ try { localStorage.setItem(KEY, JSON.stringify(v.slice(0, 60))); } catch(_) {} }
+  function render(){
+    const el = document.getElementById("mfb-list");
+    if (!el) return;
+    const bots = readBots();
+    if (!bots.length) { el.innerHTML = "<div style=\"opacity:.75\">Nqma suzdadeni botove s pulna konfiguraciya oshte.</div>"; return; }
+    el.innerHTML = bots.map((b, i) =>
+      "<div style=\"padding:8px;border:1px solid #1e293b;border-radius:8px;margin-bottom:6px;background:#090e17;\">" +
+      "<div><strong>#" + (i+1) + " [" + b.platform + "] " + b.name + "</strong> — <span>" + b.role + "</span> (" + b.lang + ")</div>" +
+      "<div style=\"opacity:.85;margin-top:3px;\">Komandi: " + b.cmds + " | Token/Hook: " + (b.token ? "zadaden" : "lipsva") + "</div>" +
+      "<div style=\"opacity:.8;margin-top:2px;\">" + b.desc + "</div>" +
+      "</div>"
+    ).join("");
+  }
+  function wire(){
+    render();
+    const btn = document.getElementById("mfb-create-btn");
+    if (btn) btn.addEventListener("click", () => {
+      const name = ((document.getElementById("mfb-name")||{}).value || "").trim() || "marauder-bot";
+      const platform = ((document.getElementById("mfb-platform")||{}).value || "Telegram").trim();
+      const role = ((document.getElementById("mfb-role")||{}).value || "Obshta avtomatizaciya").trim();
+      const token = ((document.getElementById("mfb-token")||{}).value || "").trim();
+      const cmds = ((document.getElementById("mfb-cmds")||{}).value || "/start, /help").trim();
+      const lang = ((document.getElementById("mfb-lang")||{}).value || "BG").trim();
+      const desc = ((document.getElementById("mfb-desc")||{}).value || "Avtomatiziran bot na MARAUDER-AI").trim();
+      const bots = readBots();
+      bots.unshift({ platform, name, role, token, cmds, lang, desc, createdAt: new Date().toLocaleString() });
+      writeBots(bots);
+      render();
+    });
+    const copyBtn = document.getElementById("mfb-copy-json");
+    if (copyBtn) copyBtn.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(JSON.stringify(readBots(), null, 2)); } catch(_) {}
+    });
+    const clrBtn = document.getElementById("mfb-clear-btn");
+    if (clrBtn) clrBtn.addEventListener("click", () => { writeBots([]); render(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>
+
+
+<div id="marauder-full-account-wallet-chat" style="margin-top:14px;padding:12px;border:1px solid #38bdf8;border-radius:10px;background:#0b111d;">
+  <div style="font-weight:700;margin-bottom:8px;color:#7dd3fc;">MARAUDER-AI Hub: Registraciya, Realen Crypto Portofeil (Keeper / TON) i Plashtaniya</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;">
+    <div style="padding:8px;border:1px solid #1e293b;border-radius:8px;">
+      <div style="font-weight:700;margin-bottom:4px;">Registraciya / Profil</div>
+      <input id="mah-user" type="text" placeholder="Ime ili alias (napr. ADMIRALERROR)" style="width:100%;box-sizing:border-box;margin-bottom:6px;" />
+      <input id="mah-email" type="email" placeholder="Imeil za profil / izvestiya" style="width:100%;box-sizing:border-box;margin-bottom:6px;" />
+      <button type="button" id="mah-save-user">Zapazi Registraciya</button>
+      <div id="mah-user-status" style="margin-top:6px;font-size:12px;color:#4ade80;">Profil: ne e zapazen</div>
+    </div>
+    <div style="padding:8px;border:1px solid #1e293b;border-radius:8px;">
+      <div style="font-weight:700;margin-bottom:4px;">Realen Crypto Portofeil (TON / Keeper)</div>
+      <input id="mah-ton-addr" type="text" value="UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H" style="width:100%;box-sizing:border-box;margin-bottom:6px;" />
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button type="button" id="mah-ton-bal">Realen Balans (TON)</button>
+        <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer"><button type="button">PayPal NCP</button></a>
+      </div>
+      <div id="mah-ton-out" style="margin-top:6px;font-size:12px;color:#38bdf8;">Non-custodial: chete realen balans ot TON</div>
+    </div>
+  </div>
+  <div style="margin-top:10px;padding:8px;border:1px solid #1e293b;border-radius:8px;">
+    <div style="font-weight:700;margin-bottom:4px;">Jiv Chat / Sekretno Tablo (raboteshto)</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <input id="mah-chat-input" type="text" placeholder="Napishi syobshtenie ili komanda..." style="flex:1;min-width:180px;" />
+      <button type="button" id="mah-chat-send">Izprati</button>
+      <button type="button" id="mah-chat-clear">Izchisti</button>
+    </div>
+    <div id="mah-chat-feed" style="margin-top:8px;font-size:12px;max-height:170px;overflow:auto;"></div>
+  </div>
+</div>
+<script id="MARAUDER_FULL_HUB_CHAT_JS">
+(function(){
+  const U_KEY = "marauder_hub_profile_v1";
+  const C_KEY = "marauder_hub_chat_v1";
+  function getChat(){ try { return JSON.parse(localStorage.getItem(C_KEY) || "[]"); } catch(_) { return []; } }
+  function setChat(v){ try { localStorage.setItem(C_KEY, JSON.stringify(v.slice(0, 80))); } catch(_) {} }
+  function renderChat(){
+    const box = document.getElementById("mah-chat-feed");
+    if (!box) return;
+    const rows = getChat();
+    if (!rows.length) { box.innerHTML = "<div style=\"opacity:.7\">Nqma syobshteniya oshte.</div>"; return; }
+    box.innerHTML = rows.map(r => "<div style=\"padding:4px 0;border-bottom:1px solid #1e293b;\"><strong>" + r.who + ":</strong> " + r.msg + " <span style=\"opacity:.65\">(" + r.t + ")</span></div>").join("");
+  }
+  function wire(){
+    try {
+      const saved = JSON.parse(localStorage.getItem(U_KEY) || "null");
+      const st = document.getElementById("mah-user-status");
+      if (saved && st) st.textContent = "Registriran: " + (saved.user || "User") + " (" + (saved.email || "bez imeil") + ")";
+    } catch(_) {}
+    renderChat();
+
+    const saveU = document.getElementById("mah-save-user");
+    if (saveU) saveU.addEventListener("click", () => {
+      const user = ((document.getElementById("mah-user")||{}).value || "ADMIRALERROR").trim();
+      const email = ((document.getElementById("mah-email")||{}).value || "").trim();
+      try { localStorage.setItem(U_KEY, JSON.stringify({ user, email })); } catch(_) {}
+      const st = document.getElementById("mah-user-status");
+      if (st) st.textContent = "Registriran: " + user + " (" + (email || "bez imeil") + ")";
+    });
+
+    const tonBtn = document.getElementById("mah-ton-bal");
+    if (tonBtn) tonBtn.addEventListener("click", async () => {
+      const addr = ((document.getElementById("mah-ton-addr")||{}).value || "").trim();
+      const out = document.getElementById("mah-ton-out");
+      if (!addr) return;
+      if (out) out.textContent = "Proveryavam TON balans...";
+      try {
+        const r = await fetch("https://toncenter.com/api/v2/getAddressInformation?address=" + encodeURIComponent(addr));
+        const j = await r.json();
+        const ton = Number((j && j.result && j.result.balance) || 0) / 1e9;
+        if (out) out.textContent = "TON Balans: " + ton.toFixed(4) + " TON (" + addr.slice(0, 8) + "...)";
+      } catch(e) {
+        if (out) out.textContent = "Greshka pri chetene ot TON: " + (e && e.message || "network");
+      }
+    });
+
+    const sendBtn = document.getElementById("mah-chat-send");
+    const inp = document.getElementById("mah-chat-input");
+    function pushMsg(){
+      const msg = ((inp && inp.value) || "").trim();
+      if (!msg) return;
+      const rows = getChat();
+      rows.unshift({ who: "MARAUDER", msg, t: new Date().toLocaleTimeString() });
+      setChat(rows);
+      if (inp) inp.value = "";
+      renderChat();
+    }
+    if (sendBtn) sendBtn.addEventListener("click", pushMsg);
+    if (inp) inp.addEventListener("keydown", (e) => { if (e.key === "Enter") pushMsg(); });
+
+    const clrBtn = document.getElementById("mah-chat-clear");
+    if (clrBtn) clrBtn.addEventListener("click", () => { setChat([]); renderChat(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>
+
+</body>
+</html>
