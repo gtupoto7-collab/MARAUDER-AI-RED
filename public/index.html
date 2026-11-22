@@ -474,12 +474,22 @@
         <button type="button" id="vpnBtn">VPN</button>
   <span id="marauderDropdownWrap" style="position:relative;display:inline-block;margin-left:6px;">
     <button type="button" id="marauderDropdownBtn" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;cursor:pointer;">Меню ▾</button>
-    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:240px;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,0.7);">
-      <a href="/kali-root.html" style="display:block;padding:7px 10px;color:#38bdf8;text-decoration:none;font-size:12px;border-radius:6px;">Kali Конзола (/kali-root.html)</a>
-      <a href="/kali-root.html#vpn" style="display:block;padding:7px 10px;color:#c084fc;text-decoration:none;font-size:12px;border-radius:6px;">VPN &amp; Anti-Telemetry</a>
-      <a href="/kali-root.html#dev" style="display:block;padding:7px 10px;color:#fbbf24;text-decoration:none;font-size:12px;border-radius:6px;">Software / Dev Generator</a>
-      <a href="/mining-optin.html" style="display:block;padding:7px 10px;color:#86efac;text-decoration:none;font-size:12px;border-radius:6px;">Pool &amp; 24h (Opt-In)</a>
-      <a href="/index.html" style="display:block;padding:7px 10px;color:#f4f4f5;text-decoration:none;font-size:12px;border-radius:6px;">MARAUDER Home (/index.html)</a>
+    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:265px;max-height:75vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,0.75);">
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">СТРАНИЦИ &amp; ИНСТРУМЕНТИ</div>
+      <a href="/mining-optin.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;border-radius:6px;">Pool &amp; 24h (Opt-In)</a>
+      <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;border-radius:6px;">Kali Конзола (/kali-root.html)</a>
+      <a href="/kali-root.html#vpn" style="display:block;padding:6px 10px;color:#c084fc;text-decoration:none;font-size:12px;border-radius:6px;">VPN &amp; Anti-Telemetry</a>
+      <a href="/kali-root.html#dev" style="display:block;padding:6px 10px;color:#fbbf24;text-decoration:none;font-size:12px;border-radius:6px;">Software / Dev Generator</a>
+      <a href="/index.html" style="display:block;padding:6px 10px;color:#f4f4f5;text-decoration:none;font-size:12px;border-radius:6px;">MARAUDER Home (/index.html)</a>
+      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">БУТОНИ ОТ ПАНЕЛА</div>
+      <button type="button" data-trigger-text="BOT" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#4ade80;font-size:12px;cursor:pointer;border-radius:6px;">+ BOT (TG/MAIL/FB/DC)</button>
+      <button type="button" data-trigger-text="MARAUDER-AL" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER-AL Опции</button>
+      <button type="button" data-trigger-text="FENIX" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER-AI 4.8 FENIX / 5.3 / 6.2</button>
+      <button type="button" data-trigger-id="devanBtn" data-trigger-text="DEVANPORT-AI" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">DEVANPORT-AI (CODE STUDIO)</button>
+      <button type="button" data-trigger-id="vpnBtn" data-trigger-text="VPN" data-fallback="/kali-root.html#vpn" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#c084fc;font-size:12px;cursor:pointer;border-radius:6px;">VPN</button>
+      <button type="button" data-trigger-id="secretBtn" data-trigger-text="RED SECRET CHAT" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#f87171;font-size:12px;cursor:pointer;border-radius:6px;">[ RED SECRET CHAT ]</button>
+      <button type="button" data-trigger-text="DARENIYA" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#facc15;font-size:12px;cursor:pointer;border-radius:6px;">DARENIYA (PayPal / TON)</button>
     </div>
   </span>
   <script>
@@ -494,9 +504,32 @@
         document.addEventListener("click", function(){
           menu.style.display = "none";
         });
+        var acts = menu.querySelectorAll(".m-drop-act");
+        acts.forEach(function(act){
+          act.addEventListener("click", function(ev){
+            ev.stopPropagation();
+            menu.style.display = "none";
+            var tid = act.getAttribute("data-trigger-id");
+            var txt = act.getAttribute("data-trigger-text");
+            var fb = act.getAttribute("data-fallback");
+            var target = tid ? document.getElementById(tid) : null;
+            if (!target && txt) {
+              var allBtns = Array.prototype.slice.call(document.querySelectorAll("button"));
+              target = allBtns.find(function(b){
+                return b !== btn && !b.classList.contains("m-drop-act") && (b.textContent || "").indexOf(txt) !== -1;
+              }) || null;
+            }
+            if (target) {
+              target.click();
+            } else if (fb) {
+              window.location.href = fb;
+            }
+          });
+        });
       }
     })();
   </script>
+  
   <a href="/mining-optin.html" id="pool24hLink" style="display:inline-block;padding:6px 10px;margin-left:6px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;text-decoration:none;">Pool & 24h</a>
       </div>
 
