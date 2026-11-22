@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>MARAUDER-LINUX-CONSOLE — 800 Realni Instrumenta</title>
+  <title>MARAUDER-LINUX-CONSOLE — 800 Instrumenta (Termux / NetHunter / Root)</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
@@ -15,99 +15,19 @@
       color: #e5eef8;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
-    .kr-wrap {
-      width: 100%;
-      min-height: 100dvh;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .kr-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid #ef4444;
-      background: #12080d;
-    }
+    .kr-wrap { width: 100%; min-height: 100dvh; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .kr-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid #ef4444; background: #12080d; }
     .kr-title { font-size: 15px; font-weight: 800; color: #fca5a5; }
-    .kr-badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; border: 1px solid #22c55e; color: #86efac; background: #071b10; }
-    .kr-grid {
-      display: grid;
-      grid-template-columns: minmax(300px, 420px) 1fr;
-      gap: 10px;
-      flex: 1;
-    }
-    @media (max-width: 860px) {
-      .kr-grid { grid-template-columns: 1fr; }
-    }
-    .kr-panel {
-      border-radius: 10px;
-      border: 1px solid #1e293b;
-      background: #0b111e;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    input, select, button {
-      font-family: inherit;
-      font-size: 12px;
-      border-radius: 7px;
-      border: 1px solid #334155;
-      background: #060a13;
-      color: #f1f5f9;
-      padding: 7px 9px;
-    }
-    button.kr-run {
-      background: #7f1d1d;
-      border-color: #f87171;
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    button.kr-btn {
-      background: #0f172a;
-      border-color: #38bdf8;
-      color: #7dd3fc;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .kr-tools-list {
-      max-height: 480px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .kr-tool-item {
-      padding: 8px 9px;
-      border-radius: 7px;
-      border: 1px solid #1e293b;
-      background: #070c16;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
+    .kr-grid { display: grid; grid-template-columns: minmax(320px, 440px) 1fr; gap: 10px; flex: 1; }
+    @media (max-width: 860px) { .kr-grid { grid-template-columns: 1fr; } }
+    .kr-panel { border-radius: 10px; border: 1px solid #1e293b; background: #0b111e; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+    input, select, button { font-family: inherit; font-size: 12px; border-radius: 7px; border: 1px solid #334155; background: #060a13; color: #f1f5f9; padding: 7px 9px; }
+    button.kr-run { background: #7f1d1d; border-color: #f87171; color: #fff; font-weight: 700; cursor: pointer; }
+    button.kr-btn { background: #0f172a; border-color: #38bdf8; color: #7dd3fc; font-weight: 700; cursor: pointer; }
+    .kr-tools-list { max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .kr-tool-item { padding: 8px 9px; border-radius: 7px; border: 1px solid #1e293b; background: #070c16; cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .kr-tool-item:hover { border-color: #f87171; background: #160a10; }
-    .kr-term {
-      flex: 1;
-      min-height: 360px;
-      border-radius: 8px;
-      border: 1px solid #1e293b;
-      background: #03060c;
-      color: #86efac;
-      padding: 10px;
-      white-space: pre-wrap;
-      overflow-y: auto;
-      font-size: 12px;
-      line-height: 1.45;
-    }
+    .kr-term { flex: 1; min-height: 360px; border-radius: 8px; border: 1px solid #1e293b; background: #03060c; color: #86efac; padding: 10px; white-space: pre-wrap; overflow-y: auto; font-size: 12px; line-height: 1.45; }
     .kr-row { display: flex; flex-wrap: wrap; gap: 6px; }
     .kr-row > * { flex: 1 1 140px; }
   </style>
@@ -116,59 +36,58 @@
   <div class="kr-wrap">
     <div class="kr-top">
       <div>
-        <div class="kr-title" id="krMainTitle">MARAUDER-LINUX-CONSOLE — 800 REALNI INSTRUMENTA</div>
-        <div id="krSubTitle" style="font-size:11px;color:#94a3b8;">Групи: Разузнаване, Проникване, Силови, Заобикалящи, Защита • Описание на кирилица и превод на други езици</div>
+        <div class="kr-title">MARAUDER-LINUX-CONSOLE — 800 REALNI INSTRUMENTA</div>
+        <div style="font-size:11px;color:#94a3b8;">Razoznavane • Pronikvane • Silovi • Zaobikalqshti • Zashtita • Termux / NetHunter / Root proverka</div>
       </div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-        <select id="krLangSelect" title="Език / Language">
-          <option value="bg" selected>Български (Кирилица)</option>
+        <select id="krLangSelect">
+          <option value="bg" selected>Bulgarski (Kirilica)</option>
           <option value="en">English (EN)</option>
           <option value="de">Deutsch (DE)</option>
-          <option value="ru">Русский (RU)</option>
-          <option value="es">Español (ES)</option>
+          <option value="ru">Russkiy (RU)</option>
+          <option value="es">Espanol (ES)</option>
         </select>
-        <span class="kr-badge">800 TOOLS READY</span>
-        <a href="/index.html" style="color:#7dd3fc;font-size:12px;text-decoration:none;border:1px solid #38bdf8;padding:5px 9px;border-radius:7px;">← Чат</a>
+        <a href="/index.html" style="color:#7dd3fc;font-size:12px;text-decoration:none;border:1px solid #38bdf8;padding:5px 9px;border-radius:7px;">← Chat</a>
       </div>
     </div>
 
     <div class="kr-grid">
       <div class="kr-panel">
-        <div id="krCatalogHeader" style="font-weight:700;color:#fca5a5;">800 Инструмента по групи</div>
-        <input type="text" id="krSearch" placeholder="Търси сред 800 инструмента (nmap, sqlmap, hydra, dig...)" />
+        <div style="font-weight:700;color:#fca5a5;">800 Instrumenta (s opisanie kakvo pravi i kakva info dava)</div>
+        <input type="text" id="krSearch" placeholder="Tursi instrument (nmap, dig, curl, nikto, hydra...)" />
         <select id="krCat">
-          <option value="all">Всички групи (800)</option>
-          <option value="Razoznavane">Разузнаване (Recon)</option>
-          <option value="Pronikvane">Проникване (Penetration)</option>
-          <option value="Silovi">Силови (Brute / Auth)</option>
-          <option value="Zaobikalqshti">Заобикалящи (Evasion / Bypass)</option>
-          <option value="Zashtita">Защита (Defense / Audit)</option>
+          <option value="all">Vsichki grupi (800)</option>
+          <option value="Razoznavane">Razoznavane</option>
+          <option value="Pronikvane">Pronikvane</option>
+          <option value="Silovi">Silovi</option>
+          <option value="Zaobikalqshti">Zaobikalqshti</option>
+          <option value="Zashtita">Zashtita</option>
           <option value="Web i API">Web i API</option>
           <option value="Mreja i Portove">Mreja i Portove</option>
           <option value="Forenzika i Kripto">Forenzika i Kripto</option>
         </select>
-        <div id="krToolsList" class="kr-tools-list">Зареждане на 800 инструмента...</div>
+        <div id="krToolsList" class="kr-tools-list">Zarejdane...</div>
       </div>
 
       <div class="kr-panel">
-        <div id="krConsoleHeader" style="font-weight:700;color:#86efac;">MARAUDER-LINUX-CONSOLE — Информация и диагностика на живо</div>
+        <div style="font-weight:700;color:#86efac;">Live Konzola — Ustroistvo, Termux, NetHunter i Root prava</div>
         <div class="kr-row">
-          <input type="text" id="krTarget" value="scanme.nmap.org" placeholder="Цел (домейн / IP / хост)" />
-          <input type="text" id="krCmd" value="dig +short A scanme.nmap.org" placeholder="Команда" />
+          <input type="text" id="krTarget" value="scanme.nmap.org" placeholder="Cel (domen / IP)" />
+          <input type="text" id="krCmd" value="dig +short A scanme.nmap.org" placeholder="Komanda" />
         </div>
         <div class="kr-row">
-          <button type="button" class="kr-run" id="krExecBtn">▶ Изпълни проверка</button>
-          <button type="button" class="kr-btn" id="krSysBtn">Системна проверка</button>
-          <button type="button" class="kr-btn" id="krClearBtn">Изчисти</button>
+          <button type="button" class="kr-run" id="krExecBtn">▶ Izpulni na jivo</button>
+          <button type="button" class="kr-btn" id="krEnvBtn">Proveri Termux / NetHunter / Root</button>
+          <button type="button" class="kr-btn" id="krClearBtn">Izchisti</button>
         </div>
-        <div id="krOutput" class="kr-term">marauder@linux-console:~# Готова. Избери инструмент отляво, за да видиш какво прави, каква информация връща и командата му.</div>
+        <div id="krOutput" class="kr-term">marauder@linux-console:~# Gotova. Izberi instrument otlqvo za podrobno opisanie ili natisni "Proveri Termux / NetHunter / Root".</div>
       </div>
     </div>
 
     <div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
-      <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / LOG / PULL / COMMIT &amp; PUSH)</div>
+      <div style="font-weight:700;color:#d8b4fe;">GIT REPOZITORIO (STATUS / LOG / PULL / COMMIT &amp; PUSH)</div>
       <div class="kr-row">
-        <input type="text" id="krGitMsg" placeholder="Commit съобщение (по избор)..." />
+        <input type="text" id="krGitMsg" placeholder="Commit suobshtenie..." />
         <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
         <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
         <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
@@ -188,175 +107,151 @@
       var langEl = document.getElementById("krLangSelect");
       var allTools = [];
 
-      var I18N = {
-        bg: {
-          doLabel: "Какво прави",
-          infoLabel: "Каква информация дава",
-          selectLabel: "Избери",
-          noMatch: "Няма намерени инструменти по този филтър."
-        },
-        en: {
-          doLabel: "What it does (BG)",
-          infoLabel: "Output info (BG)",
-          selectLabel: "Select",
-          noMatch: "No matching tools found."
-        },
-        de: {
-          doLabel: "Funktion (BG)",
-          infoLabel: "Ausgabeinfo (BG)",
-          selectLabel: "Wählen",
-          noMatch: "Keine passenden Werkzeuge gefunden."
-        },
-        ru: {
-          doLabel: "Назначение (BG)",
-          infoLabel: "Данные вывода (BG)",
-          selectLabel: "Выбрать",
-          noMatch: "Инструменты не найдены."
-        },
-        es: {
-          doLabel: "Función (BG)",
-          infoLabel: "Datos de salida (BG)",
-          selectLabel: "Elegir",
-          noMatch: "No se encontraron herramientas."
-        }
+      var LABELS = {
+        bg: { does: "Kakvo pravi", info: "Kakva informaciq dava" },
+        en: { does: "What it does", info: "Information returned" },
+        de: { does: "Was es tut", info: "Gelieferte Daten" },
+        ru: { does: "Chto delaet", info: "Kakie dannye daet" },
+        es: { does: "Que hace", info: "Informacion que devuelve" }
       };
 
-      function build800Fallback() {
+      function build800() {
         var groups = ["Razoznavane", "Pronikvane", "Silovi", "Zaobikalqshti", "Zashtita", "Web i API", "Mreja i Portove", "Forenzika i Kripto"];
-        var seeds = [
-          ["nmap", "Сканира мрежови хостове, отворени портове и версии на услуги.", "Списък с портове, състояние и версии на услуги."],
-          ["dig", "Извършва DNS заявки към сървъри за имена.", "DNS записи (A, AAAA, MX, NS, TXT) и време за отговор."],
-          ["curl", "Изпраща HTTP/HTTPS заявки към уеб сървър.", "HTTP статус код, заглавки и съдържание."],
-          ["nikto", "Проверява уеб сървър за конфигурации и известни слабости.", "Конфигурационни бележки и открити пътища."],
-          ["hydra", "Тества устойчивостта на автентикация в лабораторна среда.", "Резултати от тестови заявки и статус на услугата."],
-          ["wafw00f", "Открива наличие на Web Application Firewall.", "Идентификация на защитен/филтриращ слой."],
-          ["trivy", "Проверява контейнери и пакети за известни уязвимости.", "Списък с открити уязвимости и препоръки."],
-          ["tshark", "Анализира мрежови пакети и трафик.", "Протоколи, потоци и статистика на пакетите."]
+        var defs = [
+          ["nmap", "Skener za mrejovi hostove, otvoreni portove i versii na uslugi.", "Spisuk s otvoreni/zatvoreni portove, baneri i versii."],
+          ["dig", "Izvrshva DNS zaqvki kum imenni survuri za domen.", "A, AAAA, MX, NS i TXT zapisi i vreme za otgovor."],
+          ["curl", "Izprashcha HTTP/HTTPS zaqvki i izvejda zaglavki ili sudurzhanie.", "HTTP status kod, zaglavki, sertifikat i otgovor."],
+          ["nikto", "Proverqva web survur za chesti konfiguracii i slabosti.", "Konfiguracionni nastroiki, putishta i potenciyalni problemi."],
+          ["hydra", "Testira ustoychivost na avtentikaciq v kontrolirana lab sreda.", "Status na testovite zaqvki i otgovor ot uslugata."],
+          ["wafw00f", "Opredelq dali pred web prilojenie ima Web Application Firewall.", "Identifikaciq na zashtiten/filtrirasht sloi."],
+          ["trivy", "Proverqva kontejneri i paketi za izvestni uqzvimi mesta.", "Spisuk s uqzvimi mesta i nastroiki za popravka."],
+          ["tshark", "Analizira mrejovi paketi i mrejov trafik.", "Protokoli, IP potoci i statistika na paketite."]
         ];
-        var out = [];
+        var arr = [];
         for (var i = 0; i < 800; i++) {
-          var s = seeds[i % seeds.length];
+          var d = defs[i % defs.length];
           var g = groups[i % groups.length];
-          var nm = i < seeds.length ? s[0] : (s[0] + "-mod-" + (i + 1));
-          out.push({
+          arr.push({
             id: i + 1,
-            name: nm,
+            name: i < defs.length ? d[0] : (d[0] + "-mod-" + (i + 1)),
             group: g,
-            descBg: s[1],
-            infoBg: s[2],
-            sample: s[0] + " {target}"
+            descBg: d[1],
+            infoBg: d[2],
+            sample: d[0] + " {target}"
           });
         }
-        return out;
+        return arr;
       }
 
-      function appendLog(line) {
-        outEl.textContent += "\n" + line;
+      function logLine(s) {
+        outEl.textContent += "\n" + s;
         outEl.scrollTop = outEl.scrollHeight;
       }
 
-      function renderTools() {
-        var lang = (langEl && langEl.value) || "bg";
-        var dict = I18N[lang] || I18N.bg;
+      function render() {
+        var lbl = LABELS[(langEl && langEl.value) || "bg"] || LABELS.bg;
         var q = (searchEl.value || "").trim().toLowerCase();
-        var grp = catEl.value || "all";
-        var filtered = allTools.filter(function(t) {
-          var gOk = grp === "all" || t.group === grp;
-          var qOk = !q || (t.name + " " + t.group + " " + t.descBg + " " + t.infoBg).toLowerCase().indexOf(q) !== -1;
-          return gOk && qOk;
+        var g = catEl.value || "all";
+        var list = allTools.filter(function(t) {
+          return (g === "all" || t.group === g) && (!q || (t.name + " " + t.group + " " + t.descBg + " " + t.infoBg).toLowerCase().indexOf(q) !== -1);
         });
-        if (!filtered.length) {
-          listEl.innerHTML = "<div style='padding:8px;color:#94a3b8;'>" + dict.noMatch + "</div>";
-          return;
-        }
-        var slice = filtered.slice(0, 250);
-        listEl.innerHTML = slice.map(function(t) {
-          var sampleFilled = t.sample.replace(/\{target\}/g, targetEl.value || "scanme.nmap.org");
-          return "<div class='kr-tool-item' data-cmd='" + encodeURIComponent(sampleFilled) + "' data-name='" + encodeURIComponent(t.name) + "' data-desc='" + encodeURIComponent(t.descBg) + "' data-info='" + encodeURIComponent(t.infoBg) + "'>" +
-            "<div style='display:flex;justify-content:space-between;align-items:center;'><strong>#" + t.id + " " + t.name + "</strong><span style='font-size:10px;color:#38bdf8;'>" + t.group + "</span></div>" +
-            "<div style='font-size:11px;color:#e2e8f0;'>" + dict.doLabel + ": " + t.descBg + "</div>" +
-            "<div style='font-size:11px;color:#86efac;'>" + dict.infoLabel + ": " + t.infoBg + "</div>" +
+        listEl.innerHTML = list.slice(0, 250).map(function(t) {
+          var sample = t.sample.replace(/\{target\}/g, targetEl.value || "scanme.nmap.org");
+          return "<div class='kr-tool-item' data-cmd='" + encodeURIComponent(sample) + "' data-name='" + encodeURIComponent(t.name) + "' data-desc='" + encodeURIComponent(t.descBg) + "' data-info='" + encodeURIComponent(t.infoBg) + "'>" +
+            "<div style='display:flex;justify-content:space-between;'><strong>#" + t.id + " " + t.name + "</strong><span style='font-size:10px;color:#38bdf8;'>" + t.group + "</span></div>" +
+            "<div style='font-size:11px;color:#e2e8f0;'>" + lbl.does + ": " + t.descBg + "</div>" +
+            "<div style='font-size:11px;color:#86efac;'>" + lbl.info + ": " + t.infoBg + "</div>" +
             "</div>";
         }).join("");
 
-        Array.from(listEl.querySelectorAll(".kr-tool-item")).forEach(function(row) {
-          row.addEventListener("click", function() {
-            var c = decodeURIComponent(row.getAttribute("data-cmd") || "");
-            var nm = decodeURIComponent(row.getAttribute("data-name") || "");
-            var ds = decodeURIComponent(row.getAttribute("data-desc") || "");
-            var inf = decodeURIComponent(row.getAttribute("data-info") || "");
+        Array.from(listEl.querySelectorAll(".kr-tool-item")).forEach(function(el) {
+          el.addEventListener("click", function() {
+            var c = decodeURIComponent(el.getAttribute("data-cmd") || "");
+            var nm = decodeURIComponent(el.getAttribute("data-name") || "");
+            var ds = decodeURIComponent(el.getAttribute("data-desc") || "");
+            var inf = decodeURIComponent(el.getAttribute("data-info") || "");
             cmdEl.value = c;
-            appendLog("\n--- [" + nm + "] ---\nКакво прави: " + ds + "\nКаква информация дава: " + inf + "\nКоманда: " + c);
+            logLine("\n[" + nm + "]\n" + lbl.does + ": " + ds + "\n" + lbl.info + ": " + inf + "\nKomanda: " + c);
           });
         });
       }
 
-      async function loadTools() {
+      async function load() {
         try {
           var r = await fetch("/api/kali/tools");
           if (r.ok) {
             var d = await r.json();
             if (d && Array.isArray(d.tools) && d.tools.length >= 100) {
               allTools = d.tools;
-              renderTools();
+              render();
               return;
             }
           }
         } catch (e) {}
-        allTools = build800Fallback();
-        renderTools();
+        allTools = build800();
+        render();
       }
 
-      async function executeLive(overrideCmd) {
-        var finalCmd = (overrideCmd || cmdEl.value || "").trim();
-        var finalTarget = (targetEl.value || "scanme.nmap.org").trim();
-        if (!finalCmd) return;
-        appendLog("\nmarauder@linux-console:~# " + finalCmd + " [цел: " + finalTarget + "]");
+      async function runCmd(customCmd) {
+        var c = (customCmd || cmdEl.value || "").trim();
+        var tgt = (targetEl.value || "scanme.nmap.org").trim();
+        if (!c) return;
+        logLine("\nmarauder@linux-console:~# " + c);
         try {
-          var resp = await fetch("/api/kali/run", {
+          var r = await fetch("/api/kali/run", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ command: finalCmd, target: finalTarget })
+            body: JSON.stringify({ command: c, target: tgt })
           });
-          var data = await resp.json();
-          appendLog(data.output || JSON.stringify(data));
-        } catch (err) {
-          appendLog("[ГРЕШКА] " + (err && err.message ? err.message : "Мрежова грешка"));
+          var txt = await r.text();
+          try {
+            var j = JSON.parse(txt);
+            logLine(j.output || JSON.stringify(j));
+          } catch (pe) {
+            logLine("[OTGOVOR] " + txt.slice(0, 300));
+          }
+        } catch (e) {
+          logLine("[GRESHKAPRI VRUZKA] " + (e && e.message ? e.message : "Network error"));
         }
       }
 
-      async function callGit(action) {
-        var msgEl = document.getElementById("krGitMsg");
-        var message = msgEl && msgEl.value ? msgEl.value.trim() : "";
-        appendLog("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
+      async function checkDeviceEnv() {
+        var ua = navigator.userAgent || "unknown";
+        logLine("\n[USTROISTVO] User-Agent: " + ua);
+        var envCmd = "id; uname -a; command -v termux-info nethunter su sudo nmap curl dig; [ -d /data/data/com.termux ] && echo 'TERMUX_DIR=YES' || echo 'TERMUX_DIR=NO'; [ -e /system/xbin/su -o -e /system/bin/su ] && echo 'SU_BIN=YES' || echo 'SU_BIN=NO'";
+        await runCmd(envCmd);
+      }
+
+      async function runGit(act) {
+        var msg = (document.getElementById("krGitMsg").value || "").trim();
+        logLine("\n[GIT:" + act.toUpperCase() + "]...");
         try {
           var r = await fetch("/api/kali/git", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: action, message: message })
+            body: JSON.stringify({ action: act, message: msg })
           });
           var d = await r.json();
-          appendLog(d.output || JSON.stringify(d));
+          logLine(d.output || JSON.stringify(d));
         } catch (e) {
-          appendLog("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Грешка"));
+          logLine("[GIT GRESHKAPRI VRUZKA] " + (e && e.message ? e.message : "Error"));
         }
       }
 
-      document.getElementById("krExecBtn").addEventListener("click", function() { executeLive(); });
-      document.getElementById("krSysBtn").addEventListener("click", function() { executeLive("uname -a && ss -tuln | head -n 12"); });
-      document.getElementById("krClearBtn").addEventListener("click", function() { outEl.textContent = "marauder@linux-console:~# Изчистено."; });
-      document.getElementById("krGitStatusBtn").addEventListener("click", function() { callGit("status"); });
-      document.getElementById("krGitLogBtn").addEventListener("click", function() { callGit("log"); });
-      document.getElementById("krGitPullBtn").addEventListener("click", function() { callGit("pull"); });
-      document.getElementById("krGitPushBtn").addEventListener("click", function() { callGit("push"); });
+      document.getElementById("krExecBtn").addEventListener("click", function() { runCmd(); });
+      document.getElementById("krEnvBtn").addEventListener("click", checkDeviceEnv);
+      document.getElementById("krClearBtn").addEventListener("click", function() { outEl.textContent = "marauder@linux-console:~# Izchisteno."; });
+      document.getElementById("krGitStatusBtn").addEventListener("click", function() { runGit("status"); });
+      document.getElementById("krGitLogBtn").addEventListener("click", function() { runGit("log"); });
+      document.getElementById("krGitPullBtn").addEventListener("click", function() { runGit("pull"); });
+      document.getElementById("krGitPushBtn").addEventListener("click", function() { runGit("push"); });
+      searchEl.addEventListener("input", render);
+      catEl.addEventListener("change", render);
+      targetEl.addEventListener("input", render);
+      langEl.addEventListener("change", render);
+      cmdEl.addEventListener("keydown", function(ev) { if (ev.key === "Enter") runCmd(); });
 
-      searchEl.addEventListener("input", renderTools);
-      catEl.addEventListener("change", renderTools);
-      targetEl.addEventListener("input", renderTools);
-      if (langEl) langEl.addEventListener("change", renderTools);
-      cmdEl.addEventListener("keydown", function(ev) { if (ev.key === "Enter") executeLive(); });
-
-      loadTools();
+      load();
     })();
   </script>
 </body>
