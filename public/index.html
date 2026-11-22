@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>MARAUDER-AI made by RED-SOFTWARE-TEAM-BG</title>
   <style>
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -34,9 +34,6 @@
       width: 100%;
       overflow-x: hidden;
       position: relative;
-    }
-
-    body {
       display: flex;
     }
 
@@ -82,7 +79,6 @@
 
     .app-shell {
       width: calc(100% - 144px);
-      max-width: none;
       margin: 0 72px;
       min-height: 100dvh;
       display: flex;
@@ -123,7 +119,6 @@
       border: 1.5px solid #00f5d4;
       border-radius: 8px;
       flex-shrink: 0;
-      animation: rgbShift 4s linear infinite;
     }
 
     .brand-title {
@@ -132,7 +127,6 @@
       letter-spacing: 0.8px;
       color: #ff3355;
       text-shadow: 0 0 10px rgba(255, 51, 85, 0.75);
-      animation: rgbShift 4s linear infinite;
     }
 
     .brand-sub {
@@ -140,45 +134,13 @@
       font-weight: 800;
       color: #00f5d4;
       letter-spacing: 0.5px;
-      text-shadow: 0 0 8px rgba(0, 245, 212, 0.65);
-      animation: rgbShift 6s linear infinite reverse;
     }
 
-    .top-bar {
+    .feature-row, .controls-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
-      width: 100%;
-    }
-
-    .symbol-strip {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 12px;
-      background: #090a10;
-      border: 1px solid rgba(0, 245, 212, 0.35);
-      border-radius: 6px;
-      font-size: 13px;
-      animation: rgbShift 3s linear infinite;
-    }
-
-    .controls-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      width: 100%;
-    }
-
-    .sub-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: space-between;
       width: 100%;
     }
 
@@ -187,15 +149,10 @@
       color: #f3f4f6;
       border: 1px solid #00f5d4;
       border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 14px;
+      padding: 7px 10px;
+      font-size: 13px;
       outline: none;
       max-width: 100%;
-    }
-
-    select:focus, input:focus {
-      border-color: #ff007f;
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
     }
 
     .api-input {
@@ -203,28 +160,23 @@
       min-width: 0;
     }
 
-    button {
+    button, .nav-pill {
       background: #171926;
       color: #ffffff;
       border: 1px solid #00f5d4;
       border-radius: 6px;
-      padding: 8px 11px;
+      padding: 6px 10px;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.12s, box-shadow 0.2s, border-color 0.2s, opacity 0.2s;
-      animation: rgbShift 5s linear infinite;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    button:active:not(:disabled) {
-      transform: scale(0.98);
+    button:hover, .nav-pill:hover {
       border-color: #ff007f;
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.6);
     }
 
     button.danger {
@@ -236,14 +188,6 @@
       background: linear-gradient(90deg, #b5179e, #ff2a55);
       border-color: #00f5d4;
       color: #ffffff;
-      box-shadow: 0 0 14px rgba(255, 42, 85, 0.55);
-    }
-
-    button.secret-btn {
-      background: #190913;
-      border: 1px solid #ff2a55;
-      color: #ff6b8b;
-      letter-spacing: 0.6px;
     }
 
     #messages {
@@ -269,7 +213,6 @@
       align-self: flex-end;
       background: #1e1022;
       border: 1px solid #ff007f;
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.25);
       color: #fff5f8;
     }
 
@@ -277,7 +220,6 @@
       align-self: flex-start;
       background: #101622;
       border: 1px solid #00f5d4;
-      box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
       color: #e6fffa;
     }
 
@@ -287,20 +229,6 @@
       border: 1px dashed #00f5d4;
       color: #9ef9eb;
       font-size: 12px;
-    }
-
-    .msg strong {
-      color: #ffffff;
-      font-weight: 800;
-    }
-
-    .msg code {
-      background: rgba(0, 245, 212, 0.12);
-      border: 1px solid rgba(0, 245, 212, 0.25);
-      border-radius: 4px;
-      padding: 1px 5px;
-      font-family: "Consolas", monospace;
-      font-size: 13px;
     }
 
     .attachments-preview {
@@ -319,7 +247,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      max-width: 100%;
     }
 
     .att-chip img {
@@ -333,7 +260,6 @@
       padding: 10px 18px calc(12px + env(safe-area-inset-bottom));
       background: #0e1018;
       border-top: 2px solid #ff007f;
-      box-shadow: 0 -4px 18px rgba(255, 0, 127, 0.25);
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -354,10 +280,10 @@
       background: #171926;
       border: 1px solid #00f5d4;
       border-radius: 6px;
-      padding: 7px 10px;
+      padding: 6px 10px;
       font-size: 12px;
       font-weight: 700;
-      animation: rgbShift 5s linear infinite;
+      cursor: pointer;
     }
 
     .input-row {
@@ -377,14 +303,9 @@
       border: 1px solid #00f5d4;
       border-radius: 6px;
       padding: 10px;
-      font-size: 15px;
+      font-size: 14px;
       font-family: inherit;
       outline: none;
-    }
-
-    textarea:focus {
-      border-color: #ff007f;
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.45);
     }
 
     .send-btn {
@@ -395,50 +316,10 @@
     }
 
     @media (max-width: 720px) {
-      .skull-col {
-        width: 30px;
-        gap: 2px;
-        padding: 4px 2px;
-      }
-      .skull-cell {
-        font-size: 10px;
-      }
-      .app-shell {
-        width: calc(100% - 60px);
-        margin: 0 30px;
-        border-left-width: 1.5px;
-        border-right-width: 1.5px;
-      }
-      header {
-        padding: 10px;
-      }
-      .brand-title {
-        font-size: 14px;
-      }
-      .brand-sub {
-        font-size: 10px;
-      }
-      .symbol-strip {
-        font-size: 11px;
-        padding: 3px 6px;
-      }
-      #messages {
-        padding: 10px;
-      }
-      .msg {
-        max-width: 96%;
-        font-size: 13.5px;
-      }
-      .attachments-preview {
-        padding: 0 10px 8px;
-      }
-      .composer {
-        padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
-      }
-      .send-btn {
-        padding: 0 12px;
-        font-size: 12px;
-      }
+      .skull-col { width: 28px; }
+      .skull-cell { font-size: 10px; }
+      .app-shell { width: calc(100% - 56px); margin: 0 28px; }
+      .msg { max-width: 96%; }
     }
   </style>
 </head>
@@ -450,10 +331,9 @@
     <header>
       <div class="brand">
         <div class="emblem-box" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.3 12 22.5C16.6 21.3 20 16.8 20 11.5V5.5L12 2Z" stroke="#00f5d4" stroke-width="1.8" fill="#240b18"/>
             <circle cx="12" cy="12" r="3.3" stroke="#ff2a55" stroke-width="1.7"/>
-            <path d="M12 6.2V8.5M12 15.5V17.8M6.2 12H8.5M15.5 12H17.8" stroke="#00f5d4" stroke-width="1.6"/>
           </svg>
         </div>
         <div>
@@ -462,180 +342,55 @@
         </div>
       </div>
 
-      <div class="top-bar">
+      <div class="feature-row">
         <button type="button" id="botBtn">+ BOT (TG/MAIL/FB/DC)</button>
         <button type="button" id="alOptBtn">MARAUDER-AL Опции</button>
-        <button type="button" id="linuxBtn">MARAUDER-LINUX-CONSOLE</button>
-      </div>
-
-      <div class="top-bar">
+        <a href="/kali-root.html" class="nav-pill">MARAUDER-LINUX-CONSOLE</a>
         <button type="button" id="fenixBtn">MARAUDER-AI 4.8 FENIX / 5.3 / 6.2</button>
         <button type="button" id="devanBtn">DEVANPORT-AI (CODE STUDIO)</button>
         <button type="button" id="vpnBtn">VPN</button>
-  <span id="marauderDropdownWrap" style="position:relative;display:inline-block;margin-left:6px;">
-    <button type="button" id="marauderDropdownBtn" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;cursor:pointer;">Меню ▾</button>
-    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:305px;max-height:80vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,0.85);">
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">КОНЗОЛА, STUDIO &amp; 24H</div>
-      <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;border-radius:6px;">MARAUDER LINUX CONSOLE (/kali-root.html)</a>
-      <a href="/devanport-studio.html" style="display:block;padding:6px 10px;color:#f59e0b;text-decoration:none;font-size:12px;border-radius:6px;">DEVANPORT-AI (Auto-Save Dev Studio)</a>
-      <a href="/mining-optin.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;border-radius:6px;">Pool &amp; 24h (Opt-In)</a>
-      <a href="/index.html" style="display:block;padding:6px 10px;color:#f4f4f5;text-decoration:none;font-size:12px;border-radius:6px;">MARAUDER Home (/index.html)</a>
+        <a href="/mining-optin.html" class="nav-pill" style="border-color:#22c55e;color:#86efac;">Pool &amp; 24h</a>
+        <button type="button" id="secretBtn" style="border-color:#ef4444;color:#f87171;">[ RED SECRET CHAT ]</button>
+        <button type="button" id="dareniyaBtn" style="border-color:#facc15;color:#facc15;">DARENIYA (PayPal / TON)</button>
 
-      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">РЕЖИМИ &amp; ПРОФИЛИ</div>
-      <button type="button" data-mode="MARAUDER OPCI: Активни пълни опции на MARAUDER." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER OPCI</button>
-      <button type="button" data-mode="OFFLINE РЕЖИМ: Локален режим без външни заявки." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">Offline Режим</button>
-      <button type="button" data-mode="INLINE РЕЖИМ: Бързи inline команди и отговори." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#4ade80;font-size:12px;cursor:pointer;border-radius:6px;">Inline Режим</button>
-      <button type="button" data-trigger-text="BOT" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#4ade80;font-size:12px;cursor:pointer;border-radius:6px;">+ BOT (TG/MAIL/FB/DC)</button>
-      <button type="button" data-trigger-text="MARAUDER-AL" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER-AL Опции</button>
-      <button type="button" data-trigger-text="FENIX" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER-AI 4.8 FENIX / 5.3 / 6.2</button>
-      <button type="button" data-trigger-id="devanBtn" data-trigger-text="DEVANPORT-AI" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">DEVANPORT-AI (CODE STUDIO)</button>
-      <button type="button" data-trigger-id="vpnBtn" data-trigger-text="VPN" data-fallback="/kali-root.html#vpn" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#c084fc;font-size:12px;cursor:pointer;border-radius:6px;">VPN</button>
-      <button type="button" id="openSecretFromMenuBtn" onclick="window.location.href='/red-secret-chat.html'" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#f87171;font-size:12px;cursor:pointer;border-radius:6px;">[ RED SECRET CHAT + QR ]</button>
+        <span id="marauderDropdownWrap" style="position:relative;display:inline-block;">
+          <button type="button" id="marauderDropdownBtn" style="border-color:#22c55e;background:#052e16;color:#bbf7d0;">Меню ▾</button>
+          <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:295px;max-height:78vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:7px;box-shadow:0 10px 28px rgba(0,0,0,0.85);">
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">СТРАНИЦИ &amp; КОНЗОЛА</div>
+            <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;">MARAUDER LINUX CONSOLE (/kali-root.html)</a>
+            <a href="/devanport-studio.html" style="display:block;padding:6px 10px;color:#fbbf24;text-decoration:none;font-size:12px;">DEVANPORT-AI Studio (/devanport-studio.html)</a>
+            <a href="/bot-studio.html" style="display:block;padding:6px 10px;color:#4ade80;text-decoration:none;font-size:12px;">BOT Studio (/bot-studio.html)</a>
+            <a href="/red-secret-chat.html" style="display:block;padding:6px 10px;color:#f87171;text-decoration:none;font-size:12px;">RED SECRET CHAT + QR (/red-secret-chat.html)</a>
+            <a href="/payments-plans.html" style="display:block;padding:6px 10px;color:#facc15;text-decoration:none;font-size:12px;">Плащания &amp; Нива (/payments-plans.html)</a>
+            <a href="/downloads.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;">Downloads (/downloads.html)</a>
+            <a href="/tools-hub.html" style="display:block;padding:6px 10px;color:#c084fc;text-decoration:none;font-size:12px;">Модули (/tools-hub.html)</a>
+            <a href="/mining-optin.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;">Pool &amp; 24h (/mining-optin.html)</a>
 
-      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">НИВА (COPPER / SILVER / GOLD)</div>
-      <button type="button" data-mode="Ниво FREE (до 1 бот) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#d4d4d8;font-size:12px;cursor:pointer;border-radius:6px;">Free (до 1 бот)</button>
-      <button type="button" data-mode="Ниво COPPER (до 3 бота) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#d97706;font-size:12px;cursor:pointer;border-radius:6px;">Copper (до 3 бота)</button>
-      <button type="button" data-mode="Ниво SILVER (до 10 бота) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#cbd5e1;font-size:12px;cursor:pointer;border-radius:6px;">Silver (до 10 бота)</button>
-      <button type="button" data-mode="Ниво GOLD (до 50 бота) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#facc15;font-size:12px;cursor:pointer;border-radius:6px;">Gold (до 50 бота)</button>
+            <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">РЕЖИМИ</div>
+            <button type="button" data-mode="MARAUDER OPCI: Активни пълни опции." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;">MARAUDER OPCI</button>
+            <button type="button" data-mode="OFFLINE РЕЖИМ: Локален режим." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#fbbf24;font-size:12px;">Offline Режим</button>
+            <button type="button" data-mode="INLINE РЕЖИМ: Бързи inline команди." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#4ade80;font-size:12px;">Inline Режим</button>
 
-      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">ПЛАЩАНЕ (KEPER / PAYPAL / STARS / TON)</div>
-      <button type="button" data-pay="Keper (Keplr)" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#a78bfa;font-size:12px;cursor:pointer;border-radius:6px;">Keper (Keplr)</button>
-      <button type="button" data-pay="PayPal" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#fde047;font-size:12px;cursor:pointer;border-radius:6px;">PayPal</button>
-      <button type="button" data-pay="Telegram Stars" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#38bdf8;font-size:12px;cursor:pointer;border-radius:6px;">Telegram Stars</button>
-      <button type="button" data-pay="TON" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#22d3ee;font-size:12px;cursor:pointer;border-radius:6px;">TON</button>
-      <button type="button" data-trigger-text="DARENIYA" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#facc15;font-size:12px;cursor:pointer;border-radius:6px;">DARENIYA (PayPal / TON)</button>
+            <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">ПЛАЩАНЕ (KEPER / PAYPAL / STARS / TON)</div>
+            <button type="button" data-pay="Keper (Keplr)" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#a78bfa;font-size:12px;">Keper (Keplr)</button>
+            <button type="button" data-pay="PayPal" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#fde047;font-size:12px;">PayPal</button>
+            <button type="button" data-pay="Telegram Stars" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#38bdf8;font-size:12px;">Telegram Stars</button>
+            <button type="button" data-pay="TON" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#22d3ee;font-size:12px;">TON</button>
 
-      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">DOWNLOAD (ANDROID / IOS / WINDOWS 11)</div>
-      <button type="button" data-dl="Android" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#86efac;font-size:12px;cursor:pointer;border-radius:6px;">Download за Android</button>
-      <button type="button" data-dl="iOS" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">Download за iOS</button>
-      <button type="button" data-dl="Windows 11" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#93c5fd;font-size:12px;cursor:pointer;border-radius:6px;">Download за Windows 11</button>
-    </div>
-  </span>
-  <script>
-    (function(){
-      var btn = document.getElementById("marauderDropdownBtn");
-      var menu = document.getElementById("marauderDropdownMenu");
-      if (!btn || !menu) return;
-
-      function postNotice(text) {
-        if (typeof window.appendSystemNote === "function") {
-          window.appendSystemNote(text);
-          return;
-        }
-        var box = document.querySelector("main, .chat-log, #chatLog, body");
-        if (box) {
-          var div = document.createElement("div");
-          div.style.cssText = "margin:8px auto;max-width:780px;padding:8px 12px;border:1px solid #22c55e;border-radius:8px;background:#052e16;color:#dcfce7;font-family:monospace;font-size:12px;";
-          div.textContent = text;
-          box.appendChild(div);
-        }
-      }
-
-      btn.addEventListener("click", function(ev){
-        ev.stopPropagation();
-        menu.style.display = (menu.style.display === "block") ? "none" : "block";
-      });
-      document.addEventListener("click", function(){
-        menu.style.display = "none";
-      });
-
-      var secFromMenu = document.getElementById("openSecretFromMenuBtn");
-      if (secFromMenu) {
-        secFromMenu.addEventListener("click", function(ev){
-          ev.stopPropagation();
-          menu.style.display = "none";
-          if (typeof window.openRedSecretPanel === "function") window.openRedSecretPanel();
-        });
-      }
-
-      menu.querySelectorAll(".m-mode-act").forEach(function(el){
-        el.addEventListener("click", function(ev){
-          ev.stopPropagation();
-          menu.style.display = "none";
-          var msg = el.getAttribute("data-mode") || "Режим активиран";
-          try { localStorage.setItem("marauder_last_mode", msg); } catch (_) {}
-          postNotice(msg);
-        });
-      });
-
-      menu.querySelectorAll(".m-pay-act").forEach(function(el){
-        el.addEventListener("click", function(ev){
-          ev.stopPropagation();
-          menu.style.display = "none";
-          var method = el.getAttribute("data-pay") || "Плащане";
-          postNotice("Избран метод за плащане: " + method + " (RED SOFTWARE TEAM).");
-        });
-      });
-
-      menu.querySelectorAll(".m-dl-act").forEach(function(el){
-        el.addEventListener("click", function(ev){
-          ev.stopPropagation();
-          menu.style.display = "none";
-          var plat = el.getAttribute("data-dl") || "Платформа";
-          var targetUrl = "/release-manifest.json";
-          postNotice("Download за " + plat + ": отваряне на /release-manifest.json.");
-          fetch(targetUrl).then(function(r){
-            if (r.ok) window.open(targetUrl, "_blank");
-          }).catch(function(){});
-        });
-      });
-
-      menu.querySelectorAll(".m-drop-act").forEach(function(act){
-        act.addEventListener("click", function(ev){
-          ev.stopPropagation();
-          menu.style.display = "none";
-          var tid = act.getAttribute("data-trigger-id");
-          var txt = act.getAttribute("data-trigger-text");
-          var fb = act.getAttribute("data-fallback");
-          var target = tid ? document.getElementById(tid) : null;
-          if (!target && txt) {
-            var allBtns = Array.prototype.slice.call(document.querySelectorAll("button,a"));
-            target = allBtns.find(function(b){
-              return b !== btn && !b.classList.contains("m-drop-act") && (b.textContent || "").indexOf(txt) !== -1;
-            }) || null;
-          }
-          if (target) {
-            target.click();
-          } else if (fb) {
-            window.location.href = fb;
-          }
-        });
-      });
-    })();
-  </script>
-  
-  
-  
-  
-  <a href="/mining-optin.html" id="pool24hLink" style="display:inline-block;padding:6px 10px;margin-left:6px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;text-decoration:none;">Pool & 24h</a>
-      </div>
-
-      <div class="symbol-strip" aria-hidden="true">
-        <span>💀</span>
-        <span>⚡</span>
-        <span>☠</span>
-        <span>🔥</span>
-        <span>👾</span>
-        <span>💀</span>
-        <span>⚡</span>
-        <span>☠</span>
+            <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+            <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">DOWNLOAD</div>
+            <a href="/downloads.html" style="display:block;padding:5px 10px;color:#86efac;text-decoration:none;font-size:12px;">Android / iOS / Windows 11</a>
+          </div>
+        </span>
       </div>
 
       <div class="controls-bar">
         <select id="chatSelect" title="Локален чат на това устройство"></select>
         <button type="button" id="newChatBtn">+ Нов чат</button>
         <button type="button" id="delChatBtn" class="danger">Изтрий</button>
-        <button type="button" id="exportBtn">⬇ Свали</button>
         <input type="password" id="apiKeyInput" class="api-input" placeholder="RED SOFTWARE Access Key (купен от сайта)" />
-      </div>
-
-      <div class="sub-bar">
-        <button type="button" id="secretBtn" class="secret-btn">[ RED SECRET CHAT 🔒 ]</button>
-        <button type="button" id="donateBtn">▾ DARENIYA (PayPal / TON)</button>
       </div>
     </header>
 
@@ -667,6 +422,7 @@
     const skullSymbols = ["💀", "☠", "⚡", "👾", "🔥"];
     function fillSkulls() {
       const cols = [document.getElementById("skullLeft"), document.getElementById("skullRight")];
+      if (!cols[0] || !cols[1]) return;
       const isMobile = window.innerWidth <= 720;
       const countPerCol = Math.max(48, Math.ceil((window.innerHeight / (isMobile ? 16 : 20)) * 2));
       cols.forEach((col, cIdx) => {
@@ -674,8 +430,7 @@
         for (let i = 0; i < countPerCol; i++) {
           const cell = document.createElement("div");
           cell.className = "skull-cell";
-          const sym = (i % 5 === 0) ? skullSymbols[(i + cIdx) % skullSymbols.length] : (i % 2 === 0 ? "💀" : "☠");
-          cell.textContent = sym;
+          cell.textContent = (i % 5 === 0) ? skullSymbols[(i + cIdx) % skullSymbols.length] : (i % 2 === 0 ? "💀" : "☠");
           cell.style.animationDelay = `${((i * 0.17) + cIdx * 0.4).toFixed(2)}s`;
           col.appendChild(cell);
         }
@@ -683,21 +438,6 @@
     }
     fillSkulls();
     window.addEventListener("resize", fillSkulls);
-
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-    }
-
-    function formatMessageHtml(text) {
-      const escaped = escapeHtml(text);
-      return escaped
-        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-        .replace(/`([^`\n]+)`/g, "<code>$1</code>");
-    }
 
     const DEVICE_ID_KEY = "marauder_ai_device_id_v1";
     let deviceId = localStorage.getItem(DEVICE_ID_KEY);
@@ -736,12 +476,10 @@
       chats = [{
         id: firstId,
         title: "Чат #1",
-        messages: [
-          {
-            role: "sys",
-            text: "MARAUDER-AI стартиран. Въведи ключ от RED SOFTWARE TEAM за достъп. Чатовете се пазят само на това устройство."
-          }
-        ]
+        messages: [{
+          role: "sys",
+          text: "MARAUDER-AI стартиран. Въведи ключ от RED SOFTWARE TEAM за достъп. Чатовете се пазят само на това устройство."
+        }]
       }];
       saveChats(chats);
     }
@@ -758,6 +496,14 @@
     function getActiveChat() {
       return chats.find((c) => c.id === activeChatId) || chats[0];
     }
+
+    function appendSystemNote(text) {
+      const current = getActiveChat();
+      current.messages.push({ role: "sys", text });
+      saveChats(chats);
+      renderMessages();
+    }
+    window.appendSystemNote = appendSystemNote;
 
     function renderChatSelect() {
       chatSelect.innerHTML = "";
@@ -776,21 +522,10 @@
       current.messages.forEach((m) => {
         const div = document.createElement("div");
         div.className = `msg ${m.role}`;
-        if (m.role === "ai") {
-          div.innerHTML = formatMessageHtml(m.text);
-        } else {
-          div.textContent = m.text;
-        }
+        div.textContent = m.text;
         messagesEl.appendChild(div);
       });
       messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    function appendSystemNote(text) {
-      const current = getActiveChat();
-      current.messages.push({ role: "sys", text });
-      saveChats(chats);
-      renderMessages();
     }
 
     chatSelect.addEventListener("change", () => {
@@ -803,12 +538,7 @@
       const newChat = {
         id: "chat_" + Date.now(),
         title: `Чат #${chats.length + 1}`,
-        messages: [
-          {
-            role: "sys",
-            text: "Нов локален чат на това устройство."
-          }
-        ]
+        messages: [{ role: "sys", text: "Нов локален чат на това устройство." }]
       };
       chats.unshift(newChat);
       activeChatId = newChat.id;
@@ -833,42 +563,48 @@
       renderMessages();
     });
 
-    document.getElementById("exportBtn").addEventListener("click", () => {
-      const current = getActiveChat();
-      const content = current.messages.map((m) => `[${m.role.toUpperCase()}] ${m.text}`).join("\n\n");
-      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${current.title.replace(/[^a-zA-Z0-9а-яА-Я_-]/g, "_")}.txt`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+    function openSeparateWindow(url) {
+      try {
+        const w = window.open(url, "_blank", "noopener,noreferrer,width=980,height=720");
+        if (!w) window.location.href = url;
+      } catch {
+        window.location.href = url;
+      }
+    }
 
-    document.getElementById("botBtn").addEventListener("click", () => {
-      appendSystemNote("BOT модул (Telegram / Mail / Facebook / Discord): Генерирай бот код или автоматизация директно в чата.");
-    });
-    document.getElementById("alOptBtn").addEventListener("click", () => {
-      appendSystemNote("MARAUDER-AL Опции: Директен режим без излишна вода, активен профил RED-SOFTWARE-TEAM-BG.");
-    });
-    document.getElementById("linuxBtn").addEventListener("click", () => {
-      appendSystemNote("MARAUDER-LINUX-CONSOLE: Посочи задача за Bash, Linux, мрежи или сървърна конфигурация.");
-    });
-    document.getElementById("fenixBtn").addEventListener("click", () => {
-      appendSystemNote("Профил MARAUDER-AI 4.8 FENIX / 5.3 / 6.2 активиран.");
-    });
-    document.getElementById("devanBtn").addEventListener("click", () => {
-      appendSystemNote("DEVANPORT-AI (CODE STUDIO): Готов за пълни модули, скриптове и дебъгване.");
-    });
-    document.getElementById("vpnBtn").addEventListener("click", () => {
-      appendSystemNote("VPN статус: Защитен сървърен прокси път през MARAUDER-AI.");
-    });
-    document.getElementById("secretBtn").addEventListener("click", () => {
-      appendSystemNote("RED SECRET CHAT: Локалните чатове остават само в паметта на това устройство.");
-    });
-    document.getElementById("donateBtn").addEventListener("click", () => {
-      appendSystemNote("DARENIYA (PayPal / TON) & ключове за достъп: RED-SOFTWARE-TEAM-BG.");
-    });
+    document.getElementById("botBtn").addEventListener("click", () => openSeparateWindow("/bot-studio.html"));
+    document.getElementById("devanBtn").addEventListener("click", () => openSeparateWindow("/devanport-studio.html"));
+    document.getElementById("vpnBtn").addEventListener("click", () => openSeparateWindow("/kali-root.html#vpn"));
+    document.getElementById("secretBtn").addEventListener("click", () => openSeparateWindow("/red-secret-chat.html"));
+    document.getElementById("dareniyaBtn").addEventListener("click", () => openSeparateWindow("/payments-plans.html"));
+    document.getElementById("alOptBtn").addEventListener("click", () => appendSystemNote("MARAUDER-AL Опции: активен профил RED-SOFTWARE-TEAM-BG."));
+    document.getElementById("fenixBtn").addEventListener("click", () => appendSystemNote("MARAUDER-AI профил: 4.8 FENIX / 5.3 / 6.2 готов."));
+
+    const ddBtn = document.getElementById("marauderDropdownBtn");
+    const ddMenu = document.getElementById("marauderDropdownMenu");
+    if (ddBtn && ddMenu) {
+      ddBtn.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        ddMenu.style.display = (ddMenu.style.display === "block") ? "none" : "block";
+      });
+      document.addEventListener("click", () => {
+        ddMenu.style.display = "none";
+      });
+      ddMenu.querySelectorAll(".m-mode-act").forEach((el) => {
+        el.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          ddMenu.style.display = "none";
+          appendSystemNote(el.getAttribute("data-mode") || "Режим активиран");
+        });
+      });
+      ddMenu.querySelectorAll(".m-pay-act").forEach((el) => {
+        el.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          ddMenu.style.display = "none";
+          appendSystemNote("Избран начин на плащане: " + (el.getAttribute("data-pay") || "Плащане"));
+        });
+      });
+    }
 
     let pendingAttachments = [];
     const attachmentsPreview = document.getElementById("attachmentsPreview");
@@ -878,7 +614,7 @@
       pendingAttachments.forEach((att, idx) => {
         const chip = document.createElement("div");
         chip.className = "att-chip";
-        if (att.mimeType.startsWith("image/")) {
+        if (att.mimeType && att.mimeType.startsWith("image/")) {
           const img = document.createElement("img");
           img.src = `data:${att.mimeType};base64,${att.base64}`;
           chip.appendChild(img);
@@ -905,67 +641,21 @@
         const reader = new FileReader();
         reader.onload = () => {
           const res = String(reader.result || "");
-          const base64 = res.includes(",") ? res.split(",")[1] : res;
-          resolve(base64);
+          resolve(res.includes(",") ? res.split(",")[1] : res);
         };
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
     }
 
-    function compressImage(file, maxDim = 1280, quality = 0.82) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        const url = URL.createObjectURL(file);
-        img.onload = () => {
-          URL.revokeObjectURL(url);
-          let { width, height } = img;
-          if (width > maxDim || height > maxDim) {
-            if (width > height) {
-              height = Math.round((height * maxDim) / width);
-              width = maxDim;
-            } else {
-              width = Math.round((width * maxDim) / height);
-              height = maxDim;
-            }
-          }
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL("image/jpeg", quality);
-          resolve({
-            mimeType: "image/jpeg",
-            base64: dataUrl.split(",")[1]
-          });
-        };
-        img.onerror = async () => {
-          URL.revokeObjectURL(url);
-          const base64 = await fileToBase64(file);
-          resolve({ mimeType: file.type || "image/jpeg", base64 });
-        };
-        img.src = url;
-      });
-    }
-
     async function handleFileList(fileList) {
       for (const file of Array.from(fileList)) {
-        if (file.type && file.type.startsWith("image/")) {
-          const compressed = await compressImage(file);
-          pendingAttachments.push({
-            name: file.name,
-            mimeType: compressed.mimeType,
-            base64: compressed.base64
-          });
-        } else {
-          const base64 = await fileToBase64(file);
-          pendingAttachments.push({
-            name: file.name,
-            mimeType: file.type || "application/octet-stream",
-            base64
-          });
-        }
+        const base64 = await fileToBase64(file);
+        pendingAttachments.push({
+          name: file.name,
+          mimeType: file.type || "application/octet-stream",
+          base64
+        });
       }
       renderAttachments();
     }
@@ -1020,22 +710,12 @@
 
     const promptInput = document.getElementById("promptInput");
     const sendBtn = document.getElementById("sendBtn");
-    let isSending = false;
 
     async function sendMessage() {
-      if (isSending) return;
-
       const text = promptInput.value.trim();
       const accessKey = apiKeyInput.value.trim();
 
       if (!text && pendingAttachments.length === 0) return;
-      if (!accessKey) {
-        alert("Въведи ключ за достъп от RED SOFTWARE TEAM горе в полето.");
-        return;
-      }
-
-      isSending = true;
-      sendBtn.disabled = true;
 
       const currentChat = getActiveChat();
       const displayUserText = text || pendingAttachments.map((a) => `[${a.name}]`).join(" ");
@@ -1049,72 +729,37 @@
       saveChats(chats);
       renderMessages();
 
-      const parts = [];
-      for (const att of pendingAttachments) {
-        parts.push({
-          inlineData: {
-            mimeType: att.mimeType,
-            data: att.base64
-          }
-        });
-      }
-      if (text) {
-        parts.push({ text });
-      } else {
-        parts.push({ text: "Опиши и анализирай прикачения файл на български." });
-      }
-
       promptInput.value = "";
+      const attachmentsToSend = pendingAttachments.slice();
       pendingAttachments = [];
       renderAttachments();
 
-      const thinkingMsg = { role: "ai", text: "Мисля..." };
-      currentChat.messages.push(thinkingMsg);
-      renderMessages();
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 45000);
-
       try {
-        const historyContents = currentChat.messages
-          .filter((m) => m !== thinkingMsg && (m.role === "user" || m.role === "ai"))
-          .slice(-12)
-          .map((m) => ({
-            role: m.role === "user" ? "user" : "model",
-            parts: [{ text: m.text }]
-          }));
-
-        if (historyContents.length > 0 && historyContents[historyContents.length - 1].role === "user") {
-          historyContents[historyContents.length - 1].parts = parts;
-        }
-
-        const resp = await fetch("/api/chat", {
+        const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          signal: controller.signal,
           body: JSON.stringify({
+            message: text,
             accessKey,
-            contents: historyContents
+            deviceId,
+            attachments: attachmentsToSend
           })
         });
-
-        const rawText = await resp.text();
-        let data = {};
-        try {
-          data = JSON.parse(rawText);
-        } catch {
-          throw new Error("Сървърът се презарежда. Опитай отново след няколко секунди.");
+        if (res.ok) {
+          const data = await res.json();
+          const reply = data.reply || data.message || JSON.stringify(data);
+          currentChat.messages.push({ role: "ai", text: reply });
+        } else {
+          currentChat.messages.push({
+            role: "ai",
+            text: `Сървърът върна статус ${res.status}. Ключът или маршрутът /api/chat изискват проверка.`
+          });
         }
-
-        thinkingMsg.text = data?.reply || data?.error || "Няма отговор.";
-      } catch (err) {
-        thinkingMsg.text = err.name === "AbortError"
-          ? "Времето за изчакване изтече. Опитай пак."
-          : "Грешка при връзката със сървъра: " + err.message;
-      } finally {
-        clearTimeout(timeoutId);
-        isSending = false;
-        sendBtn.disabled = false;
+      } catch {
+        currentChat.messages.push({
+          role: "ai",
+          text: "Локален отговор: няма връзка с /api/chat (провери дали сървърът работи на порт 3000)."
+        });
       }
 
       saveChats(chats);
@@ -1132,200 +777,5 @@
     renderChatSelect();
     renderMessages();
   </script>
-
-
-
-
-
-<!-- RED_SECRET_CHAT_QR_MODULE -->
-<div id="redSecretModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.82);padding:16px;overflow:auto;">
-  <div style="max-width:740px;margin:24px auto;background:#09090b;border:1px solid #ef4444;border-radius:10px;padding:16px;color:#f4f4f5;font-family:monospace;">
-    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #27272a;padding-bottom:8px;margin-bottom:12px;">
-      <strong style="color:#f87171;">[ RED SECRET CHAT • QR &amp; TOOLS ]</strong>
-      <button type="button" id="closeSecretModalBtn" style="padding:4px 10px;border-radius:6px;border:1px solid #52525b;background:#18181b;color:#fff;cursor:pointer;">Затвори</button>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
-      <div style="border:1px solid #27272a;border-radius:8px;padding:10px;background:#111115;">
-        <div style="font-size:12px;color:#fca5a5;margin-bottom:6px;">QR Генератор</div>
-        <input id="qrInputText" type="text" placeholder="Текст, ключ или линк за QR..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
-        <button type="button" id="btnGenQr" style="padding:6px 12px;border-radius:6px;border:1px solid #ef4444;background:#7f1d1d;color:#fff;font-weight:bold;cursor:pointer;margin-right:6px;">Генерирай QR</button>
-        <button type="button" id="btnCopyQrText" style="padding:6px 12px;border-radius:6px;border:1px solid #52525b;background:#18181b;color:#fff;cursor:pointer;">Копирай</button>
-        <div style="margin-top:10px;padding:10px;background:#ffffff;border-radius:8px;display:inline-block;">
-          <canvas id="qrCanvas" width="160" height="160"></canvas>
-        </div>
-      </div>
-      <div style="border:1px solid #27272a;border-radius:8px;padding:10px;background:#111115;">
-        <div style="font-size:12px;color:#86efac;margin-bottom:6px;">Секретни Записи &amp; Кодове</div>
-        <input id="secretMsgInp" type="text" placeholder="Секретно съобщение..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
-        <button type="button" id="btnSendSecretMsg" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:bold;cursor:pointer;margin-right:6px;margin-bottom:6px;">Добави</button>
-        <button type="button" id="btnMakeInviteCode" style="padding:6px 10px;border-radius:6px;border:1px solid #38bdf8;background:#0c4a6e;color:#fff;cursor:pointer;margin-right:6px;margin-bottom:6px;">Нов Код</button>
-        <button type="button" id="btnClearSecretMsgs" style="padding:6px 10px;border-radius:6px;border:1px solid #ef4444;background:#450a0a;color:#fecaca;cursor:pointer;margin-bottom:6px;">Изчисти</button>
-        <pre id="secretMsgsLog" style="background:#09090b;border:1px solid #27272a;padding:8px;border-radius:6px;max-height:140px;overflow:auto;white-space:pre-wrap;margin:6px 0 0 0;font-size:11px;"></pre>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-  (function(){
-    var modal = document.getElementById("redSecretModal");
-    var closeBtn = document.getElementById("closeSecretModalBtn");
-    var qrInp = document.getElementById("qrInputText");
-    var genQrBtn = document.getElementById("btnGenQr");
-    var copyQrBtn = document.getElementById("btnCopyQrText");
-    var canvas = document.getElementById("qrCanvas");
-    var msgInp = document.getElementById("secretMsgInp");
-    var sendBtn = document.getElementById("btnSendSecretMsg");
-    var invBtn = document.getElementById("btnMakeInviteCode");
-    var clrBtn = document.getElementById("btnClearSecretMsgs");
-    var logEl = document.getElementById("secretMsgsLog");
-    var storageKey = "marauder_red_secret_msgs_v1";
-
-    function drawQr(text) {
-      if (!canvas) return;
-      var ctx = canvas.getContext("2d");
-      var val = String(text || "RED-SECRET-CHAT");
-      var size = 21;
-      var cell = Math.floor(canvas.width / size);
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      var hash = 2166136261;
-      for (var i = 0; i < val.length; i++) {
-        hash ^= val.charCodeAt(i);
-        hash = Math.imul(hash, 16777619);
-      }
-      function isFinder(r, c) {
-        return (r < 7 && c < 7) || (r < 7 && c >= size - 7) || (r >= size - 7 && c < 7);
-      }
-      ctx.fillStyle = "#09090b";
-      for (var r = 0; r < size; r++) {
-        for (var c = 0; c < size; c++) {
-          var dark = false;
-          if (isFinder(r, c)) {
-            var lr = r < 7 ? r : r - (size - 7);
-            var lc = c < 7 ? c : c - (size - 7);
-            dark = (lr === 0 || lr === 6 || lc === 0 || lc === 6 || (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4));
-          } else {
-            var bitSeed = (hash ^ (r * 73856093) ^ (c * 19349663) ^ val.charCodeAt(r % val.length));
-            dark = ((bitSeed >>> ((r + c) % 16)) & 1) === 1;
-          }
-          if (dark) ctx.fillRect(c * cell, r * cell, cell, cell);
-        }
-      }
-    }
-
-    function loadMsgs() {
-      try { return JSON.parse(localStorage.getItem(storageKey) || "[]"); } catch (_) { return []; }
-    }
-    function saveMsgs(arr) {
-      try { localStorage.setItem(storageKey, JSON.stringify(arr)); } catch (_) {}
-    }
-    function renderMsgs() {
-      if (!logEl) return;
-      var arr = loadMsgs();
-      logEl.textContent = arr.length ? arr.join("
-") : "Няма запазени секретни записи.";
-    }
-
-    function openSecretPanel() {
-      if (modal) {
-        modal.style.display = "block";
-        renderMsgs();
-        drawQr(qrInp && qrInp.value ? qrInp.value : "RED-SECRET-CHAT");
-      }
-    }
-    window.openRedSecretPanel = openSecretPanel;
-
-    if (closeBtn && modal) {
-      closeBtn.addEventListener("click", function(){ modal.style.display = "none"; });
-      modal.addEventListener("click", function(ev){ if (ev.target === modal) modal.style.display = "none"; });
-    }
-    if (genQrBtn) genQrBtn.addEventListener("click", function(){ drawQr((qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT"); });
-    if (copyQrBtn) copyQrBtn.addEventListener("click", function(){
-      var txt = (qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT";
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(function(){});
-    });
-    if (sendBtn) sendBtn.addEventListener("click", function(){
-      var t = (msgInp && msgInp.value || "").trim();
-      if (!t) return;
-      var arr = loadMsgs();
-      arr.push("[" + new Date().toLocaleTimeString() + "] " + t);
-      saveMsgs(arr.slice(-40));
-      if (msgInp) msgInp.value = "";
-      renderMsgs();
-    });
-    if (invBtn) invBtn.addEventListener("click", function(){
-      var code = "RED-KEY-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-      if (qrInp) qrInp.value = code;
-      drawQr(code);
-      var arr = loadMsgs();
-      arr.push("[" + new Date().toLocaleTimeString() + "] Генериран код: " + code);
-      saveMsgs(arr.slice(-40));
-      renderMsgs();
-    });
-    if (clrBtn) clrBtn.addEventListener("click", function(){
-      saveMsgs([]);
-      renderMsgs();
-    });
-
-    document.addEventListener("click", function(ev){
-      var el = ev.target && ev.target.closest ? ev.target.closest("button,a") : null;
-      if (!el) return;
-      var id = el.id || "";
-      var txt = (el.textContent || "");
-      if (id === "secretBtn" || txt.indexOf("RED SECRET CHAT") !== -1) {
-        if (!el.hasAttribute("data-direct-secret-pass")) {
-          ev.preventDefault();
-          openSecretPanel();
-        }
-      }
-    });
-  })();
-</script>
-<!-- /RED_SECRET_CHAT_QR_MODULE -->
-
-
-
-<!-- MARAUDER_SEPARATE_WINDOWS_AUTO -->
-<script>
-  (function(){
-    function openWin(url) {
-      try {
-        var w = window.open(url, "_blank", "noopener,noreferrer,width=980,height=720");
-        if (!w) window.location.href = url;
-      } catch (_) {
-        window.location.href = url;
-      }
-    }
-
-    document.addEventListener("click", function(ev){
-      var el = ev.target && ev.target.closest ? ev.target.closest("button,a") : null;
-      if (!el) return;
-      var txt = (el.textContent || "").trim();
-      var id = el.id || "";
-
-      if (txt.indexOf("+ BOT") !== -1) {
-        ev.preventDefault();
-        try { localStorage.setItem("marauder_auto_bot_open", new Date().toISOString()); } catch (_) {}
-        openWin("/bot-studio.html");
-      } else if (id === "devanBtn" || txt.indexOf("DEVANPORT-AI") !== -1) {
-        ev.preventDefault();
-        try { localStorage.setItem("marauder_auto_dev_open", new Date().toISOString()); } catch (_) {}
-        openWin("/devanport-studio.html");
-      } else if (id === "vpnBtn" || txt === "VPN") {
-        ev.preventDefault();
-        try { localStorage.setItem("marauder_auto_vpn_mode", "ACTIVE"); } catch (_) {}
-        openWin("/kali-root.html#vpn");
-      } else if (txt.indexOf("DARENIYA") !== -1) {
-        ev.preventDefault();
-        openWin("/payments-plans.html");
-      } else if (txt.indexOf("MARAUDER-AL Опции") !== -1) {
-        try { localStorage.setItem("marauder_al_profile", "RED-SOFTWARE-TEAM-BG"); } catch (_) {}
-      } else if (txt.indexOf("FENIX") !== -1) {
-        try { localStorage.setItem("marauder_fenix_profile", "4.8 / 5.3 / 6.2"); } catch (_) {}
-      }
-    }, true);
-  })();
-</script>
-<!-- /MARAUDER_SEPARATE_WINDOWS_AUTO -->
 </body>
 </html>
