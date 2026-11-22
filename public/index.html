@@ -3398,5 +3398,28 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 })();
 </script>
+
+<style id="marauderAndroidMenuFixStyle">
+  @media (max-width: 768px), (pointer: coarse) {
+    #marauderRealDropdownMenu.open {
+      left: 8px !important;
+      right: 8px !important;
+      width: auto !important;
+      max-width: calc(100vw - 16px) !important;
+      max-height: 75vh !important;
+      z-index: 2147483647 !important;
+    }
+    #marauderMiniHeaderDotsBtn {
+      min-width: 34px !important;
+      min-height: 34px !important;
+      touch-action: manipulation;
+    }
+    .marauder-force-visible-panel,
+    .marauder-force-visible-flex {
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+    }
+  }
+</style>
 </body>
 </html>
