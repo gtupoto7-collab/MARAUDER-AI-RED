@@ -2795,5 +2795,86 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 })();
 </script>
+
+<div id="marauderLangSwitcherWrap" style="display:flex;justify-content:flex-end;gap:8px;padding:6px 10px 0 10px;">
+  <button id="marauderLangToggleBtn" type="button" onclick="window.toggleMarauderLang()" style="padding:6px 12px;border-radius:8px;border:1px solid #3b82f6;background:#111c30;color:#93c5fd;font-weight:700;font-size:12px;cursor:pointer;">🌐 EN / English</button>
+</div>
+<script>
+(function() {
+  const LANG_KEY = "marauder_ui_lang_v1";
+  const dictToEn = {
+    "← Назад": "← Back",
+    "[ RED SECRET CHAT ]": "[ RED SECRET CHAT ]",
+    "▾ DARENIYA (PayPal / TON)": "▾ DONATIONS (PayPal / TON)",
+    "PayPal": "PayPal",
+    "PayPal плащане": "PayPal Payment",
+    "Keeper / TON": "Keeper / TON",
+    "Keeper / TON адрес": "Keeper / TON Address",
+    "Скрий / Покажи нивата": "Hide / Show Tiers",
+    "☰ Опции (Android/iOS)": "☰ Options (Android/iOS)",
+    "App / PWA": "App / PWA",
+    "Чат стая": "Chat Room",
+    "Подкрепа / Нива (Copper • Silver • Gold • Годишен)": "Support / Tiers (Copper • Silver • Gold • Annual)",
+    "Първо 1 софтуерен код + 1 Kali команда безплатно. За второ и следващо генериране:": "First 1 software/code + 1 Kali command free. For second and next generations:",
+    "Код за активация": "Activation Code",
+    "Активирай": "Activate",
+    "Създай стая (нов код и token)": "Create Room (new code & token)",
+    "Свържи се към стаята": "Join Room",
+    "Изпрати": "Send",
+    "Заключи / Отключи": "Lock / Unlock",
+    "Изтрий стаята": "Delete Room"
+  };
+
+  const dictToBg = Object.fromEntries(Object.entries(dictToEn).map(([bg, en]) => [en, bg]));
+
+  function applyLang(lang) {
+    const isEn = lang === "en";
+    const map = isEn ? dictToEn : dictToBg;
+    document.documentElement.lang = isEn ? "en" : "bg";
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) {
+      const n = walker.currentNode;
+      if (!n.parentElement) continue;
+      if (n.parentElement.id === "marauderLangToggleBtn") continue;
+      const raw = n.nodeValue;
+      const trimmed = (raw || "").trim();
+      if (trimmed && map[trimmed]) {
+        textNodes.push({ node: n, raw, trimmed, mapped: map[trimmed] });
+      }
+    }
+
+    for (const item of textNodes) {
+      item.node.nodeValue = item.raw.replace(item.trimmed, item.mapped);
+    }
+
+    document.querySelectorAll("input[placeholder]").forEach(inp => {
+      const ph = (inp.getAttribute("placeholder") || "").trim();
+      if (map[ph]) inp.setAttribute("placeholder", map[ph]);
+    });
+
+    const btn = document.getElementById("marauderLangToggleBtn");
+    if (btn) {
+      btn.textContent = isEn ? "🌐 БГ / Кирилица" : "🌐 EN / English";
+    }
+    localStorage.setItem(LANG_KEY, isEn ? "en" : "bg");
+  }
+
+  window.toggleMarauderLang = function() {
+    const cur = localStorage.getItem(LANG_KEY) || "bg";
+    applyLang(cur === "bg" ? "en" : "bg");
+  };
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const wrap = document.getElementById("marauderLangSwitcherWrap");
+    if (wrap && wrap.parentElement !== document.body) {
+      document.body.insertBefore(wrap, document.body.firstChild);
+    }
+    const saved = localStorage.getItem(LANG_KEY) || "bg";
+    applyLang(saved);
+  });
+})();
+</script>
 </body>
 </html>
