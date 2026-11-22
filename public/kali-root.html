@@ -54,6 +54,95 @@
 </script>
 </head>
 <body>
+
+<section id="marauderDualConsoleBar" style="margin:12px 0;padding:12px;border:1px solid #ef4444;border-radius:10px;background:#14090d;color:#fff;">
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+      <button type="button" id="btnModeMarauderConsole" style="padding:8px 14px;border-radius:6px;border:1px solid #f87171;background:#7f1d1d;color:#fff;font-weight:800;cursor:pointer;">
+        MARAUDER-AI-CONSOLE
+      </button>
+      <button type="button" id="btnModeNetHunterConsole" style="padding:8px 14px;border-radius:6px;border:1px solid #38bdf8;background:#0c4a6e;color:#fff;font-weight:800;cursor:pointer;">
+        LINUX NETHUNTER
+      </button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;flex:1;min-width:240px;justify-content:flex-end;">
+      <input id="marauderApiBaseInput" type="text" placeholder="http://127.0.0.1:3000" style="min-width:210px;padding:7px 10px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#f4f4f5;font-size:13px;" />
+      <button type="button" id="btnSaveApiBase" style="padding:7px 12px;border-radius:6px;border:1px solid #a1a1aa;background:#27272a;color:#fff;font-weight:700;cursor:pointer;">
+        Запази API
+      </button>
+    </div>
+  </div>
+  <div id="marauderConsoleModeDesc" style="margin-top:8px;padding:8px 10px;border-left:4px solid #ef4444;background:#1f0d13;color:#fecdd3;font-size:13px;line-height:1.45;">
+    Активен режим: MARAUDER-AI-CONSOLE — обединява реални команди, обяснения на кирилица, MYTHOS / AI отчети и Git операции върху същия backend.
+  </div>
+</section>
+
+<script id="marauderDualConsoleScript">
+(function(){
+  const STORAGE_KEY = "marauder_api_base_v1";
+  const MODE_KEY = "marauder_console_mode_v1";
+
+  function getDefaultBase() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && saved.trim()) return saved.trim().replace(//+$/, "");
+    if (window.location && window.location.protocol.startsWith("http")) {
+      if (window.location.port === "3000") return window.location.origin.replace(//+$/, "");
+      return "http://127.0.0.1:3000";
+    }
+    return "http://127.0.0.1:3000";
+  }
+
+  window.__MARAUDER_API_BASE__ = getDefaultBase();
+  const apiInput = document.getElementById("marauderApiBaseInput");
+  if (apiInput) apiInput.value = window.__MARAUDER_API_BASE__;
+
+  const saveBtn = document.getElementById("btnSaveApiBase");
+  if (saveBtn && apiInput) {
+    saveBtn.addEventListener("click", () => {
+      const val = (apiInput.value || "").trim().replace(//+$/, "") || "http://127.0.0.1:3000";
+      localStorage.setItem(STORAGE_KEY, val);
+      window.__MARAUDER_API_BASE__ = val;
+      const desc = document.getElementById("marauderConsoleModeDesc");
+      if (desc) desc.textContent = "Запазен API адрес: " + val + " (използва се за /api/kali/* заявки от Android / iOS / Desktop).";
+    });
+  }
+
+  function applyConsoleMode(mode) {
+    localStorage.setItem(MODE_KEY, mode);
+    window.__MARAUDER_CONSOLE_MODE__ = mode;
+    const desc = document.getElementById("marauderConsoleModeDesc");
+    const mBtn = document.getElementById("btnModeMarauderConsole");
+    const nBtn = document.getElementById("btnModeNetHunterConsole");
+    if (mode === "nethunter") {
+      if (mBtn) mBtn.style.opacity = "0.65";
+      if (nBtn) nBtn.style.opacity = "1";
+      if (desc) {
+        desc.style.borderLeftColor = "#38bdf8";
+        desc.style.background = "#082f49";
+        desc.style.color = "#bae6fd";
+        desc.textContent = "Активен режим: LINUX NETHUNTER — чист Linux/Kali shell фокус за реални системни, мрежови и Git команди през активния backend (" + window.__MARAUDER_API_BASE__ + ").";
+      }
+    } else {
+      if (mBtn) mBtn.style.opacity = "1";
+      if (nBtn) nBtn.style.opacity = "0.65";
+      if (desc) {
+        desc.style.borderLeftColor = "#ef4444";
+        desc.style.background = "#1f0d13";
+        desc.style.color = "#fecdd3";
+        desc.textContent = "Активен режим: MARAUDER-AI-CONSOLE — обединява реални команди, обяснения на кирилица, MYTHOS / AI отчети и Git операции през " + window.__MARAUDER_API_BASE__ + ".";
+      }
+    }
+  }
+
+  const mBtn = document.getElementById("btnModeMarauderConsole");
+  const nBtn = document.getElementById("btnModeNetHunterConsole");
+  if (mBtn) mBtn.addEventListener("click", () => applyConsoleMode("marauder"));
+  if (nBtn) nBtn.addEventListener("click", () => applyConsoleMode("nethunter"));
+
+  applyConsoleMode(localStorage.getItem(MODE_KEY) || "marauder");
+})();
+</script>
+
   <div class="kr-wrap">
     <div class="kr-top">
       <div>
