@@ -1467,10 +1467,10 @@ run_${safeIdent(nameRaw)}();
       <input id="offlineModeToggle" type="checkbox" checked onchange="saveOfflinePrefs()" />
       <span>Автоматичен офлайн режим / локален модел</span>
     </label>
-    <select id="ollamaModelSelect" onchange="saveOfflinePrefs()" style="background:#1b162e;color:#fff;border:1px solid #44396b;border-radius:6px;padding:4px 8px;">
-      <option value="dark-mega:latest">dark-mega:latest</option>
-      <option value="llama3.2:latest">llama3.2:latest</option>
-      <option value="phi3:mini">phi3:mini</option>
+    <select id="ollamaModelSelect" onchange="handleMarauderModeSelect()" style="background:#1b162e;color:#fff;border:1px solid #44396b;border-radius:6px;padding:4px 8px;">
+      <option value="offline-fenix-free">MARAUDER-AI 4.8 FENIX (Offline Free — RST-AI-001)</option>
+      <option value="online-mode">MARAUDER-AI Online</option>
+      <option value="paid-versions">MARAUDER-AI Paid (5.3 SECURITY 22 EUR / 6.2 HACKER 33 EUR)</option>
     </select>
     <input id="ollamaUrlInput" type="text" value="http://127.0.0.1:11434" onchange="saveOfflinePrefs()" style="width:185px;background:#1b162e;color:#9cf7e8;border:1px solid #44396b;border-radius:6px;padding:4px 8px;" />
   </div>
@@ -1488,6 +1488,50 @@ run_${safeIdent(nameRaw)}();
     localStorage.setItem("marauder_ollama_url", url);
   }
   window.saveOfflinePrefs = saveOfflinePrefs;
+
+  window.handleMarauderModeSelect = function() {
+    const sel = document.getElementById("ollamaModelSelect");
+    const toggle = document.getElementById("offlineModeToggle");
+    const statusEl = document.getElementById("offlineEngineStatus");
+    if (!sel) return;
+
+    const val = sel.value;
+    localStorage.setItem("marauder_mode_choice", val);
+
+    if (val === "offline-fenix-free") {
+      if (toggle) toggle.checked = true;
+      localStorage.setItem("marauder_offline_enabled", "1");
+      if (typeof window.selectMarauderVersion === "function") {
+        window.selectMarauderVersion("4.8 FENIX", true);
+      }
+      if (statusEl) {
+        statusEl.style.color = "#00f5d4";
+        statusEl.textContent = "Gotov rezhim MARAUDER-AI 4.8 FENIX ofline free";
+      }
+    } else if (val === "online-mode") {
+      if (toggle) toggle.checked = false;
+      localStorage.setItem("marauder_offline_enabled", "0");
+      localStorage.setItem("marauder_selected_version", "ONLINE");
+      const topBtn = document.getElementById("marauderTopVersionsBtn");
+      if (topBtn) topBtn.textContent = "MARAUDER-AI ONLINE";
+      if (statusEl) {
+        statusEl.style.color = "#9cf7e8";
+        statusEl.textContent = "Режим MARAUDER-AI ONLINE (сървър)";
+      }
+    } else if (val === "paid-versions") {
+      if (statusEl) {
+        statusEl.style.color = "#ffbe0b";
+        statusEl.textContent = "Платени версии: 5.3 SECURITY (22 EUR) / 6.2 HACKER (33 EUR)";
+      }
+      if (typeof window.openMarauderVersionsModal === "function") {
+        window.openMarauderVersionsModal();
+      }
+    }
+    if (typeof window.saveOfflinePrefs === "function") {
+      window.saveOfflinePrefs();
+    }
+  };
+
 
   function buildOfflineLocalReply(promptText) {
     const q = (promptText || "").trim();
