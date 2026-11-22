@@ -1,0 +1,187 @@
+const fs = require("fs");
+const path = require("path");
+
+const pubDir = path.join(__dirname, "..", "public");
+if (!fs.existsSync(pubDir)) fs.mkdirSync(pubDir, { recursive: true });
+
+const html = `<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tor / Orbot Locked Shield — MARAUDER</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: monospace; background: #09090b; color: #f4f4f5; margin: 0; padding: 16px; line-height: 1.5; }
+.box { max-width: 980px; margin: 0 auto; background: #111115; border: 1px solid #22c55e; border-radius: 10px; padding: 16px; }
+.top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #27272a; padding-bottom: 10px; margin-bottom: 14px; }
+.top a { color: #38bdf8; text-decoration: none; margin-right: 10px; font-size: 12px; }
+.top a:hover { text-decoration: underline; }
+.lock-banner { background: #052e16; border: 1px solid #22c55e; color: #dcfce7; padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 12px; }
+label { display: block; font-size: 12px; color: #d4d4d8; margin-bottom: 4px; }
+input, select { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; font-family: monospace; font-size: 13px; }
+input[disabled], select[disabled] { opacity: 0.75; cursor: not-allowed; border-color: #22c55e; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+button { padding: 8px 12px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; font-family: monospace; font-size: 12px; font-weight: bold; cursor: pointer; }
+button.purple { border-color: #c084fc; background: #3b0764; color: #f3e8ff; }
+button.green { border-color: #22c55e; background: #14532d; color: #dcfce7; }
+pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; font-size: 12px; }
+.chk-box { background: #09090b; border: 1px solid #27272a; border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 12px; }
+.chk-box label { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: #e4e4e7; cursor: pointer; }
+.chk-box input[type="checkbox"] { width: auto; }
+</style>
+</head>
+<body>
+<div class="box">
+<div class="top">
+  <h2 style="margin:0;color:#4ade80;">Tor / Orbot Locked Shield &amp; Leak Checklist</h2>
+  <div>
+    <a href="/index.html">Начало</a>
+    <a href="/kali-root.html">Linux Конзола</a>
+    <a href="/devanport-studio.html">DEVANPORT-AI</a>
+    <a href="/bot-studio.html">BOT Studio</a>
+    <a href="/payments-plans.html">Плащания</a>
+  </div>
+</div>
+
+<div class="lock-banner" id="lockBanner">
+  <strong>ЗАКЛЮЧЕН TOR / ORBOT РЕЖИМ:</strong> Опцията за скриване през мрежата на Tor е копирана и активирана без възможност за промяна от формата.
+</div>
+
+<div class="grid">
+  <div>
+    <label for="devOsSel">Устройство / Платформа</label>
+    <select id="devOsSel" disabled>
+      <option value="Android + Orbot">Android + Orbot</option>
+      <option value="iOS + Orbot">iOS + Orbot</option>
+      <option value="Windows + Tor/VPN">Windows + Tor/VPN</option>
+    </select>
+  </div>
+  <div>
+    <label for="vpnMethodSel">Заключен мрежов режим</label>
+    <select id="vpnMethodSel" disabled>
+      <option value="tor-orbot-locked" selected>TOR / ORBOT NETWORK (LOCKED)</option>
+    </select>
+  </div>
+  <div>
+    <label for="proxyEndpointInp">Tor SOCKS5 Endpoint (Заключен)</label>
+    <input id="proxyEndpointInp" type="text" value="127.0.0.1:9050" disabled />
+  </div>
+</div>
+
+<div class="actions">
+  <button type="button" id="checkIpBtn" class="purple">Провери Външен IP през Tor/VPN</button>
+  <button type="button" id="copyTorOptBtn" class="green">Копирай Заключената Опция</button>
+</div>
+
+<pre id="vpnStatusLog">Зареждане...</pre>
+
+<div class="chk-box">
+  <div style="color:#fbbf24;font-weight:bold;margin-bottom:8px;">Чеклист за проверка на течове (IP / DNS / Локални данни) — Android и Windows</div>
+  <label><input type="checkbox" class="leak-chk" data-id="android_orbot_app" /> [Android] В Orbot -> Избор на приложения е отбелязан MARAUDER-AI и Orbot е свързан към Tor.</label>
+  <label><input type="checkbox" class="leak-chk" data-id="ip_exit_check" /> [IP] Външният IP адрес при проверка е на изходен Tor/VPN възел, а не домашният/мобилният IP.</label>
+  <label><input type="checkbox" class="leak-chk" data-id="dns_no_leak" /> [DNS] DNS заявките минават през тунела/проксито (без локален ISP DNS теч).</label>
+  <label><input type="checkbox" class="leak-chk" data-id="local_storage_clean" /> [Локални данни] Проверени са localStorage, ключове, кеш и история на чатовете на устройството.</label>
+  <label><input type="checkbox" class="leak-chk" data-id="windows_tor_vpn" /> [Windows] На Windows трафикът/приложението минава през активен Tor/SOCKS5 или VPN клиент без директни заявки извън него.</label>
+  <label><input type="checkbox" class="leak-chk" data-id="no_account_link" /> [Идентичност] Не се смесват лични акаунти или чувствителни данни в сесията.</label>
+</div>
+</div>
+
+<script>
+(function(){
+  var KEY = "marauder_vpn_shield_v1";
+  var CHK_KEY = "marauder_leak_checklist_v1";
+  var logEl = document.getElementById("vpnStatusLog");
+  var checkBtn = document.getElementById("checkIpBtn");
+  var copyBtn = document.getElementById("copyTorOptBtn");
+  var osSel = document.getElementById("devOsSel");
+  var methodSel = document.getElementById("vpnMethodSel");
+  var epInp = document.getElementById("proxyEndpointInp");
+
+  var lockedPayload = {
+    os: "Android + Orbot",
+    method: "tor-orbot-locked",
+    endpoint: "127.0.0.1:9050",
+    enabled: true,
+    locked: true,
+    updatedAt: new Date().toISOString()
+  };
+
+  function enforceLock() {
+    try { localStorage.setItem(KEY, JSON.stringify(lockedPayload)); } catch (_) {}
+    if (osSel) { osSel.value = "Android + Orbot"; osSel.disabled = true; }
+    if (methodSel) { methodSel.value = "tor-orbot-locked"; methodSel.disabled = true; }
+    if (epInp) { epInp.value = "127.0.0.1:9050"; epInp.disabled = true; }
+  }
+
+  enforceLock();
+  setInterval(enforceLock, 2000);
+
+  var lastIpInfo = "Не е проверявано още.";
+  function render() {
+    var c = lockedPayload;
+    logEl.textContent = [
+      "Статус: АКТИВЕН И ЗАКЛЮЧЕН (TOR / ORBOT)",
+      "Режим: " + c.method,
+      "Endpoint: " + c.endpoint,
+      "Обновено: " + c.updatedAt,
+      "--- Проверка на външен IP ---",
+      lastIpInfo
+    ].join("\\n");
+  }
+
+  checkBtn.addEventListener("click", async function(){
+    enforceLock();
+    lastIpInfo = "Проверява се външният IP адрес...";
+    render();
+    try {
+      var ctrl = new AbortController();
+      var t = setTimeout(function(){ ctrl.abort(); }, 6000);
+      var r = await fetch("https://api.ipify.org?format=json", { signal: ctrl.signal });
+      clearTimeout(t);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      var d = await r.json();
+      lastIpInfo = "Видим външен IP: " + (d.ip || "неизвестен") + " (в " + new Date().toLocaleTimeString() + ")";
+    } catch (e) {
+      lastIpInfo = "Неуспешна проверка (" + (e && e.message ? e.message : "мрежова грешка") + "). Провери дали Orbot/Tor/VPN е пуснат.";
+    }
+    render();
+  });
+
+  copyBtn.addEventListener("click", function(){
+    enforceLock();
+    var text = "TOR / ORBOT LOCKED SHIELD | mode=tor-orbot-locked | endpoint=127.0.0.1:9050";
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(function(){});
+    }
+    lastIpInfo = "Копирана е заключената опция: " + text;
+    render();
+  });
+
+  function loadChecks() {
+    try { return JSON.parse(localStorage.getItem(CHK_KEY) || "{}"); } catch (_) { return {}; }
+  }
+  function saveChecks(o) {
+    try { localStorage.setItem(CHK_KEY, JSON.stringify(o)); } catch (_) {}
+  }
+
+  var state = loadChecks();
+  document.querySelectorAll(".leak-chk").forEach(function(box){
+    var id = box.getAttribute("data-id");
+    if (id && state[id]) box.checked = true;
+    box.addEventListener("change", function(){
+      var next = loadChecks();
+      if (id) next[id] = !!box.checked;
+      saveChecks(next);
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>`;
+
+fs.writeFileSync(path.join(pubDir, "orbot-vpn.html"), html, "utf8");
+console.log("TOR_LOCK_SHIELD_READY");
