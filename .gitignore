@@ -1,2 +1,12 @@
-keys_100.txt
-render_env_keys.txt
+node_modules/
+logs/
+*.log
+.env
+.env.*
+!.env.example
+releases/
+release-manifest.json
+locked-core/
+additions/
+.DS_Store
+Thumbs.db
