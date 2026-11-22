@@ -8,42 +8,136 @@
     body { font-family: monospace; background: #09090b; color: #f4f4f5; margin: 0; padding: 18px; line-height: 1.5; }
     .box { max-width: 920px; margin: 0 auto; background: #111115; border: 1px solid #facc15; border-radius: 10px; padding: 16px; }
     .top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #27272a; padding-bottom: 10px; margin-bottom: 14px; }
-    a { color: #38bdf8; text-decoration: none; margin-right: 10px; }
+    a { color: #38bdf8; text-decoration: none; margin-right: 10px; font-size: 12px; }
     a:hover { text-decoration: underline; }
-    input, button { font-family: monospace; }
-    button { padding: 7px 12px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .card { border: 1px solid #27272a; background: #09090b; border-radius: 8px; padding: 10px; }
+    label { display: block; font-size: 12px; color: #d4d4d8; margin-bottom: 4px; }
+    input, select { width: 100%; box-sizing: border-box; padding: 7px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; font-family: monospace; }
+    button { padding: 7px 12px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; font-family: monospace; margin-right: 6px; margin-bottom: 6px; }
+    button.active-pay { border-color: #22c55e; background: #14532d; color: #dcfce7; }
     pre { background: #09090b; border: 1px solid #27272a; padding: 10px; border-radius: 8px; white-space: pre-wrap; }
   </style>
 </head>
 <body>
   <div class="box">
     <div class="top">
-      <h2 style="margin:0;color:#facc15;">Нива & Начини на Плащане</h2>
+      <h2 style="margin:0;color:#facc15;">Нива &amp; Начини на Плащане</h2>
       <div>
         <a href="/index.html">Начало</a>
         <a href="/kali-root.html">Linux Конзола</a>
         <a href="/mining-optin.html">Pool &amp; 24h</a>
         <a href="/devanport-studio.html">DEVANPORT-AI</a>
         <a href="/red-secret-chat.html">Secret Chat + QR</a>
-        <a href="/payments-plans.html">Плащания</a>
         <a href="/downloads.html">Downloads</a>
         <a href="/tools-hub.html">Модули</a>
       </div>
     </div>
-    
-  <p style="font-size:12px;color:#d4d4d8;">Отделна страница за нивата (Free, Copper, Silver, Gold) и методите за плащане (Keper, PayPal, Telegram Stars, TON).</p>
-  <pre>Нива:
-- Free: до 1 бот
-- Copper: до 3 бота
-- Silver: до 10 бота
-- Gold: до 50 бота
 
-Методи за плащане:
-- Keper (Keplr)
-- PayPal
-- Telegram Stars
-- TON</pre>
-  
+    <div class="grid">
+      <div class="card"><strong>Free</strong><br><span style="font-size:12px;color:#a1a1aa;">до 1 бот • базов достъп</span></div>
+      <div class="card"><strong>Copper</strong><br><span style="font-size:12px;color:#d97706;">до 3 бота • разширени опции</span></div>
+      <div class="card"><strong>Silver</strong><br><span style="font-size:12px;color:#cbd5e1;">до 10 бота • приоритет</span></div>
+      <div class="card"><strong>Gold</strong><br><span style="font-size:12px;color:#facc15;">до 50 бота • пълен пакет</span></div>
+    </div>
+
+    <div style="margin-bottom:12px;">
+      <div style="font-size:12px;color:#d4d4d8;margin-bottom:6px;">Избери начин на плащане:</div>
+      <button type="button" class="pay-btn active-pay" data-method="Keper (Keplr)">Keper (Keplr)</button>
+      <button type="button" class="pay-btn" data-method="PayPal">PayPal</button>
+      <button type="button" class="pay-btn" data-method="Telegram Stars">Telegram Stars</button>
+      <button type="button" class="pay-btn" data-method="TON">TON</button>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="planSel">Избери ниво:</label>
+        <select id="planSel">
+          <option value="Free (1 bot)">Free (1 bot)</option>
+          <option value="Copper (3 bots)">Copper (3 bots)</option>
+          <option value="Silver (10 bots)">Silver (10 bots)</option>
+          <option value="Gold (50 bots)" selected>Gold (50 bots)</option>
+        </select>
+      </div>
+      <div>
+        <label for="refInp">Адрес / @username / Бележка:</label>
+        <input id="refInp" type="text" placeholder="напр. @admiralerror или wallet/бележка" />
+      </div>
+    </div>
+
+    <div>
+      <button type="button" id="genOrderBtn" style="border-color:#22c55e;background:#14532d;">Създай Заявка / Код</button>
+      <button type="button" id="copyOrderBtn" style="border-color:#38bdf8;background:#0c4a6e;">Копирай Последната</button>
+      <button type="button" id="clearOrdersBtn" style="border-color:#ef4444;background:#7f1d1d;">Изчисти Историята</button>
+    </div>
+
+    <pre id="ordersLog">Зареждане на заявките...</pre>
   </div>
+
+  <script>
+    (function(){
+      var key = "marauder_payments_orders_v1";
+      var selectedMethod = "Keper (Keplr)";
+      var payBtns = document.querySelectorAll(".pay-btn");
+      var planSel = document.getElementById("planSel");
+      var refInp = document.getElementById("refInp");
+      var genBtn = document.getElementById("genOrderBtn");
+      var copyBtn = document.getElementById("copyOrderBtn");
+      var clrBtn = document.getElementById("clearOrdersBtn");
+      var logEl = document.getElementById("ordersLog");
+
+      payBtns.forEach(function(b){
+        b.addEventListener("click", function(){
+          payBtns.forEach(function(x){ x.classList.remove("active-pay"); });
+          b.classList.add("active-pay");
+          selectedMethod = b.getAttribute("data-method") || "Keper (Keplr)";
+        });
+      });
+
+      function loadOrders(){ try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch(_){ return []; } }
+      function saveOrders(a){ try { localStorage.setItem(key, JSON.stringify(a)); } catch(_){ } }
+      function render(){
+        var a = loadOrders();
+        if (!a.length) {
+          logEl.textContent = "Няма създадени заявки още. Избери метод, ниво и натисни Създай Заявка / Код.";
+          return;
+        }
+        logEl.textContent = a.map(function(o, i){
+          return "#" + (a.length - i) + " | Код: " + o.code + " | Метод: " + o.method + " | Ниво: " + o.plan + (o.ref ? " | Данни: " + o.ref : "") + " | " + o.time;
+        }).join("\n");
+      }
+
+      genBtn.addEventListener("click", function(){
+        var code = "RST-PAY-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+        var item = {
+          code: code,
+          method: selectedMethod,
+          plan: planSel ? planSel.value : "Gold (50 bots)",
+          ref: (refInp && refInp.value || "").trim(),
+          time: new Date().toLocaleString()
+        };
+        var a = loadOrders();
+        a.unshift(item);
+        saveOrders(a.slice(0, 25));
+        if (refInp) refInp.value = "";
+        render();
+      });
+
+      copyBtn.addEventListener("click", function(){
+        var a = loadOrders();
+        if (!a.length) return;
+        var last = a[0];
+        var txt = "Код: " + last.code + " | Метод: " + last.method + " | Ниво: " + last.plan + (last.ref ? " | " + last.ref : "");
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(function(){});
+      });
+
+      clrBtn.addEventListener("click", function(){
+        saveOrders([]);
+        render();
+      });
+
+      render();
+    })();
+  </script>
 </body>
 </html>
