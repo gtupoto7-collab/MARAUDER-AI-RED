@@ -2600,7 +2600,6 @@ window.addEventListener("DOMContentLoaded", function() {
       white-space: nowrap;
     }
     body.marauder-options-collapsed [data-mobile-collapsible="1"],
-    body.marauder-options-collapsed #marauderTierBox,
     body.marauder-options-collapsed #marauderLiveRoomPanel {
       display: none !important;
     }
@@ -2655,6 +2654,144 @@ window.addEventListener("DOMContentLoaded", function() {
       document.body.insertBefore(bar, document.body.firstChild);
     }
     applySavedCompact();
+  });
+})();
+</script>
+
+<div id="marauderMobileDonatePanel" style="margin:8px 0;background:#101622;border:1px solid #2e3d57;border-radius:10px;padding:10px;color:#eef3f7;font-size:12px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+    <strong style="color:#ffc439;font-size:13px;">Подкрепа / Нива (Copper • Silver • Gold • Годишен)</strong>
+    <span id="marauderMobileTierStatus" style="padding:2px 8px;border-radius:6px;background:#172336;color:#19f58b;font-weight:700;font-size:11px;">Безплатно: 1 sw + 1 Kali</span>
+  </div>
+  <div style="color:#b9c8d8;font-size:11px;margin-bottom:8px;">
+    Първо 1 софтуерен код + 1 Kali команда безплатно. За второ и следващо генериране:
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(130px,1fr));gap:6px;margin-bottom:8px;">
+    <button type="button" onclick="selectMarauderTier('copper')" style="text-align:left;padding:7px;border-radius:8px;border:1px solid #cd7f32;background:#1c140d;color:#ffd8a8;cursor:pointer;font-size:11px;">
+      <strong>Copper — мин. 5 EUR</strong><br><span>+2 софтуера/кода + 2 команди / 24ч (1 мес.)</span>
+    </button>
+    <button type="button" onclick="selectMarauderTier('silver')" style="text-align:left;padding:7px;border-radius:8px;border:1px solid #9fb3c8;background:#131c26;color:#e4eef8;cursor:pointer;font-size:11px;">
+      <strong>Silver — 25 EUR</strong><br><span>25 софтуера/кода + 25 команди / 24ч (1 мес.)</span>
+    </button>
+    <button type="button" onclick="selectMarauderTier('gold')" style="text-align:left;padding:7px;border-radius:8px;border:1px solid #ffc439;background:#231d0c;color:#ffe79e;cursor:pointer;font-size:11px;">
+      <strong>Gold — 50 EUR</strong><br><span>300 софтуера/кода + 300 команди / 24ч + абонамент</span>
+    </button>
+    <button type="button" onclick="selectMarauderTier('annual')" style="text-align:left;padding:7px;border-radius:8px;border:1px solid #19f58b;background:#0f231a;color:#9ff7cb;cursor:pointer;font-size:11px;">
+      <strong>Годишен — 150 EUR</strong><br><span>300/24ч макс + бонус 2г. абонамент</span>
+    </button>
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:#0a0f17;border:1px solid #212c3e;border-radius:8px;padding:7px;">
+    <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer" style="padding:6px 10px;border-radius:6px;background:#ffc439;color:#111;font-weight:800;text-decoration:none;font-size:11px;">PayPal плащане</a>
+    <button type="button" onclick="navigator.clipboard?.writeText('UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H');const m=document.getElementById('marauderMobileDonateMsg');if(m)m.textContent='Копиран Keeper / TON адрес: UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H';" style="padding:6px 9px;border-radius:6px;border:1px solid #19f58b;background:#12241b;color:#19f58b;font-weight:700;cursor:pointer;font-size:11px;">Keeper / TON адрес</button>
+    <input id="marauderMobileCodeInput" type="text" placeholder="Код за активация" style="flex:1;min-width:110px;padding:6px 8px;border-radius:6px;border:1px solid #2b3548;background:#141c2b;color:#fff;font-size:11px;">
+    <button type="button" onclick="const src=document.getElementById('marauderMobileCodeInput');const dst=document.getElementById('marauderActivationCode');if(src&&dst){dst.value=src.value;}if(typeof applyActivationCode==='function')applyActivationCode();" style="padding:6px 9px;border-radius:6px;border:1px solid #19f58b;background:#12241b;color:#19f58b;font-weight:700;cursor:pointer;font-size:11px;">Активирай</button>
+  </div>
+  <div style="margin-top:5px;font-size:10px;color:#93a6ba;word-break:break-all;">TON / Keeper: <code style="color:#19f58b;">UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H</code></div>
+  <div id="marauderMobileDonateMsg" style="margin-top:6px;color:#ffc439;font-size:11px;"></div>
+</div>
+<script>
+(function() {
+  localStorage.setItem("marauder_mobile_compact_v1", "0");
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.classList.remove("marauder-options-collapsed");
+    const panel = document.getElementById("marauderMobileDonatePanel");
+    const bar = document.getElementById("marauderCompactToolbar");
+    if (panel) {
+      if (bar && bar.parentElement === document.body) {
+        bar.insertAdjacentElement("afterend", panel);
+      } else if (panel.parentElement !== document.body) {
+        document.body.insertBefore(panel, document.body.firstChild);
+      }
+    }
+  });
+})();
+</script>
+
+<style id="marauderUnifiedLayoutStyle">
+  #marauderUnifiedBar,
+  #marauderUnifiedBar *,
+  #marauderTierBox,
+  #marauderTierBox *,
+  #marauderMobileDonatePanel,
+  #marauderMobileDonatePanel * {
+    box-sizing: border-box;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  #marauderUnifiedBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 8px 0;
+    padding: 8px 10px;
+    background: #0d131d;
+    border: 1px solid #2b3a52;
+    border-radius: 10px;
+  }
+  #marauderUnifiedBar a,
+  #marauderUnifiedBar button {
+    padding: 7px 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+  .marauder-tier-grid-unified {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 768px), (pointer: coarse) {
+    .marauder-tier-grid-unified {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    body.marauder-hide-donate-mobile #marauderMobileDonatePanel,
+    body.marauder-hide-donate-mobile #marauderTierBox {
+      display: none !important;
+    }
+  }
+</style>
+
+<div id="marauderUnifiedBar">
+  <a href="./secret-chat.html" style="background:#181326;color:#e3c7ff;border:1px solid #8b5cf6;">[ RED SECRET CHAT ]</a>
+  <button type="button" onclick="window.scrollToMarauderDonate()" style="background:#241914;color:#ffc439;border:1px solid #ffc439;">▾ DARENIYA (PayPal / TON)</button>
+  <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer" style="background:#ffc439;color:#111;border:1px solid #ffc439;">PayPal</a>
+  <button type="button" onclick="navigator.clipboard?.writeText('UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H');window.setMarauderUnifiedNotice('Копиран TON / Keeper адрес: UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H');" style="background:#102219;color:#19f58b;border:1px solid #19f58b;">Keeper / TON</button>
+  <button type="button" onclick="window.toggleMarauderDonateVisibility()" style="background:#141c2b;color:#b8c8dc;border:1px solid #33425c;">Скрий / Покажи нивата</button>
+  <span id="marauderUnifiedNotice" style="font-size:11px;color:#ffc439;"></span>
+</div>
+
+<script>
+(function() {
+  window.setMarauderUnifiedNotice = function(msg) {
+    const el = document.getElementById("marauderUnifiedNotice");
+    if (el) el.textContent = msg || "";
+  };
+  window.scrollToMarauderDonate = function() {
+    document.body.classList.remove("marauder-hide-donate-mobile");
+    const target = document.getElementById("marauderMobileDonatePanel") || document.getElementById("marauderTierBox");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
+  window.toggleMarauderDonateVisibility = function() {
+    const hidden = document.body.classList.toggle("marauder-hide-donate-mobile");
+    window.setMarauderUnifiedNotice(hidden ? "Нивата са скрити за повече място в чата." : "Нивата са показани.");
+  };
+  document.addEventListener("DOMContentLoaded", function() {
+    const bar = document.getElementById("marauderUnifiedBar");
+    if (bar && bar.parentElement !== document.body) {
+      document.body.insertBefore(bar, document.body.firstChild);
+    }
+    const mobilePanel = document.getElementById("marauderMobileDonatePanel");
+    if (mobilePanel && bar && bar.parentElement === document.body) {
+      bar.insertAdjacentElement("afterend", mobilePanel);
+    }
+    document.querySelectorAll("#marauderTierBox > div:nth-of-type(3), #marauderMobileDonatePanel > div:nth-of-type(3)").forEach(g => {
+      g.classList.add("marauder-tier-grid-unified");
+    });
   });
 })();
 </script>
