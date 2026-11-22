@@ -3,36 +3,68 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MARAUDER — Pool Live & 24h Yield</title>
+  <title>MARAUDER — Pool & Reward Dashboard</title>
   <style>
-    body { font-family: monospace; background: #09090b; color: #f4f4f5; padding: 20px; line-height: 1.5; }
-    .box { max-width: 860px; margin: 0 auto; border: 1px solid #3f3f46; border-radius: 8px; padding: 16px; background: #111115; }
-    .warn { border: 1px solid #f59e0b; background: #291d06; color: #fde68a; padding: 12px; border-radius: 6px; margin-bottom: 14px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 12px; }
+    body { font-family: monospace; background: #09090b; color: #f4f4f5; padding: 18px; line-height: 1.5; }
+    .box { max-width: 900px; margin: 0 auto; border: 1px solid #3f3f46; border-radius: 10px; padding: 16px; background: #111115; }
+    .hdr { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #27272a; padding-bottom: 10px; margin-bottom: 14px; }
+    .badge { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: bold; border: 1px solid #52525b; background: #18181b; }
+    .warn { border: 1px solid #f59e0b; background: #291d06; color: #fde68a; padding: 11px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .card { border: 1px solid #27272a; background: #09090b; border-radius: 8px; padding: 12px; }
+    .card .lbl { font-size: 11px; color: #a1a1aa; }
+    .card .val { font-size: 16px; font-weight: bold; color: #22c55e; margin-top: 4px; word-break: break-word; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 12px; }
     label { display: block; font-size: 12px; color: #d4d4d8; margin-bottom: 4px; }
     input { width: 100%; box-sizing: border-box; padding: 8px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; }
-    button { padding: 8px 14px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; margin-right: 8px; margin-bottom: 8px; }
+    button { padding: 9px 14px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; margin-right: 8px; margin-bottom: 8px; }
     button.start { border-color: #22c55e; background: #14532d; }
     button.stop { border-color: #ef4444; background: #7f1d1d; }
     button.check { border-color: #38bdf8; background: #0c4a6e; }
-    pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 6px; min-height: 180px; white-space: pre-wrap; }
+    pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 8px; min-height: 160px; white-space: pre-wrap; }
     a { color: #38bdf8; }
   </style>
 </head>
 <body>
   <div class="box">
-    <h2>MARAUDER — Pool Статус & 24h Добив (EUR)</h2>
+    <div class="hdr">
+      <div>
+        <h2 style="margin:0;">MARAUDER — Pool & Reward / 24h Panel</h2>
+        <div style="font-size:12px;color:#a1a1aa;">Доброволен контрол • Външен Pool API • 24h калкулация</div>
+      </div>
+      <span id="statusBadge" class="badge">СПРЯНО</span>
+    </div>
+
     <div class="warn">
-      Внимание: Уеб страницата не генерира средства сама и не съхранява private ключове. Реалните средства зависят от пула/мрежата и вашия worker. Копаенето на телефон/браузър има ниска ефективност, хаби батерия и повишава температурата; не се изпълнява върху сървъри на Render.
+      Бележка: Страницата не извършва скрито копаене и не товари сървърите на Render. Реалните средства зависят от външен пул/сървър и зададения публичен wallet/worker; копаенето на телефон има ниска ефективност и хаби батерия.
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="lbl">ТЕКУЩ СТАТУС / ЦИКЛИ</div>
+        <div id="cStatus" class="val">OFFLINE • 0</div>
+      </div>
+      <div class="card">
+        <div class="lbl">24H БРУТО (EUR)</div>
+        <div id="cGrossEur" class="val">0.0000 EUR</div>
+      </div>
+      <div class="card">
+        <div class="lbl">24H НЕТО (EUR)</div>
+        <div id="cNetEur" class="val">0.0000 EUR</div>
+      </div>
+      <div class="card">
+        <div class="lbl">ПУБЛИЧЕН WALLET</div>
+        <div id="cWallet" class="val" style="color:#38bdf8;font-size:13px;">непосочен</div>
+      </div>
     </div>
 
     <div class="grid">
       <div>
-        <label for="walletInp">Публичен Wallet / Worker:</label>
-        <input id="walletInp" type="text" placeholder="Публичен адрес или worker" />
+        <label for="walletInp">Публичен Wallet / Worker (без private key):</label>
+        <input id="walletInp" type="text" placeholder="Публичен адрес или worker име" />
       </div>
       <div>
-        <label for="poolApiInp">Pool API URL (HTTPS JSON):</label>
+        <label for="poolApiInp">Pool / Status API URL (HTTPS JSON):</label>
         <input id="poolApiInp" type="text" placeholder="https://api.example-pool.org/stats" />
       </div>
     </div>
@@ -60,10 +92,11 @@
     </div>
 
     <div>
-      <button id="btnCheckPool" class="check" type="button">Провери Pool и сметни 24ч</button>
+      <button id="btnCheckPool" class="check" type="button">Провери и сметни 24ч</button>
       <button id="btnStartOptIn" class="start" type="button">Start (Доброволно)</button>
       <button id="btnStopOptIn" class="stop" type="button">Stop</button>
-      <a href="/kali-root.html">Обратно към конзолата</a>
+      <a href="/index.html" style="margin-right:10px;">Начало</a>
+      <a href="/kali-root.html">Конзола</a>
     </div>
 
     <pre id="optLog">Статус: СПРЯНО (изчаква изрично действие на потребителя).</pre>
@@ -76,6 +109,12 @@
       var ticks = 0;
 
       var logEl = document.getElementById("optLog");
+      var badgeEl = document.getElementById("statusBadge");
+      var cStatusEl = document.getElementById("cStatus");
+      var cGrossEl = document.getElementById("cGrossEur");
+      var cNetEl = document.getElementById("cNetEur");
+      var cWalletEl = document.getElementById("cWallet");
+
       var wEl = document.getElementById("walletInp");
       var pEl = document.getElementById("poolApiInp");
       var hEl = document.getElementById("hashInp");
@@ -134,10 +173,19 @@
         var grossCoins = hr * cph;
         var netCoins = grossCoins * (1 - feePct / 100);
         var grossEur = grossCoins * price;
-        var netEurBeforePower = netCoins * price;
-        var netEur = netEurBeforePower - powerEur;
+        var netEur = (netCoins * price) - powerEur;
 
-        return { hr, grossCoins, netCoins, grossEur, netEur, powerEur };
+        return { hr, grossCoins, netCoins, grossEur, netEur };
+      }
+
+      function updateCards(w, modeLabel, c) {
+        cWalletEl.textContent = w;
+        cStatusEl.textContent = (running ? "ACTIVE" : "IDLE") + " • " + ticks;
+        cGrossEl.textContent = c.grossEur.toFixed(4) + " EUR";
+        cNetEl.textContent = c.netEur.toFixed(4) + " EUR";
+        badgeEl.textContent = modeLabel;
+        badgeEl.style.borderColor = running ? "#22c55e" : "#52525b";
+        badgeEl.style.color = running ? "#86efac" : "#f4f4f5";
       }
 
       async function refreshView(modeLabel) {
@@ -161,37 +209,41 @@
         }
 
         var c = calc24h();
-        var summary = [
-          "Статус: " + modeLabel + " | Цикли: " + ticks,
-          "Worker/Wallet: " + w,
-          "24h добив (бруто): " + c.grossCoins.toFixed(8) + " монети (~" + c.grossEur.toFixed(4) + " EUR)",
-          "24h добив (нето след такса и ток): " + c.netCoins.toFixed(8) + " монети (~" + c.netEur.toFixed(4) + " EUR)"
-        ].join("\n");
+        updateCards(w, modeLabel, c);
 
-        logEl.textContent = summary + "\n---\n" + poolInfo;
+        logEl.textContent = [
+          "Статус: " + modeLabel + " | Цикли: " + ticks,
+          "Wallet/Worker: " + w,
+          "24h бруто: " + c.grossCoins.toFixed(8) + " монети (~" + c.grossEur.toFixed(4) + " EUR)",
+          "24h нето: " + c.netCoins.toFixed(8) + " монети (~" + c.netEur.toFixed(4) + " EUR)",
+          "---",
+          poolInfo
+        ].join("\n");
       }
 
       document.getElementById("btnCheckPool").addEventListener("click", async function(){
-        await refreshView("ПРОВЕРКА + 24H ИЗЧИСЛЕНИЕ");
+        await refreshView("ПРОВЕРКА");
       });
 
       document.getElementById("btnStartOptIn").addEventListener("click", async function(){
         if (running) return;
         running = true;
         ticks = 0;
-        await refreshView("АКТИВНО (доброволно)");
+        await refreshView("АКТИВНО");
         timer = setInterval(async function(){
           if (!running) return;
           ticks += 1;
-          await refreshView("АКТИВНО (доброволно)");
+          await refreshView("АКТИВНО");
         }, 5000);
       });
 
       document.getElementById("btnStopOptIn").addEventListener("click", function(){
         running = false;
         if (timer) { clearInterval(timer); timer = null; }
+        var w = (wEl.value || "").trim() || "непосочен-worker";
         var c = calc24h();
-        logEl.textContent = "Статус: СПРЯНО | Цикли: " + ticks + "\nПоследна 24h оценка: ~" + c.netEur.toFixed(4) + " EUR";
+        updateCards(w, "СПРЯНО", c);
+        logEl.textContent = "Статус: СПРЯНО | Цикли: " + ticks + "\nПоследна 24h нето оценка: ~" + c.netEur.toFixed(4) + " EUR";
       });
     })();
   </script>
