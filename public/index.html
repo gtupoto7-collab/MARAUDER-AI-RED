@@ -1082,5 +1082,178 @@
     renderChatSelect();
     renderMessages();
   </script>
+
+<!-- RED_SECRET_CHAT_QR_MODULE -->
+<div id="redSecretModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.82);padding:16px;overflow:auto;">
+  <div style="max-width:740px;margin:24px auto;background:#09090b;border:1px solid #ef4444;border-radius:10px;padding:16px;color:#f4f4f5;font-family:monospace;">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #27272a;padding-bottom:8px;margin-bottom:12px;">
+      <strong style="color:#f87171;">[ RED SECRET CHAT • QR &amp; TOOLS ]</strong>
+      <button type="button" id="closeSecretModalBtn" style="padding:4px 10px;border-radius:6px;border:1px solid #52525b;background:#18181b;color:#fff;cursor:pointer;">Затвори</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:12px;">
+      <div style="border:1px solid #27272a;border-radius:8px;padding:10px;background:#111115;">
+        <div style="font-size:12px;color:#fca5a5;margin-bottom:6px;">QR Генератор за Секретен Чат / Код</div>
+        <input id="qrInputText" type="text" placeholder="Въведи текст, ключ или линк за QR..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
+        <button type="button" id="btnGenQr" style="padding:6px 12px;border-radius:6px;border:1px solid #ef4444;background:#7f1d1d;color:#fff;font-weight:bold;cursor:pointer;margin-right:6px;">Генерирай QR</button>
+        <button type="button" id="btnCopyQrText" style="padding:6px 12px;border-radius:6px;border:1px solid #52525b;background:#18181b;color:#fff;cursor:pointer;">Копирай</button>
+        <div id="qrPreviewWrap" style="margin-top:10px;padding:10px;background:#ffffff;border-radius:8px;display:inline-block;min-height:96px;min-width:96px;">
+          <canvas id="qrCanvas" width="160" height="160"></canvas>
+        </div>
+      </div>
+
+      <div style="border:1px solid #27272a;border-radius:8px;padding:10px;background:#111115;">
+        <div style="font-size:12px;color:#86efac;margin-bottom:6px;">Секретни Съобщения &amp; Други Опции</div>
+        <input id="secretMsgInp" type="text" placeholder="Напиши секретно съобщение..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
+        <button type="button" id="btnSendSecretMsg" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:bold;cursor:pointer;margin-right:6px;margin-bottom:6px;">Добави</button>
+        <button type="button" id="btnMakeInviteCode" style="padding:6px 10px;border-radius:6px;border:1px solid #38bdf8;background:#0c4a6e;color:#fff;cursor:pointer;margin-right:6px;margin-bottom:6px;">Нов Код</button>
+        <button type="button" id="btnClearSecretMsgs" style="padding:6px 10px;border-radius:6px;border:1px solid #ef4444;background:#450a0a;color:#fecaca;cursor:pointer;margin-bottom:6px;">Изчисти</button>
+        <pre id="secretMsgsLog" style="background:#09090b;border:1px solid #27272a;padding:8px;border-radius:6px;max-height:140px;overflow:auto;white-space:pre-wrap;margin:6px 0 0 0;font-size:11px;"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  (function(){
+    var modal = document.getElementById("redSecretModal");
+    var closeBtn = document.getElementById("closeSecretModalBtn");
+    var qrInp = document.getElementById("qrInputText");
+    var genQrBtn = document.getElementById("btnGenQr");
+    var copyQrBtn = document.getElementById("btnCopyQrText");
+    var canvas = document.getElementById("qrCanvas");
+    var msgInp = document.getElementById("secretMsgInp");
+    var sendBtn = document.getElementById("btnSendSecretMsg");
+    var invBtn = document.getElementById("btnMakeInviteCode");
+    var clrBtn = document.getElementById("btnClearSecretMsgs");
+    var logEl = document.getElementById("secretMsgsLog");
+    var storageKey = "marauder_red_secret_msgs_v1";
+
+    function openSecretPanel() {
+      if (modal) {
+        modal.style.display = "block";
+        renderMsgs();
+        drawQr(qrInp && qrInp.value ? qrInp.value : "RED-SECRET-CHAT");
+      }
+    }
+    window.openRedSecretPanel = openSecretPanel;
+
+    if (closeBtn && modal) {
+      closeBtn.addEventListener("click", function(){ modal.style.display = "none"; });
+      modal.addEventListener("click", function(ev){ if (ev.target === modal) modal.style.display = "none"; });
+    }
+
+    function drawQr(text) {
+      if (!canvas) return;
+      var ctx = canvas.getContext("2d");
+      var val = String(text || "RED-SECRET-CHAT");
+      var size = 21;
+      var cell = Math.floor(canvas.width / size);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      var hash = 2166136261;
+      for (var i = 0; i < val.length; i++) {
+        hash ^= val.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+
+      function isFinder(r, c) {
+        return (r < 7 && c < 7) || (r < 7 && c >= size - 7) || (r >= size - 7 && c < 7);
+      }
+
+      ctx.fillStyle = "#09090b";
+      for (var r = 0; r < size; r++) {
+        for (var c = 0; c < size; c++) {
+          var dark = false;
+          if (isFinder(r, c)) {
+            var lr = r < 7 ? r : r - (size - 7);
+            var lc = c < 7 ? c : c - (size - 7);
+            dark = (lr === 0 || lr === 6 || lc === 0 || lc === 6 || (lr >= 2 && lr <= 4 && lc >= 2 && lc <= 4));
+          } else {
+            var bitSeed = (hash ^ (r * 73856093) ^ (c * 19349663) ^ val.charCodeAt(r % val.length));
+            dark = ((bitSeed >>> ((r + c) % 16)) & 1) === 1;
+          }
+          if (dark) {
+            ctx.fillRect(c * cell, r * cell, cell, cell);
+          }
+        }
+      }
+    }
+
+    if (genQrBtn) {
+      genQrBtn.addEventListener("click", function(){
+        var txt = (qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT";
+        drawQr(txt);
+      });
+    }
+
+    if (copyQrBtn) {
+      copyQrBtn.addEventListener("click", function(){
+        var txt = (qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT";
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).catch(function(){});
+        }
+      });
+    }
+
+    function loadMsgs() {
+      try { return JSON.parse(localStorage.getItem(storageKey) || "[]"); } catch (_) { return []; }
+    }
+    function saveMsgs(arr) {
+      try { localStorage.setItem(storageKey, JSON.stringify(arr)); } catch (_) {}
+    }
+    function renderMsgs() {
+      if (!logEl) return;
+      var arr = loadMsgs();
+      logEl.textContent = arr.length ? arr.join("
+") : "Няма запазени секретни записи.";
+    }
+
+    if (sendBtn) {
+      sendBtn.addEventListener("click", function(){
+        var t = (msgInp && msgInp.value || "").trim();
+        if (!t) return;
+        var arr = loadMsgs();
+        arr.push("[" + new Date().toLocaleTimeString() + "] " + t);
+        saveMsgs(arr.slice(-40));
+        if (msgInp) msgInp.value = "";
+        renderMsgs();
+      });
+    }
+
+    if (invBtn) {
+      invBtn.addEventListener("click", function(){
+        var code = "RED-KEY-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+        if (qrInp) qrInp.value = code;
+        drawQr(code);
+        var arr = loadMsgs();
+        arr.push("[" + new Date().toLocaleTimeString() + "] Генериран код: " + code);
+        saveMsgs(arr.slice(-40));
+        renderMsgs();
+      });
+    }
+
+    if (clrBtn) {
+      clrBtn.addEventListener("click", function(){
+        saveMsgs([]);
+        renderMsgs();
+      });
+    }
+
+    document.addEventListener("click", function(ev){
+      var el = ev.target && ev.target.closest ? ev.target.closest("button,a") : null;
+      if (!el) return;
+      var id = el.id || "";
+      var txt = (el.textContent || "");
+      if (id === "secretBtn" || txt.indexOf("RED SECRET CHAT") !== -1) {
+        if (!el.hasAttribute("data-direct-secret-pass")) {
+          ev.preventDefault();
+          openSecretPanel();
+        }
+      }
+    });
+  })();
+</script>
+<!-- /RED_SECRET_CHAT_QR_MODULE -->
 </body>
 </html>
