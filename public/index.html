@@ -1664,6 +1664,7 @@ run_${safeIdent(nameRaw)}();
         <p style="margin:0;color:#f2e8f7;">
           VPN, WireGuard и Orbot (Tor) помагат за скриване на IP адреса и повишават защитата на връзката, но <strong>нито уеб чатът, нито VPN/Tor гарантират 100% anonimnost ili neprosledimost</strong> при мрежов анализ, компрометирано устройство или правно разследване, както и не могат да предотвратят запазване или скрийншоти от другия участник.
         </p>
+      <a id="paypalDonateLink" href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;padding:10px;border-radius:8px;background:#ffc439;color:#111;font-weight:800;text-decoration:none;margin-bottom:10px;">Plashtane s PayPal</a>
       </section>
 
       <section style="background:#191430;border:1px solid #35295c;border-radius:10px;padding:14px;">
@@ -2044,21 +2045,35 @@ window.addEventListener("DOMContentLoaded", function() {
 </script>
 <!-- END MARAUDER MODEL/VERSION TOGGLE ON BUTTON CLICK -->
 
-  <div id="indexDonateModal" style="display:none;position:fixed;inset:0;background:rgba(5,7,9,0.92);z-index:1000;align-items:center;justify-content:center;padding:16px;">
-    <div style="width:100%;max-width:420px;background:#0e1318;border:1px solid #23303d;border-radius:12px;padding:18px;color:#eef3f7;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <strong style="color:#19f58b;">Podkrepq / Dareniq (TON)</strong>
-        <button type="button" onclick="document.getElementById('indexDonateModal').style.display='none'" style="background:#141b22;color:#eef3f7;border:1px solid #23303d;border-radius:6px;padding:4px 8px;cursor:pointer;">✕</button>
+  
+  </div>
+
+<button id="idxDonateOpenBtn" type="button" onclick="document.getElementById('idxDonateModal').style.display='flex'" style="padding:7px 12px;border-radius:8px;border:1px solid #19f58b;background:#0e1318;color:#19f58b;font-weight:700;font-size:12px;cursor:pointer;">
+  ♥ DARENIYA
+</button>
+
+<div id="idxDonateModal" style="display:none;position:fixed;inset:0;background:rgba(5,7,9,0.92);z-index:1000;align-items:center;justify-content:center;padding:16px;">
+  <div style="width:100%;max-width:440px;background:#0e1318;border:1px solid #23303d;border-radius:12px;padding:18px;color:#eef3f7;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <strong style="color:#19f58b;">Podkrepq / Dareniq — RED SOFTWARE TEAM</strong>
+      <button type="button" onclick="document.getElementById('idxDonateModal').style.display='none'" style="background:#141b22;color:#eef3f7;border:1px solid #23303d;border-radius:6px;padding:4px 8px;cursor:pointer;">✕</button>
+    </div>
+    <p style="font-size:12px;color:#8c9ba8;margin-top:0;">
+      Dobrovolna podkrepq za razrabotkata. Sredstvata postapvat direktno v posochenite metodi.
+    </p>
+    <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;padding:10px;border-radius:8px;background:#ffc439;color:#111;font-weight:800;text-decoration:none;margin-bottom:12px;">
+      💳 Plashtane s PayPal
+    </a>
+    <div style="font-size:12px;background:#141b22;border:1px solid #23303d;border-radius:8px;padding:10px;">
+      <div><strong>TON adres (samo mrezha TON):</strong></div>
+      <div id="idxDonateTonAddrText" style="word-break:break-all;color:#19f58b;margin-top:4px;">UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+        <button type="button" onclick="navigator.clipboard?.writeText('UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H').then(()=>{const s=document.getElementById('idxDonateCopyStatus');if(s)s.textContent='Kopirano!';})" style="padding:5px 10px;font-size:11px;border-radius:6px;border:1px solid #23303d;background:#0e1318;color:#19f58b;cursor:pointer;">Kopirai TON adres</button>
+        <a href="ton://transfer/UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H" style="padding:5px 10px;font-size:11px;border-radius:6px;border:1px solid #23303d;background:#0e1318;color:#eef3f7;text-decoration:none;">Otvori v TON portfeil</a>
       </div>
-      <p style="font-size:12px;color:#8c9ba8;margin-top:0;">
-        Podkrepq za razrabotkata na RED SOFTWARE TEAM. Izprashtay samo prez mrezha TON.
-      </p>
-      <div style="font-size:12px;background:#141b22;border:1px solid #23303d;border-radius:8px;padding:10px;">
-        <div><strong>TON adres:</strong></div>
-        <div id="indexTonWalletAddr" style="word-break:break-all;color:#19f58b;margin-top:4px;">UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H</div>
-        <button type="button" onclick="navigator.clipboard?.writeText(document.getElementById('indexTonWalletAddr').textContent)" style="margin-top:6px;padding:4px 8px;font-size:11px;border-radius:6px;border:1px solid #23303d;background:#0e1318;color:#19f58b;cursor:pointer;">Kopirai TON adres</button>
-      </div>
+      <div id="idxDonateCopyStatus" style="font-size:11px;color:#19f58b;margin-top:6px;"></div>
     </div>
   </div>
+</div>
 </body>
 </html>
