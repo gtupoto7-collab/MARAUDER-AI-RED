@@ -288,6 +288,12 @@ function createZipBuffer(entries) {
 }
 
 app.get('/api/download-app', (req, res) => {
+  const path = require("path");
+  const fsSync = require("fs");
+  const zipPath = path.join(__dirname, "public", "downloads", "MARAUDER-AI-Windows.zip");
+  if (fsSync.existsSync(zipPath)) {
+    return res.download(zipPath, "MARAUDER-AI-Windows.zip");
+  }
   const appUrl = 'https://marauder-ai-hacker.onrender.com';
   const zipBuf = createZipBuffer([
     {
