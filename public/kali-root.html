@@ -1092,5 +1092,81 @@
   };
 })();
 </script>
+
+<div class="kr-panel" id="marauderGitPanel" style="border-color:#a855f7;">
+  <div style="font-size:18px;font-weight:800;color:#d8b4fe;">
+    GIT РЕПОЗИТОРИО // STATUS · LOG · PULL · COMMIT &amp; PUSH
+  </div>
+  <div class="kr-desc-bg" style="border-left-color:#a855f7;color:#e9d5ff;">
+    Обяснение (Кирилица): Изпълнява реални Git операции върху локалното репозиторио — проверка на променени файлове (Status), последни комити (Log), изтегляне от отдалечения клон (Pull) и запис + качване с твое съобщение (Commit &amp; Push).
+  </div>
+  <div class="kr-row">
+    <select id="marauderGitRepo" class="kr-btn" style="border-color:#c084fc;">
+      <option value="/mnt/c/Users/gtupo/marauder-ai-web">marauder-ai-web (Web UI)</option>
+      <option value="/home/admiralerror/marauder-tg-live-bot">marauder-tg-live-bot (Bot &amp; API :3000)</option>
+    </select>
+    <input type="text" id="marauderGitMsg" class="kr-btn" placeholder="Commit съобщение..." style="min-width:240px;border-color:#c084fc;" />
+    <button type="button" class="kr-btn" id="marauderGitStatusBtn">Git Status</button>
+    <button type="button" class="kr-btn" id="marauderGitLogBtn">Git Log</button>
+    <button type="button" class="kr-btn" id="marauderGitPullBtn">Git Pull</button>
+    <button type="button" class="kr-run" id="marauderGitPushBtn">Commit &amp; Push</button>
+  </div>
+</div>
+
+<script id="marauderGitHookScript">
+(function(){
+  function getBaseUrl() {
+    if (window.location && window.location.port === "3000") return "";
+    return "http://127.0.0.1:3000";
+  }
+
+  function writeGitOut(text) {
+    const out = document.getElementById("krOutput");
+    if (out) {
+      out.textContent += (out.textContent ? "\n\n" : "") + text;
+      out.scrollTop = out.scrollHeight;
+    }
+  }
+
+  async function runGitAction(action) {
+    const repoEl = document.getElementById("marauderGitRepo");
+    const msgEl = document.getElementById("marauderGitMsg");
+    const repo = (repoEl && repoEl.value) || "/mnt/c/Users/gtupo/marauder-ai-web";
+    const message = ((msgEl && msgEl.value) || "").trim() || "Update from MARAUDER-LINUX-CONSOLE";
+    const endpoint = getBaseUrl() + "/api/kali/git";
+
+    writeGitOut("[GIT // " + action.toUpperCase() + "] Репозиторио: " + repo + " ...");
+    try {
+      const resp = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, repo, cwd: repo, message })
+      });
+      const raw = await resp.text();
+      let data = null;
+      try { data = JSON.parse(raw); } catch (e) {}
+      if (!data) {
+        writeGitOut("[GIT ОШИБКА] Неочакван отговор от " + endpoint + ":\n" + raw.slice(0, 400));
+        return;
+      }
+      const bodyText = data.output || data.stdout || data.stderr || JSON.stringify(data, null, 2);
+      writeGitOut("[GIT // " + action.toUpperCase() + "] Статус: " + (data.ok === false ? "FAILED" : "OK") + "\n" + bodyText);
+    } catch (err) {
+      writeGitOut("[GIT МРЕЖОВА ГРЕШКА] " + (err && err.message ? err.message : String(err)) + " (провери http://127.0.0.1:3000)");
+    }
+  }
+
+  const map = [
+    ["marauderGitStatusBtn", "status"],
+    ["marauderGitLogBtn", "log"],
+    ["marauderGitPullBtn", "pull"],
+    ["marauderGitPushBtn", "commit_push"]
+  ];
+  for (const [id, act] of map) {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", () => runGitAction(act));
+  }
+})();
+</script>
 </body>
 </html>
