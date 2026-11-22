@@ -144,6 +144,14 @@
       animation: rgbShift 6s linear infinite reverse;
     }
 
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+    }
+
     .symbol-strip {
       width: 100%;
       display: flex;
@@ -162,6 +170,15 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+      width: 100%;
+    }
+
+    .sub-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
     }
 
@@ -195,11 +212,16 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.12s, box-shadow 0.2s, border-color 0.2s;
+      transition: transform 0.12s, box-shadow 0.2s, border-color 0.2s, opacity 0.2s;
       animation: rgbShift 5s linear infinite;
     }
 
-    button:active {
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button:active:not(:disabled) {
       transform: scale(0.98);
       border-color: #ff007f;
       box-shadow: 0 0 12px rgba(255, 0, 127, 0.6);
@@ -215,6 +237,13 @@
       border-color: #00f5d4;
       color: #ffffff;
       box-shadow: 0 0 14px rgba(255, 42, 85, 0.55);
+    }
+
+    button.secret-btn {
+      background: #190913;
+      border: 1px solid #ff2a55;
+      color: #ff6b8b;
+      letter-spacing: 0.6px;
     }
 
     #messages {
@@ -258,6 +287,20 @@
       border: 1px dashed #00f5d4;
       color: #9ef9eb;
       font-size: 12px;
+    }
+
+    .msg strong {
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .msg code {
+      background: rgba(0, 245, 212, 0.12);
+      border: 1px solid rgba(0, 245, 212, 0.25);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: "Consolas", monospace;
+      font-size: 13px;
     }
 
     .attachments-preview {
@@ -419,6 +462,18 @@
         </div>
       </div>
 
+      <div class="top-bar">
+        <button type="button" id="botBtn">+ BOT (TG/MAIL/FB/DC)</button>
+        <button type="button" id="alOptBtn">MARAUDER-AL Опции</button>
+        <button type="button" id="linuxBtn">MARAUDER-LINUX-CONSOLE</button>
+      </div>
+
+      <div class="top-bar">
+        <button type="button" id="fenixBtn">MARAUDER-AI 4.8 FENIX / 5.3 / 6.2</button>
+        <button type="button" id="devanBtn">DEVANPORT-AI (CODE STUDIO)</button>
+        <button type="button" id="vpnBtn">VPN</button>
+      </div>
+
       <div class="symbol-strip" aria-hidden="true">
         <span>💀</span>
         <span>⚡</span>
@@ -434,7 +489,13 @@
         <select id="chatSelect" title="Локален чат на това устройство"></select>
         <button type="button" id="newChatBtn">+ Нов чат</button>
         <button type="button" id="delChatBtn" class="danger">Изтрий</button>
+        <button type="button" id="exportBtn">⬇ Свали</button>
         <input type="password" id="apiKeyInput" class="api-input" placeholder="RED SOFTWARE Access Key (купен от сайта)" />
+      </div>
+
+      <div class="sub-bar">
+        <button type="button" id="secretBtn" class="secret-btn">[ RED SECRET CHAT 🔒 ]</button>
+        <button type="button" id="donateBtn">▾ DARENIYA (PayPal / TON)</button>
       </div>
     </header>
 
@@ -482,6 +543,21 @@
     }
     fillSkulls();
     window.addEventListener("resize", fillSkulls);
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function formatMessageHtml(text) {
+      const escaped = escapeHtml(text);
+      return escaped
+        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/`([^`\n]+)`/g, "<code>$1</code>");
+    }
 
     const DEVICE_ID_KEY = "marauder_ai_device_id_v1";
     let deviceId = localStorage.getItem(DEVICE_ID_KEY);
@@ -560,10 +636,21 @@
       current.messages.forEach((m) => {
         const div = document.createElement("div");
         div.className = `msg ${m.role}`;
-        div.textContent = m.text;
+        if (m.role === "ai") {
+          div.innerHTML = formatMessageHtml(m.text);
+        } else {
+          div.textContent = m.text;
+        }
         messagesEl.appendChild(div);
       });
       messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function appendSystemNote(text) {
+      const current = getActiveChat();
+      current.messages.push({ role: "sys", text });
+      saveChats(chats);
+      renderMessages();
     }
 
     chatSelect.addEventListener("change", () => {
@@ -604,6 +691,43 @@
       localStorage.setItem(ACTIVE_CHAT_KEY, activeChatId);
       renderChatSelect();
       renderMessages();
+    });
+
+    document.getElementById("exportBtn").addEventListener("click", () => {
+      const current = getActiveChat();
+      const content = current.messages.map((m) => `[${m.role.toUpperCase()}] ${m.text}`).join("\n\n");
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${current.title.replace(/[^a-zA-Z0-9а-яА-Я_-]/g, "_")}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById("botBtn").addEventListener("click", () => {
+      appendSystemNote("BOT модул (Telegram / Mail / Facebook / Discord): Генерирай бот код или автоматизация директно в чата.");
+    });
+    document.getElementById("alOptBtn").addEventListener("click", () => {
+      appendSystemNote("MARAUDER-AL Опции: Директен режим без излишна вода, активен профил RED-SOFTWARE-TEAM-BG.");
+    });
+    document.getElementById("linuxBtn").addEventListener("click", () => {
+      appendSystemNote("MARAUDER-LINUX-CONSOLE: Посочи задача за Bash, Linux, мрежи или сървърна конфигурация.");
+    });
+    document.getElementById("fenixBtn").addEventListener("click", () => {
+      appendSystemNote("Профил MARAUDER-AI 4.8 FENIX / 5.3 / 6.2 активиран.");
+    });
+    document.getElementById("devanBtn").addEventListener("click", () => {
+      appendSystemNote("DEVANPORT-AI (CODE STUDIO): Готов за пълни модули, скриптове и дебъгване.");
+    });
+    document.getElementById("vpnBtn").addEventListener("click", () => {
+      appendSystemNote("VPN статус: Защитен сървърен прокси път през MARAUDER-AI.");
+    });
+    document.getElementById("secretBtn").addEventListener("click", () => {
+      appendSystemNote("RED SECRET CHAT: Локалните чатове остават само в паметта на това устройство.");
+    });
+    document.getElementById("donateBtn").addEventListener("click", () => {
+      appendSystemNote("DARENIYA (PayPal / TON) & ключове за достъп: RED-SOFTWARE-TEAM-BG.");
     });
 
     let pendingAttachments = [];
@@ -756,8 +880,11 @@
 
     const promptInput = document.getElementById("promptInput");
     const sendBtn = document.getElementById("sendBtn");
+    let isSending = false;
 
     async function sendMessage() {
+      if (isSending) return;
+
       const text = promptInput.value.trim();
       const accessKey = apiKeyInput.value.trim();
 
@@ -766,6 +893,9 @@
         alert("Въведи ключ за достъп от RED SOFTWARE TEAM горе в полето.");
         return;
       }
+
+      isSending = true;
+      sendBtn.disabled = true;
 
       const currentChat = getActiveChat();
       const displayUserText = text || pendingAttachments.map((a) => `[${a.name}]`).join(" ");
@@ -843,6 +973,8 @@
           : "Грешка при връзката със сървъра: " + err.message;
       } finally {
         clearTimeout(timeoutId);
+        isSending = false;
+        sendBtn.disabled = false;
       }
 
       saveChats(chats);
