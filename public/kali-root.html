@@ -527,5 +527,23 @@
   if (gitPs) gitPs.onclick = function(){ runGitAction("commit_push"); };
 })();
 </script>
+
+<script id="marauderAutoSyncReload">
+(function(){
+  var key = "marauder_build_ver";
+  async function checkVer(){
+    try {
+      var r = await fetch(window.location.pathname + "?v=" + Date.now(), { cache: "no-store" });
+      var txt = await r.text();
+      var m = txt.match(/marauderRealInstrumentsAndPanels/);
+      var ver = m ? "v2_live" : "v1";
+      var prev = sessionStorage.getItem(key);
+      if (prev && prev !== ver) { sessionStorage.setItem(key, ver); window.location.reload(); return; }
+      sessionStorage.setItem(key, ver);
+    } catch(e){}
+  }
+  checkVer();
+})();
+</script>
 </body>
 </html>
