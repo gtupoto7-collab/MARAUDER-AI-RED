@@ -2973,5 +2973,30 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 })();
 </script>
+
+<style id="marauderKeepVisibleStyle">
+  #marauderUnifiedBar,
+  #marauderMobileDonatePanel,
+  #marauderTierBox,
+  #marauderLiveRoomPanel {
+    display: block !important;
+  }
+  #marauderUnifiedBar {
+    display: flex !important;
+  }
+  body.marauder-panel-unified,
+  body.marauder-panel-donate,
+  body.marauder-panel-room {
+    display: block;
+  }
+</style>
+<script>
+(function() {
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.classList.remove("marauder-hide-donate-mobile");
+    document.body.classList.remove("marauder-options-collapsed");
+  });
+})();
+</script>
 </body>
 </html>
