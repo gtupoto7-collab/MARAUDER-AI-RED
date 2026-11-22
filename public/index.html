@@ -1451,5 +1451,106 @@ run_${safeIdent(nameRaw)}();
 </script>
 <!-- END MARAUDER-AI VERSIONS & DEVANPORT-AI ADDON -->
 
+
+<!-- MARAUDER OFFLINE / OLLAMA AI ENGINE -->
+<div id="marauderOfflineBar" style="margin:8px 12px;padding:8px 12px;border-radius:10px;background:#120e1f;border:1px solid #2e264a;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;font-size:12px;color:#e6e4f2;">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <strong style="color:#00f5d4;">OFLAIN AI:</strong>
+    <label style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;">
+      <input id="offlineModeToggle" type="checkbox" checked onchange="saveOfflinePrefs()" />
+      <span>Автоматичен офлайн режим / локален модел</span>
+    </label>
+    <select id="ollamaModelSelect" onchange="saveOfflinePrefs()" style="background:#1b162e;color:#fff;border:1px solid #44396b;border-radius:6px;padding:4px 8px;">
+      <option value="dark-mega:latest">dark-mega:latest</option>
+      <option value="llama3.2:latest">llama3.2:latest</option>
+      <option value="phi3:mini">phi3:mini</option>
+    </select>
+    <input id="ollamaUrlInput" type="text" value="http://127.0.0.1:11434" onchange="saveOfflinePrefs()" style="width:185px;background:#1b162e;color:#9cf7e8;border:1px solid #44396b;border-radius:6px;padding:4px 8px;" />
+  </div>
+  <span id="offlineEngineStatus" style="color:#ffd166;">Готов (Ollama / локален офлайн режим)</span>
+</div>
+
+<script>
+(function() {
+  function saveOfflinePrefs() {
+    const enabled = !!document.getElementById("offlineModeToggle")?.checked;
+    const model = document.getElementById("ollamaModelSelect")?.value || "dark-mega:latest";
+    const url = (document.getElementById("ollamaUrlInput")?.value || "http://127.0.0.1:11434").trim();
+    localStorage.setItem("marauder_offline_enabled", enabled ? "1" : "0");
+    localStorage.setItem("marauder_ollama_model", model);
+    localStorage.setItem("marauder_ollama_url", url);
+  }
+  window.saveOfflinePrefs = saveOfflinePrefs;
+
+  function buildOfflineLocalReply(promptText) {
+    const q = (promptText || "").trim();
+    if (!q) return "Офлайн режим: напиши въпрос, команда или задача за код.";
+    return [
+      "[ОФЛАЙН РЕЖИМ — БЕЗ ИНТЕРНЕТ]",
+      "Получена заявка: " + q,
+      "",
+      "Препоръчителни стъпки / примерен шаблон:",
+      "1. Провери локалните услуги и параметри на средата.",
+      "2. Ако си на Windows с Ollama (dark-mega:latest / llama3.2:latest / phi3:mini), увери се, че сървърът работи на http://127.0.0.1:11434.",
+      "3. За генериране на готов скрипт на конкретен език можеш да отвориш и DEVANPORT-AI (CODE STUDIO) горе."
+    ].join("\n");
+  }
+
+  window.askOfflineOrOllama = async function(promptText) {
+    const enabled = document.getElementById("offlineModeToggle")?.checked ?? true;
+    const model = document.getElementById("ollamaModelSelect")?.value || "dark-mega:latest";
+    const baseUrl = ((document.getElementById("ollamaUrlInput")?.value || "http://127.0.0.1:11434").trim()).replace(/\/+$/, "");
+    const statusEl = document.getElementById("offlineEngineStatus");
+
+    if (!enabled) {
+      return null;
+    }
+
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 3500);
+      const res = await fetch(baseUrl + "/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ model: model, prompt: promptText, stream: false }),
+        signal: controller.signal
+      });
+      clearTimeout(timer);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.response) {
+          if (statusEl) statusEl.textContent = "Локален модел: " + model;
+          return data.response;
+        }
+      }
+    } catch (_) {
+      // Пада към локален офлайн отговор без интернет/Ollama
+    }
+
+    if (statusEl) statusEl.textContent = "Локален офлайн отговор (без мрежа/Ollama)";
+    return buildOfflineLocalReply(promptText);
+  };
+
+  window.addEventListener("DOMContentLoaded", function() {
+    const savedEnabled = localStorage.getItem("marauder_offline_enabled");
+    const savedModel = localStorage.getItem("marauder_ollama_model");
+    const savedUrl = localStorage.getItem("marauder_ollama_url");
+    const toggle = document.getElementById("offlineModeToggle");
+    const sel = document.getElementById("ollamaModelSelect");
+    const inp = document.getElementById("ollamaUrlInput");
+    if (toggle && savedEnabled !== null) toggle.checked = savedEnabled === "1";
+    if (sel && savedModel) sel.value = savedModel;
+    if (inp && savedUrl) inp.value = savedUrl;
+
+    const bar = document.getElementById("marauderOfflineBar");
+    const shell = document.querySelector(".app-shell");
+    if (bar && shell && bar.parentElement !== shell) {
+      shell.insertBefore(bar, shell.children[1] || null);
+    }
+  });
+})();
+</script>
+<!-- END MARAUDER OFFLINE / OLLAMA AI ENGINE -->
+
 </body>
 </html>
