@@ -746,16 +746,17 @@
   html, body {
     width: 100%;
     min-height: 100%;
-    min-height: 100dvh;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
   }
-  body.marauder-unified-shell > * {
+  .chat-wrap, .chat-container, .main-panel, .app-main, main {
     width: 100% !important;
     max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    min-height: 100dvh;
+    margin: 0 auto !important;
+    position: relative;
+    z-index: 2;
   }
   #marauderAlOptionsDrawer,
   #marauderPravenIntelektBox,
