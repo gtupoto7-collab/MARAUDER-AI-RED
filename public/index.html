@@ -3536,5 +3536,347 @@ window.addEventListener("DOMContentLoaded", function() {
   wireDropdownMenuClicks();
 })();
 </script>
+
+<style id="marauderQrSecretStyle">
+  #marauderUnifiedBar,
+  #marauderMobileDonatePanel,
+  #marauderTierBox {
+    display: none !important;
+  }
+  #marauderQrPairModal {
+    display: none;
+    position: fixed;
+    inset: 12px;
+    max-width: 520px;
+    max-height: 88vh;
+    margin: auto;
+    overflow-y: auto;
+    background: #0c121d;
+    border: 1px solid #19f58b;
+    border-radius: 12px;
+    padding: 14px;
+    z-index: 2147483647;
+    color: #eef3f7;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.88);
+    box-sizing: border-box;
+  }
+  #marauderQrPairModal.open {
+    display: block;
+  }
+  .m-qr-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .m-qr-inp {
+    flex: 1;
+    min-width: 170px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #2b3c58;
+    background: #121b2b;
+    color: #eef3f7;
+    font-size: 13px;
+  }
+  .m-qr-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #19f58b;
+    background: #10241b;
+    color: #19f58b;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .m-qr-btn.sec {
+    border-color: #3b82f6;
+    background: #111c30;
+    color: #93c5fd;
+  }
+  .m-qr-btn.warn {
+    border-color: #ff6b6b;
+    background: #261216;
+    color: #ff9e9e;
+  }
+  #mQrPreviewBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    margin: 10px 0;
+    background: #101827;
+    border: 1px dashed #2e4366;
+    border-radius: 10px;
+  }
+  #mQrScanVideo {
+    width: 100%;
+    max-height: 220px;
+    border-radius: 8px;
+    background: #05080f;
+    display: none;
+  }
+</style>
+
+<div id="marauderQrPairModal" role="dialog" aria-label="QR и код за секретен чат между 2 устройства">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+    <strong style="color:#19f58b;font-size:14px;">1. QR / Код за секретен чат (2 устройства)</strong>
+    <button type="button" class="m-qr-btn warn" onclick="window.closeMarauderQrModal()">✕ Затвори</button>
+  </div>
+  <p style="font-size:12px;color:#b4c4d8;margin:6px 0 10px 0;">
+    Генерирай код и QR на първото устройство, а на второто сканирай QR или въведи кода за връзка в обща секретна стая.
+  </p>
+
+  <div class="m-qr-row">
+    <button type="button" class="m-qr-btn" onclick="window.generatePairRoomCode()">⚡ Генерирай нов код + QR</button>
+    <button type="button" class="m-qr-btn sec" onclick="window.startQrCameraScan()">📷 Сканирай QR с камера</button>
+    <button type="button" class="m-qr-btn warn" onclick="window.stopQrCameraScan()">■ Спри камера</button>
+  </div>
+
+  <div class="m-qr-row">
+    <input id="mPairCodeInput" class="m-qr-inp" type="text" placeholder="Въведи или копирай код за стая (напр. SEC-849201)" />
+    <button type="button" class="m-qr-btn" onclick="window.connectPairRoomNow()">🔗 Свържи 2 устройства</button>
+  </div>
+
+  <div id="mQrPreviewBox">
+    <div id="mPairCodeLabel" style="font-weight:800;font-size:13px;color:#ffc439;">Код: няма генериран</div>
+    <img id="mQrCodeImg" alt="QR код за стая" style="width:176px;height:176px;border-radius:8px;background:#fff;padding:6px;display:none;" />
+    <div id="mQrStatusText" style="font-size:12px;color:#9fb3c8;text-align:center;">Готово за генериране или сканиране.</div>
+    <video id="mQrScanVideo" playsinline muted></video>
+  </div>
+</div>
+
+<script>
+(function() {
+  let scanStream = null;
+  let scanLoopId = null;
+
+  function setStatus(msg, color) {
+    const st = document.getElementById("mQrStatusText");
+    if (st) {
+      st.textContent = msg;
+      st.style.color = color || "#9fb3c8";
+    }
+  }
+
+  function extractRoomCode(rawText) {
+    if (!rawText) return "";
+    const trimmed = String(rawText).trim();
+    try {
+      if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+        const u = new URL(trimmed);
+        const qRoom = u.searchParams.get("room") || u.searchParams.get("code") || u.searchParams.get("token");
+        if (qRoom) return qRoom.trim();
+      }
+    } catch (_) {}
+    const match = trimmed.match(/[A-Za-z0-9_-]{4,32}/);
+    return match ? match[0] : trimmed;
+  }
+
+  function renderQrForCode(code) {
+    const clean = extractRoomCode(code);
+    const lbl = document.getElementById("mPairCodeLabel");
+    const img = document.getElementById("mQrCodeImg");
+    const inp = document.getElementById("mPairCodeInput");
+    if (inp && clean) inp.value = clean;
+    if (lbl) lbl.textContent = clean ? ("Код за свързване: " + clean) : "Код: няма генериран";
+
+    if (clean && img) {
+      const payload = encodeURIComponent(clean);
+      img.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + payload;
+      img.style.display = "block";
+    } else if (img) {
+      img.removeAttribute("src");
+      img.style.display = "none";
+    }
+  }
+
+  window.generatePairRoomCode = function() {
+    const num = Math.floor(100000 + Math.random() * 900000);
+    const code = "SEC-" + num;
+    localStorage.setItem("marauder_secret_pair_code", code);
+    renderQrForCode(code);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).catch(() => {});
+    }
+    setStatus("Генериран нов код (" + code + ") и QR. Сканирай го от второто устройство.", "#19f58b");
+  };
+
+  window.stopQrCameraScan = function() {
+    if (scanLoopId) {
+      cancelAnimationFrame(scanLoopId);
+      scanLoopId = null;
+    }
+    if (scanStream) {
+      scanStream.getTracks().forEach(t => t.stop());
+      scanStream = null;
+    }
+    const vid = document.getElementById("mQrScanVideo");
+    if (vid) {
+      vid.pause();
+      vid.srcObject = null;
+      vid.style.display = "none";
+    }
+  };
+
+  window.startQrCameraScan = async function() {
+    const vid = document.getElementById("mQrScanVideo");
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus("Камерата не е достъпна в този браузър — въведи кода ръчно.", "#ff9e9e");
+      return;
+    }
+    if (!("BarcodeDetector" in window)) {
+      setStatus("Браузърът няма вграден BarcodeDetector — насочи камерата или въведи кода от QR екрана.", "#ffc439");
+    }
+    try {
+      window.stopQrCameraScan();
+      scanStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: "environment" } },
+        audio: false
+      });
+      if (!vid) return;
+      vid.srcObject = scanStream;
+      vid.style.display = "block";
+      await vid.play();
+      setStatus("Камерата е пусната. Насочи я към QR кода на другото устройство...", "#19f58b");
+
+      if ("BarcodeDetector" in window) {
+        const detector = new BarcodeDetector({ formats: ["qr_code"] });
+        const tick = async () => {
+          if (!scanStream || !vid || vid.readyState < 2) {
+            scanLoopId = requestAnimationFrame(tick);
+            return;
+          }
+          try {
+            const codes = await detector.detect(vid);
+            if (codes && codes.length > 0 && codes[0].rawValue) {
+              const found = extractRoomCode(codes[0].rawValue);
+              if (found) {
+                const inp = document.getElementById("mPairCodeInput");
+                if (inp) inp.value = found;
+                renderQrForCode(found);
+                window.stopQrCameraScan();
+                setStatus("Разпознат QR код: " + found + ". Свързване...", "#19f58b");
+                window.connectPairRoomNow();
+                return;
+              }
+            }
+          } catch (_) {}
+          scanLoopId = requestAnimationFrame(tick);
+        };
+        scanLoopId = requestAnimationFrame(tick);
+      }
+    } catch (err) {
+      setStatus("Неуспешен достъп до камерата: " + (err && err.message ? err.message : "провери разрешенията"), "#ff9e9e");
+    }
+  };
+
+  window.connectPairRoomNow = function() {
+    const inp = document.getElementById("mPairCodeInput");
+    const code = extractRoomCode(inp ? inp.value : localStorage.getItem("marauder_secret_pair_code") || "");
+    if (!code) {
+      setStatus("Въведи код за стая или генерирай нов.", "#ff9e9e");
+      return;
+    }
+    localStorage.setItem("marauder_secret_pair_code", code);
+    localStorage.setItem("marauder_active_secret_room", code);
+
+    // Опитваме да попълним съществуващи полета за стая/код/токен на страницата, ако ги има
+    const roomInputs = Array.from(document.querySelectorAll("input")).filter(el => {
+      if (el.id === "mPairCodeInput") return false;
+      const ph = (el.placeholder || "").toLowerCase();
+      const idn = ((el.id || "") + " " + (el.name || "")).toLowerCase();
+      return ph.includes("код") || ph.includes("token") || ph.includes("стая") || ph.includes("room") ||
+             idn.includes("room") || idn.includes("code") || idn.includes("token");
+    });
+    roomInputs.forEach(el => {
+      el.value = code;
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+
+    const joinBtns = Array.from(document.querySelectorAll("button")).filter(b => {
+      const t = (b.textContent || "").toLowerCase();
+      return t.includes("свържи") || t.includes("join") || t.includes("влез") || t.includes("създай стая");
+    });
+    if (joinBtns.length > 0) {
+      joinBtns[0].click();
+    }
+
+    window.stopQrCameraScan();
+    window.closeMarauderQrModal();
+
+    if (!location.pathname.endsWith("secret-chat.html")) {
+      const target = "./secret-chat.html?room=" + encodeURIComponent(code);
+      window.location.href = target;
+    }
+  };
+
+  window.openMarauderQrModal = function() {
+    const modal = document.getElementById("marauderQrPairModal");
+    if (!modal) return;
+    modal.classList.add("open");
+    const saved = localStorage.getItem("marauder_secret_pair_code") || "";
+    if (saved) {
+      renderQrForCode(saved);
+    } else {
+      window.generatePairRoomCode();
+    }
+  };
+
+  window.closeMarauderQrModal = function() {
+    window.stopQrCameraScan();
+    const modal = document.getElementById("marauderQrPairModal");
+    if (modal) modal.classList.remove("open");
+  };
+
+  function cleanupPaymentsAndMakeFirstOptionQr() {
+    const menu = document.getElementById("marauderRealDropdownMenu");
+    if (menu) {
+      Array.from(menu.querySelectorAll("button, a, div")).forEach(el => {
+        const t = (el.textContent || "").toLowerCase();
+        if (t.includes("плащания") || t.includes("нива") || t.includes("дарения") || t.includes("copper") || t.includes("paypal") || t.includes("keeper")) {
+          if (el.classList.contains("m-menu-section-title") || el.tagName === "BUTTON" || el.tagName === "A") {
+            el.style.display = "none";
+          }
+        }
+      });
+
+      const firstAction = menu.querySelector("a, button");
+      if (firstAction && firstAction.id !== "marauderFirstQrOptionBtn") {
+        const qrBtn = document.createElement("button");
+        qrBtn.id = "marauderFirstQrOptionBtn";
+        qrBtn.type = "button";
+        qrBtn.style.borderColor = "#19f58b";
+        qrBtn.style.color = "#19f58b";
+        qrBtn.textContent = "1. QR / Код за секретен чат (2 устройства)";
+        qrBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (window.closeRealDropdownMenu) window.closeRealDropdownMenu();
+          window.openMarauderQrModal();
+        }, true);
+        menu.insertBefore(qrBtn, menu.firstChild);
+      }
+    }
+
+    // Ако URL има ?room=..., автоматично попълваме кода за стая
+    try {
+      const u = new URL(location.href);
+      const qRoom = extractRoomCode(u.searchParams.get("room") || "");
+      if (qRoom) {
+        localStorage.setItem("marauder_secret_pair_code", qRoom);
+        localStorage.setItem("marauder_active_secret_room", qRoom);
+        const inp = document.getElementById("mPairCodeInput");
+        if (inp) inp.value = qRoom;
+      }
+    } catch (_) {}
+  }
+
+  document.addEventListener("DOMContentLoaded", cleanupPaymentsAndMakeFirstOptionQr);
+  cleanupPaymentsAndMakeFirstOptionQr();
+})();
+</script>
 </body>
 </html>
