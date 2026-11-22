@@ -851,9 +851,16 @@
 
         thinkingMsg.text = data?.reply || data?.error || "Няма отговор.";
       } catch (err) {
-        thinkingMsg.text = err.name === "AbortError"
-          ? "Времето за изчакване изтече. Опитай пак."
-          : "Грешка при връзката със сървъра: " + err.message;
+        const offlineEnabled = document.getElementById("offlineModeToggle")?.checked ?? true;
+        if (offlineEnabled && typeof window.askOfflineOrOllama === "function") {
+          thinkingMsg.text = "Активиран е MARAUDER-AI 4.8 FENIX offline free режим — генерирам отговор...";
+          if (typeof renderMessages === "function") renderMessages(currentChat);
+          thinkingMsg.text = await window.askOfflineOrOllama(text);
+        } else {
+          thinkingMsg.text = err.name === "AbortError"
+            ? "Времето за изчакване изтече. Опитай пак."
+            : "Грешка при връзката със сървъра: " + err.message;
+        }
       } finally {
         clearTimeout(timeoutId);
       }
