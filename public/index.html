@@ -1796,56 +1796,7 @@ run_${safeIdent(nameRaw)}();
 
 
 
-<!-- MARAUDER PLATFORM DOWNLOAD SELECTOR -->
-<div id="marauderPlatformDownloadBar" style="margin:8px 0;padding:8px 12px;background:#140f26;border:1px solid #533f8a;border-radius:8px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
-  <span style="color:#d8d2f5;font-size:12px;">Платформа за сваляне:</span>
-  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-    <select id="marauderDownloadPlatformSelect" onchange="updateMarauderPlatformDownload()" style="background:#1c1536;color:#fff;border:1px solid #6a54a8;border-radius:6px;padding:6px 10px;font-size:12px;">
-      <option value="windows">💻 Windows (.ZIP)</option>
-      <option value="android">🤖 Android (.APK)</option>
-      <option value="ios">🍎 iOS (Web / Guide)</option>
-    </select>
-    <a id="marauderPlatformDownloadLink" href="/downloads/MARAUDER-AI-Windows.zip" download="MARAUDER-AI-Windows.zip" style="background:#00f5d4;color:#090712;text-decoration:none;font-weight:bold;font-size:12px;padding:6px 12px;border-radius:6px;">⬇ Свали за Windows</a>
-  </div>
-</div>
-<script>
-(function() {
-  const MAP = {
-    windows: {
-      href: "/downloads/MARAUDER-AI-Windows.zip",
-      filename: "MARAUDER-AI-Windows.zip",
-      label: "⬇ Свали за Windows (.ZIP)"
-    },
-    android: {
-      href: "/downloads/MARAUDER-AI.apk",
-      filename: "MARAUDER-AI.apk",
-      label: "⬇ Свали за Android (.APK)"
-    },
-    ios: {
-      href: "/downloads/MARAUDER-AI-iOS-INFO.txt",
-      filename: "MARAUDER-AI-iOS-INFO.txt",
-      label: "⬇ Свали iOS ръководство"
-    }
-  };
-  window.updateMarauderPlatformDownload = function() {
-    const sel = document.getElementById("marauderDownloadPlatformSelect");
-    const link = document.getElementById("marauderPlatformDownloadLink");
-    if (!sel || !link) return;
-    const cfg = MAP[sel.value] || MAP.windows;
-    link.href = cfg.href;
-    link.setAttribute("download", cfg.filename);
-    link.textContent = cfg.label;
-    localStorage.setItem("marauder_dl_platform", sel.value);
-  };
-  window.addEventListener("DOMContentLoaded", function() {
-    const saved = localStorage.getItem("marauder_dl_platform");
-    const sel = document.getElementById("marauderDownloadPlatformSelect");
-    if (sel && saved && MAP[saved]) sel.value = saved;
-    window.updateMarauderPlatformDownload();
-  });
-})();
-</script>
-<!-- END MARAUDER PLATFORM DOWNLOAD SELECTOR -->
+
 <script>
 window.addEventListener("DOMContentLoaded", function() {
   const btns = Array.from(document.querySelectorAll("button, a"));
@@ -1862,5 +1813,96 @@ window.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>
+
+<!-- MARAUDER SVALI DROPDOWN ON CLICK -->
+<div id="marauderSvaliMenu" style="display:none;position:fixed;z-index:99999;background:#130f24;border:1px solid #6a54a8;border-radius:10px;padding:12px;min-width:250px;box-shadow:0 12px 32px rgba(0,0,0,0.75);color:#f4f2ff;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <span style="font-size:12px;font-weight:bold;color:#00f5d4;">Izberi kakvo da svalish:</span>
+    <button type="button" onclick="closeMarauderSvaliMenu()" style="background:#261d45;color:#fff;border:1px solid #6a54a8;border-radius:5px;padding:2px 7px;cursor:pointer;font-size:11px;">✕</button>
+  </div>
+  <select id="marauderSvaliSelect" onchange="syncMarauderSvaliLink()" style="width:100%;background:#1c1536;color:#fff;border:1px solid #6a54a8;border-radius:7px;padding:7px 9px;font-size:12px;margin-bottom:8px;">
+    <option value="windows">Windows (.ZIP)</option>
+    <option value="android">Android (.APK)</option>
+    <option value="ios">iOS (Info / Web)</option>
+  </select>
+  <a id="marauderSvaliGoBtn" href="/downloads/MARAUDER-AI-Windows.zip" download="MARAUDER-AI-Windows.zip" onclick="setTimeout(closeMarauderSvaliMenu, 250)" style="display:block;text-align:center;background:#00f5d4;color:#090712;text-decoration:none;font-weight:bold;font-size:12px;padding:8px 10px;border-radius:7px;">Svali Windows (.ZIP)</a>
+</div>
+<script>
+(function() {
+  const ITEMS = {
+    windows: { href: "/downloads/MARAUDER-AI-Windows.zip", file: "MARAUDER-AI-Windows.zip", text: "Svali Windows (.ZIP)" },
+    android: { href: "/downloads/MARAUDER-AI.apk", file: "MARAUDER-AI.apk", text: "Svali Android (.APK)" },
+    ios: { href: "/downloads/MARAUDER-AI-iOS-INFO.txt", file: "MARAUDER-AI-iOS-INFO.txt", text: "Svali iOS info" }
+  };
+
+  window.syncMarauderSvaliLink = function() {
+    const sel = document.getElementById("marauderSvaliSelect");
+    const go = document.getElementById("marauderSvaliGoBtn");
+    if (!sel || !go) return;
+    const cfg = ITEMS[sel.value] || ITEMS.windows;
+    go.href = cfg.href;
+    go.setAttribute("download", cfg.file);
+    go.textContent = cfg.text;
+  };
+
+  window.closeMarauderSvaliMenu = function() {
+    const menu = document.getElementById("marauderSvaliMenu");
+    if (menu) menu.style.display = "none";
+  };
+
+  window.toggleMarauderSvaliMenu = function(anchorEl) {
+    const menu = document.getElementById("marauderSvaliMenu");
+    if (!menu) return;
+    const isOpen = menu.style.display === "block";
+    if (isOpen) {
+      menu.style.display = "none";
+      return;
+    }
+    window.syncMarauderSvaliLink();
+    menu.style.display = "block";
+    if (anchorEl && anchorEl.getBoundingClientRect) {
+      const r = anchorEl.getBoundingClientRect();
+      const left = Math.min(window.innerWidth - 270, Math.max(10, r.left));
+      const top = Math.min(window.innerHeight - 150, Math.max(10, r.bottom + 6));
+      menu.style.left = left + "px";
+      menu.style.top = top + "px";
+    } else {
+      menu.style.left = "20px";
+      menu.style.top = "80px";
+    }
+  };
+
+  document.addEventListener("click", function(e) {
+    const menu = document.getElementById("marauderSvaliMenu");
+    if (!menu || menu.style.display !== "block") return;
+    const target = e.target;
+    const txt = ((target && target.textContent) || "").toLowerCase();
+    if (!menu.contains(target) && !txt.includes("свали")) {
+      menu.style.display = "none";
+    }
+  });
+
+  window.addEventListener("DOMContentLoaded", function() {
+    window.syncMarauderSvaliLink();
+    const candidates = Array.from(document.querySelectorAll("button, a, div, span")).filter(el => {
+      if (el.closest("#marauderSvaliMenu")) return false;
+      if (el.children.length > 2) return false;
+      const t = (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      return t === "свали" || t === "⬇ свали" || t.endsWith(" свали");
+    });
+    candidates.forEach(btn => {
+      if (btn.dataset.svaliMenuBound) return;
+      btn.dataset.svaliMenuBound = "1";
+      btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+        window.toggleMarauderSvaliMenu(this);
+      }, true);
+    });
+  });
+})();
+</script>
+<!-- END MARAUDER SVALI DROPDOWN ON CLICK -->
 </body>
 </html>
