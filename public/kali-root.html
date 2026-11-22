@@ -268,5 +268,51 @@
   }
 })();
 </script>
+<!-- MARAUDER_GIT_UI_BLOCK -->
+<div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
+  <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / PULL / COMMIT &amp; PUSH)</div>
+  <div class="kr-row">
+    <input type="text" id="krGitMsg" placeholder="Commit съобщение (по избор)..." />
+    <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
+    <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
+    <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
+    <button type="button" class="kr-run" id="krGitPushBtn">Commit &amp; Push</button>
+  </div>
+</div>
+<script id="marauderGitUiScript">
+(function() {
+  var outEl = document.getElementById("krOutput");
+  var msgEl = document.getElementById("krGitMsg");
+  function appendGit(txt) {
+    if (!outEl) return;
+    outEl.textContent += "\n" + txt;
+    outEl.scrollTop = outEl.scrollHeight;
+  }
+  async function callGit(action) {
+    var message = msgEl && msgEl.value ? msgEl.value.trim() : "";
+    appendGit("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
+    try {
+      var r = await fetch("/api/kali/git", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: action, message: message })
+      });
+      var d = await r.json();
+      appendGit(d.output || JSON.stringify(d));
+      appendGit("[Git време: " + (d.elapsedMs || 0) + "ms]");
+    } catch (e) {
+      appendGit("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Грешка при заявка"));
+    }
+  }
+  var bStatus = document.getElementById("krGitStatusBtn");
+  var bLog = document.getElementById("krGitLogBtn");
+  var bPull = document.getElementById("krGitPullBtn");
+  var bPush = document.getElementById("krGitPushBtn");
+  if (bStatus) bStatus.addEventListener("click", function() { callGit("status"); });
+  if (bLog) bLog.addEventListener("click", function() { callGit("log"); });
+  if (bPull) bPull.addEventListener("click", function() { callGit("pull"); });
+  if (bPush) bPush.addEventListener("click", function() { callGit("push"); });
+})();
+</script>
 </body>
 </html>
