@@ -1384,5 +1384,94 @@
   });
 })();
 </script>
+
+<section id="marauderRealShellSection" style="margin:12px 0;padding:12px;border:1px solid #22c55e;border-radius:10px;background:#07130c;color:#dcfce7;">
+  <div style="font-size:16px;font-weight:800;color:#4ade80;margin-bottom:6px;">
+    REAL SHELL / DEV &amp; ROOT CHECK (SESSION PERSISTENT)
+  </div>
+  <div style="font-size:13px;line-height:1.4;margin-bottom:8px;color:#bbf7d0;">
+    Обяснение (Кирилица): Изпраща реална команда към активната сесия на backend-а (/api/kali/session-run), пази текущата папка (cd) и връща истинския изход на системата.
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+    <input id="marauderDirectCmdInput" type="text" placeholder="Напиши команда (напр. id; whoami; pwd) и натисни Enter..." style="flex:1;min-width:240px;padding:8px 10px;border-radius:6px;border:1px solid #16a34a;background:#030a06;color:#f0fdf4;font-family:monospace;font-size:13px;" />
+    <button type="button" id="btnRunDirectSessionCmd" style="padding:8px 14px;border-radius:6px;border:1px solid #4ade80;background:#14532d;color:#fff;font-weight:800;cursor:pointer;">
+      Изпълни в сесията
+    </button>
+    <button type="button" id="btnCheckIdAndCwd" style="padding:8px 12px;border-radius:6px;border:1px solid #22d3ee;background:#164e63;color:#fff;font-weight:700;cursor:pointer;">
+      ID &amp; PWD
+    </button>
+  </div>
+</section>
+
+<script id="marauderRealShellScript">
+(function(){
+  function getApiBase() {
+    if (window.__MARAUDER_API_BASE__) return String(window.__MARAUDER_API_BASE__).replace(//+$/, "");
+    if (window.location && window.location.port === "3000") return "";
+    return "http://127.0.0.1:3000";
+  }
+  function getSid() {
+    if (!window.__MARAUDER_SESSION_ID__) {
+      window.__MARAUDER_SESSION_ID__ = "marauder-sid-" + Math.random().toString(36).slice(2, 10);
+    }
+    return window.__MARAUDER_SESSION_ID__;
+  }
+  function appendOut(txt) {
+    const el = document.getElementById("krOutput") || document.querySelector("pre, textarea");
+    if (el) {
+      if ("value" in el && el.tagName === "TEXTAREA") {
+        el.value += (el.value ? "\n\n" : "") + txt;
+        el.scrollTop = el.scrollHeight;
+      } else {
+        el.textContent += (el.textContent ? "\n\n" : "") + txt;
+        el.scrollTop = el.scrollHeight;
+      }
+    }
+  }
+  async function sendCmd(cmdText) {
+    const cmd = String(cmdText || "").trim();
+    if (!cmd) return;
+    const url = getApiBase() + "/api/kali/session-run";
+    appendOut("marauder@session:~$ " + cmd);
+    try {
+      const r = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cmd, sessionId: getSid() })
+      });
+      const raw = await r.text();
+      let j = null;
+      try { j = JSON.parse(raw); } catch (e) {}
+      if (!j) {
+        appendOut("[ОТГОВОР] " + raw.slice(0, 800));
+        return;
+      }
+      const combined = [j.stdout, j.stderr].filter(Boolean).join("\n");
+      appendOut((combined || "(няма текстов изход)") + "\n[cwd: " + (j.cwd || "?") + " | exit: " + (j.code ?? 0) + "]");
+    } catch (err) {
+      appendOut("[ГРЕШКА] " + (err && err.message ? err.message : String(err)) + " -> " + url);
+    }
+  }
+
+  const inp = document.getElementById("marauderDirectCmdInput");
+  const runBtn = document.getElementById("btnRunDirectSessionCmd");
+  const idBtn = document.getElementById("btnCheckIdAndCwd");
+
+  if (inp) {
+    inp.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendCmd(inp.value);
+      }
+    });
+  }
+  if (runBtn && inp) {
+    runBtn.addEventListener("click", () => sendCmd(inp.value));
+  }
+  if (idBtn) {
+    idBtn.addEventListener("click", () => sendCmd("id && whoami && pwd"));
+  }
+})();
+</script>
 </body>
 </html>
