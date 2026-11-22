@@ -474,7 +474,7 @@
         <button type="button" id="vpnBtn">VPN</button>
   <span id="marauderDropdownWrap" style="position:relative;display:inline-block;margin-left:6px;">
     <button type="button" id="marauderDropdownBtn" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;cursor:pointer;">Меню ▾</button>
-    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:265px;max-height:75vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,0.75);">
+    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:270px;max-height:75vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,0.75);">
       <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">СТРАНИЦИ &amp; ИНСТРУМЕНТИ</div>
       <a href="/mining-optin.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;border-radius:6px;">Pool &amp; 24h (Opt-In)</a>
       <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;border-radius:6px;">Kali Конзола (/kali-root.html)</a>
@@ -489,7 +489,11 @@
       <button type="button" data-trigger-id="devanBtn" data-trigger-text="DEVANPORT-AI" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">DEVANPORT-AI (CODE STUDIO)</button>
       <button type="button" data-trigger-id="vpnBtn" data-trigger-text="VPN" data-fallback="/kali-root.html#vpn" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#c084fc;font-size:12px;cursor:pointer;border-radius:6px;">VPN</button>
       <button type="button" data-trigger-id="secretBtn" data-trigger-text="RED SECRET CHAT" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#f87171;font-size:12px;cursor:pointer;border-radius:6px;">[ RED SECRET CHAT ]</button>
+      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">ПЛАЩАНЕ / ПОДКРЕПА</div>
       <button type="button" data-trigger-text="DARENIYA" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#facc15;font-size:12px;cursor:pointer;border-radius:6px;">DARENIYA (PayPal / TON)</button>
+      <button type="button" data-trigger-text="PayPal" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fde047;font-size:12px;cursor:pointer;border-radius:6px;">PayPal (директен бутон)</button>
+      <button type="button" data-trigger-text="TON" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#38bdf8;font-size:12px;cursor:pointer;border-radius:6px;">TON (директен бутон)</button>
     </div>
   </span>
   <script>
@@ -514,7 +518,7 @@
             var fb = act.getAttribute("data-fallback");
             var target = tid ? document.getElementById(tid) : null;
             if (!target && txt) {
-              var allBtns = Array.prototype.slice.call(document.querySelectorAll("button"));
+              var allBtns = Array.prototype.slice.call(document.querySelectorAll("button,a"));
               target = allBtns.find(function(b){
                 return b !== btn && !b.classList.contains("m-drop-act") && (b.textContent || "").indexOf(txt) !== -1;
               }) || null;
@@ -529,6 +533,7 @@
       }
     })();
   </script>
+  
   
   <a href="/mining-optin.html" id="pool24hLink" style="display:inline-block;padding:6px 10px;margin-left:6px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;text-decoration:none;">Pool & 24h</a>
       </div>
