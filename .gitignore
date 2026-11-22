@@ -10,3 +10,8 @@ locked-core/
 additions/
 .DS_Store
 Thumbs.db
+
+data/portfolio-ledger.json
+*.pem
+*.key
+.env
