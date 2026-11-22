@@ -437,5 +437,95 @@
   });
 })();
 </script>
+
+<script id="marauderRealInstrumentsAndPanels">
+(function(){
+  var outEl = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  var cEl = document.getElementById("krCmd");
+  var runBtn = document.getElementById("krRunBtn");
+  function appendOut(txt){
+    if (!outEl) return;
+    outEl.textContent += (outEl.textContent ? "\n" : "") + String(txt || "");
+    outEl.scrollTop = outEl.scrollHeight;
+  }
+  function getTargetCtx(){
+    var rawT = (tEl && tEl.value) ? tEl.value.trim() : "";
+    var rawU = (uEl && uEl.value) ? uEl.value.trim() : "";
+    var host = (rawT || rawU || "xera.bg").replace(/^https?:\/\//i, "").split("/")[0].split("?")[0].trim() || "xera.bg";
+    var url = /^https?:\/\//i.test(rawU) ? rawU : (/^https?:\/\//i.test(rawT) ? rawT : ("https://" + host));
+    return { target: host, url: url };
+  }
+  async function callApi(path, payload){
+    var bodyStr = JSON.stringify(payload || {});
+    var opts = { method: "POST", headers: { "Content-Type": "application/json" }, body: bodyStr };
+    try {
+      var r = await fetch(path, opts);
+      var txt = await r.text();
+      try { return JSON.parse(txt); } catch(e){}
+    } catch(e){}
+    var r2 = await fetch("http://127.0.0.1:3000" + path, opts);
+    var txt2 = await r2.text();
+    try { return JSON.parse(txt2); } catch(e){ return { ok: false, output: txt2 }; }
+  }
+  function buildRealCmdForTool(toolName, host, url){
+    var low = String(toolName || "").toLowerCase();
+    if (low.indexOf("dig") !== -1 || low.indexOf("dns") !== -1) {
+      return "(command -v dig >/dev/null 2>&1 && dig +short A " + host + " || getent ahosts " + host + " | head -n 6)";
+    }
+    if (low.indexOf("nmap") !== -1) {
+      return "getent ahosts " + host + " | head -n 6; (command -v nc >/dev/null 2>&1 && nc -zv -w 3 " + host + " 80 443 2>&1 || true)";
+    }
+    return "curl -I -sS -L --max-time 8 " + url + " | head -n 15";
+  }
+  async function runRealCommand(cmdOverride, label){
+    var ctx = getTargetCtx();
+    var cmd = (cmdOverride || (cEl && cEl.value) || "").trim();
+    if (!cmd || cmd.indexOf("{target}") !== -1 || cmd.indexOf("hydra ") === 0) {
+      cmd = buildRealCmdForTool(label || cmd, ctx.target, ctx.url);
+    }
+    if (cEl) cEl.value = cmd;
+    appendOut("[LIVE RUN] " + (label || "cmd") + " -> " + ctx.target + " | $ " + cmd);
+    var d = await callApi("/api/kali/run", { command: cmd, target: ctx.target, url: ctx.url });
+    appendOut(d && (d.output || d.error) ? (d.output || d.error) : JSON.stringify(d));
+  }
+  document.addEventListener("click", function(ev){
+    var card = ev.target && ev.target.closest ? ev.target.closest("[data-tool], .tool-card, .kr-tool, li, .card") : null;
+    if (card && outEl && outEl.contains(card) === false) {
+      var firstLine = (card.innerText || "").split("\n").map(function(x){return x.trim();}).filter(Boolean)[0] || "";
+      var m = firstLine.match(/^#?\d+\s+([a-zA-Z0-9._-]+)/);
+      var toolName = card.getAttribute("data-tool") || (m ? m[1] : "");
+      if (toolName) {
+        var ctx = getTargetCtx();
+        var realCmd = buildRealCmdForTool(toolName, ctx.target, ctx.url);
+        if (cEl) cEl.value = realCmd;
+        setTimeout(function(){ runRealCommand(realCmd, toolName); }, 80);
+      }
+    }
+  }, true);
+  if (runBtn) {
+    runBtn.addEventListener("click", function(ev){
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      runRealCommand(cEl ? cEl.value : "", "manual");
+    }, true);
+  }
+  var gitSt = document.getElementById("krGitStatusBtn");
+  var gitLg = document.getElementById("krGitLogBtn");
+  var gitPl = document.getElementById("krGitPullBtn");
+  var gitPs = document.getElementById("krGitPushBtn");
+  var gitMsg = document.getElementById("krGitMsg");
+  async function runGitAction(action){
+    appendOut("[GIT " + action.toUpperCase() + "] Изпълнява се...");
+    var d = await callApi("/api/kali/git", { action: action, message: (gitMsg && gitMsg.value.trim()) || "Sync MARAUDER-LINUX-CONSOLE" });
+    appendOut(d && (d.output || d.error) ? (d.output || d.error) : JSON.stringify(d));
+  }
+  if (gitSt) gitSt.onclick = function(){ runGitAction("status"); };
+  if (gitLg) gitLg.onclick = function(){ runGitAction("log"); };
+  if (gitPl) gitPl.onclick = function(){ runGitAction("pull"); };
+  if (gitPs) gitPs.onclick = function(){ runGitAction("commit_push"); };
+})();
+</script>
 </body>
 </html>
