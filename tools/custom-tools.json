@@ -4,9 +4,9 @@
     "name": "net-check",
     "file": "tools/custom/net-check.sh",
     "group": "Защита",
-    "descBg": "Бърза проверка на цел и локални интерфейси.",
-    "infoBg": "Връща подадената цел и IP адресите на интерфейса.",
+    "descBg": "Потребителски инструмент от Devanport Code Studio.",
+    "infoBg": "Връща реалния изход от изпълнението на скрипта.",
     "sample": "bash /mnt/c/Users/gtupo/marauder-ai-web/tools/custom/net-check.sh {target}",
-    "installedAt": "2026-11-22T09:23:06.711Z"
+    "installedAt": "2026-11-22T09:24:10.522Z"
   }
 ]
