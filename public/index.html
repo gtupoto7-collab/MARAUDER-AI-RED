@@ -3421,5 +3421,120 @@ window.addEventListener("DOMContentLoaded", function() {
     }
   }
 </style>
+
+<script id="marauderMenuFullWiringScript">
+(function() {
+  function findTargetPanel(selectors) {
+    for (const sel of selectors) {
+      const el = document.querySelector(sel);
+      if (el) return el;
+    }
+    return null;
+  }
+
+  function openPanelSafely(selectors, asFlex) {
+    const el = findTargetPanel(selectors);
+    if (!el) return false;
+    el.classList.remove("marauder-force-visible-panel", "marauder-force-visible-flex");
+    el.classList.add(asFlex ? "marauder-force-visible-flex" : "marauder-force-visible-panel");
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    const inp = el.querySelector("input, button, select, textarea");
+    if (inp) setTimeout(() => inp.focus(), 160);
+    return true;
+  }
+
+  function wireDropdownMenuClicks() {
+    const menu = document.getElementById("marauderRealDropdownMenu");
+    if (!menu || menu.dataset.marauderWired === "1") return;
+    menu.dataset.marauderWired = "1";
+
+    menu.addEventListener("click", function(ev) {
+      const item = ev.target.closest("button, a");
+      if (!item || !menu.contains(item)) return;
+
+      const txt = (item.textContent || "").toLowerCase();
+      const onclickAttr = item.getAttribute("onclick") || "";
+
+      if (item.tagName === "A" && item.getAttribute("href")) {
+        return;
+      }
+
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      if (onclickAttr.includes("room") || txt.includes("код / token") || txt.includes("стая")) {
+        const opened = openPanelSafely(["#marauderLiveRoomPanel", "[id*=room i]", "[class*=room i]"], false);
+        if (!opened) window.location.href = "./secret-chat.html";
+        if (window.closeRealDropdownMenu) window.closeRealDropdownMenu();
+        return;
+      }
+
+      if (onclickAttr.includes("donate") || txt.includes("нива") || txt.includes("copper") || txt.includes("дарения")) {
+        openPanelSafely(["#marauderMobileDonatePanel", "#marauderTierBox", "[id*=tier i]", "[id*=donate i]"], false);
+        if (window.closeRealDropdownMenu) window.closeRealDropdownMenu();
+        return;
+      }
+
+      if (onclickAttr.includes("unified") || txt.includes("плащания") || txt.includes("paypal") || txt.includes("keeper") || txt.includes("ton")) {
+        openPanelSafely(["#marauderUnifiedBar", "[id*=pay i]", "[class*=pay i]"], true);
+        if (window.closeRealDropdownMenu) window.closeRealDropdownMenu();
+        return;
+      }
+
+      if (onclickAttr.includes("vpn_mode") || (txt.includes("vpn режим") && !txt.includes("проверка"))) {
+        const key = "marauder_vpn_mode_v1";
+        const cur = localStorage.getItem(key) || "while_using";
+        const next = cur === "while_using" ? "always" : "while_using";
+        localStorage.setItem(key, next);
+        const sel = document.getElementById("marauderVpnModeSelect");
+        if (sel) sel.value = next;
+        const tag = document.getElementById("mMenuVpnModeTag");
+        if (tag) tag.textContent = next === "always" ? "Постоянно" : "Докато ползвам";
+        return;
+      }
+
+      if (onclickAttr.includes("vpn_check") || txt.includes("проверка връзка") || txt.includes("vpn")) {
+        if (typeof window.enterOptionFromDots === "function") {
+          window.enterOptionFromDots("vpn_check");
+        }
+        return;
+      }
+
+      if (onclickAttr.includes("online_toggle") || txt.includes("fenix режим") || txt.includes("онлайн") || txt.includes("офлайн")) {
+        const key = "marauder_online_mode_v1";
+        const nextOnline = localStorage.getItem(key) === "offline";
+        localStorage.setItem(key, nextOnline ? "online" : "offline");
+        window.MARAUDER_OFFLINE_MODE = !nextOnline;
+        const tag = document.getElementById("mMenuOnlineTag");
+        if (tag) {
+          tag.textContent = nextOnline ? "ОНЛАЙН" : "ОФЛАЙН";
+          tag.style.color = nextOnline ? "#19f58b" : "#ffc439";
+        }
+        const topBtn = document.getElementById("marauderOnlineOfflineBtn");
+        if (topBtn) {
+          topBtn.textContent = nextOnline ? "FENIX: ОНЛАЙН" : "FENIX: ОФЛАЙН";
+          topBtn.style.color = nextOnline ? "#19f58b" : "#ffc439";
+        }
+        return;
+      }
+
+      if (onclickAttr.includes("lang") || txt.includes("превод") || txt.includes("бг / en")) {
+        if (typeof window.toggleMarauderLang === "function") {
+          window.toggleMarauderLang();
+        }
+        if (window.closeRealDropdownMenu) window.closeRealDropdownMenu();
+        return;
+      }
+
+      if (txt.includes("затвори") || onclickAttr.includes("closeRealDropdownMenu")) {
+        if (window.closeRealDropdownMenu) window.closeRealDropdownMenu();
+      }
+    }, true);
+  }
+
+  document.addEventListener("DOMContentLoaded", wireDropdownMenuClicks);
+  wireDropdownMenuClicks();
+})();
+</script>
 </body>
 </html>
