@@ -1008,5 +1008,44 @@
   setTimeout(enforceVerticalListAndSingleDots, 600);
 })();
 </script>
+<script id="marauderNetHunterOptionsScript">
+(function() {
+  function addKaliAndNetHunterToDrawer() {
+    var drawer = document.getElementById("marauderAlOptionsDrawer");
+    if (!drawer) return;
+    if (!document.getElementById("openKaliLinuxRootPageBtn")) {
+      var kBtn = document.createElement("a");
+      kBtn.id = "openKaliLinuxRootPageBtn";
+      kBtn.href = "/kali-root.html";
+      kBtn.target = "_blank";
+      kBtn.rel = "noopener noreferrer";
+      kBtn.style.cssText = "display:flex;align-items:center;justify-content:space-between;width:100%;padding:8px 10px;border-radius:8px;border:1px solid #f87171;background:#22090e;color:#fca5a5;font-weight:700;text-decoration:none;";
+      kBtn.innerHTML = "<span>KONZOLA KALI LINUX ROOT</span><span>100 ИНСТРУМЕНТА →</span>";
+      drawer.insertBefore(kBtn, drawer.firstChild);
+    }
+    if (!document.getElementById("openKaliNetHunterMobileBtn")) {
+      var nhBtn = document.createElement("a");
+      nhBtn.id = "openKaliNetHunterMobileBtn";
+      nhBtn.href = "/kali-root.html?profile=nethunter-mobile";
+      nhBtn.target = "_blank";
+      nhBtn.rel = "noopener noreferrer";
+      nhBtn.style.cssText = "display:flex;align-items:center;justify-content:space-between;width:100%;padding:8px 10px;border-radius:8px;border:1px solid #38bdf8;background:#081c2e;color:#7dd3fc;font-weight:700;text-decoration:none;";
+      nhBtn.innerHTML = "<span>KALI NETHUNTER (ANDROID / iOS)</span><span>MOBILE LIVE →</span>";
+      var kEl = document.getElementById("openKaliLinuxRootPageBtn");
+      if (kEl && kEl.nextSibling) {
+        drawer.insertBefore(nhBtn, kEl.nextSibling);
+      } else {
+        drawer.appendChild(nhBtn);
+      }
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() { setTimeout(addKaliAndNetHunterToDrawer, 200); });
+  } else {
+    setTimeout(addKaliAndNetHunterToDrawer, 200);
+  }
+  setTimeout(addKaliAndNetHunterToDrawer, 650);
+})();
+</script>
 </body>
 </html>

@@ -253,5 +253,20 @@
       loadTools();
     })();
   </script>
+<script id="marauderNetHunterProfileScript">
+// MARAUDER_NH_MOBILE_PROFILE
+(function() {
+  var params = new URLSearchParams(window.location.search || "");
+  var profile = params.get("profile") || "";
+  var titleEl = document.querySelector(".kr-title");
+  var cmdEl = document.getElementById("krCmd");
+  var outEl = document.getElementById("krOutput");
+  if (profile === "nethunter-mobile") {
+    if (titleEl) titleEl.textContent = "KALI NETHUNTER (ANDROID / iOS) — LIVE PENTESTING KONZOLA";
+    if (cmdEl) cmdEl.value = "dig +short A scanme.nmap.org && uname -a";
+    if (outEl) outEl.textContent += "\n[NETHUNTER MOBILE] Профил за Android / iOS активиран (готови живи команди и 100 инструмента).";
+  }
+})();
+</script>
 </body>
 </html>
