@@ -668,5 +668,56 @@
   if (btn) btn.addEventListener("click", function(ev){ ev.preventDefault(); ev.stopImmediatePropagation(); runAuto(); }, true);
 })();
 </script>
+
+<div class="kr-panel" id="marauderKaliTop10Panel" style="border-color:#ef4444;">
+  <div style="font-weight:700;color:#f87171;">KALI TOP 10 // РЕАЛЕН ИЗПЪЛНИТЕЛ (INSTALLED CHECK + STATUS + LOG)</div>
+  <div class="kr-row">
+    <select id="kaliTop10Sel" class="kr-btn">
+      <option value="nmap">1. Nmap (Network Recon)</option>
+      <option value="tshark">2. Tshark / Net Info (Traffic)</option>
+      <option value="nuclei">3. Nuclei (Templates Audit)</option>
+      <option value="lynis">4. Lynis (Linux Audit)</option>
+      <option value="sqlmap">5. SQLmap (Authorized SQL Check)</option>
+      <option value="gobuster">6. Gobuster (Paths Audit)</option>
+      <option value="whatweb">7. WhatWeb (Tech Stack)</option>
+      <option value="hydra">8. Hydra (Auth Check)</option>
+      <option value="metasploit">9. Metasploit (Lab Check)</option>
+      <option value="hashcat">10. Hashcat (Hash Audit)</option>
+    </select>
+    <button type="button" class="kr-run" id="kaliTop10RunBtn">Пусни Kali Top 10</button>
+  </div>
+</div>
+<script id="marauderKaliTop10Script">
+(function(){
+  var btn = document.getElementById("kaliTop10RunBtn");
+  var sel = document.getElementById("kaliTop10Sel");
+  var out = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  function log(m){ if(out){ out.textContent += (out.textContent ? "\n" : "") + m; out.scrollTop = out.scrollHeight; } }
+  if (btn) btn.addEventListener("click", async function(){
+    var tool = sel ? sel.value : "nmap";
+    var target = (tEl && tEl.value.trim()) || "xera.bg";
+    var url = (uEl && uEl.value.trim()) || ("https://" + target);
+    log("[KALI TOP 10 // " + tool.toUpperCase() + "] Статус: RUNNING за " + target + "...");
+    var payload = JSON.stringify({ tool: tool, target: target, url: url });
+    var opts = { method: "POST", headers: { "Content-Type": "application/json" }, body: payload };
+    var bases = ["", "http://127.0.0.1:3000"];
+    for (var i = 0; i < bases.length; i++){
+      try {
+        var r = await fetch(bases[i] + "/api/kali/top10", opts);
+        var txt = await r.text();
+        var tr = txt.trim();
+        if (tr.charAt(0) === "{" || tr.charAt(0) === "["){
+          var d = JSON.parse(tr);
+          log(d.output || JSON.stringify(d, null, 2));
+          return;
+        }
+      } catch(e){}
+    }
+    log("[KALI TOP 10] Статус: FAILED — няма активен /api/kali/top10 отговор.");
+  });
+})();
+</script>
 </body>
 </html>
