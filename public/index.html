@@ -5280,5 +5280,65 @@ window.addEventListener("DOMContentLoaded", function() {
   setTimeout(bindDirectOptionTriggers, 500);
 })();
 </script>
+<style id="marauderSingleScreenTopBtnStyle">
+  html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+  }
+  .chat-wrap, .chat-container, .main-panel, .app-main, main {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+  #marauderTopKaliQuickBtn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 6px 11px !important;
+    border-radius: 8px !important;
+    border: 1px solid #f87171 !important;
+    background: #2b0b12 !important;
+    color: #fca5a5 !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    margin-left: 6px !important;
+  }
+  #marauderAlOptionsDrawer.open {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+</style>
+<script id="marauderSingleScreenTopBtnScript">
+(function() {
+  function placeTopKaliButton() {
+    var optBtn = document.getElementById("marauderNewAlMenuBtn");
+    if (!optBtn) {
+      var all = Array.from(document.querySelectorAll("button, a, [role=button]"));
+      optBtn = all.find(function(el) { return /marauder-al\s*опции/i.test((el.textContent || "").trim()); }) || null;
+    }
+    if (optBtn && optBtn.parentNode && !document.getElementById("marauderTopKaliQuickBtn")) {
+      var topBtn = document.createElement("a");
+      topBtn.id = "marauderTopKaliQuickBtn";
+      topBtn.href = "/kali-root.html";
+      topBtn.target = "_blank";
+      topBtn.rel = "noopener noreferrer";
+      topBtn.textContent = "KONZOLA KALI";
+      optBtn.parentNode.insertBefore(topBtn, optBtn.nextSibling);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() { setTimeout(placeTopKaliButton, 150); });
+  } else {
+    setTimeout(placeTopKaliButton, 150);
+  }
+  setTimeout(placeTopKaliButton, 500);
+})();
+</script>
 </body>
 </html>
