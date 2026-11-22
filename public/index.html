@@ -2892,5 +2892,86 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 })();
 </script>
+
+<style id="marauderStrictMenuStyle">
+  #marauderUnifiedBar,
+  #marauderMobileDonatePanel,
+  #marauderTierBox,
+  #marauderLiveRoomPanel {
+    display: none !important;
+  }
+  body.marauder-panel-unified #marauderUnifiedBar {
+    display: flex !important;
+  }
+  body.marauder-panel-donate #marauderMobileDonatePanel,
+  body.marauder-panel-donate #marauderTierBox {
+    display: block !important;
+  }
+  body.marauder-panel-room #marauderLiveRoomPanel {
+    display: block !important;
+  }
+  #marauderStrictMenuBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin: 8px 10px;
+    padding: 8px 10px;
+    background: #0c121c;
+    border: 1px solid #2b3a52;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  #marauderStrictMenuBar button,
+  #marauderStrictMenuBar a {
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+</style>
+
+<div id="marauderStrictMenuBar">
+  <button type="button" onclick="window.openStrictMenuPanel('donate')" style="background:#241914;color:#ffc439;border:1px solid #ffc439;">💎 Дарения и нива</button>
+  <button type="button" onclick="window.openStrictMenuPanel('unified')" style="background:#111c2d;color:#93c5fd;border:1px solid #3b82f6;">⚡ Бързи плащания</button>
+  <button type="button" onclick="window.openStrictMenuPanel('room')" style="background:#102219;color:#19f58b;border:1px solid #19f58b;">🔐 Код / Token стая</button>
+  <a href="./secret-chat.html" style="background:#181326;color:#e3c7ff;border:1px solid #8b5cf6;">🕵️ Секретен чат</a>
+  <button type="button" onclick="window.openStrictMenuPanel(null)" style="background:#241216;color:#ff9494;border:1px solid #6b2933;">✕ Затвори менюто</button>
+</div>
+
+<script>
+(function() {
+  const PANEL_CLASSES = [
+    "marauder-panel-unified",
+    "marauder-panel-donate",
+    "marauder-panel-room"
+  ];
+
+  window.openStrictMenuPanel = function(panelKey) {
+    document.body.classList.remove(...PANEL_CLASSES);
+    document.body.classList.remove("marauder-hide-donate-mobile");
+    document.body.classList.remove("marauder-options-collapsed");
+    if (panelKey === "unified") document.body.classList.add("marauder-panel-unified");
+    if (panelKey === "donate") document.body.classList.add("marauder-panel-donate");
+    if (panelKey === "room") document.body.classList.add("marauder-panel-room");
+  };
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.classList.remove(...PANEL_CLASSES);
+    const menuBar = document.getElementById("marauderStrictMenuBar");
+    const langWrap = document.getElementById("marauderLangSwitcherWrap");
+    if (menuBar && menuBar.parentElement !== document.body) {
+      if (langWrap && langWrap.parentElement === document.body) {
+        langWrap.insertAdjacentElement("afterend", menuBar);
+      } else {
+        document.body.insertBefore(menuBar, document.body.firstChild);
+      }
+    }
+  });
+})();
+</script>
 </body>
 </html>
