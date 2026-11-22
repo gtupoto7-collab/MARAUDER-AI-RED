@@ -545,5 +545,96 @@
   checkVer();
 })();
 </script>
+
+<script id="marauderAutoRealEngine">
+(function(){
+  var outEl = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  var cEl = document.getElementById("krCmd");
+  var apiBase = "";
+  function log(msg){
+    if (!outEl) return;
+    outEl.textContent += (outEl.textContent ? "\n" : "") + String(msg || "");
+    outEl.scrollTop = outEl.scrollHeight;
+  }
+  function getCtx(){
+    var rt = (tEl && tEl.value) ? tEl.value.trim() : "";
+    var ru = (uEl && uEl.value) ? uEl.value.trim() : "";
+    var host = (rt || ru || "xera.bg").replace(/^https?:\/\//i, "").split("/")[0].split("?")[0].trim() || "xera.bg";
+    var url = /^https?:\/\//i.test(ru) ? ru : (/^https?:\/\//i.test(rt) ? rt : ("https://" + host));
+    return { target: host, url: url };
+  }
+  async function smartPost(path, payload){
+    var bodyStr = JSON.stringify(payload || {});
+    var opts = { method: "POST", headers: { "Content-Type": "application/json" }, body: bodyStr };
+    var bases = apiBase ? [apiBase, "", "http://127.0.0.1:3000"] : ["", "http://127.0.0.1:3000"];
+    var seen = {};
+    for (var i = 0; i < bases.length; i++){
+      var b = bases[i];
+      if (seen[b]) continue; seen[b] = 1;
+      try {
+        var r = await fetch(b + path, opts);
+        var txt = await r.text();
+        var trimmed = txt.trim();
+        if (trimmed.charAt(0) === "{" || trimmed.charAt(0) === "["){
+          apiBase = b;
+          return JSON.parse(trimmed);
+        }
+      } catch(e){}
+    }
+    return { ok: false, error: "Няма активен JSON API на /api/kali (провери bot-live.js на порт 3000)." };
+  }
+  function autoCmd(toolName, host, url){
+    var low = String(toolName || "").toLowerCase();
+    if (low.indexOf("dig") !== -1 || low.indexOf("dns") !== -1) {
+      return "(command -v dig >/dev/null 2>&1 && dig +short A " + host + " || getent ahosts " + host + " | head -n 8)";
+    }
+    if (low.indexOf("nmap") !== -1) {
+      return "getent ahosts " + host + " | head -n 8; (command -v nmap >/dev/null 2>&1 && nmap -Pn -F --max-retries 1 " + host + " || (command -v nc >/dev/null 2>&1 && nc -zv -w 3 " + host + " 80 443 2>&1 || true))";
+    }
+    return "curl -I -sS -L --max-time 10 " + url + " | head -n 20";
+  }
+  window.marauderRunLive = async function(customCmd, label){
+    var ctx = getCtx();
+    var cmd = (customCmd || (cEl && cEl.value) || "").trim();
+    if (!cmd || cmd.indexOf("{target}") !== -1 || /^hydra\s/i.test(cmd)) {
+      cmd = autoCmd(label || cmd, ctx.target, ctx.url);
+    }
+    if (cEl) cEl.value = cmd;
+    log("[RUN] " + (label || "tool") + " -> " + ctx.target + " | $ " + cmd);
+    var d = await smartPost("/api/kali/run", { command: cmd, target: ctx.target, url: ctx.url });
+    log(d.output || d.error || JSON.stringify(d));
+  };
+  document.addEventListener("click", function(ev){
+    var el = ev.target && ev.target.closest ? ev.target.closest("[data-tool], .tool-card, .kr-tool, .card, li") : null;
+    if (el && outEl && !outEl.contains(el)){
+      var first = (el.innerText || "").split("\n").map(function(x){return x.trim();}).filter(Boolean)[0] || "";
+      var m = first.match(/^#?\d+\s+([a-zA-Z0-9._-]+)/);
+      var tName = el.getAttribute("data-tool") || (m ? m[1] : "");
+      if (tName){
+        var ctx = getCtx();
+        var nextCmd = autoCmd(tName, ctx.target, ctx.url);
+        if (cEl) cEl.value = nextCmd;
+        setTimeout(function(){ window.marauderRunLive(nextCmd, tName); }, 60);
+      }
+    }
+  }, true);
+  var runBtn = document.getElementById("krRunBtn");
+  if (runBtn) runBtn.onclick = function(ev){ ev.preventDefault(); window.marauderRunLive(cEl ? cEl.value : "", "live"); };
+  var megBtn = document.getElementById("krMegatronBtn");
+  if (megBtn) megBtn.onclick = async function(){ var d = await smartPost("/api/kali/megatron-security", getCtx()); log(d.output || d.error || JSON.stringify(d)); };
+  var alBtn = document.getElementById("krAlAgentBtn");
+  if (alBtn) alBtn.onclick = async function(){ var d = await smartPost("/api/kali/al-agent", getCtx()); log(d.output || d.error || JSON.stringify(d)); };
+  var monBtn = document.getElementById("alMonBtn");
+  if (monBtn) monBtn.onclick = async function(){ var d = await smartPost("/api/kali/telemetry", getCtx()); log(d.output || d.error || JSON.stringify(d)); };
+  var vulnBtn = document.getElementById("alVulnBtn");
+  if (vulnBtn) vulnBtn.onclick = async function(){ var c = getCtx(); c.agent = "AI VULNERABILITY ANALYZER"; var d = await smartPost("/api/kali/agent-hub", c); log(d.output || d.error || JSON.stringify(d)); };
+  var hubBtn = document.getElementById("alHubBtn");
+  if (hubBtn) hubBtn.onclick = async function(){ var c = getCtx(); var sel = document.getElementById("alAgentSel"); c.agent = sel ? sel.value : "RECON AI"; var d = await smartPost("/api/kali/agent-hub", c); log(d.output || d.error || JSON.stringify(d)); };
+  var autoBtn = document.getElementById("alAutoBtn");
+  if (autoBtn) autoBtn.onclick = async function(){ var d = await smartPost("/api/kali/auto-audit", getCtx()); log(d.output || d.error || JSON.stringify(d)); };
+})();
+</script>
 </body>
 </html>
