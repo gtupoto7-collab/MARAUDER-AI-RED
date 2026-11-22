@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const { attachSecretChat } = require('./secret-chat');
 const path = require('path');
 
 const app = express();
@@ -320,6 +322,10 @@ app.get(['/health', '/api/health'], (req, res) => {
   });
 });
 
+app.get('/secret-chat', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'secret-chat.html'));
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -445,7 +451,10 @@ ${description}
     }
 });
 
-app.listen(PORT, () => {
+const server = http.createServer(app);
+attachSecretChat(server);
+
+server.listen(PORT, () => {
   console.log(`MARAUDER-AI server running on port ${PORT}`);
 const KEEP_ALIVE_INTERVAL_MS = Number(process.env.KEEP_ALIVE_INTERVAL_MS) || 10 * 60 * 1000;
   const pingUrl = `${KEEP_ALIVE_URL}/health`;
