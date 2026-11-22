@@ -870,5 +870,209 @@
   if (hBtn) hBtn.addEventListener('click', () => downloadFile(lastExports && lastExports.html, lastId + '.html', 'text/html;charset=utf-8'));
 })();
 </script>
+
+<style id="marauderProThemeStyle">
+  body {
+    background: #070b14 !important;
+    color: #f8fafc !important;
+    font-size: 16px !important;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif !important;
+  }
+  .kr-panel, [id^="marauder"][id$="Panel"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(9, 13, 24, 0.98)) !important;
+    border-width: 2px !important;
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+    margin: 12px 0 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+  }
+  .kr-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-top: 8px !important;
+  }
+  .kr-btn, .kr-run, select.kr-btn, input.kr-btn {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    letter-spacing: 0.3px !important;
+  }
+  .kr-run {
+    background: linear-gradient(90deg, #dc2626, #991b1b) !important;
+    color: #ffffff !important;
+    border: 1px solid #f87171 !important;
+  }
+  .kr-btn {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #38bdf8 !important;
+  }
+  .kr-desc-bg {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #cbd5e1;
+    background: rgba(2, 6, 23, 0.7);
+    border-left: 4px solid #38bdf8;
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+  #krOutput {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    color: #4ade80 !important;
+    background: #030712 !important;
+    border: 2px solid #22c55e !important;
+    padding: 14px !important;
+  }
+</style>
+
+<div class="kr-panel" id="marauderLangAndHelpPanel" style="border-color:#f59e0b;">
+  <div style="font-size:18px;font-weight:800;color:#fbbf24;">
+    MARAUDER-LINUX-CONSOLE // ЕЗИК И СПРАВКА НА КИРИЛИЦА
+  </div>
+  <div class="kr-row">
+    <label for="marauderLangSelect" style="font-weight:700;color:#fde68a;">Език / Language:</label>
+    <select id="marauderLangSelect" class="kr-btn" style="border-color:#fbbf24;">
+      <option value="bg">Български (Кирилица)</option>
+      <option value="en">English (EN)</option>
+      <option value="de">Deutsch (DE)</option>
+      <option value="ru">Русский (RU)</option>
+      <option value="es">Español (ES)</option>
+      <option value="fr">Français (FR)</option>
+    </select>
+    <button type="button" class="kr-btn" id="marauderHelpAllBtn" style="border-color:#34d399;color:#6ee7b7;">
+      Покажи пълно обяснение на опциите
+    </button>
+  </div>
+  <div class="kr-desc-bg" id="marauderOptionHintBox">
+    Обяснение (Кирилица): Избери цел (домейн или IP), натисни модул за реална проверка (DNS, портове, HTTP/TLS, инсталирани инструменти, MYTHOS или AI анализ) и експортирай отчета в JSON, TXT или HTML.
+  </div>
+</div>
+
+<script id="marauderProConsoleScript">
+(function(){
+  const I18N = {
+    bg: {
+      hint: "Обяснение (Кирилица): Всяка опция изпълнява реална проверка или действие — инвентар на инсталирани инструменти, MYTHOS поток, AI анализ по фактите и експорт на отчети (JSON/TXT/HTML).",
+      runAi: "MARAUDER AI ANALYZE (Анализ по фактите)",
+      mythos: "RUN MARAUDER-MYTHOS-ENGINE (Автоматичен поток)",
+      catScan: "MARAUDER CATEGORY SCAN (Проверка на категория)",
+      top10: "MARAUDER TOP-10 RUN (Изпълнение на инструмент)",
+      expJson: "ЕКСПОРТ JSON",
+      expTxt: "ЕКСПОРТ TXT",
+      expHtml: "ЕКСПОРТ HTML",
+      helpDump: [
+        "=== СПРАВКА НА КИРИЛИЦА ЗА МОДУЛИТЕ НА MARAUDER ===",
+        "1. GIT РЕПОЗИТОРИО: Проверява статус (status), история (log), дърпа промени (pull) или качва промени (commit & push).",
+        "2. MARAUDER-AL [31-34] & AUTO MODE: Мониторинг на устройство, анализ на сигурността, агенти и автоматична диагностика.",
+        "3. KALI TOP-10: Проверява дали избраният инструмент е инсталиран и пуска реална диагностична проверка.",
+        "4. КАТЕГОРИИ & ИНВЕНТАР: Проверява root права и кои инструменти са налични в PATH.",
+        "5. MYTHOS ENGINE: Автоматичен поток MEGATRON -> MYTHOS -> AL-AGENTS -> REPORT върху зададената цел.",
+        "6. AI ANALYZER & REPORT CENTER: Анализира реалните факти чрез AI / правила и сваля отчет в JSON, TXT или HTML."
+      ].join("\n")
+    },
+    en: {
+      hint: "Explanation: Every button triggers a real backend check — installed tool inventory, MYTHOS pipeline, fact-based AI analysis, and JSON/TXT/HTML report export.",
+      runAi: "MARAUDER AI ANALYZE (Fact Analysis)",
+      mythos: "RUN MARAUDER-MYTHOS-ENGINE (Auto Pipeline)",
+      catScan: "MARAUDER CATEGORY SCAN (Category Check)",
+      top10: "MARAUDER TOP-10 RUN (Execute Tool)",
+      expJson: "EXPORT JSON",
+      expTxt: "EXPORT TXT",
+      expHtml: "EXPORT HTML",
+      helpDump: "=== MARAUDER MODULES GUIDE (EN) ===\nUse Target/URL at the top, run Categories, MYTHOS, or AI Analyze, then export JSON, TXT, or HTML."
+    },
+    de: {
+      hint: "Erklärung: Jede Option führt echte Prüfungen aus — Tool-Inventar, MYTHOS-Ablauf, faktenbasierte KI-Analyse und Export als JSON/TXT/HTML.",
+      runAi: "MARAUDER AI ANALYZE (Faktenanalyse)",
+      mythos: "RUN MARAUDER-MYTHOS-ENGINE (Auto-Ablauf)",
+      catScan: "MARAUDER CATEGORY SCAN (Kategorie prüfen)",
+      top10: "MARAUDER TOP-10 RUN (Werkzeug starten)",
+      expJson: "EXPORT JSON",
+      expTxt: "EXPORT TXT",
+      expHtml: "EXPORT HTML",
+      helpDump: "=== MARAUDER MODUL-HILFE (DE) ===\nZiel eingeben, Kategorie/MYTHOS/KI starten und Bericht als JSON, TXT oder HTML speichern."
+    },
+    ru: {
+      hint: "Пояснение: Каждая кнопка запускает реальную проверку — инвентарь утилит, поток MYTHOS, ИИ-анализ фактов и экспорт отчётов (JSON/TXT/HTML).",
+      runAi: "MARAUDER AI ANALYZE (Анализ фактов)",
+      mythos: "RUN MARAUDER-MYTHOS-ENGINE (Автопоток)",
+      catScan: "MARAUDER CATEGORY SCAN (Проверка категории)",
+      top10: "MARAUDER TOP-10 RUN (Запуск утилиты)",
+      expJson: "ЭКСПОРТ JSON",
+      expTxt: "ЭКСПОРТ TXT",
+      expHtml: "ЭКСПОРТ HTML",
+      helpDump: "=== СПРАВКА ПО МОДУЛЯМ MARAUDER (RU) ===\nУкажите цель, запустите проверку или ИИ-анализ и сохраните отчёт в JSON, TXT или HTML."
+    },
+    es: {
+      hint: "Explicación: Cada opción ejecuta comprobaciones reales — inventario de herramientas, flujo MYTHOS, análisis IA de hechos y exportación JSON/TXT/HTML.",
+      runAi: "MARAUDER AI ANALYZE (Análisis de hechos)",
+      mythos: "RUN MARAUDER-MYTHOS-ENGINE (Flujo auto)",
+      catScan: "MARAUDER CATEGORY SCAN (Escanear categoría)",
+      top10: "MARAUDER TOP-10 RUN (Ejecutar herramienta)",
+      expJson: "EXPORTAR JSON",
+      expTxt: "EXPORTAR TXT",
+      expHtml: "EXPORTAR HTML",
+      helpDump: "=== GUÍA DE MÓDULOS MARAUDER (ES) ===\nIntroduce el objetivo, ejecuta Categoría/MYTHOS/IA y exporta el informe en JSON, TXT o HTML."
+    },
+    fr: {
+      hint: "Explication : Chaque option lance de vrais contrôles — inventaire d'outils, flux MYTHOS, analyse IA des faits et export JSON/TXT/HTML.",
+      runAi: "MARAUDER AI ANALYZE (Analyse des faits)",
+      mythos: "RUN MARAUDER-MYTHOS-ENGINE (Flux auto)",
+      catScan: "MARAUDER CATEGORY SCAN (Scan catégorie)",
+      top10: "MARAUDER TOP-10 RUN (Lancer l'outil)",
+      expJson: "EXPORT JSON",
+      expTxt: "EXPORT TXT",
+      expHtml: "EXPORT HTML",
+      helpDump: "=== GUIDE MODULES MARAUDER (FR) ===\nSaisissez la cible, lancez Catégorie/MYTHOS/IA puis exportez en JSON, TXT ou HTML."
+    }
+  };
+
+  function setTextById(id, txt) {
+    const el = document.getElementById(id);
+    if (el && txt) el.textContent = txt;
+  }
+
+  function applyLang(lang) {
+    const d = I18N[lang] || I18N.bg;
+    setTextById("marauderOptionHintBox", d.hint);
+    setTextById("marauderAiRunBtn", d.runAi);
+    setTextById("marauderMythosBtn", d.mythos);
+    setTextById("marauderCatRunBtn", d.catScan);
+    setTextById("marauderExpJsonBtn", d.expJson);
+    setTextById("marauderExpTxtBtn", d.expTxt);
+    setTextById("marauderExpHtmlBtn", d.expHtml);
+    try { localStorage.setItem("marauder_lang", lang); } catch(e){}
+  }
+
+  const langSel = document.getElementById("marauderLangSelect");
+  const helpBtn = document.getElementById("marauderHelpAllBtn");
+  const out = document.getElementById("krOutput");
+  const savedLang = (function(){ try { return localStorage.getItem("marauder_lang") || "bg"; } catch(e){ return "bg"; } })();
+
+  if (langSel) {
+    langSel.value = I18N[savedLang] ? savedLang : "bg";
+    applyLang(langSel.value);
+    langSel.addEventListener("change", () => applyLang(langSel.value));
+  } else {
+    applyLang("bg");
+  }
+
+  if (helpBtn) {
+    helpBtn.addEventListener("click", () => {
+      const lang = (langSel && langSel.value) || "bg";
+      const msg = (I18N[lang] && I18N[lang].helpDump) || I18N.bg.helpDump;
+      if (out) {
+        out.textContent += (out.textContent ? "\n\n" : "") + msg;
+        out.scrollTop = out.scrollHeight;
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
