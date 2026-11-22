@@ -6,25 +6,29 @@
   <title>MARAUDER — Opt-In Compute & Pool Status</title>
   <style>
     body { font-family: monospace; background: #09090b; color: #f4f4f5; padding: 20px; line-height: 1.5; }
-    .box { max-width: 780px; margin: 0 auto; border: 1px solid #3f3f46; border-radius: 8px; padding: 16px; background: #111115; }
+    .box { max-width: 820px; margin: 0 auto; border: 1px solid #3f3f46; border-radius: 8px; padding: 16px; background: #111115; }
     .warn { border: 1px solid #f59e0b; background: #291d06; color: #fde68a; padding: 12px; border-radius: 6px; margin-bottom: 14px; }
-    button { padding: 8px 14px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; margin-right: 8px; }
+    button { padding: 8px 14px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; margin-right: 8px; margin-bottom: 8px; }
     button.start { border-color: #22c55e; background: #14532d; }
     button.stop { border-color: #ef4444; background: #7f1d1d; }
-    input { width: 100%; max-width: 440px; padding: 8px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; margin: 6px 0 12px; display: block; }
-    pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 6px; min-height: 120px; white-space: pre-wrap; }
+    button.check { border-color: #38bdf8; background: #0c4a6e; }
+    input { width: 100%; max-width: 540px; padding: 8px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; margin: 6px 0 12px; display: block; }
+    pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 6px; min-height: 150px; white-space: pre-wrap; }
     a { color: #38bdf8; }
   </style>
 </head>
 <body>
   <div class="box">
-    <h2>MARAUDER — Доброволен Compute & Worker Статус</h2>
+    <h2>MARAUDER — Доброволен Compute & Pool Статус</h2>
     <div class="warn">
       Внимание: Постоянното натоварване на телефон/браузър изразходва батерия, повишава температурата и има ниска ефективност. Стартирането става само доброволно и може да бъде спряно по всяко време. Копаенето не се изпълнява върху сървъри на Render.
     </div>
     <label for="walletInp">Публичен Wallet / Worker идентификатор (без private key):</label>
     <input id="walletInp" type="text" placeholder="Публичен адрес или worker име" />
+    <label for="poolApiInp">Публичен Pool / Worker Stats API URL (HTTPS, без private key):</label>
+    <input id="poolApiInp" type="text" placeholder="https://api.example-pool.org/miner/WALLET/stats" />
     <div>
+      <button id="btnCheckPool" class="check" type="button">Провери Pool веднъж</button>
       <button id="btnStartOptIn" class="start" type="button">Start (Доброволно)</button>
       <button id="btnStopOptIn" class="stop" type="button">Stop</button>
       <a href="/kali-root.html">Обратно към конзолата</a>
@@ -38,25 +42,71 @@
       var ticks = 0;
       var logEl = document.getElementById("optLog");
       var wEl = document.getElementById("walletInp");
-      function writeStatus(msg) {
-        logEl.textContent = msg;
+      var pEl = document.getElementById("poolApiInp");
+
+      function getApiBase() {
+        if (window.__MARAUDER_API_BASE__) return String(window.__MARAUDER_API_BASE__).replace(/\/+$/, "");
+        if (window.location.port === "3000") return window.location.origin.replace(/\/+$/, "");
+        return "http://127.0.0.1:3000";
       }
-      document.getElementById("btnStartOptIn").addEventListener("click", function(){
+
+      async function queryPool(apiUrl) {
+        if (!apiUrl) return { ok: false, error: "Не е въведен Pool API URL." };
+        try {
+          var direct = await fetch(apiUrl, { headers: { "Accept": "application/json" }, signal: AbortSignal.timeout(5000) });
+          if (direct.ok) {
+            var txtDirect = await direct.text();
+            return { ok: true, mode: "direct", data: txtDirect.slice(0, 4000) };
+          }
+        } catch (_) {}
+        try {
+          var proxy = await fetch(getApiBase() + "/api/kali/pool-stats", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ apiUrl: apiUrl }),
+            signal: AbortSignal.timeout(7000)
+          });
+          var pJson = await proxy.json();
+          return { ok: !!pJson.ok, mode: "proxy", data: pJson.raw || pJson.error || JSON.stringify(pJson) };
+        } catch (err) {
+          return { ok: false, error: err && err.message ? err.message : String(err) };
+        }
+      }
+
+      async function refreshView(modeLabel) {
+        var w = (wEl.value || "").trim() || "непосочен-worker";
+        var apiUrl = (pEl.value || "").trim();
+        var poolPart = "Pool API: не е зададен";
+        if (apiUrl) {
+          var res = await queryPool(apiUrl);
+          poolPart = res.ok
+            ? ("Pool API (" + res.mode + "): OK\n" + res.data)
+            : ("Pool API грешка: " + res.error);
+        }
+        logEl.textContent = "Статус: " + modeLabel + "\nWorker/Wallet: " + w + "\nЦикли: " + ticks + "\n---\n" + poolPart;
+      }
+
+      document.getElementById("btnCheckPool").addEventListener("click", async function(){
+        await refreshView("ЕДНОКРАТНА ПРОВЕРКА");
+      });
+
+      document.getElementById("btnStartOptIn").addEventListener("click", async function(){
         if (running) return;
         running = true;
         ticks = 0;
-        var w = (wEl.value || "").trim() || "непосочен-worker";
-        writeStatus("Статус: АКТИВНО (доброволно стартирано)\nWorker/Wallet: " + w + "\nЦикли на проверка: 0");
-        timer = setInterval(function(){
+        await refreshView("АКТИВНО (доброволно стартирано)");
+        timer = setInterval(async function(){
+          if (!running) return;
           ticks += 1;
-          writeStatus("Статус: АКТИВНО (доброволно стартирано)\nWorker/Wallet: " + w + "\nАктивни цикли: " + ticks + "\nНатисни Stop за спиране.");
-        }, 2000);
+          await refreshView("АКТИВНО (доброволно стартирано)");
+        }, 5000);
       });
+
       document.getElementById("btnStopOptIn").addEventListener("click", function(){
         running = false;
         if (timer) { clearInterval(timer); timer = null; }
         var w = (wEl.value || "").trim() || "непосочен-worker";
-        writeStatus("Статус: СПРЯНО\nWorker/Wallet: " + w + "\nИзпълнени цикли: " + ticks);
+        logEl.textContent = "Статус: СПРЯНО\nWorker/Wallet: " + w + "\nИзпълнени цикли: " + ticks;
       });
     })();
   </script>
