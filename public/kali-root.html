@@ -1567,5 +1567,57 @@
   }
 })();
 </script>
+
+<section id="devanportStudioBox" style="max-width:920px;margin:16px auto;padding:14px;border:1px solid #f59e0b;border-radius:8px;background:#111115;color:#f4f4f5;font-family:monospace;">
+  <h3 style="margin:0 0 8px 0;color:#fbbf24;">DEVANPORT-AI — Software Generator &amp; Auto-Save</h3>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+    <input id="devToolName" type="text" placeholder="Име на инструмент / скрипт (напр. net-check.sh)" style="flex:1;min-width:220px;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;" />
+    <button type="button" id="btnGenSaveTool" style="padding:7px 12px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:bold;cursor:pointer;">Генерирай и Авто-Запази</button>
+  </div>
+  <pre id="devSavedList" style="background:#09090b;border:1px solid #27272a;padding:10px;border-radius:6px;max-height:220px;overflow:auto;white-space:pre-wrap;">Зареждане на запазените инструменти...</pre>
+</section>
+<script>
+  (function(){
+    var key = "marauder_devanport_saved_tools_v1";
+    var nameInp = document.getElementById("devToolName");
+    var btn = document.getElementById("btnGenSaveTool");
+    var listEl = document.getElementById("devSavedList");
+    if (!btn || !listEl) return;
+
+    function loadTools() {
+      try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch (_) { return []; }
+    }
+    function saveTools(arr) {
+      try { localStorage.setItem(key, JSON.stringify(arr)); } catch (_) {}
+    }
+    function render() {
+      var arr = loadTools();
+      if (!arr.length) {
+        listEl.textContent = "Няма запазени инструменти още. Въведи име и натисни Генерирай и Авто-Запази.";
+        return;
+      }
+      listEl.textContent = arr.map(function(item, i){
+        return "[" + (i + 1) + "] " + item.name + " (" + item.savedAt + ")
+" + item.code;
+      }).join("
+------------------------------
+");
+    }
+
+    btn.addEventListener("click", function(){
+      var rawName = (nameInp && nameInp.value || "").trim() || ("marauder-tool-" + (loadTools().length + 1) + ".sh");
+      var snippet = "#!/usr/bin/env bash
+# Generated & Auto-Saved by DEVANPORT-AI
+echo "Running tool: " + rawName.replace(/"/g, "") + ""
+";
+      var arr = loadTools();
+      arr.unshift({ name: rawName, code: snippet, savedAt: new Date().toISOString() });
+      saveTools(arr.slice(0, 25));
+      render();
+    });
+
+    render();
+  })();
+</script>
 </body>
 </html>
