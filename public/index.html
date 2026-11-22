@@ -971,5 +971,438 @@
 })();
 </script>
 
+<!-- =============== BEGIN MARAUDER FULL HUB =============== -->
+<section id="marauder-full-hub" style="margin:14px auto;max-width:980px;padding:14px;border:1px solid #22c55e;border-radius:12px;background:#090d14;color:#e2e8f0;font-family:Consolas,'Segoe UI',sans-serif;">
+  <style>
+    .mah-card { border:1px solid #1e293b; border-radius:10px; padding:12px; margin-bottom:12px; background:#0d131f; }
+    .mah-card-title { font-weight:700; font-size:14px; color:#4ade80; margin-bottom:8px; }
+    .mah-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .mah-grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; }
+    .mah-payment { border:1px solid #243247; border-radius:8px; padding:10px; background:#090e17; }
+    .mah-btn { background:#162032; color:#f8fafc; border:1px solid #38bdf8; border-radius:6px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:5px; }
+    .mah-btn:hover { border-color:#4ade80; }
+    .mah-green { border-color:#22c55e; color:#86efac; }
+    .mah-gold { border-color:#eab308; color:#fde047; }
+    .mah-red { border-color:#ef4444; color:#fca5a5; }
+    .mah-status { margin-top:8px; font-size:12px; color:#93c5fd; }
+    .mah-warning { margin-top:8px; font-size:11px; color:#94a3b8; line-height:1.4; }
+    #mah-chat-feed { max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; margin:10px 0; padding:8px; border:1px solid #1e293b; border-radius:8px; background:#070b12; }
+    .mah-message { border:1px solid #1f2937; border-radius:8px; padding:8px 10px; background:#0d1422; }
+    .mah-message-header { display:flex; justify-content:space-between; font-size:11px; color:#38bdf8; margin-bottom:4px; }
+    .mah-message-body { font-size:13px; white-space:pre-wrap; word-break:break-word; color:#f1f5f9; }
+    .mah-message-actions { margin-top:6px; display:flex; justify-content:flex-end; }
+    .mah-delete-msg { background:#241118; color:#fca5a5; border:1px solid #ef4444; border-radius:5px; padding:3px 8px; font-size:11px; cursor:pointer; }
+    #mah-chat-input { width:100%; min-height:70px; resize:vertical; background:#070b12; color:#f8fafc; border:1px solid #334155; border-radius:8px; padding:8px; font-size:13px; }
+  </style>
+
+  <!-- ПРОФИЛ -->
+  <div class="mah-card">
+    <div class="mah-card-title">👤 ЛОКАЛЕН ПРОФИЛ</div>
+    <div class="mah-row">
+      <input id="mah-user" type="text" maxlength="40" placeholder="Потребителско име (напр. MARAUDER)" />
+      <input id="mah-email" type="email" maxlength="120" placeholder="Имейл (по желание)" />
+      <button type="button" class="mah-btn mah-green" id="mah-save-user">Запази профила</button>
+    </div>
+    <div id="mah-user-status" class="mah-status">Активен профил: MARAUDER</div>
+  </div>
+
+  <!-- ПЛАЩАНИЯ / TON -->
+  <div class="mah-card">
+    <div class="mah-card-title">💳 ПЛАЩАНИЯ &amp; TON ИНСТРУМЕНТИ</div>
+    <div class="mah-row" style="margin-bottom:10px;">
+      <input id="mah-ton-addr" type="text" value="UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H" placeholder="TON адрес" style="min-width:280px;flex:1;" />
+      <button type="button" class="mah-btn" id="mah-copy-ton">Копирай TON</button>
+      <button type="button" class="mah-btn mah-green" id="mah-ton-bal">Провери баланс</button>
+      <a class="mah-btn" id="mah-open-ton" href="https://tonviewer.com/UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H" target="_blank" rel="noopener noreferrer">Tonviewer</a>
+    </div>
+
+    <div class="mah-grid-2">
+      <div class="mah-payment">
+        <strong>🅿️ PayPal</strong>
+        <div style="margin-top:8px;">
+          <a class="mah-btn" style="width:100%;" href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer">
+            Отвори PayPal плащане
+          </a>
+        </div>
+      </div>
+
+      <div class="mah-payment">
+        <strong>💎 TON Transfer</strong>
+        <div style="margin-top:8px;">
+          <a class="mah-btn mah-gold" style="width:100%;" id="mah-ton-transfer" href="ton://transfer/UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H">
+            Отвори TON портфейл
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="mah-ton-out" class="mah-status">TON портфейлът е готов.</div>
+    <div class="mah-warning">
+      Плащанията се извършват през външните услуги.
+      Този интерфейс не потвърждава сам плащане и не съхранява средства.
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="mah-card">
+    <div class="mah-card-title">💬 MARAUDER LOCAL CHAT</div>
+    <div class="mah-row">
+      <button type="button" class="mah-btn" id="mah-chat-export">⬇️ Експорт на чата</button>
+      <button type="button" class="mah-btn" id="mah-chat-copy-last">📋 Копирай последното</button>
+      <button type="button" class="mah-btn mah-red" id="mah-chat-clear">🗑️ Изтрий целия чат</button>
+    </div>
+
+    <div id="mah-chat-feed"></div>
+
+    <textarea id="mah-chat-input" maxlength="5000" placeholder="Напиши съобщение..."></textarea>
+
+    <div class="mah-row" style="margin-top:8px;">
+      <button type="button" class="mah-btn mah-green" id="mah-chat-send">➤ ИЗПРАТИ</button>
+    </div>
+
+    <div id="mah-chat-status" class="mah-status">Чатът е готов.</div>
+
+    <div class="mah-warning">
+      Тази версия е локален чат: съобщенията се пазят в браузъра на устройството.
+      Не се изпращат към други потребители и не представлява криптиран Secret Chat.
+    </div>
+  </div>
+
+  <script id="MARAUDER_FULL_HUB_CHAT_JS">
+  (function(){
+    "use strict";
+
+    /* STORAGE */
+    const PROFILE_KEY = "marauder_hub_profile_v2";
+    const CHAT_KEY = "marauder_hub_chat_v2";
+    const MAX_MESSAGES = 300;
+
+    /* ELEMENTS */
+    const userInput = document.getElementById("mah-user");
+    const emailInput = document.getElementById("mah-email");
+    const userStatus = document.getElementById("mah-user-status");
+
+    const chatFeed = document.getElementById("mah-chat-feed");
+    const chatInput = document.getElementById("mah-chat-input");
+    const chatStatus = document.getElementById("mah-chat-status");
+
+    const tonAddress = document.getElementById("mah-ton-addr");
+    const tonStatus = document.getElementById("mah-ton-out");
+
+    /* SAFE STORAGE */
+    function readStorage(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function writeStorage(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    /* PROFILE */
+    function getProfile() {
+      return readStorage(PROFILE_KEY, {
+        user: "MARAUDER",
+        email: ""
+      });
+    }
+
+    function saveProfile() {
+      const user = (userInput.value || "").trim().slice(0, 40);
+      const email = (emailInput.value || "").trim().slice(0, 120);
+
+      const profile = {
+        user: user || "MARAUDER",
+        email: email,
+        updatedAt: new Date().toISOString()
+      };
+
+      if (!writeStorage(PROFILE_KEY, profile)) {
+        userStatus.textContent = "Грешка: профилът не може да бъде запазен.";
+        return;
+      }
+
+      userStatus.textContent = "Профилът е запазен: " + profile.user;
+      renderChat();
+    }
+
+    function loadProfile() {
+      const p = getProfile();
+      userInput.value = p.user || "MARAUDER";
+      emailInput.value = p.email || "";
+      userStatus.textContent = "Активен профил: " + (p.user || "MARAUDER");
+    }
+
+    /* CHAT DATA */
+    function getMessages() {
+      const messages = readStorage(CHAT_KEY, []);
+      return Array.isArray(messages) ? messages.slice(0, MAX_MESSAGES) : [];
+    }
+
+    function saveMessages(messages) {
+      const safeMessages = messages.slice(0, MAX_MESSAGES);
+      if (!writeStorage(CHAT_KEY, safeMessages)) {
+        chatStatus.textContent = "Грешка при запис. Провери свободното място.";
+        return false;
+      }
+      return true;
+    }
+
+    /* CHAT RENDER */
+    function renderChat() {
+      const messages = getMessages();
+      chatFeed.replaceChildren();
+
+      if (messages.length === 0) {
+        const empty = document.createElement("div");
+        empty.style.color = "#64748b";
+        empty.style.fontSize = "12px";
+        empty.textContent = "Няма съобщения. Напиши първото.";
+        chatFeed.appendChild(empty);
+        return;
+      }
+
+      messages.slice().reverse().forEach(function(msg) {
+        const card = document.createElement("div");
+        card.className = "mah-message";
+
+        const header = document.createElement("div");
+        header.className = "mah-message-header";
+
+        const name = document.createElement("span");
+        name.textContent = msg.user || "MARAUDER";
+
+        const time = document.createElement("span");
+        time.textContent = msg.time || "";
+
+        header.appendChild(name);
+        header.appendChild(time);
+
+        const body = document.createElement("div");
+        body.className = "mah-message-body";
+        body.textContent = msg.text || "";
+
+        const actions = document.createElement("div");
+        actions.className = "mah-message-actions";
+
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "mah-delete-msg";
+        del.textContent = "Изтрий";
+
+        del.addEventListener("click", function() {
+          const updated = getMessages().filter(function(m) {
+            return m.id !== msg.id;
+          });
+          saveMessages(updated);
+          renderChat();
+        });
+
+        actions.appendChild(del);
+
+        card.appendChild(header);
+        card.appendChild(body);
+        card.appendChild(actions);
+
+        chatFeed.appendChild(card);
+      });
+
+      chatFeed.scrollTop = chatFeed.scrollHeight;
+    }
+
+    /* SEND */
+    function sendMessage() {
+      const text = (chatInput.value || "").trim();
+      if (!text) return;
+
+      const profile = getProfile();
+      const message = {
+        id: Date.now().toString() + "_" + Math.random().toString(36).slice(2, 8),
+        user: profile.user || "MARAUDER",
+        text: text.slice(0, 5000),
+        time: new Date().toLocaleString(),
+        createdAt: new Date().toISOString()
+      };
+
+      const messages = getMessages();
+      messages.unshift(message);
+
+      if (!saveMessages(messages)) return;
+
+      chatInput.value = "";
+      chatStatus.textContent = "Съобщението е записано.";
+      renderChat();
+      chatInput.focus();
+    }
+
+    /* CLEAR */
+    function clearChat() {
+      const confirmed = confirm("Сигурен ли си, че искаш да изтриеш всички съобщения?");
+      if (!confirmed) return;
+
+      localStorage.removeItem(CHAT_KEY);
+      renderChat();
+      chatStatus.textContent = "Чатът е изчистен.";
+    }
+
+    /* EXPORT */
+    function exportChat() {
+      const messages = getMessages();
+      if (!messages.length) {
+        chatStatus.textContent = "Няма съобщения за експортиране.";
+        return;
+      }
+
+      const data = {
+        application: "MARAUDER-AI",
+        exportedAt: new Date().toISOString(),
+        profile: getProfile().user,
+        messages: messages
+      };
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "marauder-chat-backup-" + new Date().toISOString().replace(/[:.]/g, "-") + ".json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      setTimeout(function() {
+        URL.revokeObjectURL(url);
+      }, 1000);
+
+      chatStatus.textContent = "Чатът е експортиран.";
+    }
+
+    /* COPY LAST */
+    async function copyLastMessage() {
+      const messages = getMessages();
+      if (!messages.length) {
+        chatStatus.textContent = "Няма съобщения.";
+        return;
+      }
+
+      const text = messages[0].text;
+      try {
+        await navigator.clipboard.writeText(text);
+        chatStatus.textContent = "Последното съобщение е копирано.";
+      } catch (e) {
+        chatStatus.textContent = "Копирането не е разрешено от браузъра.";
+      }
+    }
+
+    /* COPY TON */
+    async function copyTonAddress() {
+      const addr = (tonAddress.value || "").trim();
+      if (!addr) {
+        tonStatus.textContent = "Няма TON адрес.";
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(addr);
+        tonStatus.textContent = "TON адресът е копиран.";
+      } catch (e) {
+        tonStatus.textContent = "Неуспешно копиране.";
+      }
+    }
+
+    /* TON BALANCE */
+    async function checkTonBalance() {
+      const addr = (tonAddress.value || "").trim();
+      if (!addr) {
+        tonStatus.textContent = "Въведи TON адрес.";
+        return;
+      }
+
+      tonStatus.textContent = "Проверявам баланса в TON блокчейна...";
+
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(function() {
+          controller.abort();
+        }, 12000);
+
+        const url = "https://toncenter.com/api/v2/getAddressInformation?address=" + encodeURIComponent(addr);
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeout);
+
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+        if (!data || !data.result) {
+          throw new Error("Невалиден отговор от TON API.");
+        }
+
+        const nano = Number(data.result.balance || 0);
+        const ton = nano / 1e9;
+
+        tonStatus.textContent =
+          "Реален баланс: " +
+          ton.toLocaleString(undefined, {
+            minimumFractionDigits: 4,
+            maximumFractionDigits: 9
+          }) +
+          " TON";
+      } catch (e) {
+        tonStatus.textContent =
+          "Неуспешна проверка. API недостъпен, адресът е невалиден или CORS блокира заявката.";
+      }
+    }
+
+    /* TON LINKS */
+    function updateWalletLinks() {
+      const addr = (tonAddress.value || "").trim();
+      const explorer = document.getElementById("mah-open-ton");
+      const transfer = document.getElementById("mah-ton-transfer");
+
+      if (explorer) {
+        explorer.href = "https://tonviewer.com/" + encodeURIComponent(addr);
+      }
+      if (transfer) {
+        transfer.href = "ton://transfer/" + encodeURIComponent(addr);
+      }
+    }
+
+    /* EVENTS */
+    document.getElementById("mah-save-user").addEventListener("click", saveProfile);
+    document.getElementById("mah-chat-send").addEventListener("click", sendMessage);
+    document.getElementById("mah-chat-clear").addEventListener("click", clearChat);
+    document.getElementById("mah-chat-export").addEventListener("click", exportChat);
+    document.getElementById("mah-chat-copy-last").addEventListener("click", copyLastMessage);
+    document.getElementById("mah-ton-bal").addEventListener("click", checkTonBalance);
+    document.getElementById("mah-copy-ton").addEventListener("click", copyTonAddress);
+
+    chatInput.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    tonAddress.addEventListener("input", updateWalletLinks);
+
+    /* INIT */
+    loadProfile();
+    renderChat();
+    updateWalletLinks();
+  })();
+  </script>
+</section>
+<!-- =============== END MARAUDER FULL HUB =============== -->
+
 </body>
 </html>
