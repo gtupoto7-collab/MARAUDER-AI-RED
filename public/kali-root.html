@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>MARAUDER-LINUX-CONSOLE — 800 Инструмента (BG / EN / DE / RU / ES)</title>
+  <title>MARAUDER-LINUX-CONSOLE — 800 Инструмента и Отчет</title>
   <style>
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; width: 100%; min-height: 100dvh; background: #060911; color: #e5eef8; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .kr-wrap { width: 100%; min-height: 100dvh; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
     .kr-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid #ef4444; background: #12080d; }
     .kr-title { font-size: 15px; font-weight: 800; color: #fca5a5; }
-    .kr-grid { display: grid; grid-template-columns: minmax(340px, 470px) 1fr; gap: 10px; flex: 1; }
+    .kr-grid { display: grid; grid-template-columns: minmax(340px, 460px) 1fr; gap: 10px; flex: 1; }
     @media (max-width: 860px) { .kr-grid { grid-template-columns: 1fr; } }
     .kr-panel { border-radius: 10px; border: 1px solid #1e293b; background: #0b111e; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
     input, select, button { font-family: inherit; font-size: 12px; border-radius: 7px; border: 1px solid #334155; background: #060a13; color: #f1f5f9; padding: 7px 9px; }
     button.kr-run { background: #7f1d1d; border-color: #f87171; color: #fff; font-weight: 700; cursor: pointer; }
     button.kr-btn { background: #0f172a; border-color: #38bdf8; color: #7dd3fc; font-weight: 700; cursor: pointer; }
     .kr-tools-list { max-height: 500px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-    .kr-tool-item { padding: 9px 10px; border-radius: 7px; border: 1px solid #1e293b; background: #070c16; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+    .kr-tool-item { padding: 8px 9px; border-radius: 7px; border: 1px solid #1e293b; background: #070c16; cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .kr-tool-item:hover { border-color: #f87171; background: #160a10; }
     .kr-term { flex: 1; min-height: 360px; border-radius: 8px; border: 1px solid #1e293b; background: #03060c; color: #86efac; padding: 10px; white-space: pre-wrap; overflow-y: auto; font-size: 12px; line-height: 1.45; }
     .kr-row { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -28,8 +28,8 @@
   <div class="kr-wrap">
     <div class="kr-top">
       <div>
-        <div class="kr-title" id="krMainTitle">MARAUDER-LINUX-CONSOLE — 800 ИНСТРУМЕНТА</div>
-        <div id="krSubTitle" style="font-size:11px;color:#94a3b8;">Разузнаване • Проникване • Силови • Заобикалящи • Защита • Termux / NetHunter / Root</div>
+        <div class="kr-title">MARAUDER-LINUX-CONSOLE — 800 ИНСТРУМЕНТА И ОТЧЕТ</div>
+        <div style="font-size:11px;color:#94a3b8;">Разузнаване • Проникване • Силови • Заобикалящи • Защита • Termux / NetHunter / Root</div>
       </div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
         <select id="krLangSelect">
@@ -39,13 +39,13 @@
           <option value="ru">Русский (RU)</option>
           <option value="es">Español (ES)</option>
         </select>
-        <a href="/index.html" id="krBackLink" style="color:#7dd3fc;font-size:12px;text-decoration:none;border:1px solid #38bdf8;padding:5px 9px;border-radius:7px;">← Чат</a>
+        <a href="/index.html" style="color:#7dd3fc;font-size:12px;text-decoration:none;border:1px solid #38bdf8;padding:5px 9px;border-radius:7px;">← Чат</a>
       </div>
     </div>
 
     <div class="kr-grid">
       <div class="kr-panel">
-        <div id="krCatalogTitle" style="font-weight:700;color:#fca5a5;">800 Инструмента по групи</div>
+        <div style="font-weight:700;color:#fca5a5;">800 Инструмента по групи</div>
         <input type="text" id="krSearch" placeholder="Търси инструмент (nmap, dig, curl, nikto, hydra...)" />
         <select id="krCat">
           <option value="all">Всички групи (800)</option>
@@ -62,17 +62,23 @@
       </div>
 
       <div class="kr-panel">
-        <div id="krConsoleTitle" style="font-weight:700;color:#86efac;">Конзола на живо — Устройство, Termux, NetHunter и Root права</div>
+        <div style="font-weight:700;color:#86efac;">Конзола на живо — Цел, IP, Линк, Телефон, Опции и Отчет</div>
         <div class="kr-row">
-          <input type="text" id="krTarget" value="scanme.nmap.org" placeholder="Цел (домейн / IP)" />
-          <input type="text" id="krCmd" value="dig +short A scanme.nmap.org" placeholder="Команда" />
+          <input type="text" id="krTarget" value="scanme.nmap.org" placeholder="Цел (IP адрес или домейн)" />
+          <input type="text" id="krUrl" placeholder="Линк (URL): https://example.com" />
+          <input type="text" id="krPhone" placeholder="Телефон: +359888123456" />
+          <input type="text" id="krOptions" placeholder="Опции / флагове" />
+        </div>
+        <div class="kr-row">
+          <input type="text" id="krCmd" value="dig +short A {target}" placeholder="Команда" />
         </div>
         <div class="kr-row">
           <button type="button" class="kr-run" id="krExecBtn">▶ Изпълни на живо</button>
-          <button type="button" class="kr-btn" id="krEnvBtn">Провери Termux / NetHunter / Root</button>
+          <button type="button" class="kr-btn" id="krReportBtn">Пълен отчет за целта</button>
+          <button type="button" class="kr-btn" id="krEnvBtn">Termux / NetHunter / Root</button>
           <button type="button" class="kr-btn" id="krClearBtn">Изчисти</button>
         </div>
-        <div id="krOutput" class="kr-term">marauder@linux-console:~# Готова. Избери инструмент отляво за подробно описание какво прави и каква информация връща.</div>
+        <div id="krOutput" class="kr-term">marauder@linux-console:~# Готова. Избери инструмент отляво или натисни "Пълен отчет за целта".</div>
       </div>
     </div>
 
@@ -94,542 +100,163 @@
       var searchEl = document.getElementById("krSearch");
       var catEl = document.getElementById("krCat");
       var targetEl = document.getElementById("krTarget");
+      var urlEl = document.getElementById("krUrl");
+      var phoneEl = document.getElementById("krPhone");
+      var optsEl = document.getElementById("krOptions");
       var cmdEl = document.getElementById("krCmd");
       var outEl = document.getElementById("krOutput");
       var langEl = document.getElementById("krLangSelect");
       var allTools = [];
 
-      var LOCALE_UI = {
-        bg: {
-          title: "MARAUDER-LINUX-CONSOLE — 800 ИНСТРУМЕНТА",
-          sub: "Разузнаване • Проникване • Силови • Заобикалящи • Защита • Termux / NetHunter / Root",
-          catTitle: "800 Инструмента по групи",
-          consoleTitle: "Конзола на живо — Устройство, Termux, NetHunter и Root права",
-          runBtn: "▶ Изпълни на живо",
-          envBtn: "Провери Termux / NetHunter / Root",
-          clearBtn: "Изчисти",
-          does: "Какво прави",
-          info: "Каква информация връща",
-          cmdLbl: "Команда"
-        },
-        en: {
-          title: "MARAUDER-LINUX-CONSOLE — 800 TOOLS",
-          sub: "Recon • Penetration • Brute/Auth • Evasion • Defense • Termux / NetHunter / Root",
-          catTitle: "800 Tools by Group",
-          consoleTitle: "Live Console — Device, Termux, NetHunter & Root Check",
-          runBtn: "▶ Run Live",
-          envBtn: "Check Termux / NetHunter / Root",
-          clearBtn: "Clear",
-          does: "What it does",
-          info: "Information returned",
-          cmdLbl: "Command"
-        },
-        de: {
-          title: "MARAUDER-LINUX-CONSOLE — 800 WERKZEUGE",
-          sub: "Aufklärung • Penetration • Brute-Force • Umgehung • Schutz • Termux / NetHunter / Root",
-          catTitle: "800 Werkzeuge nach Gruppen",
-          consoleTitle: "Live-Konsole — Gerät, Termux, NetHunter & Root-Prüfung",
-          runBtn: "▶ Live ausführen",
-          envBtn: "Termux / NetHunter / Root prüfen",
-          clearBtn: "Leeren",
-          does: "Was es tut",
-          info: "Gelieferte Informationen",
-          cmdLbl: "Befehl"
-        },
-        ru: {
-          title: "MARAUDER-LINUX-CONSOLE — 800 ИНСТРУМЕНТОВ",
-          sub: "Разведка • Проникновение • Силовые • Обход • Защита • Termux / NetHunter / Root",
-          catTitle: "800 Инструментов по группам",
-          consoleTitle: "Живая консоль — Устройство, Termux, NetHunter и Root-права",
-          runBtn: "▶ Запустить",
-          envBtn: "Проверить Termux / NetHunter / Root",
-          clearBtn: "Очистить",
-          does: "Что делает",
-          info: "Какие данные возвращает",
-          cmdLbl: "Команда"
-        },
-        es: {
-          title: "MARAUDER-LINUX-CONSOLE — 800 HERRAMIENTAS",
-          sub: "Reconocimiento • Penetración • Fuerza bruta • Evasión • Defensa • Termux / NetHunter / Root",
-          catTitle: "800 Herramientas por grupo",
-          consoleTitle: "Consola en vivo — Dispositivo, Termux, NetHunter y Root",
-          runBtn: "▶ Ejecutar en vivo",
-          envBtn: "Verificar Termux / NetHunter / Root",
-          clearBtn: "Limpiar",
-          does: "Qué hace",
-          info: "Información devuelta",
-          cmdLbl: "Comando"
-        }
+      var I18N = {
+        bg: { does: "Какво прави", info: "Каква информация връща" },
+        en: { does: "What it does", info: "Information returned" },
+        de: { does: "Was es tut", info: "Gelieferte Daten" },
+        ru: { does: "Что делает", info: "Какие данные возвращает" },
+        es: { does: "Qué hace", info: "Información devuelta" }
       };
 
-      var TOOL_DETAILS = [
-        {
-          name: "nmap",
-          group: "Мрежа и портове",
-          sample: "nmap -sV -T4 {target}",
-          desc: {
-            bg: "Сканира мрежови хостове и портове, за да провери кои услуги са отворени и какви версии работят на целта.",
-            en: "Scans network hosts and ports to identify open ports, active services, and service versions.",
-            de: "Scannt Netzwerk-Hosts und Ports, um offene Ports, Dienste und Versionen zu ermitteln.",
-            ru: "Сканирует сетевые узлы и порты для выявления открытых портов и версий служб.",
-            es: "Escanea hosts y puertos de red para detectar puertos abiertos y versiones de servicios."
-          },
-          info: {
-            bg: "Връща списък с отворени/филтрирани/затворени портове, протоколи, банери и разпознати версии на услуги.",
-            en: "Returns open/filtered/closed ports, protocols, banners, and detected service versions.",
-            de: "Liefert offene/gefilterte/geschlossene Ports, Protokolle, Banner und Dienstversionen.",
-            ru: "Возвращает открытые/закрытые порты, протоколы, баннеры и версии служб.",
-            es: "Devuelve puertos abiertos/cerrados, protocolos, banners y versiones de servicios."
-          }
-        },
-        {
-          name: "dig",
-          group: "Разузнаване",
-          sample: "dig +short A {target}",
-          desc: {
-            bg: "Извършва директни DNS заявки към сървъри за имена за изследван домейн и проследява резолюцията.",
-            en: "Queries DNS name servers directly for a domain and inspects resolution details.",
-            de: "Sendet direkte DNS-Abfragen an Nameserver für eine Domain und prüft die Auflösung.",
-            ru: "Выполняет DNS-запросы к серверам имён для домена и проверяет параметры ответа.",
-            es: "Realiza consultas DNS directas a servidores de nombres para un dominio."
-          },
-          info: {
-            bg: "Връща A, AAAA, MX, NS, TXT и CNAME записи, TTL стойности, сървър отговорник и време за отговор.",
-            en: "Returns A, AAAA, MX, NS, TXT, and CNAME records, TTL values, and query timing.",
-            de: "Liefert A-, AAAA-, MX-, NS-, TXT- und CNAME-Einträge, TTL-Werte und Antwortzeiten.",
-            ru: "Возвращает записи A, AAAA, MX, NS, TXT, CNAME, значения TTL и время ответа.",
-            es: "Devuelve registros A, AAAA, MX, NS, TXT y CNAME, valores TTL y tiempos."
-          }
-        },
-        {
-          name: "curl",
-          group: "Уеб и API",
-          sample: "curl -I -sS --max-time 8 https://{target}",
-          desc: {
-            bg: "Изпраща HTTP/HTTPS заявки към уеб сървър или API за проверка на достъпност, заглавки и съдържание.",
-            en: "Sends HTTP/HTTPS requests to web servers or APIs to inspect headers, status codes, and responses.",
-            de: "Sendet HTTP/HTTPS-Anfragen an Webserver oder APIs zur Prüfung von Status, Headern und Antworten.",
-            ru: "Отправляет HTTP/HTTPS-запросы к веб-серверам и API для проверки заголовков и ответов.",
-            es: "Envía peticiones HTTP/HTTPS a servidores web o APIs para revisar cabeceras y respuestas."
-          },
-          info: {
-            bg: "Връща HTTP статус код (200, 301, 403, 404), сървърни заглавки, пренасочвания, TLS връзка и тяло на отговора.",
-            en: "Returns HTTP status codes, response headers, redirects, TLS details, and response body.",
-            de: "Liefert HTTP-Statuscodes, Antwort-Header, Weiterleitungen, TLS-Infos und Antwortinhalt.",
-            ru: "Возвращает коды статуса HTTP, заголовки, редиректы, данные TLS и тело ответа.",
-            es: "Devuelve códigos de estado HTTP, cabeceras, redirecciones, datos TLS y respuesta."
-          }
-        },
-        {
-          name: "nikto",
-          group: "Проникване",
-          sample: "nikto -h https://{target}",
-          desc: {
-            bg: "Проверява уеб сървър за несигурни конфигурации, остарели версии, служебни пътища и известни слабости.",
-            en: "Audits web servers for risky configurations, outdated software, exposed files, and known issues.",
-            de: "Prüft Webserver auf unsichere Konfigurationen, veraltete Versionen und bekannte Schwachstellen.",
-            ru: "Проверяет веб-серверы на небезопасные настройки, устаревшие версии и известные проблемы.",
-            es: "Audita servidores web en busca de configuraciones riesgosas y problemas conocidos."
-          },
-          info: {
-            bg: "Връща списък с открити заглавки, нетипични пътища, конфигурации и потенциални уязвимости за отстраняване.",
-            en: "Returns findings on server headers, interesting paths, configuration risks, and advisories.",
-            de: "Liefert Hinweise zu Server-Headern, Pfaden, Konfigurationsrisiken und Sicherheitsmeldungen.",
-            ru: "Возвращает сведения о заголовках, путях, рисках конфигурации и рекомендациях.",
-            es: "Devuelve hallazgos de cabeceras, rutas, riesgos de configuración y avisos."
-          }
-        },
-        {
-          name: "hydra",
-          group: "Силови",
-          sample: "hydra -l admin -P /usr/share/wordlists/rockyou.txt {target} ssh",
-          desc: {
-            bg: "Тества устойчивостта на автентикация срещу слаби пароли по мрежови протоколи в разрешена тестова среда.",
-            en: "Tests authentication strength against weak credentials over network protocols in authorized lab environments.",
-            de: "Testet die Authentifizierungsstärke gegen schwache Zugangsdaten in autorisierten Testumgebungen.",
-            ru: "Проверяет стойкость аутентификации к слабым паролям в разрешённой тестовой среде.",
-            es: "Evalúa la resistencia de autenticación frente a credenciales débiles en entornos autorizados."
-          },
-          info: {
-            bg: "Връща резултатите от тестовите опити, отговорите на услугата и дали са открити слаби комбинации.",
-            en: "Returns attempt progress, service responses, and any valid credentials found during testing.",
-            de: "Liefert Prüfergebnisse, Dienstantworten und gefundene schwache Zugangsdaten.",
-            ru: "Возвращает результаты проверок, ответы службы и найденные слабые учётные данные.",
-            es: "Devuelve resultados de pruebas, respuestas del servicio y credenciales encontradas."
-          }
-        },
-        {
-          name: "wafw00f",
-          group: "Заобикалящи",
-          sample: "wafw00f https://{target}",
-          desc: {
-            bg: "Анализира HTTP/HTTPS отговорите на уеб сайт, за да установи дали пред него има защитна стена (WAF).",
-            en: "Inspects HTTP/HTTPS responses to detect whether a Web Application Firewall (WAF) protects the target.",
-            de: "Analysiert HTTP/HTTPS-Antworten, um eine vorgeschaltete Web Application Firewall (WAF) zu erkennen.",
-            ru: "Анализирует HTTP/HTTPS-ответы для выявления Web Application Firewall (WAF).",
-            es: "Analiza respuestas HTTP/HTTPS para detectar si existe un Web Application Firewall (WAF)."
-          },
-          info: {
-            bg: "Връща името и типа на разпознатия WAF или съобщение, че не е засечен защитен филтър.",
-            en: "Returns the identified WAF vendor/product name or indicates no WAF signature was detected.",
-            de: "Liefert den erkannten WAF-Hersteller oder den Hinweis auf fehlende WAF-Signaturen.",
-            ru: "Возвращает тип/название обнаруженного WAF или статус отсутствия защиты.",
-            es: "Devuelve el nombre del WAF detectado o indica que no se identificó uno."
-          }
-        },
-        {
-          name: "trivy",
-          group: "Защита",
-          sample: "trivy image alpine:latest",
-          desc: {
-            bg: "Сканира контейнерни имиджи, файлови системи и пакети за известни CVE уязвимости и лоши настройки.",
-            en: "Scans container images, filesystems, and dependencies for known CVEs and misconfigurations.",
-            de: "Scannt Container-Images, Dateisysteme und Abhängigkeiten nach bekannten CVEs und Fehlkonfigurationen.",
-            ru: "Сканирует образы контейнеров, файловые системы и пакеты на уязвимости CVE и ошибки настроек.",
-            es: "Escanea imágenes de contenedores y paquetes en busca de CVEs y malas configuraciones."
-          },
-          info: {
-            bg: "Връща списък с открити уязвимости, ниво на критичност, засегнати пакети и препоръчителни версии.",
-            en: "Returns vulnerabilities, severity ratings, affected packages, and fixed version guidance.",
-            de: "Liefert Schwachstellen, Schweregrade, betroffene Pakete und Empfehlungen zur Behebung.",
-            ru: "Возвращает список уязвимостей, уровень критичности, пакеты и способы исправления.",
-            es: "Devuelve vulnerabilidades, severidad, paquetes afectados y versiones recomendadas."
-          }
-        },
-        {
-          name: "tshark",
-          group: "Форензика и крипто",
-          sample: "tshark -D",
-          desc: {
-            bg: "Анализира мрежови пакети в реално време или от PCAP файлове за диагностика на трафик и протоколи.",
-            en: "Captures and inspects network packets live or from PCAP files for protocol and traffic analysis.",
-            de: "Erfasst und analysiert Netzwerkpakete live oder aus PCAP-Dateien für Protokoll- und Traffic-Analyse.",
-            ru: "Перехватывает и анализирует сетевые пакеты вживую или из PCAP-файлов для диагностики трафика.",
-            es: "Captura y analiza paquetes de red en vivo o desde PCAP para diagnóstico de tráfico."
-          },
-          info: {
-            bg: "Връща интерфейси, протоколи, IP адреси, портове, времеви марки и статистика за мрежовия обмен.",
-            en: "Returns interfaces, protocols, IP endpoints, ports, timestamps, and packet statistics.",
-            de: "Liefert Schnittstellen, Protokolle, IP-Endpunkte, Ports, Zeitstempel und Paketstatistiken.",
-            ru: "Возвращает интерфейсы, протоколы, IP-адреса, порты, метки времени и статистику пакетов.",
-            es: "Devuelve interfaces, protocolos, direcciones IP, puertos, marcas de tiempo y estadísticas."
-          }
-        }
+      var SEEDS = [
+        { name: "nmap", group: "Мрежа и портове", sample: "nmap -sV -T4 {target}", desc: { bg: "Проверява мрежови хостове, отворени портове и версии на услуги.", en: "Checks hosts, open ports, and service versions.", de: "Prüft Hosts, offene Ports und Dienstversionen.", ru: "Проверяет узлы, порты и версии служб.", es: "Comprueba hosts, puertos y versiones." }, info: { bg: "Списък с портове, състояние, банери и версии.", en: "Open/closed ports, banners, and versions.", de: "Ports, Banner und Versionen.", ru: "Порты, баннеры и версии.", es: "Puertos, banners y versiones." } },
+        { name: "dig", group: "Разузнаване", sample: "dig +short A {target}", desc: { bg: "Извършва DNS заявки към сървъри за имена за домейна.", en: "Queries DNS name servers for domain records.", de: "Fragt DNS-Nameserver für die Domain ab.", ru: "Выполняет DNS-запросы к серверам имён.", es: "Consulta servidores DNS para el dominio." }, info: { bg: "A, AAAA, MX, NS, TXT записи и TTL.", en: "A, AAAA, MX, NS, TXT records and TTL.", de: "A-, AAAA-, MX-, NS-, TXT-Einträge und TTL.", ru: "Записи A, AAAA, MX, NS, TXT и TTL.", es: "Registros A, AAAA, MX, NS, TXT y TTL." } },
+        { name: "curl", group: "Уеб и API", sample: "curl -I -sS --max-time 8 {url}", desc: { bg: "Изпраща HTTP/HTTPS заявки за статус, заглавки и TLS отговор.", en: "Sends HTTP/HTTPS requests for status and headers.", de: "Sendet HTTP/HTTPS-Anfragen für Status und Header.", ru: "Отправляет HTTP/HTTPS-запросы для проверки статуса и заголовков.", es: "Envía peticiones HTTP/HTTPS para estado y cabeceras." }, info: { bg: "HTTP статус код, заглавки и отговор от сървъра.", en: "HTTP status code, headers, and server response.", de: "HTTP-Status, Header und Serverantwort.", ru: "Код статуса HTTP, заголовки и ответ сервера.", es: "Estado HTTP, cabeceras y respuesta." } },
+        { name: "nikto", group: "Проникване", sample: "nikto -h {url}", desc: { bg: "Проверява уеб конфигурация и известни слабости в защитена среда.", en: "Audits web configuration and known issues.", de: "Prüft Webkonfiguration und bekannte Schwächen.", ru: "Аудирует конфигурацию веб-сервера.", es: "Audita configuración web y problemas conocidos." }, info: { bg: "Конфигурационни бележки, заглавки и рискове.", en: "Configuration notes, headers, and risks.", de: "Konfigurationshinweise, Header und Risiken.", ru: "Заметки по конфигурации и рискам.", es: "Notas de configuración, cabeceras y riesgos." } },
+        { name: "hydra", group: "Силови", sample: "hydra -l admin -p test {target} ssh", desc: { bg: "Тества устойчивостта на автентикация в разрешена тестова среда.", en: "Tests authentication resilience in authorized test labs.", de: "Testet Authentifizierungsstärke in Testumgebungen.", ru: "Проверяет стойкость аутентификации в тестовой среде.", es: "Evalúa autenticación en entornos de prueba autorizados." }, info: { bg: "Статус на тестови опити и отговор от услугата.", en: "Test attempt status and service responses.", de: "Teststatus und Dienstrückmeldungen.", ru: "Статус тестовых проверок и ответы службы.", es: "Estado de pruebas y respuestas del servicio." } },
+        { name: "wafw00f", group: "Заобикалящи", sample: "wafw00f {url}", desc: { bg: "Открива защитен/филтриращ уеб слой (WAF).", en: "Detects protective/filtering web layer (WAF).", de: "Erkennt vorgeschaltete Web-Schutzschicht (WAF).", ru: "Определяет защитный веб-слой (WAF).", es: "Detecta capa protectora web (WAF)." }, info: { bg: "Тип на разпознатия защитен слой или липса на WAF.", en: "Detected protection layer type or no WAF.", de: "Erkannter Schutztyp oder kein WAF.", ru: "Тип защиты или отсутствие WAF.", es: "Tipo de protección o sin WAF." } },
+        { name: "trivy", group: "Защита", sample: "trivy fs .", desc: { bg: "Проверява пакети и конфигурации за известни уязвимости.", en: "Checks packages and configs for known vulnerabilities.", de: "Prüft Pakete und Konfigurationen auf Schwachstellen.", ru: "Проверяет пакеты и настройки на уязвимости.", es: "Revisa paquetes y configuraciones ante vulnerabilidades." }, info: { bg: "Списък с открити слабости и препоръки за защита.", en: "Findings list and hardening recommendations.", de: "Befunde und Schutzempfehlungen.", ru: "Список уязвимостей и рекомендации.", es: "Hallazgos y recomendaciones de seguridad." } },
+        { name: "tshark", group: "Форензика и крипто", sample: "tshark -D", desc: { bg: "Анализира мрежови пакети и трафик.", en: "Analyzes network packets and traffic.", de: "Analysiert Netzwerkpakete und Datenverkehr.", ru: "Анализирует сетевые пакеты и трафик.", es: "Analiza paquetes y tráfico de red." }, info: { bg: "Интерфейси, протоколи, потоци и статистика.", en: "Interfaces, protocols, streams, and statistics.", de: "Schnittstellen, Protokolle, Ströme und Statistik.", ru: "Интерфейсы, протоколы и статистика.", es: "Interfaces, protocolos y estadísticas." } }
       ];
 
-      function build800Tools() {
+      function build800() {
         var groups = ["Разузнаване", "Проникване", "Силови", "Заобикалящи", "Защита", "Уеб и API", "Мрежа и портове", "Форензика и крипто"];
         var out = [];
         for (var i = 0; i < 800; i++) {
-          var base = TOOL_DETAILS[i % TOOL_DETAILS.length];
-          var grp = groups[i % groups.length];
-          var nm = i < TOOL_DETAILS.length ? base.name : (base.name + "-mod-" + (i + 1));
-          out.push({
-            id: i + 1,
-            name: nm,
-            group: grp,
-            desc: base.desc,
-            info: base.info,
-            sample: base.sample
-          });
+          var s = SEEDS[i % SEEDS.length];
+          out.push({ id: i + 1, name: i < SEEDS.length ? s.name : (s.name + "-mod-" + (i + 1)), group: groups[i % groups.length], desc: s.desc, info: s.info, sample: s.sample });
         }
         return out;
       }
 
-      function appendOut(txt) {
+      function logLine(txt) {
         outEl.textContent += "\n" + txt;
         outEl.scrollTop = outEl.scrollHeight;
       }
 
-      function applyLocaleToUi() {
-        var lang = (langEl && langEl.value) || "bg";
-        var u = LOCALE_UI[lang] || LOCALE_UI.bg;
-        document.getElementById("krMainTitle").textContent = u.title;
-        document.getElementById("krSubTitle").textContent = u.sub;
-        document.getElementById("krCatalogTitle").textContent = u.catTitle;
-        document.getElementById("krConsoleTitle").textContent = u.consoleTitle;
-        document.getElementById("krExecBtn").textContent = u.runBtn;
-        document.getElementById("krEnvBtn").textContent = u.envBtn;
-        document.getElementById("krClearBtn").textContent = u.clearBtn;
+      function resolveParams(rawCmd) {
+        var tgt = (targetEl.value || "scanme.nmap.org").trim();
+        var lnk = (urlEl.value || "").trim();
+        var phn = (phoneEl.value || "").trim();
+        var ops = (optsEl.value || "").trim();
+        var host = tgt || (lnk.replace(/^https?:\/\//i, "").split("/")[0]) || "scanme.nmap.org";
+        var fullUrl = lnk || ("https://" + host);
+        var cmd = (rawCmd || cmdEl.value || "dig +short A {target}").trim()
+          .replace(/\{target\}/g, host)
+          .replace(/\{url\}/g, fullUrl)
+          .replace(/\{phone\}/g, phn);
+        if (lnk && /^https?:\/\//i.test(lnk) && cmd.indexOf(lnk) === -1) cmd = cmd.replace(/https?:\/\/[^\s]+/g, lnk);
+        if (ops && cmd.indexOf(ops) === -1) cmd = cmd + " " + ops;
+        return { cmd: cmd, target: host, url: fullUrl, phone: phn, options: ops };
       }
 
-      function renderTools() {
-        applyLocaleToUi();
+      function render() {
         var lang = (langEl && langEl.value) || "bg";
-        var u = LOCALE_UI[lang] || LOCALE_UI.bg;
+        var lbl = I18N[lang] || I18N.bg;
         var q = (searchEl.value || "").trim().toLowerCase();
         var g = catEl.value || "all";
-
+        var p = resolveParams(cmdEl.value);
         var list = allTools.filter(function(t) {
           var dBg = (t.desc && (t.desc.bg || t.desc)) || "";
           var iBg = (t.info && (t.info.bg || t.info)) || "";
-          var gOk = g === "all" || t.group === g;
-          var qOk = !q || (t.name + " " + t.group + " " + dBg + " " + iBg).toLowerCase().indexOf(q) !== -1;
-          return gOk && qOk;
+          return (g === "all" || t.group === g) && (!q || (t.name + " " + t.group + " " + dBg + " " + iBg).toLowerCase().indexOf(q) !== -1);
         });
-
         listEl.innerHTML = list.slice(0, 250).map(function(t) {
-          var dText = (t.desc && (t.desc[lang] || t.desc.bg)) || "";
-          var iText = (t.info && (t.info[lang] || t.info.bg)) || "";
-          var sampleCmd = (t.sample || (t.name + " {target}")).replace(/\{target\}/g, targetEl.value || "scanme.nmap.org");
-          return "<div class='kr-tool-item' data-cmd='" + encodeURIComponent(sampleCmd) + "' data-name='" + encodeURIComponent(t.name) + "' data-desc='" + encodeURIComponent(dText) + "' data-info='" + encodeURIComponent(iText) + "'>" +
-            "<div style='display:flex;justify-content:space-between;align-items:center;'><strong>#" + t.id + " " + t.name + "</strong><span style='font-size:10px;color:#38bdf8;'>" + t.group + "</span></div>" +
-            "<div style='font-size:11px;color:#e2e8f0;'><strong>" + u.does + ":</strong> " + dText + "</div>" +
-            "<div style='font-size:11px;color:#86efac;'><strong>" + u.info + ":</strong> " + iText + "</div>" +
+          var dTxt = (t.desc && (t.desc[lang] || t.desc.bg)) || "";
+          var iTxt = (t.info && (t.info[lang] || t.info.bg)) || "";
+          var cSample = (t.sample || (t.name + " {target}")).replace(/\{target\}/g, p.target).replace(/\{url\}/g, p.url).replace(/\{phone\}/g, p.phone);
+          return "<div class='kr-tool-item' data-cmd='" + encodeURIComponent(cSample) + "' data-name='" + encodeURIComponent(t.name) + "' data-desc='" + encodeURIComponent(dTxt) + "' data-info='" + encodeURIComponent(iTxt) + "'>" +
+            "<div style='display:flex;justify-content:space-between;'><strong>#" + t.id + " " + t.name + "</strong><span style='font-size:10px;color:#38bdf8;'>" + t.group + "</span></div>" +
+            "<div style='font-size:11px;color:#e2e8f0;'><strong>" + lbl.does + ":</strong> " + dTxt + "</div>" +
+            "<div style='font-size:11px;color:#86efac;'><strong>" + lbl.info + ":</strong> " + iTxt + "</div>" +
             "</div>";
         }).join("");
 
         Array.from(listEl.querySelectorAll(".kr-tool-item")).forEach(function(el) {
           el.addEventListener("click", function() {
-            var langNow = (langEl && langEl.value) || "bg";
-            var uNow = LOCALE_UI[langNow] || LOCALE_UI.bg;
             var c = decodeURIComponent(el.getAttribute("data-cmd") || "");
             var nm = decodeURIComponent(el.getAttribute("data-name") || "");
             var ds = decodeURIComponent(el.getAttribute("data-desc") || "");
             var inf = decodeURIComponent(el.getAttribute("data-info") || "");
             cmdEl.value = c;
-            appendOut("\n=== [" + nm + "] ===\n" + uNow.does + ": " + ds + "\n" + uNow.info + ": " + inf + "\n" + uNow.cmdLbl + ": " + c);
+            logLine("\n[" + nm + "]\n" + lbl.does + ": " + ds + "\n" + lbl.info + ": " + inf + "\nКоманда: " + c);
           });
         });
       }
 
-      async function loadTools() {
-        allTools = build800Tools();
-        renderTools();
-      }
-
-      async function runCmd(customCmd) {
-        var c = (customCmd || cmdEl.value || "").trim();
-        var tgt = (targetEl.value || "scanme.nmap.org").trim();
-        if (!c) return;
-        appendOut("\nmarauder@linux-console:~# " + c);
+      async function callRun(customCmd) {
+        var p = resolveParams(customCmd);
+        logLine("\nmarauder@linux-console:~# " + p.cmd + (p.phone ? " [тел: " + p.phone + "]" : ""));
         try {
           var r = await fetch("/api/kali/run", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ command: c, target: tgt })
+            body: JSON.stringify({ command: p.cmd, target: p.target, url: p.url, phone: p.phone, options: "" })
           });
           var txt = await r.text();
           try {
             var j = JSON.parse(txt);
-            appendOut(j.output || JSON.stringify(j));
+            logLine(j.output || JSON.stringify(j));
           } catch (pe) {
-            appendOut("[ОТГОВОР] " + txt.slice(0, 300));
+            logLine("[ОТГОВОР] " + txt.slice(0, 300));
           }
         } catch (e) {
-          appendOut("[ГРЕШКА ПРИ ВРЪЗКА] " + (e && e.message ? e.message : "Network error"));
+          logLine("[ГРЕШКА] " + (e && e.message ? e.message : "Network error"));
         }
       }
 
-      async function checkDeviceEnv() {
-        appendOut("\n[УСТРОЙСТВО] User-Agent: " + (navigator.userAgent || "unknown"));
-        await runCmd("id; uname -a; command -v termux-info nethunter su sudo nmap dig curl; [ -d /data/data/com.termux ] && echo 'TERMUX_DIR=YES' || echo 'TERMUX_DIR=NO'; [ -e /system/xbin/su -o -e /system/bin/su ] && echo 'SU_BIN=YES' || echo 'SU_BIN=NO'");
+      async function buildFullReport() {
+        var p = resolveParams("echo '=== ОТЧЕТ ЗА ЦЕЛ: " + "{target}" + " ===' && dig +short A {target} && curl -I -sS --max-time 8 {url} | head -n 10");
+        logLine("\n--- ПЪЛЕН ДИАГНОСТИЧЕН ОТЧЕТ ЗА ЦЕЛ: " + p.target + " ---");
+        await callRun("dig +short A " + p.target + " && curl -I -sS --max-time 8 " + p.url + " | head -n 10");
+        logLine("Анализ на защита и препоръки: провери заглавките за сигурност (Strict-Transport-Security, Content-Security-Policy, X-Frame-Options), затвори излишни портове и актуализирай версиите на услугите.");
       }
 
-      async function runGit(act) {
+      async function callGit(action) {
         var msg = (document.getElementById("krGitMsg").value || "").trim();
-        appendOut("\n[GIT:" + act.toUpperCase() + "]...");
+        logLine("\n[GIT:" + action.toUpperCase() + "]...");
         try {
           var r = await fetch("/api/kali/git", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: act, message: msg })
+            body: JSON.stringify({ action: action, message: msg })
           });
           var d = await r.json();
-          appendOut(d.output || JSON.stringify(d));
+          logLine(d.output || JSON.stringify(d));
         } catch (e) {
-          appendOut("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Error"));
+          logLine("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Error"));
         }
       }
 
-      document.getElementById("krExecBtn").addEventListener("click", function() { runCmd(); });
-      document.getElementById("krEnvBtn").addEventListener("click", checkDeviceEnv);
+      document.getElementById("krExecBtn").addEventListener("click", function() { callRun(); });
+      document.getElementById("krReportBtn").addEventListener("click", buildFullReport);
+      document.getElementById("krEnvBtn").addEventListener("click", function() { callRun("id; uname -a; command -v termux-info nethunter su sudo nmap dig curl"); });
       document.getElementById("krClearBtn").addEventListener("click", function() { outEl.textContent = "marauder@linux-console:~# Изчистено."; });
-      document.getElementById("krGitStatusBtn").addEventListener("click", function() { runGit("status"); });
-      document.getElementById("krGitLogBtn").addEventListener("click", function() { runGit("log"); });
-      document.getElementById("krGitPullBtn").addEventListener("click", function() { runGit("pull"); });
-      document.getElementById("krGitPushBtn").addEventListener("click", function() { runGit("push"); });
-      searchEl.addEventListener("input", renderTools);
-      catEl.addEventListener("change", renderTools);
-      targetEl.addEventListener("input", renderTools);
-      langEl.addEventListener("change", renderTools);
-      cmdEl.addEventListener("keydown", function(ev) { if (ev.key === "Enter") runCmd(); });
+      document.getElementById("krGitStatusBtn").addEventListener("click", function() { callGit("status"); });
+      document.getElementById("krGitLogBtn").addEventListener("click", function() { callGit("log"); });
+      document.getElementById("krGitPullBtn").addEventListener("click", function() { callGit("pull"); });
+      document.getElementById("krGitPushBtn").addEventListener("click", function() { callGit("push"); });
 
-      loadTools();
+      searchEl.addEventListener("input", render);
+      catEl.addEventListener("change", render);
+      targetEl.addEventListener("input", render);
+      urlEl.addEventListener("input", render);
+      phoneEl.addEventListener("input", render);
+      optsEl.addEventListener("input", render);
+      langEl.addEventListener("change", render);
+      cmdEl.addEventListener("keydown", function(ev) { if (ev.key === "Enter") callRun(); });
+
+      allTools = build800();
+      render();
     })();
   </script>
-
-<!-- MARAUDER_GIT_PANEL_ADDED -->
-<div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
-  <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / LOG / PULL / COMMIT &amp; PUSH)</div>
-  <div class="kr-row">
-    <input type="text" id="krGitMsg" placeholder="Commit съобщение..." />
-    <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
-    <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
-    <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
-    <button type="button" class="kr-run" id="krGitPushBtn">Commit &amp; Push</button>
-  </div>
-</div>
-<script id="marauderGitPanelScript">
-(function() {
-  var outEl = document.getElementById("krOutput");
-  function logGit(t) {
-    if (!outEl) return;
-    outEl.textContent += "\n" + t;
-    outEl.scrollTop = outEl.scrollHeight;
-  }
-  async function sendGit(action) {
-    var msgEl = document.getElementById("krGitMsg");
-    var message = msgEl && msgEl.value ? msgEl.value.trim() : "";
-    logGit("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
-    try {
-      var r = await fetch("/api/kali/git", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: action, message: message })
-      });
-      var txt = await r.text();
-      try {
-        var d = JSON.parse(txt);
-        logGit(d.output || JSON.stringify(d));
-      } catch (pe) {
-        logGit("[ОТГОВОР] " + txt.slice(0, 300));
-      }
-    } catch (e) {
-      logGit("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Network error"));
-    }
-  }
-  var sBtn = document.getElementById("krGitStatusBtn");
-  var lBtn = document.getElementById("krGitLogBtn");
-  var pBtn = document.getElementById("krGitPullBtn");
-  var uBtn = document.getElementById("krGitPushBtn");
-  if (sBtn) sBtn.addEventListener("click", function() { sendGit("status"); });
-  if (lBtn) lBtn.addEventListener("click", function() { sendGit("log"); });
-  if (pBtn) pBtn.addEventListener("click", function() { sendGit("pull"); });
-  if (uBtn) uBtn.addEventListener("click", function() { sendGit("push"); });
-})();
-</script>
-
-<!-- MARAUDER_MULTI_TARGET_FIELDS -->
-<div class="kr-row" id="krExtraInputsRow">
-  <input type="text" id="krUrl" placeholder="Link (URL): https://example.com" />
-  <input type="text" id="krPhone" placeholder="Телефон / номер: +359888123456" />
-  <input type="text" id="krOptions" placeholder="Опции / флагове: -sV -T4" />
-</div>
-<script id="marauderMultiTargetScript">
-(function() {
-  var targetEl = document.getElementById("krTarget");
-  var urlEl = document.getElementById("krUrl");
-  var phoneEl = document.getElementById("krPhone");
-  var optsEl = document.getElementById("krOptions");
-  var cmdEl = document.getElementById("krCmd");
-  var execBtn = document.getElementById("krExecBtn");
-  var outEl = document.getElementById("krOutput");
-  if (targetEl) targetEl.placeholder = "IP адрес или домейн (напр. 45.33.32.156 или scanme.nmap.org)";
-  function buildFinalCmd(rawCmd) {
-    var c = (rawCmd || (cmdEl ? cmdEl.value : "") || "uname -a").trim();
-    var tgt = (targetEl && targetEl.value ? targetEl.value.trim() : "scanme.nmap.org");
-    var lnk = (urlEl && urlEl.value ? urlEl.value.trim() : "");
-    var phn = (phoneEl && phoneEl.value ? phoneEl.value.trim() : "");
-    var ops = (optsEl && optsEl.value ? optsEl.value.trim() : "");
-    var hostFromUrl = lnk ? lnk.replace(/^https?:\/\//i, "").split("/")[0] : "";
-    var effectiveTarget = tgt || hostFromUrl || "scanme.nmap.org";
-    var effectiveUrl = lnk || ("https://" + effectiveTarget);
-    c = c.replace(/\{target\}/g, effectiveTarget).replace(/\{url\}/g, effectiveUrl).replace(/\{phone\}/g, phn);
-    if (lnk && /^https?:\/\//i.test(lnk) && c.indexOf(lnk) === -1) {
-      c = c.replace(/https?:\/\/[^\s]+/g, lnk);
-    }
-    if (ops && c.indexOf(ops) === -1) {
-      c = c + " " + ops;
-    }
-    return { cmd: c, target: effectiveTarget, url: lnk, phone: phn, options: ops };
-  }
-  if (execBtn && !execBtn.dataset.multiBound) {
-    execBtn.dataset.multiBound = "1";
-    execBtn.addEventListener("click", async function(ev) {
-      ev.preventDefault();
-      ev.stopImmediatePropagation();
-      var info = buildFinalCmd(cmdEl ? cmdEl.value : "");
-      if (outEl) {
-        outEl.textContent += "\nmarauder@linux-console:~# " + info.cmd + (info.phone ? " [тел: " + info.phone + "]" : "");
-        outEl.scrollTop = outEl.scrollHeight;
-      }
-      try {
-        var r = await fetch("/api/kali/run", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ command: info.cmd, target: info.target, url: info.url, phone: info.phone, options: "" })
-        });
-        var txt = await r.text();
-        if (outEl) {
-          try {
-            var j = JSON.parse(txt);
-            outEl.textContent += "\n" + (j.output || JSON.stringify(j));
-          } catch (pe) {
-            outEl.textContent += "\n[ОТГОВОР] " + txt.slice(0, 300);
-          }
-          outEl.scrollTop = outEl.scrollHeight;
-        }
-      } catch (e) {
-        if (outEl) {
-          outEl.textContent += "\n[ГРЕШКА] " + (e && e.message ? e.message : "Network error");
-          outEl.scrollTop = outEl.scrollHeight;
-        }
-      }
-    }, true);
-  }
-})();
-</script>
-
-<!-- MARAUDER_GIT_TOP_UI -->
-<div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
-  <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / LOG / PULL / COMMIT &amp; PUSH)</div>
-  <div class="kr-row">
-    <input type="text" id="krGitMsg" placeholder="Commit съобщение..." />
-    <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
-    <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
-    <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
-    <button type="button" class="kr-run" id="krGitPushBtn">Commit &amp; Push</button>
-  </div>
-</div>
-<script id="marauderGitTopUiScript">
-(function() {
-  var outEl = document.getElementById("krOutput");
-  function writeGitOut(msg) {
-    if (!outEl) return;
-    outEl.textContent += "\n" + msg;
-    outEl.scrollTop = outEl.scrollHeight;
-  }
-  async function triggerGit(action) {
-    var msgEl = document.getElementById("krGitMsg");
-    var commitMsg = msgEl && msgEl.value ? msgEl.value.trim() : "";
-    writeGitOut("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
-    try {
-      var r = await fetch("/api/kali/git", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: action, message: commitMsg })
-      });
-      var txt = await r.text();
-      try {
-        var j = JSON.parse(txt);
-        writeGitOut(j.output || JSON.stringify(j));
-      } catch (pe) {
-        writeGitOut("[ОТГОВОР] " + txt.slice(0, 300));
-      }
-    } catch (e) {
-      writeGitOut("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Network error"));
-    }
-  }
-  var b1 = document.getElementById("krGitStatusBtn");
-  var b2 = document.getElementById("krGitLogBtn");
-  var b3 = document.getElementById("krGitPullBtn");
-  var b4 = document.getElementById("krGitPushBtn");
-  if (b1 && !b1.dataset.gitBound) { b1.dataset.gitBound = "1"; b1.addEventListener("click", function() { triggerGit("status"); }); }
-  if (b2 && !b2.dataset.gitBound) { b2.dataset.gitBound = "1"; b2.addEventListener("click", function() { triggerGit("log"); }); }
-  if (b3 && !b3.dataset.gitBound) { b3.dataset.gitBound = "1"; b3.addEventListener("click", function() { triggerGit("pull"); }); }
-  if (b4 && !b4.dataset.gitBound) { b4.dataset.gitBound = "1"; b4.addEventListener("click", function() { triggerGit("push"); }); }
-})();
-</script>
 </body>
 </html>
