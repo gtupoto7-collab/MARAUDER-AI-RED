@@ -1074,5 +1074,21 @@
   }
 })();
 </script>
+
+<script id="marauderForceLocal3000Script">
+(function(){
+  const origFetch = window.fetch.bind(window);
+  window.fetch = function(input, init) {
+    try {
+      const urlStr = typeof input === "string" ? input : (input && input.url) || "";
+      if (urlStr.startsWith("/api/kali/") && window.location.port !== "3000") {
+        const targetUrl = "http://127.0.0.1:3000" + urlStr;
+        return origFetch(targetUrl, init);
+      }
+    } catch (e) {}
+    return origFetch(input, init);
+  };
+})();
+</script>
 </body>
 </html>
