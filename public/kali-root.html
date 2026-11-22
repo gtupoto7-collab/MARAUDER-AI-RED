@@ -369,5 +369,23 @@
   }
 })();
 </script>
+
+<script id="marauderApiBaseFallback">
+(function(){
+  var origFetch = window.fetch.bind(window);
+  window.fetch = async function(input, init){
+    var url = typeof input === "string" ? input : (input && input.url) || "";
+    if (url.indexOf("/api/kali/") === 0 && !/^https?:\/\//i.test(url)) {
+      var res = await origFetch(url, init);
+      var ct = (res.headers && res.headers.get("content-type")) || "";
+      if (ct.indexOf("application/json") === -1) {
+        try { return await origFetch("http://127.0.0.1:3000" + url, init); } catch(e){ return res; }
+      }
+      return res;
+    }
+    return origFetch(input, init);
+  };
+})();
+</script>
 </body>
 </html>
