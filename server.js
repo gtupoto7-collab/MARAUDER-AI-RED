@@ -111,7 +111,7 @@ const KEEP_ALIVE_URL = (process.env.KEEP_ALIVE_URL || 'https://marauder-ai-hacke
 
 const IMAGE_MODELS = [
   'imagen-3.0-generate-002',
-  'gemini-2.5-flash-image',
+  'gemini-3.8-flash-image',
   'gemini-2.0-flash-exp'
 ];
 
@@ -336,12 +336,21 @@ app.post('/api/generate-software', async (req, res) => {
         const { description, type } = req.body || {};
 
         const apiKey = process.env.GEMINI_API_KEY;
-        const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+        const model = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+
+        const softwarePrompt = `Ти си софтуерен инженер на RED SOFTWARE TEAM.\nТип софтуер: ${type || "Общ софтуер"}\nЗадача: ${description || ""}\n\nНапиши чист, работещ програмен код с коментари, обработка на грешки и кратки инструкции как да се стартира.`;
 
         if (!apiKey) {
-            return res.status(500).json({
-                error: 'Липсва GEMINI_API_KEY.'
-            });
+            try {
+                const localCode = await callLocalOllamaSoftware(softwarePrompt);
+                if (localCode && localCode.trim()) {
+                    return res.json({ code: localCode, text: localCode, model: process.env.OLLAMA_MODEL || "marauder-coder", provider: "ollama-local" });
+                }
+            } catch (ollamaErr) {
+                return res.status(500).json({
+                    error: "Липсва GEMINI_API_KEY и локалният Ollama модел (marauder-coder) не отговори: " + (ollamaErr.message || ollamaErr)
+                });
+            }
         }
 
         if (!description || String(description).length > 5000) {
@@ -470,3 +479,23 @@ const KEEP_ALIVE_INTERVAL_MS = Number(process.env.KEEP_ALIVE_INTERVAL_MS) || 10 
     KEEP_ALIVE_INTERVAL.unref();
   }
 });
+
+async function callLocalOllamaSoftware(promptText, modelName = process.env.OLLAMA_MODEL || "marauder-coder") {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 45000);
+  try {
+    const response = await fetch("http://127.0.0.1:11434/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: modelName, prompt: promptText, stream: false }),
+      signal: controller.signal
+    });
+    if (!response.ok) {
+      throw new Error("Ollama HTTP " + response.status);
+    }
+    const data = await response.json();
+    return (data && (data.response || data.text || data.output)) ? String(data.response || data.text || data.output) : "";
+  } finally {
+    clearTimeout(timeout);
+  }
+}
