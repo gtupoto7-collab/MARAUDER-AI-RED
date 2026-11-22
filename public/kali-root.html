@@ -3,18 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>MARAUDER-LINUX-CONSOLE — 800 Instrumenta (Termux / NetHunter / Root)</title>
+  <title>MARAUDER-LINUX-CONSOLE — 800 Instrumenta</title>
   <style>
     * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100dvh;
-      background: #060911;
-      color: #e5eef8;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    }
+    html, body { margin: 0; padding: 0; width: 100%; min-height: 100dvh; background: #060911; color: #e5eef8; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .kr-wrap { width: 100%; min-height: 100dvh; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
     .kr-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid #ef4444; background: #12080d; }
     .kr-title { font-size: 15px; font-weight: 800; color: #fca5a5; }
@@ -37,7 +29,7 @@
     <div class="kr-top">
       <div>
         <div class="kr-title">MARAUDER-LINUX-CONSOLE — 800 REALNI INSTRUMENTA</div>
-        <div style="font-size:11px;color:#94a3b8;">Razoznavane • Pronikvane • Silovi • Zaobikalqshti • Zashtita • Termux / NetHunter / Root proverka</div>
+        <div style="font-size:11px;color:#94a3b8;">Razoznavane • Pronikvane • Silovi • Zaobikalqshti • Zashtita • Termux / NetHunter / Root</div>
       </div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
         <select id="krLangSelect">
@@ -70,7 +62,7 @@
       </div>
 
       <div class="kr-panel">
-        <div style="font-weight:700;color:#86efac;">Live Konzola — Ustroistvo, Termux, NetHunter i Root prava</div>
+        <div style="font-weight:700;color:#86efac;">Live Konzola — Termux, NetHunter i Root prava</div>
         <div class="kr-row">
           <input type="text" id="krTarget" value="scanme.nmap.org" placeholder="Cel (domen / IP)" />
           <input type="text" id="krCmd" value="dig +short A scanme.nmap.org" placeholder="Komanda" />
@@ -80,7 +72,7 @@
           <button type="button" class="kr-btn" id="krEnvBtn">Proveri Termux / NetHunter / Root</button>
           <button type="button" class="kr-btn" id="krClearBtn">Izchisti</button>
         </div>
-        <div id="krOutput" class="kr-term">marauder@linux-console:~# Gotova. Izberi instrument otlqvo za podrobno opisanie ili natisni "Proveri Termux / NetHunter / Root".</div>
+        <div id="krOutput" class="kr-term">marauder@linux-console:~# Gotova. Izberi instrument otlqvo za opisanie ili natisni "Proveri Termux / NetHunter / Root".</div>
       </div>
     </div>
 
@@ -123,7 +115,7 @@
           ["curl", "Izprashcha HTTP/HTTPS zaqvki i izvejda zaglavki ili sudurzhanie.", "HTTP status kod, zaglavki, sertifikat i otgovor."],
           ["nikto", "Proverqva web survur za chesti konfiguracii i slabosti.", "Konfiguracionni nastroiki, putishta i potenciyalni problemi."],
           ["hydra", "Testira ustoychivost na avtentikaciq v kontrolirana lab sreda.", "Status na testovite zaqvki i otgovor ot uslugata."],
-          ["wafw00f", "Opredelq dali pred web prilojenie ima Web Application Firewall.", "Identifikaciq na zashtiten/filtrirasht sloi."],
+          ["wafw00f", "Opredelq dali pred web prilojenie ima Web Application Firewall.", "Identifikaciq na zashtitniya/filtrirasht sloi."],
           ["trivy", "Proverqva kontejneri i paketi za izvestni uqzvimi mesta.", "Spisuk s uqzvimi mesta i nastroiki za popravka."],
           ["tshark", "Analizira mrejovi paketi i mrejov trafik.", "Protokoli, IP potoci i statistika na paketite."]
         ];
@@ -131,14 +123,7 @@
         for (var i = 0; i < 800; i++) {
           var d = defs[i % defs.length];
           var g = groups[i % groups.length];
-          arr.push({
-            id: i + 1,
-            name: i < defs.length ? d[0] : (d[0] + "-mod-" + (i + 1)),
-            group: g,
-            descBg: d[1],
-            infoBg: d[2],
-            sample: d[0] + " {target}"
-          });
+          arr.push({ id: i + 1, name: i < defs.length ? d[0] : (d[0] + "-mod-" + (i + 1)), group: g, descBg: d[1], infoBg: d[2], sample: d[0] + " {target}" });
         }
         return arr;
       }
@@ -216,10 +201,8 @@
       }
 
       async function checkDeviceEnv() {
-        var ua = navigator.userAgent || "unknown";
-        logLine("\n[USTROISTVO] User-Agent: " + ua);
-        var envCmd = "id; uname -a; command -v termux-info nethunter su sudo nmap curl dig; [ -d /data/data/com.termux ] && echo 'TERMUX_DIR=YES' || echo 'TERMUX_DIR=NO'; [ -e /system/xbin/su -o -e /system/bin/su ] && echo 'SU_BIN=YES' || echo 'SU_BIN=NO'";
-        await runCmd(envCmd);
+        logLine("\n[USTROISTVO] User-Agent: " + (navigator.userAgent || "unknown"));
+        await runCmd("id; uname -a; command -v termux-info nethunter su sudo nmap curl dig; [ -d /data/data/com.termux ] && echo 'TERMUX_DIR=YES' || echo 'TERMUX_DIR=NO'; [ -e /system/xbin/su -o -e /system/bin/su ] && echo 'SU_BIN=YES' || echo 'SU_BIN=NO'");
       }
 
       async function runGit(act) {
