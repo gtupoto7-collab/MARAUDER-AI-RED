@@ -1467,10 +1467,10 @@ run_${safeIdent(nameRaw)}();
       <input id="offlineModeToggle" type="checkbox" checked onchange="saveOfflinePrefs()" />
       <span>Автоматичен офлайн режим / локален модел</span>
     </label>
-    <select id="ollamaModelSelect" onchange="handleMarauderModeSelect()" style="background:#1b162e;color:#fff;border:1px solid #44396b;border-radius:6px;padding:4px 8px;">
-      <option value="offline-fenix-free">MARAUDER-AI 4.8 FENIX (Offline Free — RST-AI-001)</option>
+    <select id="ollamaModelSelect" onchange="handleMarauderModeSelect()" style="min-width:210px;background:#1b162e;color:#fff;border:1px solid #44396b;border-radius:6px;padding:4px 8px;">
+      <option value="offline-fenix-free">MARAUDER-AI 4.8 FENIX (Offline Free)</option>
       <option value="online-mode">MARAUDER-AI Online</option>
-      <option value="paid-versions">MARAUDER-AI Paid (5.3 SECURITY 22 EUR / 6.2 HACKER 33 EUR)</option>
+      <option value="paid-versions">MARAUDER-AI Paid (5.3 / 6.2)</option>
     </select>
     <input id="ollamaUrlInput" type="text" value="http://127.0.0.1:11434" onchange="saveOfflinePrefs()" style="width:185px;background:#1b162e;color:#9cf7e8;border:1px solid #44396b;border-radius:6px;padding:4px 8px;" />
   </div>
@@ -1603,5 +1603,248 @@ run_${safeIdent(nameRaw)}();
 </script>
 <!-- END MARAUDER OFFLINE / OLLAMA AI ENGINE -->
 
+
+
+
+<!-- MARAUDER TOR / VPN FULL PAGE MODAL -->
+<div id="marauderTorModal" style="display:none;position:fixed;inset:0;z-index:99999;background:#090713;color:#f4f2ff;overflow-y:auto;padding:20px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <div style="max-width:860px;margin:0 auto;background:#130f24;border:1px solid #5a4399;border-radius:14px;padding:22px;box-shadow:0 16px 48px rgba(0,0,0,0.75);">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid #2d234d;padding-bottom:14px;margin-bottom:16px;">
+      <div>
+        <div style="font-size:18px;font-weight:bold;color:#00f5d4;">MARAUDER-AI — VPN И БЕЗОПАСНОСТ (ВСИЧКИ ЕЗИЦИ)</div>
+        <div style="font-size:12px;color:#b8b0dc;margin-top:3px;">Ръководство на български език + превод на всички езици за Android, Windows и iOS</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <select id="vpnLangSelect" onchange="applyVpnPageLanguage()" style="background:#1c1536;color:#fff;border:1px solid #6a54a8;border-radius:8px;padding:7px 10px;font-size:13px;">
+          <option value="bg">🇧🇬 Български (Кирилица)</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="tr">🇹🇷 Türkçe</option>
+          <option value="uk">🇺🇦 Українська</option>
+          <option value="pl">🇵🇱 Polski</option>
+          <option value="ro">🇷🇴 Română</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="zh-CN">🇨🇳 中文 (简体)</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="ko">🇰🇷 한국어</option>
+          <option value="pt">🇵🇹 Português</option>
+          <option value="nl">🇳🇱 Nederlands</option>
+          <option value="sv">🇸🇪 Svenska</option>
+          <option value="el">🇬🇷 Ελληνικά</option>
+          <option value="hi">🇮🇳 हिन्दी</option>
+        </select>
+        <button type="button" onclick="openGoogleTranslateForVpn()" style="background:#261d45;color:#ffd166;border:1px solid #7c63c4;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:bold;cursor:pointer;">🌐 Превод (Google)</button>
+        <button type="button" onclick="closeMarauderTorModal()" style="background:#ff2a6d;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:bold;cursor:pointer;">✕ Затвори</button>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#0d0a18;border:1px solid #2e264a;border-radius:10px;padding:12px 14px;margin-bottom:16px;">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;">
+        <input id="torVpnEnabledToggle" type="checkbox" onchange="saveTorVpnPrefs()" />
+        <span id="vpnToggleLabel">Маркирай активен TOR / VPN режим в MARAUDER-AI</span>
+      </label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <input id="torProxyInput" type="text" value="http://127.0.0.1:8118" onchange="saveTorVpnPrefs()" style="width:180px;background:#18122b;color:#9cf7e8;border:1px solid #44396b;border-radius:7px;padding:6px 9px;font-size:12px;" />
+        <button type="button" onclick="testTorProxyEndpoint()" style="background:#2b214d;color:#00f5d4;border:1px solid #5c4699;border-radius:7px;padding:6px 11px;font-size:12px;font-weight:bold;cursor:pointer;" id="vpnTestBtn">Провери прокси</button>
+      </div>
+    </div>
+
+    <div id="torVpnDiagStatus" style="padding:10px 12px;border-radius:8px;background:#0b0814;border:1px solid #2e264a;color:#ffd166;font-size:13px;margin-bottom:18px;white-space:pre-line;">Статус: Изчаква проверка на локален прокси / VPN.</div>
+
+    <div id="vpnPageContent" style="display:grid;gap:14px;line-height:1.55;font-size:14px;">
+      <section style="background:#191430;border:1px solid #35295c;border-radius:10px;padding:14px;">
+        <h3 id="vpnSec1Title" style="margin:0 0 8px;color:#00f5d4;font-size:15px;">1. Как се използва MARAUDER-AI за безопасност (на прост език)</h3>
+        <p id="vpnSec1Body" style="margin:0;color:#e6e2fa;">MARAUDER-AI помага да работиш по-безопасно и по-независимо, като комбинира локален/офлайн режим и защита на връзката. Самата страница или приложение сама не може да скрие реалния IP адрес на ниво система — за скриване на IP адреса в мрежата трафикът трябва да минава през VPN или Tor клиент на устройството.</p>
+      </section>
+      <section style="background:#191430;border:1px solid #35295c;border-radius:10px;padding:14px;">
+        <h3 id="vpnSec2Title" style="margin:0 0 8px;color:#ffd166;font-size:15px;">2. Какво трябва за ANDROID</h3>
+        <p id="vpnSec2Body" style="margin:0;color:#e6e2fa;">• Инсталирай MARAUDER-AI APK на телефона с Android.
+• За скриване на IP адреса през Tor инсталирай Orbot и включи VPN Mode (или избери приложенията през Tor).
+• Първо стартирай Orbot до свързване към Tor, след което отвори MARAUDER-AI.</p>
+      </section>
+      <section style="background:#191430;border:1px solid #35295c;border-radius:10px;padding:14px;">
+        <h3 id="vpnSec3Title" style="margin:0 0 8px;color:#00f5d4;font-size:15px;">3. Какво трябва за WINDOWS</h3>
+        <p id="vpnSec3Body" style="margin:0;color:#e6e2fa;">• За локален AI пусни Ollama на http://127.0.0.1:11434 с модели (dark-mega:latest, llama3.2:latest, phi3:mini).
+• За скриване на IP адреса при мрежов трафик използвай VPN клиент за Windows или Tor/прокси клиент.</p>
+      </section>
+      <section style="background:#191430;border:1px solid #35295c;border-radius:10px;padding:14px;">
+        <h3 id="vpnSec4Title" style="margin:0 0 8px;color:#ff758f;font-size:15px;">4. Какво трябва за iOS (iPhone / iPad)</h3>
+        <p id="vpnSec4Body" style="margin:0;color:#e6e2fa;">• На iOS ползвай уеб/браузър или сървър заради по-строгите системни ограничения.
+• За скриване на IP адреса инсталирай официален VPN или Tor клиент от App Store и го активирай в настройките на iOS.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  window.handleMarauderModeSelect = function() {
+    const sel = document.getElementById("ollamaModelSelect");
+    const toggle = document.getElementById("offlineModeToggle");
+    const statusEl = document.getElementById("offlineEngineStatus");
+    if (!sel) return;
+    const val = sel.value;
+    if (val === "offline-fenix-free") {
+      if (toggle) toggle.checked = true;
+      if (typeof window.selectMarauderVersion === "function") window.selectMarauderVersion("4.8 FENIX", true);
+      if (statusEl) {
+        statusEl.style.color = "#00f5d4";
+        statusEl.textContent = "Gotov rezhim MARAUDER-AI 4.8 FENIX ofline free";
+      }
+    } else if (val === "online-mode") {
+      if (toggle) toggle.checked = false;
+      if (statusEl) {
+        statusEl.style.color = "#9cf7e8";
+        statusEl.textContent = "Режим MARAUDER-AI ONLINE (сървър)";
+      }
+    } else if (val === "paid-versions") {
+      if (statusEl) {
+        statusEl.style.color = "#ffbe0b";
+        statusEl.textContent = "Платени версии: 5.3 SECURITY (22 EUR) / 6.2 HACKER (33 EUR)";
+      }
+      if (typeof window.openMarauderVersionsModal === "function") window.openMarauderVersionsModal();
+    }
+  };
+
+  window.applyVpnPageLanguage = function() {
+    const lang = document.getElementById("vpnLangSelect")?.value || "bg";
+    const s1b = document.getElementById("vpnSec1Body");
+    const s2b = document.getElementById("vpnSec2Body");
+    const s3b = document.getElementById("vpnSec3Body");
+    const s4b = document.getElementById("vpnSec4Body");
+    if (lang === "en") {
+      if (s1b) s1b.textContent = "MARAUDER-AI combines local/offline mode and connection protection. A web view or app window alone cannot hide your real IP at OS level — use a VPN or Tor client on the device to hide your IP.";
+      if (s2b) s2b.textContent = "• Install MARAUDER-AI APK on Android.\n• To hide your IP via Tor, install Orbot and enable VPN Mode (or route apps through Tor).\n• Start Orbot first, then open MARAUDER-AI.";
+      if (s3b) s3b.textContent = "• Run Ollama at http://127.0.0.1:11434 with local models (dark-mega:latest, llama3.2:latest, phi3:mini).\n• Use a Windows VPN or Tor/proxy client to hide your IP.";
+      if (s4b) s4b.textContent = "• On iOS, use web/browser or server mode due to OS sandbox limits.\n• Install an official VPN or Tor app from the App Store and enable it in iOS settings.";
+    } else {
+      if (s1b) s1b.textContent = "MARAUDER-AI помага да работиш по-безопасно и по-независимо, като комбинира локален/офлайн режим и защита на връзката. Самата страница или приложение сама не може да скрие реалния IP адрес на ниво система — за скриване на IP адреса в мрежата трафикът трябва да минава през VPN или Tor клиент на устройството.";
+      if (s2b) s2b.textContent = "• Инсталирай MARAUDER-AI APK на телефона с Android.\n• За скриване на IP адреса през Tor инсталирай Orbot и включи VPN Mode (или избери приложенията през Tor).\n• Първо стартирай Orbot до свързване към Tor, след което отвори MARAUDER-AI.";
+      if (s3b) s3b.textContent = "• За локален AI пусни Ollama на http://127.0.0.1:11434 с модели (dark-mega:latest, llama3.2:latest, phi3:mini).\n• За скриване на IP адреса при мрежов трафик използвай VPN клиент за Windows или Tor/прокси клиент.";
+      if (s4b) s4b.textContent = "• На iOS ползвай уеб/браузър или сървър заради по-строгите системни ограничения.\n• За скриване на IP адреса инсталирай официален VPN или Tor клиент от App Store и го активирай в настройките на iOS.";
+    }
+  };
+
+  window.openGoogleTranslateForVpn = function() {
+    const lang = document.getElementById("vpnLangSelect")?.value || "en";
+    const text = [
+      document.getElementById("vpnSec1Body")?.textContent || "",
+      document.getElementById("vpnSec2Body")?.textContent || "",
+      document.getElementById("vpnSec3Body")?.textContent || "",
+      document.getElementById("vpnSec4Body")?.textContent || ""
+    ].join("\n\n");
+    window.open("https://translate.google.com/?sl=auto&tl=" + encodeURIComponent(lang) + "&text=" + encodeURIComponent(text.slice(0, 1800)) + "&op=translate", "_blank", "noopener,noreferrer");
+  };
+
+  window.openMarauderTorModal = function() {
+    const m = document.getElementById("marauderTorModal");
+    if (m) m.style.display = "block";
+    window.applyVpnPageLanguage();
+  };
+
+  window.closeMarauderTorModal = function() {
+    const m = document.getElementById("marauderTorModal");
+    if (m) m.style.display = "none";
+    window.saveTorVpnPrefs();
+  };
+
+  window.saveTorVpnPrefs = function() {
+    const enabled = !!document.getElementById("torVpnEnabledToggle")?.checked;
+    const proxyUrl = (document.getElementById("torProxyInput")?.value || "http://127.0.0.1:8118").trim();
+    localStorage.setItem("marauder_tor_enabled", enabled ? "1" : "0");
+    localStorage.setItem("marauder_tor_proxy", proxyUrl);
+    const btn = document.getElementById("marauderTopTorBtn");
+    if (btn) btn.textContent = enabled ? "VPN: ON" : "VPN";
+  };
+
+  window.testTorProxyEndpoint = async function() {
+    const diag = document.getElementById("torVpnDiagStatus");
+    const proxyUrl = ((document.getElementById("torProxyInput")?.value || "http://127.0.0.1:8118").trim()).replace(/\/+$/, "");
+    if (diag) diag.textContent = "Проверявам " + proxyUrl + " ...";
+    try {
+      const c = new AbortController();
+      const t = setTimeout(() => c.abort(), 2500);
+      await fetch(proxyUrl, { mode: "no-cors", signal: c.signal });
+      clearTimeout(t);
+      if (diag) diag.textContent = "Открит отговор от " + proxyUrl + ". Провери дали VPN / Tor клиентът е активен за целия трафик.";
+    } catch (_) {
+      if (diag) diag.textContent = "Няма директен отговор от " + proxyUrl + ". На Android пусни Orbot (VPN режим), а на Windows/iOS пусни VPN/Tor клиент за скриване на IP адреса.";
+    }
+  };
+
+  window.addEventListener("DOMContentLoaded", function() {
+    if (!document.getElementById("marauderTopTorBtn")) {
+      const btn = document.createElement("button");
+      btn.id = "marauderTopTorBtn";
+      btn.type = "button";
+      btn.textContent = "VPN";
+      btn.onclick = window.openMarauderTorModal;
+      btn.style.cssText = "margin-left:6px;background:#1b1530;color:#00f5d4;border:1px solid #6a54a8;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:bold;cursor:pointer;";
+      const devBtn = Array.from(document.querySelectorAll("button")).find(b => (b.textContent || "").includes("DEVANPORT-AI"));
+      if (devBtn && devBtn.parentElement) devBtn.parentElement.appendChild(btn);
+      else document.getElementById("marauderOfflineBar")?.appendChild(btn);
+    }
+    window.applyVpnPageLanguage();
+  });
+})();
+</script>
+<!-- END MARAUDER TOR / VPN FULL PAGE MODAL -->
+
+
+
+<!-- MARAUDER PLATFORM DOWNLOAD SELECTOR -->
+<div id="marauderPlatformDownloadBar" style="margin:8px 0;padding:8px 12px;background:#140f26;border:1px solid #533f8a;border-radius:8px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
+  <span style="color:#d8d2f5;font-size:12px;">Платформа за сваляне:</span>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+    <select id="marauderDownloadPlatformSelect" onchange="updateMarauderPlatformDownload()" style="background:#1c1536;color:#fff;border:1px solid #6a54a8;border-radius:6px;padding:6px 10px;font-size:12px;">
+      <option value="windows">💻 Windows (.ZIP)</option>
+      <option value="android">🤖 Android (.APK)</option>
+      <option value="ios">🍎 iOS (Web / Guide)</option>
+    </select>
+    <a id="marauderPlatformDownloadLink" href="/downloads/MARAUDER-AI-Windows.zip" download="MARAUDER-AI-Windows.zip" style="background:#00f5d4;color:#090712;text-decoration:none;font-weight:bold;font-size:12px;padding:6px 12px;border-radius:6px;">⬇ Свали за Windows</a>
+  </div>
+</div>
+<script>
+(function() {
+  const MAP = {
+    windows: {
+      href: "/downloads/MARAUDER-AI-Windows.zip",
+      filename: "MARAUDER-AI-Windows.zip",
+      label: "⬇ Свали за Windows (.ZIP)"
+    },
+    android: {
+      href: "/downloads/marauder-ai.apk",
+      filename: "marauder-ai.apk",
+      label: "⬇ Свали за Android (.APK)"
+    },
+    ios: {
+      href: "/downloads/MARAUDER-AI-iOS-INFO.txt",
+      filename: "MARAUDER-AI-iOS-INFO.txt",
+      label: "⬇ Свали iOS ръководство"
+    }
+  };
+  window.updateMarauderPlatformDownload = function() {
+    const sel = document.getElementById("marauderDownloadPlatformSelect");
+    const link = document.getElementById("marauderPlatformDownloadLink");
+    if (!sel || !link) return;
+    const cfg = MAP[sel.value] || MAP.windows;
+    link.href = cfg.href;
+    link.setAttribute("download", cfg.filename);
+    link.textContent = cfg.label;
+    localStorage.setItem("marauder_dl_platform", sel.value);
+  };
+  window.addEventListener("DOMContentLoaded", function() {
+    const saved = localStorage.getItem("marauder_dl_platform");
+    const sel = document.getElementById("marauderDownloadPlatformSelect");
+    if (sel && saved && MAP[saved]) sel.value = saved;
+    window.updateMarauderPlatformDownload();
+  });
+})();
+</script>
+<!-- END MARAUDER PLATFORM DOWNLOAD SELECTOR -->
 </body>
 </html>

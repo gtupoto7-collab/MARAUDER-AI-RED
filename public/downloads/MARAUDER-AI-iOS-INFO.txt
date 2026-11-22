@@ -1,0 +1,2 @@
+MARAUDER-AI за iOS
+Използвай уеб версията https://marauder-ai-hacker.onrender.com в Safari и добави на начален екран (Share -> Add to Home Screen), а за VPN/Tor ползвай клиент от App Store.
