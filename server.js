@@ -331,6 +331,56 @@ app.get('*', (req, res) => {
 });
 
 
+
+const MARAUDER_TIER_QUOTAS = {
+  free:   { software24h: 1, kali24h: 1, label: "Free (1 software + 1 Kali command)" },
+  copper: { software24h: 3, kali24h: 3, label: "Copper (5 EUR / month)" },
+  silver: { software24h: 25, kali24h: 25, label: "Silver (25 EUR / month)" },
+  gold:   { software24h: 300, kali24h: 300, label: "Gold (50 EUR / month)" },
+  annual: { software24h: 300, kali24h: 300, label: "Annual 150 EUR (300/24h + 2y bonus)" }
+};
+
+const deviceUsageStore = new Map();
+
+function getDeviceQuotaState(deviceId, tier = "free") {
+  const cleanId = String(deviceId || "anon-device").slice(0, 120);
+  const safeTier = MARAUDER_TIER_QUOTAS[tier] ? tier : "free";
+  const now = Date.now();
+  const windowMs = 24 * 60 * 60 * 1000;
+  let entry = deviceUsageStore.get(cleanId);
+  if (!entry || now - entry.windowStart > windowMs) {
+    entry = { windowStart: now, softwareCount: 0, kaliCount: 0, tier: safeTier };
+  }
+  entry.tier = safeTier;
+  deviceUsageStore.set(cleanId, entry);
+  return { cleanId, entry, spec: MARAUDER_TIER_QUOTAS[safeTier] };
+}
+
+app.post("/api/quota/check", (req, res) => {
+  const { deviceId, tier, kind } = req.body || {};
+  const { entry, spec } = getDeviceQuotaState(deviceId, tier);
+  const isKali = kind === "kali";
+  const used = isKali ? entry.kaliCount : entry.softwareCount;
+  const maxAllowed = isKali ? spec.kali24h : spec.software24h;
+  if (used >= maxAllowed) {
+    return res.status(402).json({
+      allowed: false,
+      tier: entry.tier,
+      used,
+      limit: maxAllowed,
+      error: "Dostignat e limitut za bezplatnoto / tekushto nivo (" + used + "/" + maxAllowed + " za 24h). Izberi nivo i plati prez PayPal ili Keeper (TON)."
+    });
+  }
+  if (isKali) entry.kaliCount += 1;
+  else entry.softwareCount += 1;
+  return res.json({
+    allowed: true,
+    tier: entry.tier,
+    used: isKali ? entry.kaliCount : entry.softwareCount,
+    limit: maxAllowed
+  });
+});
+
 app.post('/api/generate-software', async (req, res) => {
     try {
         const { description, type } = req.body || {};

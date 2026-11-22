@@ -1615,54 +1615,86 @@ run_${safeIdent(nameRaw)}();
       <div>
         <div style="font-size:18px;font-weight:bold;color:#00f5d4;">MARAUDER-AI — VPN И БЕЗОПАСНОСТ (ВСИЧКИ ЕЗИЦИ)</div>
         <div style="font-size:12px;color:#b8b0dc;margin-top:3px;">Ръководство на български език + превод на всички езици за Android, Windows и iOS
-<div id="marauderVpnTorGuideBox" style="margin-top:14px;background:#121722;border:1px solid #2b3548;border-radius:10px;padding:14px;color:#eef3f7;font-size:13px;line-height:1.5;">
-  <h3 style="margin:0 0 8px 0;color:#19f58b;font-size:15px;">Realen VPN / Tor profil — nastroiki i rukovodstvo</h3>
-  <p style="margin:0 0 10px 0;color:#b8c4d0;">
-    Za da bude skrit realniqt ti IP adres v mrezhata, tunelut trqbva da raboti na nivo ustroystvo ili mrezha. Samata web stranica ne mozhe da upravlqva direktno drugi prilozheniq na Android, iOS ili Windows — tuk zapazvash profila i rukovodstvoto za rabota s Orbot / VPN.
+
+<div id="marauderVpnTorGuideBox" style="margin-top:14px;background:#121722;border:1px solid #2b3548;border-radius:10px;padding:14px;color:#eef3f7;font-size:13px;line-height:1.55;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+    <h3 style="margin:0;color:#19f58b;font-size:15px;">Реален VPN / Tor профил — настройки и ръководство</h3>
+    <select id="vpnLangSelect" onchange="applyVpnLang(this.value)" style="padding:5px 8px;border-radius:6px;border:1px solid #2b3548;background:#0c1018;color:#eef3f7;font-size:12px;">
+      <option value="bg" selected>Български (Кирилица)</option>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="ru">Русский</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
+
+  <p id="vpnIntroText" style="margin:0 0 10px 0;color:#c5d1de;">
+    За да се скрие реалният ти IP адрес в мрежата, тунелът трябва да работи на ниво устройство или мрежа. Браузърът не може директно да сканира телефона за инсталирани приложения или да управлява системни VPN/Orbot услуги — тук управляваш профилите, режимите и ръководството.
   </p>
 
   <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;margin-bottom:12px;">
-    <div style="font-weight:700;color:#ffc439;margin-bottom:6px;">Rezhim na rabota (izberi edno):</div>
+    <div style="font-weight:700;color:#ffc439;margin-bottom:6px;">Режим на работа:</div>
     <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;">
       <input type="radio" name="marauderVpnMode" id="vpnModeAlways" value="always" onchange="saveVpnTorPrefs()">
-      <span><strong>1. Postoyanno vkluchen VPN / Tor (non-stop)</strong> — raboti neprekysnato na ustroystvoto.</span>
+      <span><strong>1. Постоянно включен VPN / Tor (non-stop)</strong> — маркира непрекъснат режим на устройството.</span>
     </label>
     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
       <input type="radio" name="marauderVpnMode" id="vpnModeAppOnly" value="app_only" onchange="saveVpnTorPrefs()">
-      <span><strong>2. Samo dokato polzvam prilozhenieto</strong> — aktivno samo po vreme na rabota s prilozhenieto.</span>
+      <span><strong>2. Само докато ползвам приложението</strong> — активно само по време на работа с приложението.</span>
     </label>
   </div>
 
   <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;margin-bottom:12px;">
-    <div style="font-weight:700;color:#19f58b;margin-bottom:6px;">3. Ruchna funkciq za prilozheniq (kato na Orbot / nov profil):</div>
-    <div style="font-size:12px;color:#9fb0c0;margin-bottom:8px;">
-      Dobavi imenata ili paketite na prilozheniqta, koito iskash da zashtitish (naprimer: <code>org.telegram.messenger</code>, <code>com.android.chrome</code>, <code>Browser</code>).
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+      <strong style="color:#19f58b;">Автоматична проверка за Orbot / локален прокси и профили</strong>
+      <button id="autoDetectOrbotBtn" type="button" onclick="autoDetectOrbotAndSetup()" style="padding:6px 11px;border-radius:7px;border:1px solid #19f58b;background:#13261e;color:#19f58b;font-weight:700;font-size:12px;cursor:pointer;">Авто-проверка и настройка</button>
     </div>
+    <div style="font-size:12px;color:#a7b6c6;margin-bottom:8px;">
+      Проверява локалния прокси порт (по подразбиране <code>127.0.0.1:8118</code> за Orbot/HTTP прокси) и автоматично добавя базови профили/приложения в списъка, ако още няма добавени.
+    </div>
+    <div id="orbotAutoStatus" style="font-size:12px;color:#ffc439;">Статус: не е проверявано още.</div>
+  </div>
+
+  <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;margin-bottom:12px;">
+    <strong style="color:#19f58b;display:block;margin-bottom:6px;">3. Приложения за защита (ръчно + бързо добавяне, тип Orbot)</strong>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-      <input id="vpnAppInput" type="text" placeholder="Napr. org.telegram.messenger ili Browser" style="flex:1;min-width:190px;padding:7px 10px;border-radius:7px;border:1px solid #2b3548;background:#141b28;color:#fff;font-size:12px;">
-      <button id="vpnAddAppBtn" type="button" onclick="addProtectedApp()" style="padding:7px 12px;border-radius:7px;border:1px solid #19f58b;background:#13261e;color:#19f58b;font-weight:700;font-size:12px;cursor:pointer;">+ Dobavi prilozhenie</button>
+      <input id="vpnAppInput" type="text" placeholder="Напр. org.telegram.messenger, com.android.chrome или Browser" style="flex:1;min-width:200px;padding:7px 10px;border-radius:7px;border:1px solid #2b3548;background:#141b28;color:#fff;font-size:12px;">
+      <button id="vpnAddAppBtn" type="button" onclick="addProtectedApp()" style="padding:7px 12px;border-radius:7px;border:1px solid #19f58b;background:#13261e;color:#19f58b;font-weight:700;font-size:12px;cursor:pointer;">+ Добави приложение</button>
     </div>
     <ul id="vpnProtectedAppsList" style="list-style:none;padding:0;margin:0 0 8px 0;display:flex;flex-direction:column;gap:6px;"></ul>
     <div id="vpnPrefsStatus" style="font-size:12px;color:#19f58b;"></div>
+  </div>
+
+  <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;margin-bottom:12px;">
+    <strong style="color:#ffc439;display:block;margin-bottom:4px;">Списък с VPN / сървърни профили (до 50 профила)</strong>
+    <div style="font-size:12px;color:#a7b6c6;margin-bottom:8px;">
+      Можеш да добавиш до 50 профила за удобство, но на практика за реална връзка работи един избран активен тунел/профил (множество едновременни VPN-и забавят мрежата и създават конфликти).
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+      <input id="vpnProfileInput" type="text" placeholder="Име на профил (напр. Orbot-Tor-BG или WireGuard-DE)" style="flex:1;min-width:200px;padding:7px 10px;border-radius:7px;border:1px solid #2b3548;background:#141b28;color:#fff;font-size:12px;">
+      <button type="button" onclick="addVpnProfile()" style="padding:7px 12px;border-radius:7px;border:1px solid #ffc439;background:#262112;color:#ffc439;font-weight:700;font-size:12px;cursor:pointer;">+ Добави профил</button>
+    </div>
+    <div id="vpnProfilesCount" style="font-size:12px;color:#9fb0c0;margin-bottom:6px;"></div>
+    <ul id="vpnProfilesList" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;"></ul>
   </div>
 
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
     <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;">
       <strong style="color:#19f58b;">Android + Tor / Orbot</strong>
       <p style="margin:6px 0 0 0;font-size:12px;color:#c2cedb;">
-        Instaliray <strong>Orbot</strong> ot oficialniq kanal, vkluchi VPN rezhim / proxy (napr. <code>127.0.0.1:8118</code> / SOCKS5) i v nastroikite na Orbot izberi konkretnoto prilozhenie, chiito trafik da minava prez Tor mrezhata.
+        Инсталирай <strong>Orbot</strong> от официален източник, включи VPN режим или локално прокси (напр. <code>127.0.0.1:8118</code> / SOCKS5) и в настройките на Orbot избери приложенията, чийто трафик да минава през Tor.
       </p>
     </div>
     <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;">
       <strong style="color:#19f58b;">iOS (iPhone / iPad)</strong>
       <p style="margin:6px 0 0 0;font-size:12px;color:#c2cedb;">
-        Izpolzvay doveren VPN klient ili poddurzhan Tor klient za iOS i aktiviray VPN profila v nastroikite na sistemata (s <em>Connect On Demand</em> pri nuzhda), za da se marshrutira mrezhoviqt trafik prez tunela.
+        Използвай проверен VPN клиент или поддържан Tor клиент за iOS, активирай системния VPN профил (и <em>Connect On Demand</em> при нужда) и провери видимия си IP адрес.
       </p>
     </div>
     <div style="background:#0c1018;border:1px solid #232c3d;border-radius:8px;padding:10px;">
       <strong style="color:#19f58b;">Windows</strong>
       <p style="margin:6px 0 0 0;font-size:12px;color:#c2cedb;">
-        Za skrivane na IP adresa v Windows izpolzvay aktiven VPN klient (naprimer WireGuard tunel) ili Tor/proxy nastroiki na nivo sistema/brauzur, kato proverish tekushtiqt ti publichno viden IP sled vklyuchvane.
+        За реално скриване на IP адреса в Windows използвай активен VPN клиент (напр. WireGuard тунел) или системни/браузър прокси настройки и сверявай текущия си външен IP адрес.
       </p>
     </div>
   </div>
@@ -1670,14 +1702,30 @@ run_${safeIdent(nameRaw)}();
 
 <script>
 (function() {
-  const STORAGE_KEY = "marauder_vpn_tor_config_v1";
+  const STORAGE_KEY = "marauder_vpn_tor_config_v2";
+  const MAX_PROFILES = 50;
 
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        return {
+          mode: parsed.mode === "always" ? "always" : "app_only",
+          apps: Array.isArray(parsed.apps) ? parsed.apps : [],
+          profiles: Array.isArray(parsed.profiles) ? parsed.profiles.slice(0, MAX_PROFILES) : ["Orbot / Tor (127.0.0.1:8118)"],
+          activeProfile: parsed.activeProfile || "Orbot / Tor (127.0.0.1:8118)",
+          lang: parsed.lang || "bg"
+        };
+      }
     } catch (e) {}
-    return { mode: "app_only", apps: ["Browser (Web Chat)"] };
+    return {
+      mode: "app_only",
+      apps: ["Браузър / Уеб чат"],
+      profiles: ["Orbot / Tor (127.0.0.1:8118)"],
+      activeProfile: "Orbot / Tor (127.0.0.1:8118)",
+      lang: "bg"
+    };
   }
 
   function renderApps(apps) {
@@ -1691,7 +1739,7 @@ run_${safeIdent(nameRaw)}();
       span.textContent = appName;
       const rmBtn = document.createElement("button");
       rmBtn.type = "button";
-      rmBtn.textContent = "Mahni";
+      rmBtn.textContent = "Премахни";
       rmBtn.style.cssText = "padding:3px 8px;border-radius:5px;border:1px solid #3a465c;background:#0e131c;color:#ff8a8a;font-size:11px;cursor:pointer;";
       rmBtn.onclick = function() {
         const st = loadState();
@@ -1704,25 +1752,57 @@ run_${safeIdent(nameRaw)}();
     });
   }
 
+  function renderProfiles(st) {
+    const ul = document.getElementById("vpnProfilesList");
+    const cnt = document.getElementById("vpnProfilesCount");
+    const profiles = st.profiles || [];
+    if (cnt) {
+      cnt.textContent = "Профили: " + profiles.length + " / " + MAX_PROFILES + " | Активен профил: " + (st.activeProfile || "няма");
+    }
+    if (!ul) return;
+    ul.innerHTML = "";
+    profiles.forEach((prof) => {
+      const li = document.createElement("li");
+      const isActive = st.activeProfile === prof;
+      li.style.cssText = "display:flex;justify-content:space-between;align-items:center;gap:8px;background:" + (isActive ? "#13261e" : "#141b28") + ";border:1px solid " + (isActive ? "#19f58b" : "#263246") + ";border-radius:6px;padding:6px 10px;font-size:12px;";
+      const span = document.createElement("span");
+      span.textContent = prof + (isActive ? " [АКТИВЕН]" : "");
+      const actBtn = document.createElement("button");
+      actBtn.type = "button";
+      actBtn.textContent = isActive ? "Активен" : "Избери";
+      actBtn.style.cssText = "padding:3px 8px;border-radius:5px;border:1px solid #2b3548;background:#0e131c;color:#19f58b;font-size:11px;cursor:pointer;";
+      actBtn.onclick = function() {
+        const cur = loadState();
+        cur.activeProfile = prof;
+        persistState(cur);
+      };
+      li.appendChild(span);
+      li.appendChild(actBtn);
+      ul.appendChild(li);
+    });
+  }
+
   function persistState(st) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(st));
     } catch (e) {}
     const rAlways = document.getElementById("vpnModeAlways");
     const rAppOnly = document.getElementById("vpnModeAppOnly");
+    const langSel = document.getElementById("vpnLangSelect");
     if (rAlways) rAlways.checked = st.mode === "always";
     if (rAppOnly) rAppOnly.checked = st.mode !== "always";
+    if (langSel && st.lang) langSel.value = st.lang;
     renderApps(st.apps || []);
+    renderProfiles(st);
     const status = document.getElementById("vpnPrefsStatus");
     if (status) {
-      status.textContent = "Zapazeno: rezhim = " + (st.mode === "always" ? "Postoyanno vkluchen (non-stop)" : "Samo dokato se polzva prilozhenieto") + " | Prilozheniq: " + ((st.apps && st.apps.length) || 0);
+      status.textContent = "Запазено: режим = " + (st.mode === "always" ? "Постоянно включен (non-stop)" : "Само докато се ползва приложението") + " | Приложения: " + ((st.apps && st.apps.length) || 0);
     }
   }
 
   window.saveVpnTorPrefs = function() {
     const st = loadState();
-    const isAlways = document.getElementById("vpnModeAlways")?.checked;
-    st.mode = isAlways ? "always" : "app_only";
+    st.mode = document.getElementById("vpnModeAlways")?.checked ? "always" : "app_only";
     persistState(st);
   };
 
@@ -1733,16 +1813,76 @@ run_${safeIdent(nameRaw)}();
     if (!val) return;
     const st = loadState();
     st.apps = st.apps || [];
-    if (!st.apps.includes(val)) {
-      st.apps.push(val);
-    }
+    if (!st.apps.includes(val)) st.apps.push(val);
     inp.value = "";
     persistState(st);
+  };
+
+  window.addVpnProfile = function() {
+    const inp = document.getElementById("vpnProfileInput");
+    if (!inp) return;
+    const val = (inp.value || "").trim();
+    if (!val) return;
+    const st = loadState();
+    st.profiles = st.profiles || [];
+    if (st.profiles.length >= MAX_PROFILES) {
+      const stEl = document.getElementById("orbotAutoStatus");
+      if (stEl) stEl.textContent = "Достигнат е лимитът от " + MAX_PROFILES + " профила.";
+      return;
+    }
+    if (!st.profiles.includes(val)) st.profiles.push(val);
+    st.activeProfile = val;
+    inp.value = "";
+    persistState(st);
+  };
+
+  window.autoDetectOrbotAndSetup = async function() {
+    const stEl = document.getElementById("orbotAutoStatus");
+    const st = loadState();
+    if (!st.apps || st.apps.length === 0) {
+      st.apps = ["org.telegram.messenger", "com.android.chrome", "Браузър / Уеб чат"];
+    }
+    if (!st.profiles || st.profiles.length === 0) {
+      st.profiles = ["Orbot / Tor (127.0.0.1:8118)"];
+    }
+    persistState(st);
+
+    if (stEl) stEl.textContent = "Проверява се локален прокси порт (127.0.0.1:8118)...";
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 1800);
+    try {
+      await fetch("http://127.0.0.1:8118", { mode: "no-cors", signal: ctrl.signal });
+      clearTimeout(timer);
+      if (stEl) stEl.textContent = "Открит отговор от 127.0.0.1:8118 (възможен активен локален прокси/Orbot). Базовите профили са обновени.";
+    } catch (e) {
+      clearTimeout(timer);
+      if (stEl) stEl.textContent = "Не е засечен отговор на 127.0.0.1:8118 от браузъра (нормално при затворен прокси или ограничение на браузъра). Профилите са подготвени.";
+    }
+  };
+
+  window.applyVpnLang = function(langCode) {
+    const st = loadState();
+    st.lang = langCode || "bg";
+    persistState(st);
+    const intro = document.getElementById("vpnIntroText");
+    if (!intro) return;
+    if (langCode === "en") {
+      intro.textContent = "To hide your real IP address, a tunnel must run at the device or network level. The browser cannot scan installed apps or control system VPN/Orbot services directly.";
+    } else if (langCode === "de") {
+      intro.textContent = "Um Ihre echte IP-Adresse zu verbergen, muss ein Tunnel auf Geräte- oder Netzwerkebene laufen. Der Browser kann installierte Apps nicht scannen oder System-VPN/Orbot direkt steuern.";
+    } else if (langCode === "ru") {
+      intro.textContent = "Чтобы скрыть реальный IP-адрес, туннель должен работать на уровне устройства или сети. Браузер не может напрямую сканировать приложения или управлять системным VPN/Orbot.";
+    } else if (langCode === "es") {
+      intro.textContent = "Para ocultar tu IP real, el túnel debe funcionar a nivel de dispositivo o red. El navegador no puede escanear apps instaladas ni controlar VPN/Orbot del sistema directamente.";
+    } else {
+      intro.textContent = "За да се скрие реалният ти IP адрес в мрежата, тунелът трябва да работи на ниво устройство или мрежа. Браузърът не може директно да сканира телефона за инсталирани приложения или да управлява системни VPN/Orbot услуги — тук управляваш профилите, режимите и ръководството.";
+    }
   };
 
   document.addEventListener("DOMContentLoaded", function() {
     const st = loadState();
     persistState(st);
+    applyVpnLang(st.lang || "bg");
   });
 })();
 </script></div>
@@ -2282,6 +2422,158 @@ window.addEventListener("DOMContentLoaded", function() {
         });
       }
     }
+  });
+})();
+</script>
+
+<div id="marauderTierBox" style="margin:12px 0;background:#101520;border:1px solid #2a364b;border-radius:10px;padding:12px;color:#eef3f7;font-size:12px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+    <strong style="color:#19f58b;font-size:13px;">Niva za generirane (Software / Kod / Kali komandi) &amp; Plashtaniq</strong>
+    <span id="marauderTierBadge" style="padding:3px 8px;border-radius:6px;background:#172233;color:#ffc439;font-weight:700;">Tekushto nivo: Free (1/1)</span>
+  </div>
+  <div id="marauderUsageSummary" style="color:#b8c6d6;margin-bottom:10px;">
+    Bezplatno na ustroystvo: 1 software/kod + 1 Kali komanda. Za vtoro generirane se iska podkrepq / nivo.
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:10px;">
+    <button type="button" onclick="selectMarauderTier('copper')" style="text-align:left;padding:8px;border-radius:8px;border:1px solid #cd7f32;background:#1b140e;color:#ffd8a8;cursor:pointer;">
+      <strong>Copper — min 5 EUR</strong><br><span>+2 software/kod + 2 komandi / 24h (1 mesec)</span>
+    </button>
+    <button type="button" onclick="selectMarauderTier('silver')" style="text-align:left;padding:8px;border-radius:8px;border:1px solid #9fb3c8;background:#131b24;color:#e2ecf5;cursor:pointer;">
+      <strong>Silver — 25 EUR</strong><br><span>25 software/kod + 25 komandi / 24h (1 mesec)</span>
+    </button>
+    <button type="button" onclick="selectMarauderTier('gold')" style="text-align:left;padding:8px;border-radius:8px;border:1px solid #ffc439;background:#221c0c;color:#ffe599;cursor:pointer;">
+      <strong>Gold — 50 EUR</strong><br><span>300 software/kod + 300 komandi / 24h + abonament</span>
+    </button>
+    <button type="button" onclick="selectMarauderTier('annual')" style="text-align:left;padding:8px;border-radius:8px;border:1px solid #19f58b;background:#0f2219;color:#9ff7cb;cursor:pointer;">
+      <strong>Godishen — 150 EUR</strong><br><span>300/24h max + bonus 2g. abonament</span>
+    </button>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#0b0f17;border:1px solid #202a3b;border-radius:8px;padding:8px;">
+    <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer" style="padding:7px 11px;border-radius:7px;background:#ffc439;color:#111;font-weight:800;text-decoration:none;">PayPal plashtane</a>
+    <span style="color:#9fb0c0;">Keeper / TON: <code style="color:#19f58b;">UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H</code></span>
+    <button type="button" onclick="navigator.clipboard?.writeText('UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H')" style="padding:5px 9px;border-radius:6px;border:1px solid #2b3548;background:#131b28;color:#19f58b;cursor:pointer;">Kopirai TON</button>
+    <input id="marauderActivationCode" type="text" placeholder="Kod za aktivaciq (ako imash)" style="padding:6px 8px;border-radius:6px;border:1px solid #2b3548;background:#141c2b;color:#fff;font-size:12px;">
+    <button type="button" onclick="applyActivationCode()" style="padding:6px 10px;border-radius:6px;border:1px solid #19f58b;background:#12241b;color:#19f58b;font-weight:700;cursor:pointer;">Aktiviray nivo</button>
+  </div>
+  <div id="marauderQuotaMsg" style="margin-top:8px;color:#ffc439;font-size:12px;"></div>
+</div>
+
+<script>
+(function() {
+  const DEV_KEY = "marauder_device_id_v1";
+  const STATE_KEY = "marauder_quota_state_v1";
+  const LIMITS = {
+    free:   { sw: 1, kali: 1, name: "Free" },
+    copper: { sw: 3, kali: 3, name: "Copper (5 EUR / mesec)" },
+    silver: { sw: 25, kali: 25, name: "Silver (25 EUR / mesec)" },
+    gold:   { sw: 300, kali: 300, name: "Gold (50 EUR / mesec)" },
+    annual: { sw: 300, kali: 300, name: "Godishen 150 EUR (bonus 2g. abonament)" }
+  };
+
+  function getDeviceId() {
+    let id = localStorage.getItem(DEV_KEY);
+    if (!id) {
+      id = "dev-" + Math.random().toString(36).slice(2, 10) + "-" + Date.now().toString(36);
+      localStorage.setItem(DEV_KEY, id);
+    }
+    return id;
+  }
+
+  function loadQ() {
+    try {
+      const r = JSON.parse(localStorage.getItem(STATE_KEY) || "null");
+      if (r && LIMITS[r.tier]) return r;
+    } catch (e) {}
+    return { tier: "free", swUsed: 0, kaliUsed: 0, unlockedTier: "free" };
+  }
+
+  function saveQ(q) {
+    localStorage.setItem(STATE_KEY, JSON.stringify(q));
+    renderQ(q);
+  }
+
+  function renderQ(q) {
+    const badge = document.getElementById("marauderTierBadge");
+    const sum = document.getElementById("marauderUsageSummary");
+    const lim = LIMITS[q.tier] || LIMITS.free;
+    if (badge) badge.textContent = "Tekushto nivo: " + lim.name + " (" + q.swUsed + "/" + lim.sw + " sw | " + q.kaliUsed + "/" + lim.kali + " kali)";
+    if (sum) sum.textContent = "Ustroystvo: " + getDeviceId() + " — Bezplatno: 1 software/kod + 1 Kali komanda. Sled tova se iziskva podkrepq / nivo.";
+  }
+
+  window.selectMarauderTier = function(tier) {
+    const q = loadQ();
+    q.selectedTier = tier;
+    saveQ(q);
+    const msg = document.getElementById("marauderQuotaMsg");
+    if (msg) {
+      msg.textContent = "Izbrano nivo: " + (LIMITS[tier]?.name || tier) + ". Izprati sredstvata prez PayPal ili Keeper (TON) i vivedi koda za aktivirane.";
+    }
+  };
+
+  window.applyActivationCode = function() {
+    const inp = document.getElementById("marauderActivationCode");
+    const code = (inp && inp.value || "").trim().toUpperCase();
+    const q = loadQ();
+    if (!code) {
+      const msg = document.getElementById("marauderQuotaMsg");
+      if (msg) msg.textContent = "Vivedi validen kod za aktivirane sled plashtane prez PayPal ili Keeper (TON).";
+      return;
+    }
+    if (code.startsWith("COPPER-")) q.tier = "copper";
+    else if (code.startsWith("SILVER-")) q.tier = "silver";
+    else if (code.startsWith("GOLD-")) q.tier = "gold";
+    else if (code.startsWith("ANNUAL150-")) q.tier = "annual";
+    else {
+      const msg = document.getElementById("marauderQuotaMsg");
+      if (msg) msg.textContent = "Nepoznat kod. Izpolzvay kod s prefiks COPPER-, SILVER-, GOLD- ili ANNUAL150- sled potvurzhdenie na plashtaneto.";
+      return;
+    }
+    saveQ(q);
+    const msg = document.getElementById("marauderQuotaMsg");
+    if (msg) msg.textContent = "Aktiviran plan: " + LIMITS[q.tier].name;
+  };
+
+  window.consumeMarauderQuota = async function(kind) {
+    const q = loadQ();
+    const isKali = kind === "kali";
+    const lim = LIMITS[q.tier] || LIMITS.free;
+    const used = isKali ? q.kaliUsed : q.swUsed;
+    const max = isKali ? lim.kali : lim.sw;
+    if (used >= max) {
+      const msg = document.getElementById("marauderQuotaMsg");
+      if (msg) msg.textContent = "Dostignat e bezplatniqt / tekushtiqt limit (" + used + "/" + max + "). Za vtoro i sledvashto generirane darj / izberi nivo (Copper 5 EUR, Silver 25 EUR, Gold 50 EUR ili Godishen 150 EUR) prez PayPal ili Keeper.";
+      return false;
+    }
+    if (isKali) q.kaliUsed += 1;
+    else q.swUsed += 1;
+    saveQ(q);
+    try {
+      await fetch("/api/quota/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deviceId: getDeviceId(), tier: q.tier, kind: isKali ? "kali" : "software" })
+      });
+    } catch (e) {}
+    return true;
+  };
+
+  document.addEventListener("DOMContentLoaded", function() {
+    renderQ(loadQ());
+    document.querySelectorAll("button").forEach(btn => {
+      const t = (btn.textContent || "").toLowerCase();
+      if (t.includes("suzday moya softuer") || t.includes("създай моя софтуер") || t.includes("kali")) {
+        if (!btn.dataset.quotaBound) {
+          btn.dataset.quotaBound = "1";
+          btn.addEventListener("click", async function(e) {
+            const ok = await window.consumeMarauderQuota(t.includes("kali") ? "kali" : "software");
+            if (!ok) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            }
+          }, true);
+        }
+      }
+    });
   });
 })();
 </script>
