@@ -258,5 +258,44 @@
       render();
     })();
   </script>
+
+<script id="marauderUniversalUrlFix">
+(function(){
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  var cEl = document.getElementById("krCmd");
+  var outEl = document.getElementById("krOutput");
+  function parseAnyLink(raw){
+    var v = String(raw || "").trim();
+    if (!v) return { host: "", url: "" };
+    var withProto = /^https?:\/\//i.test(v) ? v : ("https://" + v);
+    try {
+      var u = new URL(withProto);
+      return { host: u.hostname, url: u.toString() };
+    } catch(e){
+      var h = v.replace(/^https?:\/\//i, "").split("/")[0].split("?")[0];
+      return { host: h, url: withProto };
+    }
+  }
+  if (uEl) {
+    uEl.addEventListener("input", function(){
+      var info = parseAnyLink(uEl.value);
+      if (info.host && tEl) tEl.value = info.host;
+      if (info.url && cEl && (!cEl.value || cEl.value.indexOf("dig ") === 0)) {
+        cEl.value = "curl -I -sS -L --max-time 10 " + info.url + " | head -n 15";
+      }
+    });
+  }
+  if (tEl) {
+    tEl.addEventListener("input", function(){
+      var info = parseAnyLink(tEl.value);
+      if (info.host && tEl.value !== info.host && /^https?:\/\//i.test(tEl.value)) {
+        tEl.value = info.host;
+        if (uEl) uEl.value = info.url;
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
