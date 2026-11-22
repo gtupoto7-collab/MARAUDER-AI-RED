@@ -26,8 +26,9 @@ function loadModules(baseDir = __dirname) {
 
   for (const file of files) {
     try {
-      delete require.cache[require.resolve(file)];
-      const mod = require(file);
+      const resolved = require.resolve(file);
+      delete require.cache[resolved];
+      const mod = require(resolved);
       loaded.push({
         file: path.relative(path.dirname(baseDir), file),
         name: mod.name || path.basename(file, ".js"),
