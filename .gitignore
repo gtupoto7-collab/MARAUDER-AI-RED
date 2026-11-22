@@ -15,3 +15,4 @@ data/portfolio-ledger.json
 *.pem
 *.key
 .env
+/tmp/marauder_server.log

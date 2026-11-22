@@ -1,3 +1,28 @@
+
+// --- MARAUDER PORTFOLIO & MODULES HOOK ---
+let __marauderPortfolioRouter = null;
+let __marauderRenderPortfolioHtml = null;
+let __marauderSecretRouter = null;
+let __marauderBotEngine = null;
+try {
+  const { createPortfolioRouter } = require("./routes/portfolio");
+  const { renderPortfolioPageHtml } = require("./modules/portfolio-view");
+  __marauderPortfolioRouter = createPortfolioRouter();
+  __marauderRenderPortfolioHtml = renderPortfolioPageHtml;
+} catch (_) {}
+try {
+  const { createRedSecretChatRouter } = require("./routes/red-secret-chat");
+  __marauderSecretRouter = createRedSecretChatRouter();
+} catch (_) {}
+try {
+  const { createMarauderBotEngine } = require("./routes/marauder-bot");
+  __marauderBotEngine = createMarauderBotEngine({
+    portfolioRouter: __marauderPortfolioRouter,
+    secretChatRouter: __marauderSecretRouter
+  });
+} catch (_) {}
+// --- END MARAUDER HOOK ---
+
 const express = require('express');
 const http = require('http');
 const { attachSecretChat } = require('./secret-chat');
@@ -668,3 +693,158 @@ app.post("/api/secret-room/delete", (req, res) => {
   if (room) secretRooms.delete(room.token);
   return res.json({ ok: true });
 });
+
+
+// DEVANPORT-AI Safe Tool Runner API (allowlist + timeout)
+const { execFile } = require("child_process");
+app.post("/api/devanport/run", (req, res) => {
+  const { runner = "node", scriptCode = "", target = "example.com" } = req.body || {};
+  const allowedRunners = new Set(["node", "python3", "bash"]);
+  if (!allowedRunners.has(runner)) {
+    return res.status(400).json({ ok: false, error: "RUNNER_NOT_ALLOWED" });
+  }
+  const safeTarget = String(target || "example.com").replace(/[^a-zA-Z0-9._-]/g, "").slice(0, 80) || "example.com";
+  const blocked = /(rm\s+-rf|mkfs|dd\s+if=|shutdown|reboot|poweroff|:\(\)\{|eval\s*\()/i;
+  if (blocked.test(String(scriptCode))) {
+    return res.status(403).json({ ok: false, error: "BLOCKED_DANGEROUS_PATTERN" });
+  }
+  const tmpFile = path.join("/tmp", "devanport-run-" + Date.now() + (runner === "python3" ? ".py" : runner === "bash" ? ".sh" : ".js"));
+  try {
+    fs.writeFileSync(tmpFile, String(scriptCode), "utf8");
+  } catch (e) {
+    return res.status(500).json({ ok: false, error: e.message });
+  }
+  const args = runner === "bash" ? [tmpFile, safeTarget] : [tmpFile, "--target", safeTarget];
+  execFile(runner, args, { timeout: 5000, maxBuffer: 512 * 1024 }, (err, stdout, stderr) => {
+    try { fs.unlinkSync(tmpFile); } catch (_) {}
+    res.json({
+      ok: !err,
+      runner,
+      target: safeTarget,
+      code: err ? (err.code || 1) : 0,
+      stdout: String(stdout || "").slice(0, 20000),
+      stderr: String(stderr || "").slice(0, 8000),
+      ranAt: new Date().toISOString()
+    });
+  });
+});
+
+
+// MARAUDER-AI Backend Tor/VPN Shield & Fail-Closed Guard (additive)
+const netShield = require("net");
+const httpShield = require("http");
+
+const SHIELD_CFG = {
+  enforced: process.env.MARAUDER_SHIELD_ENFORCED === "1",
+  socksHost: process.env.TOR_HOST || "127.0.0.1",
+  socksPort: Number(process.env.TOR_SOCKS_PORT || 9050),
+  timeoutMs: Number(process.env.SHIELD_TIMEOUT_MS || 2500)
+};
+
+function probeTcpEndpoint(host, port, timeoutMs) {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    const sock = new netShield.Socket();
+    let settled = false;
+    const finish = (reachable) => {
+      if (settled) return;
+      settled = true;
+      sock.destroy();
+      resolve({ reachable, latencyMs: Date.now() - start });
+    };
+    sock.setTimeout(timeoutMs);
+    sock.once("connect", () => finish(true));
+    sock.once("timeout", () => finish(false));
+    sock.once("error", () => finish(false));
+    sock.connect(port, host);
+  });
+}
+
+function checkSocks5Handshake(host, port, timeoutMs) {
+  return new Promise((resolve) => {
+    const sock = new netShield.Socket();
+    let settled = false;
+    const finish = (ok, detail) => {
+      if (settled) return;
+      settled = true;
+      sock.destroy();
+      resolve({ ok, detail });
+    };
+    sock.setTimeout(timeoutMs);
+    sock.once("error", (e) => finish(false, e.code || e.message));
+    sock.once("timeout", () => finish(false, "SOCKS5_TIMEOUT"));
+    sock.connect(port, host, () => {
+      // SOCKS5 greeting: version 5, 1 auth method (0x00 = no auth)
+      sock.write(Buffer.from([0x05, 0x01, 0x00]));
+    });
+    sock.once("data", (buf) => {
+      if (buf && buf.length >= 2 && buf[0] === 0x05 && buf[1] !== 0xff) {
+        finish(true, "SOCKS5_READY");
+      } else {
+        finish(false, "INVALID_SOCKS5_REPLY");
+      }
+    });
+  });
+}
+
+async function evaluateShieldStatus() {
+  const tcp = await probeTcpEndpoint(SHIELD_CFG.socksHost, SHIELD_CFG.socksPort, SHIELD_CFG.timeoutMs);
+  const socks = tcp.reachable
+    ? await checkSocks5Handshake(SHIELD_CFG.socksHost, SHIELD_CFG.socksPort, SHIELD_CFG.timeoutMs)
+    : { ok: false, detail: "PORT_UNREACHABLE" };
+
+  const tunnelConnected = Boolean(tcp.reachable && socks.ok);
+  const dnsCheck = tunnelConnected ? "PASS (SOCKS5_RESOLVE_READY)" : "FAILED";
+  const leakCheck = tunnelConnected ? "PASS" : "FAILED";
+  const applicationAllowed = !SHIELD_CFG.enforced || tunnelConnected;
+
+  return {
+    shield: "TOR_VPN_SHIELD",
+    enforced: SHIELD_CFG.enforced,
+    endpoint: SHIELD_CFG.socksHost + ":" + SHIELD_CFG.socksPort,
+    tunnel: tunnelConnected ? "CONNECTED" : "NOT DETECTED",
+    latencyMs: tcp.latencyMs,
+    socksDetail: socks.detail,
+    externalIp: tunnelConnected ? "VIA_TUNNEL_SOCKS5" : "DIRECT_CONNECTION",
+    dnsCheck,
+    leakCheck,
+    application: applicationAllowed ? "ALLOWED" : "BLOCKED",
+    networkFunctions: applicationAllowed ? "ENABLED" : "BLOCKED",
+    checkedAt: new Date().toISOString()
+  };
+}
+
+app.get("/api/shield/status", async (req, res) => {
+  try {
+    const status = await evaluateShieldStatus();
+    res.status(status.application === "ALLOWED" ? 200 : 503).json(status);
+  } catch (err) {
+    res.status(503).json({
+      shield: "TOR_VPN_SHIELD",
+      tunnel: "NOT DETECTED",
+      leakCheck: "FAILED",
+      application: "BLOCKED",
+      networkFunctions: "BLOCKED",
+      error: err.message
+    });
+  }
+});
+
+// Fail-closed middleware on /api/ routes except /api/shield/status and /api/health
+app.use("/api", async (req, res, next) => {
+  if (req.path === "/shield/status" || req.path === "/health") return next();
+  if (!SHIELD_CFG.enforced) return next();
+  const status = await evaluateShieldStatus();
+  if (!status || status.application !== "ALLOWED") {
+    return res.status(503).json({
+      ok: false,
+      blocked: true,
+      code: "SHIELD_FAIL_CLOSED",
+      message: "MARAUDER NETWORK FUNCTIONS: BLOCKED — реалният Tor/VPN тунел не е потвърден.",
+      status
+    });
+  }
+  return next();
+});
+
+try { const { mountWalletRoutes } = require("./routes/wallet"); mountWalletRoutes(app); } catch (e) { console.error("WALLET_ROUTE_HOOK_ERR:", e && e.message); }

@@ -880,6 +880,293 @@ function renderPortfolioPageHtml(apiBase = "/api/portfolio") {
 
     load();
   </script>
+
+<script id="PF_UNIFIED_PLANS_HUB_SCRIPT">
+(function () {
+  const PAYPAL_URL = "https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC";
+  const TON_ADDR = "UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H";
+  let currentTier = "Gold (50 bots)";
+  let currentMethod = "paypal";
+  let lastGeneratedLink = PAYPAL_URL;
+
+  function updateStatus(msg) {
+    const el = document.getElementById("pf-hub-status");
+    if (el) el.textContent = msg;
+  }
+
+  function highlightActive() {
+    document.querySelectorAll(".pf-tier-btn").forEach((b) => {
+      b.style.outline = b.dataset.tier === currentTier ? "2px solid #22c55e" : "none";
+    });
+    document.querySelectorAll(".pf-method-btn").forEach((b) => {
+      b.style.outline = b.dataset.method === currentMethod ? "2px solid #38bdf8" : "none";
+    });
+  }
+
+  function buildTarget(noteVal) {
+    const clean = (noteVal || "").trim();
+    if (currentMethod === "paypal") return PAYPAL_URL;
+    if (currentMethod === "ton") {
+      const addr = clean.startsWith("UQ") || clean.startsWith("EQ") ? clean : TON_ADDR;
+      return "ton://transfer/" + encodeURIComponent(addr) + "?text=" + encodeURIComponent("MARAUDER " + currentTier);
+    }
+    const bot = (clean || "marauderai_bot").replace(/^@/, "");
+    return "https://t.me/" + encodeURIComponent(bot) + "?start=" + encodeURIComponent("tier_" + currentTier.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 24));
+  }
+
+  function initHub() {
+    const anchor = document.getElementById("pf-accounts-overview-card") || document.getElementById("tab-important");
+    if (anchor && !document.getElementById("pf-unified-plans-hub")) {
+      anchor.insertAdjacentHTML("beforebegin", hubHtml);
+    }
+    highlightActive();
+
+    document.querySelectorAll(".pf-tier-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentTier = btn.dataset.tier || "Gold (50 bots)";
+        highlightActive();
+        updateStatus("Избрано: " + currentTier + " • " + currentMethod.toUpperCase());
+      });
+    });
+
+    document.querySelectorAll(".pf-method-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentMethod = btn.dataset.method || "paypal";
+        highlightActive();
+        lastGeneratedLink = buildTarget((document.getElementById("pf-hub-note") || {}).value || "");
+        updateStatus("Избрано: " + currentTier + " • " + currentMethod.toUpperCase() + " → " + lastGeneratedLink);
+      });
+    });
+
+    const genBtn = document.getElementById("pf-hub-generate");
+    if (genBtn) {
+      genBtn.addEventListener("click", () => {
+        const noteVal = (document.getElementById("pf-hub-note") || {}).value || "";
+        lastGeneratedLink = buildTarget(noteVal);
+        if (document.getElementById("pf-link-out")) {
+          document.getElementById("pf-link-out").value = lastGeneratedLink;
+        }
+        updateStatus("Готов линк (" + currentTier + " • " + currentMethod.toUpperCase() + "): " + lastGeneratedLink);
+        if (currentMethod === "paypal" || currentMethod === "stars") {
+          window.open(lastGeneratedLink, "_blank", "noopener,noreferrer");
+        }
+      });
+    }
+
+    const copyBtn = document.getElementById("pf-hub-copy");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const noteVal = (document.getElementById("pf-hub-note") || {}).value || "";
+        const target = lastGeneratedLink || buildTarget(noteVal);
+        try {
+          await navigator.clipboard.writeText(target);
+          updateStatus("Копирано: " + target);
+        } catch (_) {
+          updateStatus("Линк: " + target);
+        }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHub);
+  } else {
+    initHub();
+  }
+})();
+</script>
+
+
+<script id="PF_REVOLUT_STYLE_SCRIPT">
+(function () {
+  const PAYPAL_URL = "https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC";
+  const TON_ADDR = "UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H";
+  const STORAGE_KEY = "marauder_revolut_feed_v1";
+  let method = "paypal";
+  let feed = [];
+  try { feed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch (_) { feed = []; }
+
+  function saveFeed() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(feed.slice(0, 15))); } catch (_) {}
+  }
+
+  function setStatus(text) {
+    const el = document.getElementById("pf-rev-status");
+    if (el) el.textContent = text;
+  }
+
+  function buildLink(m, tier, note) {
+    const clean = (note || "").trim();
+    if (m === "paypal") return PAYPAL_URL;
+    if (m === "ton") {
+      const addr = clean.startsWith("UQ") || clean.startsWith("EQ") ? clean : TON_ADDR;
+      return "ton://transfer/" + encodeURIComponent(addr) + "?text=" + encodeURIComponent("MARAUDER " + tier + (clean ? " " + clean : ""));
+    }
+    const bot = (clean || "marauderai_bot").replace(/^@/, "");
+    return "https://t.me/" + encodeURIComponent(bot) + "?start=" + encodeURIComponent("rev_" + tier.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 20));
+  }
+
+  function renderFeed() {
+    const box = document.getElementById("pf-rev-activity");
+    if (!box) return;
+    if (!feed.length) {
+      box.innerHTML = "<div class=\"hint\">Последна активност: няма записи още.</div>";
+      return;
+    }
+    box.innerHTML = feed.map((item) =>
+      "<div style=\"display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #1b263b;font-size:12px;\">" +
+      "<div><strong>" + item.method.toUpperCase() + "</strong> • " + item.tier +
+      (item.note ? " <span style=\"color:#94a3b8;\">(" + item.note + ")</span>" : "") +
+      "<div style=\"color:#60a5fa;word-break:break-all;\">" + item.link + "</div></div>" +
+      "<span style=\"color:#64748b;white-space:nowrap;\">" + item.time + "</span>" +
+      "</div>"
+    ).join("");
+  }
+
+  function addEntry(m, tier, note, openExternal) {
+    method = m || method;
+    const link = buildLink(method, tier, note);
+    if (document.getElementById("pf-link-out")) {
+      document.getElementById("pf-link-out").value = link;
+    }
+    feed.unshift({
+      method,
+      tier,
+      note: (note || "").trim(),
+      link,
+      time: new Date().toLocaleTimeString()
+    });
+    saveFeed();
+    renderFeed();
+    setStatus("Активен канал: " + method.toUpperCase() + " • " + link);
+    if (openExternal && (method === "paypal" || method === "stars")) {
+      window.open(link, "_blank", "noopener,noreferrer");
+    }
+  }
+
+  function mountRevolut() {
+    const target = document.getElementById("pf-unified-plans-hub") || document.getElementById("pf-accounts-overview-card") || document.getElementById("tab-important");
+    if (target && !document.getElementById("pf-revolut-style-hub")) {
+      target.insertAdjacentHTML("beforebegin", revolutHtml);
+    }
+    renderFeed();
+
+    document.querySelectorAll(".pf-rev-quick").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const m = btn.dataset.method || "paypal";
+        const tier = (document.getElementById("pf-rev-tier") || {}).value || "Gold (50 bots)";
+        const note = (document.getElementById("pf-rev-note") || {}).value || "";
+        addEntry(m, tier, note, m === "paypal");
+      });
+    });
+
+    const createBtn = document.getElementById("pf-rev-create");
+    if (createBtn) {
+      createBtn.addEventListener("click", () => {
+        const tier = (document.getElementById("pf-rev-tier") || {}).value || "Gold (50 bots)";
+        const note = (document.getElementById("pf-rev-note") || {}).value || "";
+        addEntry(method, tier, note, false);
+      });
+    }
+
+    const copyBtn = document.getElementById("pf-rev-copy");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        if (!feed.length) {
+          setStatus("Няма запис за копиране.");
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(feed[0].link);
+          setStatus("Копирано в клипборда: " + feed[0].link);
+        } catch (_) {
+          setStatus("Линк: " + feed[0].link);
+        }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountRevolut);
+  } else {
+    mountRevolut();
+  }
+})();
+</script>
+
+
+
+
+
+<script id="PF_REV_QR_SCRIPT">
+(function () {
+  function ensureQrBox() {
+    const feed = document.getElementById("pf-rev-activity");
+    if (feed && !document.getElementById("pf-rev-qr-box")) {
+      feed.insertAdjacentHTML("afterend", qrUi);
+      const closeBtn = document.getElementById("pf-rev-qr-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          const box = document.getElementById("pf-rev-qr-box");
+          if (box) box.style.display = "none";
+        });
+      }
+    }
+  }
+
+  async function showQrForLink(link) {
+    ensureQrBox();
+    const box = document.getElementById("pf-rev-qr-box");
+    const targetEl = document.getElementById("pf-rev-qr-target");
+    const wrapEl = document.getElementById("pf-rev-qr-img-wrap");
+    if (!box || !targetEl || !wrapEl || !link) return;
+
+    targetEl.textContent = link;
+    wrapEl.innerHTML = "<span class=\"hint\">Генерирам QR...</span>";
+    box.style.display = "block";
+
+    try {
+      const res = await fetch("/api/portfolio/qr?text=" + encodeURIComponent(link));
+      if (res.ok) {
+        const ct = res.headers.get("content-type") || "";
+        if (ct.includes("svg")) {
+          const svgText = await res.text();
+          wrapEl.innerHTML = svgText;
+          return;
+        }
+        const data = await res.json();
+        if (data && data.svg) {
+          wrapEl.innerHTML = data.svg;
+          return;
+        }
+      }
+    } catch (_) {}
+
+    const imgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(link);
+    wrapEl.innerHTML = "<img src=\"" + imgUrl + "\" alt=\"QR Code\" width=\"180\" height=\"180\" style=\"border-radius:6px;background:#fff;padding:4px;\" />";
+  }
+
+  document.addEventListener("click", (e) => {
+    const feed = document.getElementById("pf-rev-activity");
+    if (!feed || !feed.contains(e.target)) return;
+    const row = e.target.closest("div[style*=\"padding:6px 0\"]");
+    if (!row) return;
+    const linkEl = row.querySelector("a");
+    const href = linkEl ? linkEl.getAttribute("href") : "";
+    if (href) {
+      e.preventDefault();
+      showQrForLink(href);
+    }
+  });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureQrBox);
+  } else {
+    ensureQrBox();
+  }
+})();
+</script>
+
 </body>
 </html>`;
 }
