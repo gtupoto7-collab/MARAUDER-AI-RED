@@ -1,0 +1,14 @@
+{
+  "app": "MARAUDER-AI",
+  "owner": "RED-SOFTWARE-TEAM-BG",
+  "mainBot": "@marauderai_bot",
+  "webAndMiniAppUrl": "https://marauder-ai-hacker.onrender.com",
+  "giftAccessKey": "RST-AI-001",
+  "updatedAt": "2026-11-22T07:53:18Z",
+  "targets": {
+    "windows": "https://marauder-ai-hacker.onrender.com",
+    "android": "https://marauder-ai-hacker.onrender.com",
+    "ios": "https://marauder-ai-hacker.onrender.com",
+    "telegramMiniApp": "https://marauder-ai-hacker.onrender.com"
+  }
+}
