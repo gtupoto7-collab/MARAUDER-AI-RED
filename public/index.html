@@ -4361,43 +4361,7 @@ window.addEventListener("DOMContentLoaded", function() {
   setTimeout(placeBotButtonNearDots, 300);
 })();
 </script>
-<style id="marauderMainBotStyle">
-  #marauderMainBotCard {
-    margin: 10px auto;
-    max-width: 960px;
-    background: #0d1422;
-    border: 1px solid #19f58b;
-    border-radius: 10px;
-    padding: 12px 14px;
-    color: #eef3f7;
-    box-sizing: border-box;
-  }
-  .m-dl-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .m-dl-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 12px;
-    border-radius: 8px;
-    border: 1px solid #ffc439;
-    background: #1c1509;
-    color: #ffc439;
-    font-weight: 700;
-    font-size: 12px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .m-dl-btn.tg {
-    border-color: #19f58b;
-    background: #0f251b;
-    color: #19f58b;
-  }
-</style>
+
 <script id="marauderMainBotScript">
 (function() {
   var MAIN_BOT_HANDLE = "@marauderai_bot";
@@ -4490,6 +4454,99 @@ window.addEventListener("DOMContentLoaded", function() {
     injectGiftBtn();
   }
   setTimeout(injectGiftBtn, 400);
+})();
+</script>
+<style id="marauderUnifiedSinglePageStyle">
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  #marauderMainBotCard {
+    width: 100%;
+    max-width: 1120px;
+    margin: 8px auto;
+    background: #0d1422;
+    border: 1px solid #19f58b;
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: #eef3f7;
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  #marauderMainBotCard .m-bot-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  #marauderMainBotCard .m-dl-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0;
+  }
+  #marauderMainBotCard .m-dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    border: 1px solid #ffc439;
+    background: #1c1509;
+    color: #ffc439;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #marauderMainBotCard .m-dl-btn.tg {
+    border-color: #19f58b;
+    background: #0f251b;
+    color: #19f58b;
+  }
+  @media (max-width: 720px) {
+    #marauderMainBotCard {
+      padding: 8px;
+      font-size: 12px;
+    }
+    #marauderMainBotCard .m-dl-btn {
+      padding: 5px 8px;
+      font-size: 11px;
+    }
+  }
+</style>
+<script id="marauderUnifiedSinglePageScript">
+(function() {
+  function normalizeSinglePageLayout() {
+    var card = document.getElementById("marauderMainBotCard");
+    if (card && !card.querySelector(".m-bot-head")) {
+      var firstDiv = card.firstElementChild;
+      if (firstDiv) firstDiv.className = "m-bot-head";
+    }
+    var allEls = Array.from(document.querySelectorAll("body * "));
+    for (var i = 0; i < allEls.length; i++) {
+      var el = allEls[i];
+      if (el.id === "marauderMainBotCard" || el.closest && el.closest("#marauderMainBotCard")) continue;
+      var cs = window.getComputedStyle(el);
+      var fs = parseFloat(cs.fontSize || "0");
+      if (fs >= 24) {
+        el.style.fontSize = "14px";
+      }
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", normalizeSinglePageLayout);
+  } else {
+    normalizeSinglePageLayout();
+  }
+  setTimeout(normalizeSinglePageLayout, 300);
+  setTimeout(normalizeSinglePageLayout, 900);
 })();
 </script>
 </body>
