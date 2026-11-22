@@ -637,5 +637,36 @@
   if (autoBtn) autoBtn.onclick = async function(){ var d = await smartPost("/api/kali/auto-audit", getCtx()); log(d.output || d.error || JSON.stringify(d)); };
 })();
 </script>
+
+<script id="marauderWireKaliAuto">
+(function(){
+  var out = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  var btn = document.getElementById("alAutoBtn");
+  function put(txt){ if(out){ out.textContent += (out.textContent ? "\n" : "") + txt; out.scrollTop = out.scrollHeight; } }
+  async function runAuto(){
+    var target = ((tEl && tEl.value.trim()) || (uEl && uEl.value.trim()) || "xera.bg");
+    put("Стартиране на автоматичния анализ (/api/kali/auto) за " + target + "...");
+    var opts = { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ target: target }) };
+    var bases = ["", "http://127.0.0.1:3000"];
+    for (var i = 0; i < bases.length; i++){
+      try {
+        var r = await fetch(bases[i] + "/api/kali/auto", opts);
+        var txt = await r.text();
+        var t = txt.trim();
+        if (t.charAt(0) === "{" || t.charAt(0) === "["){
+          var data = JSON.parse(t);
+          if (!data.success) { put("ГРЕШКА: " + (data.error || "Неуспешна проверка.")); return; }
+          put(data.output || JSON.stringify(data, null, 2));
+          return;
+        }
+      } catch(e){}
+    }
+    put("API CONNECTION ERROR: Няма отговор от /api/kali/auto.");
+  }
+  if (btn) btn.addEventListener("click", function(ev){ ev.preventDefault(); ev.stopImmediatePropagation(); runAuto(); }, true);
+})();
+</script>
 </body>
 </html>
