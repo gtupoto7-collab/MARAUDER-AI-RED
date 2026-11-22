@@ -580,5 +580,56 @@
   }
 })();
 </script>
+
+<!-- MARAUDER_GIT_TOP_UI -->
+<div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
+  <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / LOG / PULL / COMMIT &amp; PUSH)</div>
+  <div class="kr-row">
+    <input type="text" id="krGitMsg" placeholder="Commit съобщение..." />
+    <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
+    <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
+    <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
+    <button type="button" class="kr-run" id="krGitPushBtn">Commit &amp; Push</button>
+  </div>
+</div>
+<script id="marauderGitTopUiScript">
+(function() {
+  var outEl = document.getElementById("krOutput");
+  function writeGitOut(msg) {
+    if (!outEl) return;
+    outEl.textContent += "\n" + msg;
+    outEl.scrollTop = outEl.scrollHeight;
+  }
+  async function triggerGit(action) {
+    var msgEl = document.getElementById("krGitMsg");
+    var commitMsg = msgEl && msgEl.value ? msgEl.value.trim() : "";
+    writeGitOut("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
+    try {
+      var r = await fetch("/api/kali/git", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: action, message: commitMsg })
+      });
+      var txt = await r.text();
+      try {
+        var j = JSON.parse(txt);
+        writeGitOut(j.output || JSON.stringify(j));
+      } catch (pe) {
+        writeGitOut("[ОТГОВОР] " + txt.slice(0, 300));
+      }
+    } catch (e) {
+      writeGitOut("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Network error"));
+    }
+  }
+  var b1 = document.getElementById("krGitStatusBtn");
+  var b2 = document.getElementById("krGitLogBtn");
+  var b3 = document.getElementById("krGitPullBtn");
+  var b4 = document.getElementById("krGitPushBtn");
+  if (b1 && !b1.dataset.gitBound) { b1.dataset.gitBound = "1"; b1.addEventListener("click", function() { triggerGit("status"); }); }
+  if (b2 && !b2.dataset.gitBound) { b2.dataset.gitBound = "1"; b2.addEventListener("click", function() { triggerGit("log"); }); }
+  if (b3 && !b3.dataset.gitBound) { b3.dataset.gitBound = "1"; b3.addEventListener("click", function() { triggerGit("pull"); }); }
+  if (b4 && !b4.dataset.gitBound) { b4.dataset.gitBound = "1"; b4.addEventListener("click", function() { triggerGit("push"); }); }
+})();
+</script>
 </body>
 </html>
