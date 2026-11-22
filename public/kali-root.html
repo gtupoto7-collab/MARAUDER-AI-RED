@@ -23,6 +23,35 @@
     .kr-row { display: flex; flex-wrap: wrap; gap: 6px; }
     .kr-row > * { flex: 1 1 140px; }
   </style>
+
+<script id="marauderSessionBaseV1">
+(function(){
+  if (!window.__MARAUDER_SESSION_ID__) {
+    window.__MARAUDER_SESSION_ID__ = "marauder-sid-" + Math.random().toString(36).slice(2, 10);
+  }
+  window.__MARAUDER_API_BASE__ = "http://127.0.0.1:3000";
+
+  const origFetch = window.fetch.bind(window);
+  window.fetch = function(input, init) {
+    try {
+      let urlStr = typeof input === "string" ? input : (input && input.url) || "";
+      if (urlStr.startsWith("/api/kali/")) {
+        urlStr = window.__MARAUDER_API_BASE__ + urlStr;
+        const nextInit = Object.assign({}, init || {});
+        if (nextInit.method && nextInit.method.toUpperCase() === "POST" && typeof nextInit.body === "string") {
+          try {
+            const parsed = JSON.parse(nextInit.body);
+            if (!parsed.sessionId) parsed.sessionId = window.__MARAUDER_SESSION_ID__;
+            nextInit.body = JSON.stringify(parsed);
+          } catch (e) {}
+        }
+        return origFetch(urlStr, nextInit);
+      }
+    } catch (e) {}
+    return origFetch(input, init);
+  };
+})();
+</script>
 </head>
 <body>
   <div class="kr-wrap">
