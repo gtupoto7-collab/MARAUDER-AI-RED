@@ -4571,5 +4571,44 @@ window.addEventListener("DOMContentLoaded", function() {
   setTimeout(init, 300);
 })();
 </script>
+<style id="marauderBotButtonOnlyStyle">
+  #marauderMainBotCard { display: none !important; }
+  #marauderMainBotCard.bot-panel-open { display: flex !important; }
+</style>
+<script id="marauderBotButtonOnlyScript">
+(function() {
+  function toggleBotPanel() {
+    var card = document.getElementById("marauderMainBotCard");
+    if (!card) return;
+    card.classList.toggle("bot-panel-open");
+  }
+  function bindBotButtons() {
+    var card = document.getElementById("marauderMainBotCard");
+    if (card) card.classList.remove("bot-panel-open");
+    var candidates = Array.from(document.querySelectorAll("button, a, [role=button]"));
+    for (var i = 0; i < candidates.length; i++) {
+      var el = candidates[i];
+      if (el.closest && el.closest("#marauderMainBotCard")) continue;
+      var txt = (el.textContent || "").trim();
+      if (/\+\s*BOT|\bBOT\b|ботовете/i.test(txt) && !el.dataset.marauderBotBound) {
+        el.dataset.marauderBotBound = "1";
+        el.addEventListener("click", function(ev) {
+          var href = (el.getAttribute("href") || "").trim();
+          if (!href || href === "#" || href.indexOf("bot-builder") !== -1) {
+            if (!href || href === "#") ev.preventDefault();
+            toggleBotPanel();
+          }
+        });
+      }
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindBotButtons);
+  } else {
+    bindBotButtons();
+  }
+  setTimeout(bindBotButtons, 300);
+})();
+</script>
 </body>
 </html>
