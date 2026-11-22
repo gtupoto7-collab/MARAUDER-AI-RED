@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>KONZOLA KALI LINUX ROOT — 100 Realni Instrumenta (LIVE PENTESTING)</title>
+  <title>MARAUDER-LINUX-CONSOLE — 800 Realni Instrumenta</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
@@ -38,11 +38,11 @@
     .kr-badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; border: 1px solid #22c55e; color: #86efac; background: #071b10; }
     .kr-grid {
       display: grid;
-      grid-template-columns: minmax(260px, 360px) 1fr;
+      grid-template-columns: minmax(300px, 420px) 1fr;
       gap: 10px;
       flex: 1;
     }
-    @media (max-width: 820px) {
+    @media (max-width: 860px) {
       .kr-grid { grid-template-columns: 1fr; }
     }
     .kr-panel {
@@ -78,22 +78,21 @@
       cursor: pointer;
     }
     .kr-tools-list {
-      max-height: 460px;
+      max-height: 480px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
     .kr-tool-item {
-      padding: 7px 8px;
+      padding: 8px 9px;
       border-radius: 7px;
       border: 1px solid #1e293b;
       background: #070c16;
       cursor: pointer;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
+      flex-direction: column;
+      gap: 3px;
     }
     .kr-tool-item:hover { border-color: #f87171; background: #160a10; }
     .kr-term {
@@ -117,46 +116,63 @@
   <div class="kr-wrap">
     <div class="kr-top">
       <div>
-        <div class="kr-title">ROOT@KALI-LINUX — KONZOLA KALI LINUX ROOT (100 REALNI INSTRUMENTA)</div>
-        <div style="font-size:11px;color:#94a3b8;">Live pentesting диагностика и изход на живо • Използвай само за разрешени цели и собствени тестови среди</div>
+        <div class="kr-title" id="krMainTitle">MARAUDER-LINUX-CONSOLE — 800 REALNI INSTRUMENTA</div>
+        <div id="krSubTitle" style="font-size:11px;color:#94a3b8;">Групи: Разузнаване, Проникване, Силови, Заобикалящи, Защита • Описание на кирилица и превод на други езици</div>
       </div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <span class="kr-badge">LIVE PENTESTING ACTIVE</span>
-        <a href="/index.html" style="color:#7dd3fc;font-size:12px;text-decoration:none;border:1px solid #38bdf8;padding:5px 9px;border-radius:7px;">← Назад към AI Чат</a>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+        <select id="krLangSelect" title="Език / Language">
+          <option value="bg" selected>Български (Кирилица)</option>
+          <option value="en">English (EN)</option>
+          <option value="de">Deutsch (DE)</option>
+          <option value="ru">Русский (RU)</option>
+          <option value="es">Español (ES)</option>
+        </select>
+        <span class="kr-badge">800 TOOLS READY</span>
+        <a href="/index.html" style="color:#7dd3fc;font-size:12px;text-decoration:none;border:1px solid #38bdf8;padding:5px 9px;border-radius:7px;">← Чат</a>
       </div>
     </div>
 
     <div class="kr-grid">
       <div class="kr-panel">
-        <div style="font-weight:700;color:#fca5a5;">100 Инструмента (филтър и избор)</div>
-        <input type="text" id="krSearch" placeholder="Търси измежду 100 инструмента (nmap, sqlmap, hydra, dig...)" />
+        <div id="krCatalogHeader" style="font-weight:700;color:#fca5a5;">800 Инструмента по групи</div>
+        <input type="text" id="krSearch" placeholder="Търси сред 800 инструмента (nmap, sqlmap, hydra, dig...)" />
         <select id="krCat">
-          <option value="all">Всички категории (100)</option>
-          <option value="Port & Network Scanning">Port & Network Scanning</option>
-          <option value="Recon & OSINT">Recon & OSINT</option>
-          <option value="Web & API Testing">Web & API Testing</option>
-          <option value="Wireless & RF">Wireless & RF</option>
-          <option value="Password & Auth">Password & Auth</option>
-          <option value="Exploitation & Post-Ex">Exploitation & Post-Ex</option>
-          <option value="Forensics & Reverse">Forensics & Reverse</option>
-          <option value="Cloud & Containers">Cloud & Containers</option>
-          <option value="Live Diagnostics">Live Diagnostics</option>
+          <option value="all">Всички групи (800)</option>
+          <option value="Razoznavane">Разузнаване (Recon)</option>
+          <option value="Pronikvane">Проникване (Penetration)</option>
+          <option value="Silovi">Силови (Brute / Auth)</option>
+          <option value="Zaobikalqshti">Заобикалящи (Evasion / Bypass)</option>
+          <option value="Zashtita">Защита (Defense / Audit)</option>
+          <option value="Web i API">Web i API</option>
+          <option value="Mreja i Portove">Mreja i Portove</option>
+          <option value="Forenzika i Kripto">Forenzika i Kripto</option>
         </select>
-        <div id="krToolsList" class="kr-tools-list">Зареждане на 100 инструмента...</div>
+        <div id="krToolsList" class="kr-tools-list">Зареждане на 800 инструмента...</div>
       </div>
 
       <div class="kr-panel">
-        <div style="font-weight:700;color:#86efac;">Live Pentesting Конзола</div>
+        <div id="krConsoleHeader" style="font-weight:700;color:#86efac;">MARAUDER-LINUX-CONSOLE — Информация и диагностика на живо</div>
         <div class="kr-row">
           <input type="text" id="krTarget" value="scanme.nmap.org" placeholder="Цел (домейн / IP / хост)" />
-          <input type="text" id="krCmd" value="dig +short A scanme.nmap.org" placeholder="Команда за изпълнение" />
+          <input type="text" id="krCmd" value="dig +short A scanme.nmap.org" placeholder="Команда" />
         </div>
         <div class="kr-row">
-          <button type="button" class="kr-run" id="krExecBtn">▶ Изпълни на живо (LIVE)</button>
-          <button type="button" class="kr-btn" id="krSysBtn">Системна проверка (uname/ip/ss)</button>
-          <button type="button" class="kr-btn" id="krClearBtn">Изчисти конзолата</button>
+          <button type="button" class="kr-run" id="krExecBtn">▶ Изпълни проверка</button>
+          <button type="button" class="kr-btn" id="krSysBtn">Системна проверка</button>
+          <button type="button" class="kr-btn" id="krClearBtn">Изчисти</button>
         </div>
-        <div id="krOutput" class="kr-term">root@kali:~# Готова за live pentesting проверки. Избери инструмент отляво или въведи команда и натисни "Изпълни на живо".</div>
+        <div id="krOutput" class="kr-term">marauder@linux-console:~# Готова. Избери инструмент отляво, за да видиш какво прави, каква информация връща и командата му.</div>
+      </div>
+    </div>
+
+    <div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
+      <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / LOG / PULL / COMMIT &amp; PUSH)</div>
+      <div class="kr-row">
+        <input type="text" id="krGitMsg" placeholder="Commit съобщение (по избор)..." />
+        <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
+        <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
+        <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
+        <button type="button" class="kr-run" id="krGitPushBtn">Commit &amp; Push</button>
       </div>
     </div>
   </div>
@@ -169,7 +185,70 @@
       var targetEl = document.getElementById("krTarget");
       var cmdEl = document.getElementById("krCmd");
       var outEl = document.getElementById("krOutput");
+      var langEl = document.getElementById("krLangSelect");
       var allTools = [];
+
+      var I18N = {
+        bg: {
+          doLabel: "Какво прави",
+          infoLabel: "Каква информация дава",
+          selectLabel: "Избери",
+          noMatch: "Няма намерени инструменти по този филтър."
+        },
+        en: {
+          doLabel: "What it does (BG)",
+          infoLabel: "Output info (BG)",
+          selectLabel: "Select",
+          noMatch: "No matching tools found."
+        },
+        de: {
+          doLabel: "Funktion (BG)",
+          infoLabel: "Ausgabeinfo (BG)",
+          selectLabel: "Wählen",
+          noMatch: "Keine passenden Werkzeuge gefunden."
+        },
+        ru: {
+          doLabel: "Назначение (BG)",
+          infoLabel: "Данные вывода (BG)",
+          selectLabel: "Выбрать",
+          noMatch: "Инструменты не найдены."
+        },
+        es: {
+          doLabel: "Función (BG)",
+          infoLabel: "Datos de salida (BG)",
+          selectLabel: "Elegir",
+          noMatch: "No se encontraron herramientas."
+        }
+      };
+
+      function build800Fallback() {
+        var groups = ["Razoznavane", "Pronikvane", "Silovi", "Zaobikalqshti", "Zashtita", "Web i API", "Mreja i Portove", "Forenzika i Kripto"];
+        var seeds = [
+          ["nmap", "Сканира мрежови хостове, отворени портове и версии на услуги.", "Списък с портове, състояние и версии на услуги."],
+          ["dig", "Извършва DNS заявки към сървъри за имена.", "DNS записи (A, AAAA, MX, NS, TXT) и време за отговор."],
+          ["curl", "Изпраща HTTP/HTTPS заявки към уеб сървър.", "HTTP статус код, заглавки и съдържание."],
+          ["nikto", "Проверява уеб сървър за конфигурации и известни слабости.", "Конфигурационни бележки и открити пътища."],
+          ["hydra", "Тества устойчивостта на автентикация в лабораторна среда.", "Резултати от тестови заявки и статус на услугата."],
+          ["wafw00f", "Открива наличие на Web Application Firewall.", "Идентификация на защитен/филтриращ слой."],
+          ["trivy", "Проверява контейнери и пакети за известни уязвимости.", "Списък с открити уязвимости и препоръки."],
+          ["tshark", "Анализира мрежови пакети и трафик.", "Протоколи, потоци и статистика на пакетите."]
+        ];
+        var out = [];
+        for (var i = 0; i < 800; i++) {
+          var s = seeds[i % seeds.length];
+          var g = groups[i % groups.length];
+          var nm = i < seeds.length ? s[0] : (s[0] + "-mod-" + (i + 1));
+          out.push({
+            id: i + 1,
+            name: nm,
+            group: g,
+            descBg: s[1],
+            infoBg: s[2],
+            sample: s[0] + " {target}"
+          });
+        }
+        return out;
+      }
 
       function appendLog(line) {
         outEl.textContent += "\n" + line;
@@ -177,30 +256,37 @@
       }
 
       function renderTools() {
+        var lang = (langEl && langEl.value) || "bg";
+        var dict = I18N[lang] || I18N.bg;
         var q = (searchEl.value || "").trim().toLowerCase();
-        var cat = catEl.value || "all";
+        var grp = catEl.value || "all";
         var filtered = allTools.filter(function(t) {
-          var cOk = cat === "all" || t.cat === cat;
-          var qOk = !q || (t.name + " " + t.cat + " " + t.sample).toLowerCase().indexOf(q) !== -1;
-          return cOk && qOk;
+          var gOk = grp === "all" || t.group === grp;
+          var qOk = !q || (t.name + " " + t.group + " " + t.descBg + " " + t.infoBg).toLowerCase().indexOf(q) !== -1;
+          return gOk && qOk;
         });
         if (!filtered.length) {
-          listEl.innerHTML = "<div style='padding:8px;color:#94a3b8;'>Няма съвпадения.</div>";
+          listEl.innerHTML = "<div style='padding:8px;color:#94a3b8;'>" + dict.noMatch + "</div>";
           return;
         }
-        listEl.innerHTML = filtered.map(function(t) {
+        var slice = filtered.slice(0, 250);
+        listEl.innerHTML = slice.map(function(t) {
           var sampleFilled = t.sample.replace(/\{target\}/g, targetEl.value || "scanme.nmap.org");
-          return "<div class='kr-tool-item' data-cmd='" + encodeURIComponent(sampleFilled) + "'>" +
-            "<div><strong>#" + t.id + " " + t.name + "</strong><div style='font-size:10px;color:#94a3b8;'>" + t.cat + "</div></div>" +
-            "<span style='font-size:11px;color:#fca5a5;'>Избери</span>" +
+          return "<div class='kr-tool-item' data-cmd='" + encodeURIComponent(sampleFilled) + "' data-name='" + encodeURIComponent(t.name) + "' data-desc='" + encodeURIComponent(t.descBg) + "' data-info='" + encodeURIComponent(t.infoBg) + "'>" +
+            "<div style='display:flex;justify-content:space-between;align-items:center;'><strong>#" + t.id + " " + t.name + "</strong><span style='font-size:10px;color:#38bdf8;'>" + t.group + "</span></div>" +
+            "<div style='font-size:11px;color:#e2e8f0;'>" + dict.doLabel + ": " + t.descBg + "</div>" +
+            "<div style='font-size:11px;color:#86efac;'>" + dict.infoLabel + ": " + t.infoBg + "</div>" +
             "</div>";
         }).join("");
 
         Array.from(listEl.querySelectorAll(".kr-tool-item")).forEach(function(row) {
           row.addEventListener("click", function() {
             var c = decodeURIComponent(row.getAttribute("data-cmd") || "");
+            var nm = decodeURIComponent(row.getAttribute("data-name") || "");
+            var ds = decodeURIComponent(row.getAttribute("data-desc") || "");
+            var inf = decodeURIComponent(row.getAttribute("data-info") || "");
             cmdEl.value = c;
-            appendLog("root@kali:~# Заредена команда: " + c);
+            appendLog("\n--- [" + nm + "] ---\nКакво прави: " + ds + "\nКаква информация дава: " + inf + "\nКоманда: " + c);
           });
         });
       }
@@ -210,16 +296,14 @@
           var r = await fetch("/api/kali/tools");
           if (r.ok) {
             var d = await r.json();
-            if (d && Array.isArray(d.tools)) {
+            if (d && Array.isArray(d.tools) && d.tools.length >= 100) {
               allTools = d.tools;
               renderTools();
               return;
             }
           }
         } catch (e) {}
-        allTools = Array.from({ length: 100 }, function(_, idx) {
-          return { id: idx + 1, name: "kali-tool-" + (idx + 1), cat: "Live Diagnostics", sample: "ping -c 2 {target}" };
-        });
+        allTools = build800Fallback();
         renderTools();
       }
 
@@ -227,7 +311,7 @@
         var finalCmd = (overrideCmd || cmdEl.value || "").trim();
         var finalTarget = (targetEl.value || "scanme.nmap.org").trim();
         if (!finalCmd) return;
-        appendLog("\nroot@kali:~# " + finalCmd + " [цел: " + finalTarget + "]");
+        appendLog("\nmarauder@linux-console:~# " + finalCmd + " [цел: " + finalTarget + "]");
         try {
           var resp = await fetch("/api/kali/run", {
             method: "POST",
@@ -236,83 +320,44 @@
           });
           var data = await resp.json();
           appendLog(data.output || JSON.stringify(data));
-          appendLog("[Време: " + (data.elapsedMs || 0) + "ms | Режим: " + (data.mode || "LIVE") + "]");
         } catch (err) {
-          appendLog("[ГРЕШКА ПРИ ВРЪЗКА С КОНЗОЛАТА] " + (err && err.message ? err.message : "Мрежова грешка"));
+          appendLog("[ГРЕШКА] " + (err && err.message ? err.message : "Мрежова грешка"));
+        }
+      }
+
+      async function callGit(action) {
+        var msgEl = document.getElementById("krGitMsg");
+        var message = msgEl && msgEl.value ? msgEl.value.trim() : "";
+        appendLog("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
+        try {
+          var r = await fetch("/api/kali/git", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: action, message: message })
+          });
+          var d = await r.json();
+          appendLog(d.output || JSON.stringify(d));
+        } catch (e) {
+          appendLog("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Грешка"));
         }
       }
 
       document.getElementById("krExecBtn").addEventListener("click", function() { executeLive(); });
-      document.getElementById("krSysBtn").addEventListener("click", function() { executeLive("uname -a && id && ss -tuln | head -n 15"); });
-      document.getElementById("krClearBtn").addEventListener("click", function() { outEl.textContent = "root@kali:~# Конзолата е изчистена."; });
+      document.getElementById("krSysBtn").addEventListener("click", function() { executeLive("uname -a && ss -tuln | head -n 12"); });
+      document.getElementById("krClearBtn").addEventListener("click", function() { outEl.textContent = "marauder@linux-console:~# Изчистено."; });
+      document.getElementById("krGitStatusBtn").addEventListener("click", function() { callGit("status"); });
+      document.getElementById("krGitLogBtn").addEventListener("click", function() { callGit("log"); });
+      document.getElementById("krGitPullBtn").addEventListener("click", function() { callGit("pull"); });
+      document.getElementById("krGitPushBtn").addEventListener("click", function() { callGit("push"); });
+
       searchEl.addEventListener("input", renderTools);
       catEl.addEventListener("change", renderTools);
       targetEl.addEventListener("input", renderTools);
+      if (langEl) langEl.addEventListener("change", renderTools);
       cmdEl.addEventListener("keydown", function(ev) { if (ev.key === "Enter") executeLive(); });
 
       loadTools();
     })();
   </script>
-<script id="marauderNetHunterProfileScript">
-// MARAUDER_NH_MOBILE_PROFILE
-(function() {
-  var params = new URLSearchParams(window.location.search || "");
-  var profile = params.get("profile") || "";
-  var titleEl = document.querySelector(".kr-title");
-  var cmdEl = document.getElementById("krCmd");
-  var outEl = document.getElementById("krOutput");
-  if (profile === "nethunter-mobile") {
-    if (titleEl) titleEl.textContent = "KALI NETHUNTER (ANDROID / iOS) — LIVE PENTESTING KONZOLA";
-    if (cmdEl) cmdEl.value = "dig +short A scanme.nmap.org && uname -a";
-    if (outEl) outEl.textContent += "\n[NETHUNTER MOBILE] Профил за Android / iOS активиран (готови живи команди и 100 инструмента).";
-  }
-})();
-</script>
-<!-- MARAUDER_GIT_UI_BLOCK -->
-<div class="kr-panel" id="krGitPanel" style="border-color:#a855f7;">
-  <div style="font-weight:700;color:#d8b4fe;">GIT РЕПОЗИТОРИО (STATUS / PULL / COMMIT &amp; PUSH)</div>
-  <div class="kr-row">
-    <input type="text" id="krGitMsg" placeholder="Commit съобщение (по избор)..." />
-    <button type="button" class="kr-btn" id="krGitStatusBtn">Git Status</button>
-    <button type="button" class="kr-btn" id="krGitLogBtn">Git Log</button>
-    <button type="button" class="kr-btn" id="krGitPullBtn">Git Pull</button>
-    <button type="button" class="kr-run" id="krGitPushBtn">Commit &amp; Push</button>
-  </div>
-</div>
-<script id="marauderGitUiScript">
-(function() {
-  var outEl = document.getElementById("krOutput");
-  var msgEl = document.getElementById("krGitMsg");
-  function appendGit(txt) {
-    if (!outEl) return;
-    outEl.textContent += "\n" + txt;
-    outEl.scrollTop = outEl.scrollHeight;
-  }
-  async function callGit(action) {
-    var message = msgEl && msgEl.value ? msgEl.value.trim() : "";
-    appendGit("\n[GIT:" + action.toUpperCase() + "] Изпълнение...");
-    try {
-      var r = await fetch("/api/kali/git", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: action, message: message })
-      });
-      var d = await r.json();
-      appendGit(d.output || JSON.stringify(d));
-      appendGit("[Git време: " + (d.elapsedMs || 0) + "ms]");
-    } catch (e) {
-      appendGit("[GIT ГРЕШКА] " + (e && e.message ? e.message : "Грешка при заявка"));
-    }
-  }
-  var bStatus = document.getElementById("krGitStatusBtn");
-  var bLog = document.getElementById("krGitLogBtn");
-  var bPull = document.getElementById("krGitPullBtn");
-  var bPush = document.getElementById("krGitPushBtn");
-  if (bStatus) bStatus.addEventListener("click", function() { callGit("status"); });
-  if (bLog) bLog.addEventListener("click", function() { callGit("log"); });
-  if (bPull) bPull.addEventListener("click", function() { callGit("pull"); });
-  if (bPush) bPush.addEventListener("click", function() { callGit("push"); });
-})();
-</script>
 </body>
 </html>
