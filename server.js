@@ -324,6 +324,127 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+
+app.post('/api/generate-software', async (req, res) => {
+    try {
+        const { description, type } = req.body || {};
+
+        const apiKey = process.env.GEMINI_API_KEY;
+        const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+
+        if (!apiKey) {
+            return res.status(500).json({
+                error: 'Липсва GEMINI_API_KEY.'
+            });
+        }
+
+        if (!description || String(description).length > 5000) {
+            return res.status(400).json({
+                error: 'Описание е празно или прекалено дълго.'
+            });
+        }
+
+        const typeNames = {
+            auto: 'Избери най-подходящия език и технология.',
+            html: 'Създай уеб приложение с HTML, CSS и JavaScript.',
+            python: 'Създай програма на Python.',
+            node: 'Създай приложение с Node.js.'
+        };
+
+        const instruction = `
+Ти си RED SOFTWARE TEAM AI SOFTWARE BUILDER.
+
+Твоята задача е да превръщаш обикновени описания
+на хора в готов софтуер.
+
+Потребителят не е програмист.
+Обяснявай кратко и разбираемо на български.
+
+Изисквания:
+- Направи програмата възможно най-функционална.
+- Използвай красив и модерен интерфейс, когато е приложимо.
+- Добави работещи бутони.
+- Добави търсене, когато е необходимо.
+- Добави запис на данните, когато е подходящо.
+- Направи програмата лесна за използване.
+- Избягвай сложни инсталации.
+- За малки уеб приложения предпочитай един HTML файл.
+- Не твърди, че функции работят, ако не са реализирани.
+- Не генерирай зловреден софтуер, кражба на данни
+  или неразрешен достъп до устройства и системи.
+
+Вид софтуер:
+${typeNames[type] || typeNames.auto}
+
+Описание от потребителя:
+${description}
+
+Върни САМО валиден JSON в следния формат:
+
+{
+  "summary": "Кратко описание на създадената програма на български",
+  "filename": "името-на-файла.html",
+  "code": "пълният код на програмата"
+}
+
+Полето code трябва да съдържа пълен код,
+който може да бъде запазен като файл.
+`;
+
+        const apiResponse = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-goog-api-key': apiKey
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        role: 'user',
+                        parts: [{ text: instruction }]
+                    }],
+                    generationConfig: {
+                        responseMimeType: 'application/json',
+                        temperature: 0.3,
+                        maxOutputTokens: 8192
+                    }
+                })
+            }
+        );
+
+        const data = await apiResponse.json();
+
+        if (!apiResponse.ok) {
+            return res.status(apiResponse.status).json({
+                error: data.error?.message || 'Gemini API грешка.'
+            });
+        }
+
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!text) {
+            return res.status(500).json({
+                error: 'AI не върна код.'
+            });
+        }
+
+        const result = JSON.parse(text);
+
+        res.json({
+            summary: result.summary || '',
+            filename: result.filename || 'software.txt',
+            code: result.code || ''
+        });
+
+    } catch (error) {
+        console.error('Software generator error:', error);
+        res.status(500).json({
+            error: 'Грешка при генерирането: ' + error.message
+        });
+    }
+});
+
 app.listen(PORT, () => {
   console.log(`MARAUDER-AI server running on port ${PORT}`);
 const KEEP_ALIVE_INTERVAL_MS = Number(process.env.KEEP_ALIVE_INTERVAL_MS) || 10 * 60 * 1000;

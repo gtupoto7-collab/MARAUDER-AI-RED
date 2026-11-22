@@ -1846,5 +1846,21 @@ run_${safeIdent(nameRaw)}();
 })();
 </script>
 <!-- END MARAUDER PLATFORM DOWNLOAD SELECTOR -->
+<script>
+window.addEventListener("DOMContentLoaded", function() {
+  const btns = Array.from(document.querySelectorAll("button, a"));
+  const devBtn = btns.find(el => {
+    const t = (el.textContent || "").trim().toUpperCase();
+    return t === "DEV" || t.includes("DEVANPORT-AI");
+  });
+  if (devBtn && !devBtn.dataset.swBuilderBound) {
+    devBtn.dataset.swBuilderBound = "1";
+    devBtn.addEventListener("click", function(e) {
+      if (this.tagName === "A") e.preventDefault();
+      window.location.href = "/software-builder.html";
+    }, true);
+  }
+});
+</script>
 </body>
 </html>

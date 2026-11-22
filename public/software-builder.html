@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RED SOFTWARE TEAM — AI SOFTWARE BUILDER (DEV)</title>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #080808;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    padding: 18px 20px;
+    text-align: center;
+    border-bottom: 1px solid #ff2222;
+    background: #111;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto 10px;
+}
+
+.back-btn {
+    background: #1a1a1a;
+    color: #00f5d4;
+    border: 1px solid #00f5d4;
+    border-radius: 8px;
+    padding: 8px 14px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background: #242424;
+}
+
+header h1 {
+    color: #ff3333;
+    font-size: 26px;
+    margin: 6px 0;
+}
+
+header p {
+    color: #aaa;
+    margin: 4px 0;
+}
+
+.container {
+    width: 95%;
+    max-width: 900px;
+    margin: 26px auto;
+}
+
+.card {
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 15px;
+    padding: 22px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.12);
+}
+
+h2 {
+    color: #ff3333;
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin: 15px 0 8px;
+    color: #ddd;
+}
+
+select, textarea {
+    width: 100%;
+    background: #050505;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 14px;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+textarea {
+    min-height: 160px;
+    resize: vertical;
+}
+
+select:focus, textarea:focus {
+    outline: none;
+    border-color: #ff3333;
+}
+
+.examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.example {
+    background: #1b1b1b;
+    color: #ddd;
+    border: 1px solid #444;
+    padding: 9px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.example:hover {
+    border-color: #ff3333;
+    color: #fff;
+}
+
+.generate {
+    width: 100%;
+    margin-top: 18px;
+    padding: 16px;
+    background: #e11;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.generate:hover {
+    background: #ff3333;
+}
+
+.generate:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+.status {
+    margin-top: 15px;
+    color: #ffcc55;
+    text-align: center;
+    min-height: 22px;
+}
+
+.result {
+    margin-top: 25px;
+    display: none;
+}
+
+.result-box {
+    background: #050505;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 12px;
+}
+
+.result-box h3 {
+    margin-top: 0;
+    color: #00f5d4;
+    font-size: 15px;
+}
+
+#summary {
+    color: #ddd;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+#code {
+    white-space: pre;
+    overflow-x: auto;
+    display: block;
+    color: #00ff9c;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.buttons button {
+    padding: 12px 16px;
+    background: #191919;
+    color: #fff;
+    border: 1px solid #ff3333;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.buttons button:hover {
+    background: #292929;
+}
+
+.footer {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+    font-size: 13px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="top-nav">
+        <a class="back-btn" href="/">⬅ Обратно към MARAUDER-AI</a>
+        <span style="color:#ffbe0b;font-size:12px;font-weight:bold;">DEV SOFTWARE GENERATOR</span>
+    </div>
+    <h1>🔴 RED SOFTWARE TEAM</h1>
+    <p>AI SOFTWARE BUILDER</p>
+    <p>Опиши идеята си. AI ще създаде програмата.</p>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h2>🤖 Какъв софтуер искаш?</h2>
+
+        <label for="softwareType">Избери тип на програмата:</label>
+        <select id="softwareType">
+            <option value="auto">🤖 AI да избере най-подходящото</option>
+            <option value="html">🌐 Уебсайт / Уеб приложение</option>
+            <option value="python">🐍 Python програма</option>
+            <option value="node">🟢 Node.js софтуер</option>
+        </select>
+
+        <label for="description">Напиши какво трябва да прави програмата:</label>
+        <textarea id="description" placeholder="Например:
+
+Искам програма за автосервиз.
+Да записва клиентите, автомобилите, ремонтите,
+цените и датите за следващ ремонт.
+
+Искам да има красив дизайн, бутони,
+търсене и лесно управление."></textarea>
+
+        <label>💡 Или използвай готова идея:</label>
+        <div class="examples">
+            <button type="button" class="example" onclick="setExample('Искам система за фризьорски салон с клиенти, записване на часове, услуги, цени и календар.')">💇 Салон</button>
+            <button type="button" class="example" onclick="setExample('Искам онлайн магазин със снимки на продуктите, цени, количка и поръчки.')">🛒 Онлайн магазин</button>
+            <button type="button" class="example" onclick="setExample('Искам приложение за управление на личните ми финанси. Да записва приходи, разходи, сметки и да показва статистики.')">💰 Финанси</button>
+            <button type="button" class="example" onclick="setExample('Искам система за управление на ресторант с меню, поръчки, маси и сметки.')">🍕 Ресторант</button>
+            <button type="button" class="example" onclick="setExample('Искам приложение за фитнес с упражнения, тренировъчен план, прогрес и календар.')">🏋️ Фитнес</button>
+            <button type="button" class="example" onclick="setExample('Искам система за управление на бизнес, клиенти, задачи, служители и приходи.')">🏢 Бизнес</button>
+        </div>
+
+        <button type="button" class="generate" id="generateBtn" onclick="generateSoftware()">
+            🚀 СЪЗДАЙ МОЯ СОФТУЕР
+        </button>
+
+        <div class="status" id="status"></div>
+
+        <div class="result" id="result">
+            <h2>✅ ТВОЯТ СОФТУЕР Е ГОТОВ</h2>
+
+            <div class="result-box">
+                <h3>📋 Какво създадохме?</h3>
+                <div id="summary"></div>
+            </div>
+
+            <div class="result-box">
+                <h3>💻 Генериран код</h3>
+                <pre><code id="code"></code></pre>
+            </div>
+
+            <div class="buttons">
+                <button type="button" onclick="copyCode()">📋 КОПИРАЙ КОДА</button>
+                <button type="button" onclick="downloadCode()">⬇️ ЗАПАЗИ ПРОГРАМАТА</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    RED SOFTWARE TEAM · AI SOFTWARE GENERATOR
+</div>
+
+<script>
+let generatedCode = "";
+let generatedFilename = "my-software.html";
+
+function setExample(text) {
+    document.getElementById("description").value = text;
+}
+
+async function generateSoftware() {
+    const description = document.getElementById("description").value.trim();
+    const type = document.getElementById("softwareType").value;
+    const btn = document.getElementById("generateBtn");
+    const status = document.getElementById("status");
+
+    if (!description) {
+        alert("Напиши какво искаш да създадеш!");
+        return;
+    }
+
+    btn.disabled = true;
+    status.innerText = "🤖 AI анализира идеята и създава софтуера...";
+    document.getElementById("result").style.display = "none";
+
+    try {
+        const response = await fetch("/api/generate-software", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                description: description,
+                type: type
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Грешка при генерирането.");
+        }
+
+        generatedCode = data.code || "";
+        generatedFilename = data.filename || "my-software.html";
+
+        document.getElementById("summary").textContent =
+            data.summary || "Софтуерът е генериран.";
+        document.getElementById("code").textContent =
+            generatedCode;
+        document.getElementById("result").style.display = "block";
+        status.innerText = "✅ Генерирането приключи успешно!";
+    } catch (error) {
+        status.innerText = "❌ " + error.message;
+    }
+
+    btn.disabled = false;
+}
+
+async function copyCode() {
+    if (!generatedCode) return;
+    await navigator.clipboard.writeText(generatedCode);
+    alert("Кодът е копиран успешно!");
+}
+
+function downloadCode() {
+    if (!generatedCode) return;
+    const blob = new Blob([generatedCode], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = generatedFilename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+</script>
+</body>
+</html>
