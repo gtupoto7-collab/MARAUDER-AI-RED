@@ -155,18 +155,54 @@ function syncToSdAdditions() {
   return { synced: true, sdRoot: SD_ROOT, count: targets.length, files: targets };
 }
 
+
+function syncGitStatusAndOptionalCommit() {
+  try {
+    execFileSync("git", ["rev-parse", "--is-inside-work-tree"], { cwd: ROOT, stdio: "pipe" });
+  } catch (_) {
+    return { initialized: false, reason: "NOT_A_GIT_REPO" };
+  }
+
+  let dirtyBefore = "";
+  try {
+    dirtyBefore = execFileSync("git", ["status", "--porcelain"], { cwd: ROOT, stdio: "pipe" }).toString("utf8").trim();
+  } catch (err) {
+    return { initialized: true, error: err.message };
+  }
+
+  if (process.env.GIT_AUTO_COMMIT === "1" && dirtyBefore) {
+    execFileSync("git", ["add", ".gitignore", "modules/", "routes/", "scripts/"], { cwd: ROOT, stdio: "pipe" });
+    const staged = execFileSync("git", ["diff", "--cached", "--name-only"], { cwd: ROOT, stdio: "pipe" }).toString("utf8").trim();
+    if (staged) {
+      const msg = process.env.GIT_COMMIT_MSG || `chore(marauder): auto-snapshot ${new Date().toISOString().slice(0, 19)}`;
+      execFileSync("git", ["commit", "-m", msg], { cwd: ROOT, stdio: "pipe" });
+    }
+  }
+
+  const head = execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: ROOT, stdio: "pipe" }).toString("utf8").trim();
+  const dirtyAfter = execFileSync("git", ["status", "--porcelain"], { cwd: ROOT, stdio: "pipe" }).toString("utf8").trim();
+  return {
+    initialized: true,
+    head,
+    clean: dirtyAfter.length === 0,
+    changedCount: dirtyAfter ? dirtyAfter.split("\n").length : 0
+  };
+}
+
 (async () => {
   const syntax = checkAllSyntax();
   const port9050 = await checkPort9050();
   const shieldApi = await checkShieldApi();
   const e2eeSmoke = await runSecretChatE2eeSmokeTest();
   const sdSync = syncToSdAdditions();
+  const git = syncGitStatusAndOptionalCommit();
 
   console.log(JSON.stringify({
     ok: syntax.ok && e2eeSmoke.ok,
     syntax,
     networkCheck: { port_127_0_0_1_9050: port9050, shieldEndpoint: shieldApi },
     secretChatE2eeSmoke: e2eeSmoke,
-    sdSync
+    sdSync,
+    git
   }, null, 2));
 })();
