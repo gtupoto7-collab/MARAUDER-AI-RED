@@ -1556,6 +1556,14 @@
   saveBtn.parentElement.appendChild(vpnSel);
   saveBtn.parentElement.appendChild(vpnApply);
   saveBtn.parentElement.appendChild(bVpn);
+
+  const bMine = document.createElement("button");
+  bMine.type = "button";
+  bMine.id = "btnMiningOptInPage";
+  bMine.textContent = "Opt-In Compute";
+  bMine.style.cssText = "padding:7px 11px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;cursor:pointer;font-size:12px;";
+  bMine.addEventListener("click", () => { window.location.href = "/mining-optin.html"; });
+  saveBtn.parentElement.appendChild(bMine);
   }
 })();
 </script>

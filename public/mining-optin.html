@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MARAUDER — Opt-In Compute & Pool Status</title>
+  <style>
+    body { font-family: monospace; background: #09090b; color: #f4f4f5; padding: 20px; line-height: 1.5; }
+    .box { max-width: 780px; margin: 0 auto; border: 1px solid #3f3f46; border-radius: 8px; padding: 16px; background: #111115; }
+    .warn { border: 1px solid #f59e0b; background: #291d06; color: #fde68a; padding: 12px; border-radius: 6px; margin-bottom: 14px; }
+    button { padding: 8px 14px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; cursor: pointer; font-weight: bold; margin-right: 8px; }
+    button.start { border-color: #22c55e; background: #14532d; }
+    button.stop { border-color: #ef4444; background: #7f1d1d; }
+    input { width: 100%; max-width: 440px; padding: 8px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; margin: 6px 0 12px; display: block; }
+    pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 6px; min-height: 120px; white-space: pre-wrap; }
+    a { color: #38bdf8; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>MARAUDER — Доброволен Compute & Worker Статус</h2>
+    <div class="warn">
+      Внимание: Постоянното натоварване на телефон/браузър изразходва батерия, повишава температурата и има ниска ефективност. Стартирането става само доброволно и може да бъде спряно по всяко време. Копаенето не се изпълнява върху сървъри на Render.
+    </div>
+    <label for="walletInp">Публичен Wallet / Worker идентификатор (без private key):</label>
+    <input id="walletInp" type="text" placeholder="Публичен адрес или worker име" />
+    <div>
+      <button id="btnStartOptIn" class="start" type="button">Start (Доброволно)</button>
+      <button id="btnStopOptIn" class="stop" type="button">Stop</button>
+      <a href="/kali-root.html">Обратно към конзолата</a>
+    </div>
+    <pre id="optLog">Статус: СПРЯНО (изчаква изрично действие на потребителя).</pre>
+  </div>
+  <script>
+    (function(){
+      var running = false;
+      var timer = null;
+      var ticks = 0;
+      var logEl = document.getElementById("optLog");
+      var wEl = document.getElementById("walletInp");
+      function writeStatus(msg) {
+        logEl.textContent = msg;
+      }
+      document.getElementById("btnStartOptIn").addEventListener("click", function(){
+        if (running) return;
+        running = true;
+        ticks = 0;
+        var w = (wEl.value || "").trim() || "непосочен-worker";
+        writeStatus("Статус: АКТИВНО (доброволно стартирано)\nWorker/Wallet: " + w + "\nЦикли на проверка: 0");
+        timer = setInterval(function(){
+          ticks += 1;
+          writeStatus("Статус: АКТИВНО (доброволно стартирано)\nWorker/Wallet: " + w + "\nАктивни цикли: " + ticks + "\nНатисни Stop за спиране.");
+        }, 2000);
+      });
+      document.getElementById("btnStopOptIn").addEventListener("click", function(){
+        running = false;
+        if (timer) { clearInterval(timer); timer = null; }
+        var w = (wEl.value || "").trim() || "непосочен-worker";
+        writeStatus("Статус: СПРЯНО\nWorker/Wallet: " + w + "\nИзпълнени цикли: " + ticks);
+      });
+    })();
+  </script>
+</body>
+</html>
