@@ -4708,5 +4708,159 @@ window.addEventListener("DOMContentLoaded", function() {
   setTimeout(mountPravenIntelekt, 500);
 })();
 </script>
+<script id="marauderLawVerifyScript">
+(function() {
+  var LAW_AND_CRIME_DB = [
+    {
+      keys: ["престъпление", "наказателен", "нк", "кражба", "обсебване", "измама"],
+      title: "Наказателен кодекс (НК) — Престъпления против собствеността (кражба, обсебване, измама)",
+      dvRef: "ДВ, бр. 26/1968 г. (с последващи изм. и доп. в ДВ)",
+      category: "Наказателно право и престъпления",
+      summary: "Престъпление по смисъла на НК е общественоопасно деяние (действие или бездействие), което е виновно извършено и е обявено от закона за наказуемо. При кражба се отнема чужда движима вещ без съгласието на владелеца с намерение за противозаконно присвояване; при измама се въвежда или поддържа заблуждение за набавяне на имотна облага.",
+      practiceNote: "Сверяване: проверяват се конкретните текстове на НК в актуалния брой на ДВ, квалифициращите признаци, стойността и съдебната практика."
+    },
+    {
+      keys: ["телесна повреда", "живот", "здраве", "заплаха", "принуда", "престъпление против личността"],
+      title: "Наказателен кодекс (НК) — Престъпления против личността (телесни повреди, принуда, заплаха)",
+      dvRef: "ДВ, бр. 26/1968 г. (с последващи изм. и доп. в ДВ)",
+      category: "Наказателно право и престъпления",
+      summary: "Урежда отговорността за посегателства върху здравето, телесната неприкосновеност, свободата и достойнството на гражданите в Република България.",
+      practiceNote: "Сверяване: при сверка се гледат видът на телесната повреда (лека, средна, тежка), умисълът и актуалните изменения в ДВ."
+    },
+    {
+      keys: ["компютърно", "кибер", "данни", "хак", "мрежа", "ззлд", "gdpr"],
+      title: "НК (компютърни престъпления) и ЗЗЛД / Регламент (ЕС) 2016/679 (GDPR)",
+      dvRef: "ДВ, бр. 26/1968 г. / ДВ, бр. 17/2019 г. (актуални изм. ДВ)",
+      category: "Киберправо и лични данни",
+      summary: "Обхваща неправомерния достъп до компютърни системи/данни, повреждането на информация и задълженията за законосъобразно обработване и защита на личните данни.",
+      practiceNote: "Сверяване: разграничават се наказателните състави по НК от административните правила и отговорността по ЗЗЛД и GDPR."
+    },
+    {
+      keys: ["договор", "неустойка", "обезщетение", "зд", "ззд", "давност"],
+      title: "Закон за задълженията и договорите (ЗЗД) — Договори и гражданска отговорност",
+      dvRef: "ДВ, бр. 275/1950 г. (актуални изм. ДВ)",
+      category: "Гражданско право",
+      summary: "Регулира сключването и изпълнението на договори, отговорността при неизпълнение, неустойките и давностните срокове.",
+      practiceNote: "Сверяване: сверяват се приложимите разпоредби на ЗЗД и последните промени, обнародвани в Държавен вестник."
+    },
+    {
+      keys: ["потребител", "онлайн", "рекламация", "отказ", "ззп"],
+      title: "Закон за защита на потребителите (ЗЗП) — Потребителски права и онлайн сделки",
+      dvRef: "ДВ, бр. 99/2005 г. (актуални изм. ДВ)",
+      category: "Потребителско право",
+      summary: "Урежда информацията към потребителите, правото на отказ от договор от разстояние и гаранционните претенции.",
+      practiceNote: "Сверяване: проверява се актуалният текст на ЗЗП в ДВ при онлайн продажби и дигитални услуги."
+    },
+    {
+      keys: ["авторско", "софтуер", "код", "лиценз", "запсп"],
+      title: "Закон за авторското право и сродните му права (ЗАПСП)",
+      dvRef: "ДВ, бр. 56/1993 г. (актуални изм. ДВ)",
+      category: "Интелектуална собственост",
+      summary: "Защитава авторските права върху софтуерни програми, текстове, дизайни и бази данни в Република България.",
+      practiceNote: "Сверяване: сверяват се авторските и имуществените права, лицензионните условия и измененията в ДВ."
+    }
+  ];
+  function verifyLawOrCrime(queryText) {
+    var q = (queryText || "").trim().toLowerCase();
+    if (!q) return LAW_AND_CRIME_DB;
+    var scored = [];
+    for (var i = 0; i < LAW_AND_CRIME_DB.length; i++) {
+      var item = LAW_AND_CRIME_DB[i];
+      var hay = (item.title + " " + item.dvRef + " " + item.category + " " + item.summary + " " + item.practiceNote + " " + item.keys.join(" ")).toLowerCase();
+      var score = 0;
+      for (var k = 0; k < item.keys.length; k++) {
+        if (q.indexOf(item.keys[k]) !== -1 || item.keys[k].indexOf(q) !== -1) score += 2;
+      }
+      if (hay.indexOf(q) !== -1) score += 3;
+      var words = q.split(/\s+/);
+      for (var w = 0; w < words.length; w++) {
+        if (words[w].length >= 2 && hay.indexOf(words[w]) !== -1) score += 1;
+      }
+      if (score > 0) scored.push({ score: score, item: item });
+    }
+    scored.sort(function(a, b) { return b.score - a.score; });
+    if (scored.length) return scored.map(function(x) { return x.item; });
+    return [{
+      title: "Справка за заявка: " + queryText,
+      dvRef: "Държавен вестник на Република България (dv.parliament.bg)",
+      category: "Проверка на закон / престъпление",
+      summary: "Няма точно съвпадение в краткия локален списък за \"" + queryText + "\". Използвай бутона \"Най-нови закони (ДВ)\" или търси по ключови думи като: престъпление, кражба, измама, компютърно, договор, потребител, авторско.",
+      practiceNote: "Сверяване: пълният текст на действащите закони и промените им се сверява в Държавен вестник и официалните нормативни регистри."
+      _unmatched: true
+    }];
+  }
+  function attachLawVerifierUi() {
+    var box = document.getElementById("marauderPravenIntelektBox");
+    var inputEl = document.getElementById("piSearchInput");
+    var listEl = document.getElementById("piResultsList");
+    var reportEl = document.getElementById("piReportBox");
+    if (!box || !inputEl || !listEl) return;
+    inputEl.placeholder = "Свери закон, член или престъпление (напр. престъпление, кражба, измама, ЗЗД, ЗЗЛД)...";
+    if (!document.getElementById("piQuickVerifyBar")) {
+      var bar = document.createElement("div");
+      bar.id = "piQuickVerifyBar";
+      bar.style.cssText = "display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;";
+      var presets = [
+        { label: "Свери: Престъпление (НК)", q: "престъпление" },
+        { label: "Кражба / Измама", q: "кражба" },
+        { label: "Кибер / ЗЗЛД", q: "компютърно" },
+        { label: "Договори (ЗЗД)", q: "договор" },
+        { label: "Потребители (ЗЗП)", q: "потребител" }
+      ];
+      for (var i = 0; i < presets.length; i++) {
+        (function(p) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "m-pi-btn";
+          b.textContent = p.label;
+          b.addEventListener("click", function() {
+            inputEl.value = p.q;
+            runVerification(p.q);
+          });
+          bar.appendChild(b);
+        })(presets[i]);
+      }
+      var controls = box.querySelector(".m-pi-controls");
+      if (controls && controls.nextSibling) {
+        box.insertBefore(bar, controls.nextSibling);
+      } else {
+        box.appendChild(bar);
+      }
+    }
+    function runVerification(customQuery) {
+      var q = typeof customQuery === "string" ? customQuery : (inputEl.value || "");
+      var results = verifyLawOrCrime(q);
+      if (reportEl) {
+        reportEl.innerHTML = "<strong>Сверяване и отчитане (ДВ РБ):</strong> Заявка \"" + (q || "всички актове") + "\" • Намерени справки: <strong>" + results.length + "</strong> • Проверка: " + new Date().toISOString();
+      }
+      listEl.innerHTML = results.map(function(it) {
+        return "<div class=\"m-pi-item\">" +
+          "<div class=\"m-pi-title\">" + it.title + "</div>" +
+          "<div class=\"m-pi-meta\">" + it.dvRef + " • " + it.category + "</div>" +
+          "<div>" + it.summary + "</div>" +
+          "<div style=\"margin-top:4px;color:#86efac;\">" + it.practiceNote + "</div>" +
+          "</div>";
+      }).join("");
+    }
+    var searchBtn = document.getElementById("piSearchBtn");
+    if (searchBtn && !searchBtn.dataset.verifyBound) {
+      searchBtn.dataset.verifyBound = "1";
+      searchBtn.addEventListener("click", function() { runVerification(); });
+    }
+    if (!inputEl.dataset.verifyKeyBound) {
+      inputEl.dataset.verifyKeyBound = "1";
+      inputEl.addEventListener("input", function() { runVerification(); });
+      inputEl.addEventListener("keydown", function(ev) { if (ev.key === "Enter") runVerification(); });
+    }
+    runVerification("");
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() { setTimeout(attachLawVerifierUi, 350); });
+  } else {
+    setTimeout(attachLawVerifierUi, 350);
+  }
+  setTimeout(attachLawVerifierUi, 800);
+})();
+</script>
 </body>
 </html>
