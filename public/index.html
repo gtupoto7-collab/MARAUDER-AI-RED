@@ -2577,5 +2577,86 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 })();
 </script>
+
+<style id="marauderMobileCompactStyle">
+  @media (max-width: 768px), (pointer: coarse) {
+    #marauderCompactToolbar {
+      display: flex !important;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 6px 0 !important;
+      padding: 6px 8px !important;
+      background: #0c111b !important;
+      border: 1px solid #263349 !important;
+      border-radius: 8px !important;
+    }
+    #marauderCompactToolbar button,
+    #marauderCompactToolbar a {
+      padding: 5px 8px !important;
+      font-size: 11px !important;
+      line-height: 1.2 !important;
+      border-radius: 6px !important;
+      white-space: nowrap;
+    }
+    body.marauder-options-collapsed [data-mobile-collapsible="1"],
+    body.marauder-options-collapsed #marauderTierBox,
+    body.marauder-options-collapsed #marauderLiveRoomPanel {
+      display: none !important;
+    }
+    body.marauder-options-collapsed #liveRoomMessagesBox,
+    body.marauder-options-collapsed textarea,
+    body.marauder-options-collapsed [class*="chat-messages"],
+    body.marauder-options-collapsed [class*="messages"],
+    body.marauder-options-collapsed [id*="messages"] {
+      min-height: 240px !important;
+      max-height: 55vh !important;
+    }
+    [class*="attach"], [class*="upload"], [class*="toolbar"] {
+      gap: 6px !important;
+    }
+  }
+</style>
+<div id="marauderCompactToolbar" style="display:none;">
+  <button type="button" onclick="window.toggleMarauderCompactOptions()" style="background:#14231c;color:#19f58b;border:1px solid #19f58b;font-weight:700;cursor:pointer;">☰ Опции (Android/iOS)</button>
+  <button type="button" onclick="window.openMarauderAppInstallGuide()" style="background:#171f2e;color:#ffc439;border:1px solid #ffc439;font-weight:700;cursor:pointer;">App / PWA</button>
+  <a href="./secret-chat.html" style="background:#181326;color:#d6b4ff;border:1px solid #7e57c2;text-decoration:none;font-weight:700;">Чат стая</a>
+</div>
+<div id="marauderMobileGuideModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:99999;padding:16px;align-items:center;justify-content:center;">
+  <div style="background:#0f1522;border:1px solid #2e3d57;border-radius:12px;padding:14px;max-width:420px;width:100%;color:#eef3f7;font-size:12px;line-height:1.45;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <strong style="color:#19f58b;font-size:13px;">Инсталация на Android и iOS (без невалидни пакети)</strong>
+      <button type="button" onclick="document.getElementById('marauderMobileGuideModal').style.display='none'" style="background:#261418;color:#ff8f8f;border:1px solid #632b34;border-radius:6px;padding:3px 8px;cursor:pointer;">✕</button>
+    </div>
+    <p style="margin:0 0 8px 0;"><strong>Android (Chrome):</strong> Отвори линка към сървъра/Render и избери менюто ⋮ → <em>Добавяне към началния екран</em> или <em>Инсталиране на приложението</em>. Така се добавя икона без грешка за невалиден пакет.</p>
+    <p style="margin:0;"><strong>iOS (Safari):</strong> Натисни бутона за споделяне (квадрат със стрелка нагоре) → <em>Добави към начален екран</em> (Add to Home Screen).</p>
+  </div>
+</div>
+<script>
+(function() {
+  const COMPACT_KEY = "marauder_mobile_compact_v1";
+  function applySavedCompact() {
+    const saved = localStorage.getItem(COMPACT_KEY);
+    const shouldCollapse = saved === null ? true : saved === "1";
+    document.body.classList.toggle("marauder-options-collapsed", shouldCollapse);
+  }
+  window.toggleMarauderCompactOptions = function() {
+    const next = !document.body.classList.contains("marauder-options-collapsed");
+    document.body.classList.toggle("marauder-options-collapsed", next);
+    localStorage.setItem(COMPACT_KEY, next ? "1" : "0");
+  };
+  window.openMarauderAppInstallGuide = function() {
+    const m = document.getElementById("marauderMobileGuideModal");
+    if (m) m.style.display = "flex";
+  };
+  document.addEventListener("DOMContentLoaded", function() {
+    const bar = document.getElementById("marauderCompactToolbar");
+    if (bar && bar.parentElement !== document.body) {
+      document.body.insertBefore(bar, document.body.firstChild);
+    }
+    applySavedCompact();
+  });
+})();
+</script>
 </body>
 </html>
