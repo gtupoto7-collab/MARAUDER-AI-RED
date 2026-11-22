@@ -842,5 +842,81 @@
   setTimeout(initAiChatClean, 250);
 })();
 </script>
+<style id="marauderSeparateMenusStyle">
+  [data-marauder-duplicate-dots="1"] { display: none !important; }
+  #marauderNewAlMenuBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid #38bdf8;
+    background: #08192c;
+    color: #7dd3fc;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  #marauderAlOptionsDrawer { display: none !important; }
+  #marauderAlOptionsDrawer.open {
+    display: block !important;
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #38bdf8;
+    border-radius: 10px;
+    background: #071322;
+    color: #e6f1ff;
+  }
+  @media (min-width: 769px) {
+    #marauderAlOptionsDrawer.open {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+    #marauderAlOptionsDrawer.open > :first-child,
+    #marauderAlOptionsDrawer.open > #marauderPravenIntelektBox {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
+<script id="marauderSeparateMenusScript">
+(function() {
+  function separateThreeDotAndNewMenu() {
+    var allBtns = Array.from(document.querySelectorAll("button, [role=button]"));
+    var dotBtns = allBtns.filter(function(b) {
+      var t = (b.textContent || "").trim();
+      return t === "⋮" || t === "..." || t === "•••";
+    });
+    var primaryDot = dotBtns[0] || null;
+    if (primaryDot) {
+      primaryDot.setAttribute("data-marauder-menu", "classic-three-dots");
+      primaryDot.title = "Класическо меню (⋮)";
+    }
+    for (var i = 1; i < dotBtns.length; i++) {
+      dotBtns[i].setAttribute("data-marauder-duplicate-dots", "1");
+    }
+    var drawer = document.getElementById("marauderAlOptionsDrawer");
+    if (primaryDot && drawer && !document.getElementById("marauderNewAlMenuBtn")) {
+      var newBtn = document.createElement("button");
+      newBtn.type = "button";
+      newBtn.id = "marauderNewAlMenuBtn";
+      newBtn.textContent = "MARAUDER-AL Опции";
+      newBtn.addEventListener("click", function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        drawer.classList.toggle("open");
+      });
+      primaryDot.parentNode.insertBefore(newBtn, primaryDot.nextSibling);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() { setTimeout(separateThreeDotAndNewMenu, 200); });
+  } else {
+    setTimeout(separateThreeDotAndNewMenu, 200);
+  }
+  setTimeout(separateThreeDotAndNewMenu, 600);
+})();
+</script>
 </body>
 </html>
