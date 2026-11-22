@@ -2482,5 +2482,117 @@
   </script>
 </section>
 <!-- =============== END RED-BANK SUITE =============== -->
+<!-- =============== UNIVERSAL BUTTON WIRING =============== -->
+<script id="MARAUDER_UNIVERSAL_WIRING_JS">
+(function(){
+  "use strict";
+
+  function byId(id) { return document.getElementById(id); }
+
+  function note(msg) {
+    if (typeof window.appendSystemNote === "function") {
+      window.appendSystemNote(msg);
+    }
+  }
+
+  function openPage(url) {
+    try {
+      const w = window.open(url, "_blank", "noopener,noreferrer,width=1020,height=760");
+      if (!w) window.location.href = url;
+    } catch (_) {
+      window.location.href = url;
+    }
+  }
+
+  function jumpTo(id, statusText) {
+    const el = byId(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (statusText) note(statusText);
+  }
+
+  // Top bar buttons
+  const botBtn = byId("botBtn");
+  if (botBtn) {
+    botBtn.onclick = () => {
+      const sec = byId("m14-bot-section");
+      if (sec) {
+        sec.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        const inp = byId("m14-bot-name");
+        if (inp) inp.focus();
+      } else {
+        openPage("/bot-studio.html");
+      }
+    };
+  }
+
+  const devanBtn = byId("devanBtn");
+  if (devanBtn) {
+    devanBtn.onclick = () => jumpTo("m56-f5-box", "Отворен модул DEVANPORT-AI / Конзола за софтуер.");
+  }
+
+  const vpnBtn = byId("vpnBtn");
+  if (vpnBtn) {
+    vpnBtn.onclick = () => jumpTo("m56-f6-box", "Отворен VPN / Orbot / Proton / w2dark / Tor панел.");
+  }
+
+  const secretBtn = byId("secretBtn");
+  if (secretBtn) {
+    secretBtn.onclick = () => jumpTo("marauder-secret-invite-hub", "Отворен RED SECRET CHAT с кодове, QR, групи и парола.");
+  }
+
+  const dareniyaBtn = byId("dareniyaBtn");
+  if (dareniyaBtn) {
+    dareniyaBtn.onclick = () => jumpTo("red-bank-suite", "Отворени плащания, дарения и RED-BANK портфейл.");
+  }
+
+  const alOptBtn = byId("alOptBtn");
+  if (alOptBtn) {
+    alOptBtn.onclick = () => {
+      jumpTo("m14-versions-section", "MARAUDER-AL Опции: активен профил RED-SOFTWARE-TEAM-BG.");
+    };
+  }
+
+  const fenixBtn = byId("fenixBtn");
+  if (fenixBtn) {
+    fenixBtn.onclick = () => {
+      jumpTo("m14-versions-section", "MARAUDER-AI профил: 4.8 FENIX / 5.3 / 6.2 активен.");
+    };
+  }
+
+  // Mode buttons inside dropdown
+  document.querySelectorAll(".m-mode-act").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      const menu = byId("marauderDropdownMenu");
+      if (menu) menu.style.display = "none";
+      const modeText = btn.getAttribute("data-mode") || btn.textContent.trim();
+      localStorage.setItem("marauder_active_mode_v1", modeText);
+      const verStatus = byId("m14-ver-status");
+      if (verStatus) verStatus.textContent = "Активен режим: " + modeText;
+      note(modeText);
+    });
+  });
+
+  // Payment buttons inside dropdown
+  document.querySelectorAll(".m-pay-act").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      const menu = byId("marauderDropdownMenu");
+      if (menu) menu.style.display = "none";
+      const payName = btn.getAttribute("data-pay") || btn.textContent.trim();
+      localStorage.setItem("marauder_selected_pay_v1", payName);
+      const payStatus = byId("rb-pay-status");
+      if (payStatus) payStatus.textContent = "Избран метод: " + payName + " -> готово за плащане / дарение.";
+      note("Избран начин на плащане: " + payName);
+      if (payName.toLowerCase().includes("paypal")) {
+        openPage("https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC");
+      } else {
+        jumpTo("rb-pay-methods", "Насочено към секцията за плащания (" + payName + ").");
+      }
+    });
+  });
+})();
+</script>
+<!-- =============== END UNIVERSAL BUTTON WIRING =============== -->
 </body>
 </html>
