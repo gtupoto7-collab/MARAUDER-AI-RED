@@ -3,70 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MARAUDER-AI BOT STUDIO | Telegram • Gmail • Facebook • Discord</title>
+  <title>MARAUDER-AI BOT STUDIO | Live Монитор и Безплатен Хостинг</title>
   <style>
     body { margin:0; font-family:Segoe UI,Arial,sans-serif; background:#090d16; color:#eef3f7; padding:16px; }
-    .wrap { max-width:980px; margin:0 auto; }
+    .wrap { max-width:1040px; margin:0 auto; }
     .top { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; padding:12px 14px; background:#101827; border:1px solid #263652; border-radius:10px; }
     .badge { padding:5px 10px; border-radius:8px; font-size:12px; font-weight:700; background:#16241c; color:#19f58b; border:1px solid #19f58b; }
-    .btn { padding:8px 12px; border-radius:8px; border:1px solid #ffc439; background:#1f1709; color:#ffc439; font-weight:700; cursor:pointer; text-decoration:none; font-size:13px; }
+    .btn { padding:7px 11px; border-radius:8px; border:1px solid #ffc439; background:#1f1709; color:#ffc439; font-weight:700; cursor:pointer; text-decoration:none; font-size:12px; }
     .btn.green { border-color:#19f58b; background:#10251b; color:#19f58b; }
     .btn.red { border-color:#ff6b6b; background:#261216; color:#ff9e9e; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:14px; margin-top:14px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:14px; margin-top:14px; }
     .card { background:#101827; border:1px solid #23324d; border-radius:10px; padding:14px; }
     label { display:block; font-size:12px; color:#a8bdd4; margin-top:10px; margin-bottom:4px; }
     input, select, textarea { width:100%; box-sizing:border-box; padding:8px 10px; border-radius:8px; border:1px solid #2c3f61; background:#0b111d; color:#eef3f7; font-size:13px; }
-    textarea { min-height:84px; }
+    textarea { min-height:76px; }
     .bot-item { border:1px solid #253654; background:#0c1320; border-radius:8px; padding:10px; margin-top:8px; }
+    .live-log { max-height:220px; overflow-y:auto; background:#070b12; border:1px solid #1e2d47; border-radius:8px; padding:8px; margin-top:8px; font-family:Consolas,monospace; font-size:12px; }
     .small { font-size:12px; color:#9fb3c8; }
+    .links-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="top">
       <div>
-        <strong>MARAUDER-AI BOT BUILDER</strong>
-        <div class="small">Telegram • Gmail • Facebook • Discord (1 bezplaten + Copper / Silver / Gold)</div>
+        <strong>MARAUDER-AI BOT STUDIO — LIVE</strong>
+        <div class="small">Telegram • Gmail • Facebook • Discord | Live следене на всяко устройство</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <span id="tierQuotaBadge" class="badge">Nivo: Free (1 bot)</span>
-        <a class="btn" href="./index.html">← Kym chata</a>
+        <span id="tierQuotaBadge" class="badge">Ниво: FREE (0/1 бота)</span>
+        <a class="btn" href="./index.html">← Към чата</a>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px;">
+      <strong>Безплатен хостинг за пускане на ботове (директни линкове)</strong>
+      <div class="small" style="margin-top:4px;">Безплатните сървърни инстанции могат да заспиват при неактивност — използвай за тестове и ботове с webhooks/заявки.</div>
+      <div class="links-row">
+        <a class="btn green" target="_blank" rel="noopener noreferrer" href="https://render.com/hosting/nodejs">Render Free Node.js</a>
+        <a class="btn" target="_blank" rel="noopener noreferrer" href="https://workers.cloudflare.com/">Cloudflare Workers</a>
+        <a class="btn" target="_blank" rel="noopener noreferrer" href="https://railway.app/">Railway</a>
+        <a class="btn" target="_blank" rel="noopener noreferrer" href="https://pages.github.com/">GitHub Pages</a>
       </div>
     </div>
     <div class="grid">
       <div class="card">
-        <h3>Nivo i dneven limit na botove</h3>
-        <label for="botTierSelect">Izberi nivo (broika botove)</label>
+        <h3>Ниво и дневен лимит (1 безплатен + нива)</h3>
+        <label for="botTierSelect">Избери ниво</label>
         <select id="botTierSelect" onchange="saveTierAndRender()">
-          <option value="free">Free — 1 bot (bezplaten)</option>
-          <option value="copper">Copper — do 3 bota</option>
-          <option value="silver">Silver — do 10 bota</option>
-          <option value="gold">Gold — do 50 bota</option>
+          <option value="free">Free — 1 бот (безплатен)</option>
+          <option value="copper">Copper — до 3 бота</option>
+          <option value="silver">Silver — до 10 бота</option>
+          <option value="gold">Gold — до 50 бота</option>
         </select>
         <div id="tierInfoText" class="small" style="margin-top:8px;color:#ffc439;"></div>
-        <h3 style="margin-top:16px;">Nov realen MARAUDER-AI bot</h3>
-        <label for="botName">Ime na bota</label>
-        <input id="botName" type="text" placeholder="Napr. MarauderSupportBot" />
-        <label for="botPlatform">Platforma</label>
+        <h3 style="margin-top:14px;">Създаване на нов бот</h3>
+        <label for="botName">Име на бота</label>
+        <input id="botName" type="text" placeholder="Напр. MarauderRelayBot" />
+        <label for="botPlatform">Платформа</label>
         <select id="botPlatform">
-          <option value="telegram">Telegram Bot (Bot Token)</option>
-          <option value="gmail">Gmail Bot (Apps Script / Webhook / SMTP)</option>
-          <option value="facebook">Facebook Messenger Bot (Page Token + Webhook)</option>
-          <option value="discord">Discord Bot (Bot Token / Webhook URL)</option>
+          <option value="telegram">Telegram Bot</option>
+          <option value="gmail">Gmail Bot</option>
+          <option value="facebook">Facebook Bot</option>
+          <option value="discord">Discord Bot</option>
         </select>
-        <label for="botSecret">Token / Webhook / API klyuch</label>
-        <input id="botSecret" type="password" placeholder="Postavi token ili webhook URL" />
-        <label for="botPrompt">Sistemna rolya / pravila za otgovor</label>
-        <textarea id="botPrompt" placeholder="Otgovaryay kratko, tochno i pomagai na potrebitelya..."></textarea>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
-          <button type="button" class="btn green" onclick="addDailyBot()">+ Dobavi bot za dnes</button>
-          <button type="button" class="btn" onclick="exportBotsJson()">Svali JSON</button>
+        <label for="botHostUrl">Хостинг / Webhook URL за live статус</label>
+        <input id="botHostUrl" type="text" placeholder="https://your-bot.onrender.com/webhook" />
+        <label for="botPrompt">Инструкция / поведение</label>
+        <textarea id="botPrompt" placeholder="Правила за отговор и обработка на съобщения..."></textarea>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+          <button type="button" class="btn green" onclick="addDailyBot()">+ Добави бот за днес</button>
+          <button type="button" class="btn" onclick="exportBotsJson()">Свали JSON</button>
         </div>
         <div id="botMsg" class="small" style="margin-top:8px;"></div>
       </div>
       <div class="card">
-        <h3>Suzdadeni botove i aktivnost</h3>
+        <h3>Ботове и Live наблюдение</h3>
         <div id="botsList"></div>
+        <h4 style="margin-top:14px;margin-bottom:4px;">Live събития (последно на това устройство)</h4>
+        <div id="liveEventsLog" class="live-log"></div>
       </div>
     </div>
   </div>
@@ -74,51 +88,80 @@
     var TIER_LIMITS = { free: 1, copper: 3, silver: 10, gold: 50 };
     var STORAGE_KEY = "marauder_real_bots_v1";
     var TIER_KEY = "marauder_bot_tier_v1";
+    var LOG_KEY = "marauder_bot_live_events_v1";
     function todayStr() { return new Date().toISOString().slice(0,10); }
+    function nowTime() { return new Date().toLocaleTimeString("bg-BG"); }
     function loadBots() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch(e) { return []; } }
     function saveBots(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+    function loadLogs() { try { return JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); } catch(e) { return []; } }
+    function pushLiveEvent(text) {
+      var logs = loadLogs();
+      logs.unshift("[" + nowTime() + "] " + text);
+      logs = logs.slice(0, 40);
+      localStorage.setItem(LOG_KEY, JSON.stringify(logs));
+      renderLogs();
+    }
     function getTier() { return localStorage.getItem(TIER_KEY) || "free"; }
     function saveTierAndRender() {
       var sel = document.getElementById("botTierSelect");
-      var t = sel ? sel.value : "free";
-      localStorage.setItem(TIER_KEY, t);
+      localStorage.setItem(TIER_KEY, sel ? sel.value : "free");
+      pushLiveEvent("Сменено ниво на: " + (sel ? sel.value.toUpperCase() : "FREE"));
       renderAll();
     }
     function addDailyBot() {
       var name = (document.getElementById("botName").value || "").trim();
       var platform = document.getElementById("botPlatform").value;
-      var secret = (document.getElementById("botSecret").value || "").trim();
+      var hostUrl = (document.getElementById("botHostUrl").value || "").trim();
       var prompt = (document.getElementById("botPrompt").value || "").trim();
       var msg = document.getElementById("botMsg");
-      if (!name) { msg.textContent = "Vuvedi ime na bota."; msg.style.color = "#ff9e9e"; return; }
+      if (!name) { msg.textContent = "Въведи име на бота."; msg.style.color = "#ff9e9e"; return; }
       var tier = getTier();
       var limit = TIER_LIMITS[tier] || 1;
       var bots = loadBots();
       var todayBots = bots.filter(function(b) { return b.createdDay === todayStr(); });
       if (todayBots.length >= limit || bots.length >= limit) {
-        msg.textContent = "Dostignat e limitut za nivo " + tier.toUpperCase() + " (maksimum " + limit + " bot/bota). Smeni nivoto na Copper / Silver / Gold.";
+        msg.textContent = "Достигнат е лимитът за ниво " + tier.toUpperCase() + " (макс. " + limit + " бота).";
         msg.style.color = "#ffc439";
         return;
       }
-      bots.push({
+      var newBot = {
         id: "BOT-" + Math.floor(100000 + Math.random()*900000),
         name: name,
         platform: platform,
-        hasSecret: Boolean(secret),
-        prompt: prompt || "Ти си полезен MARAUDER-AI асистент.",
+        hostUrl: hostUrl,
+        prompt: prompt || "MARAUDER-AI асистент.",
         createdDay: todayStr(),
-        enabled: true
-      });
+        running: true,
+        lastPulse: nowTime()
+      };
+      bots.push(newBot);
       saveBots(bots);
       document.getElementById("botName").value = "";
-      document.getElementById("botSecret").value = "";
-      msg.textContent = "Dobaven e bot za dnes na platforma " + platform.toUpperCase() + ".";
+      document.getElementById("botHostUrl").value = "";
+      msg.textContent = "Създаден бот " + newBot.name + " (" + platform.toUpperCase() + ").";
       msg.style.color = "#19f58b";
+      pushLiveEvent("Създаден бот " + newBot.name + " [" + platform.toUpperCase() + "] — LIVE");
+      renderAll();
+    }
+    function pulseBot(id) {
+      var bots = loadBots().map(function(b) {
+        if (b.id === id) {
+          b.running = true;
+          b.lastPulse = nowTime();
+          pushLiveEvent("Live сигнал от " + b.name + " (" + b.platform.toUpperCase() + ")" + (b.hostUrl ? " -> " + b.hostUrl : ""));
+        }
+        return b;
+      });
+      saveBots(bots);
       renderAll();
     }
     function toggleBot(id) {
       var bots = loadBots().map(function(b) {
-        if (b.id === id) b.enabled = !b.enabled;
+        if (b.id === id) {
+          b.running = !b.running;
+          b.lastPulse = nowTime();
+          pushLiveEvent((b.running ? "Пуснат " : "Спрян ") + b.name);
+        }
         return b;
       });
       saveBots(bots);
@@ -127,6 +170,7 @@
     function deleteBot(id) {
       var bots = loadBots().filter(function(b) { return b.id !== id; });
       saveBots(bots);
+      pushLiveEvent("Изтрит бот " + id);
       renderAll();
     }
     function exportBotsJson() {
@@ -134,9 +178,15 @@
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
       a.href = url;
-      a.download = "marauder-bots-config.json";
+      a.download = "marauder-bots-live.json";
       a.click();
       URL.revokeObjectURL(url);
+    }
+    function renderLogs() {
+      var box = document.getElementById("liveEventsLog");
+      if (!box) return;
+      var logs = loadLogs();
+      box.innerHTML = logs.length ? logs.map(function(l) { return "<div>" + l + "</div>"; }).join("") : "<div class=\"small\">Няма записани live събития още.</div>";
     }
     function renderAll() {
       var tier = getTier();
@@ -145,25 +195,29 @@
       if (sel) sel.value = tier;
       var bots = loadBots();
       var badge = document.getElementById("tierQuotaBadge");
-      if (badge) badge.textContent = "Nivo: " + tier.toUpperCase() + " (" + bots.length + "/" + limit + " bota)";
+      if (badge) badge.textContent = "Ниво: " + tier.toUpperCase() + " (" + bots.length + "/" + limit + " бота)";
       var info = document.getElementById("tierInfoText");
-      if (info) info.textContent = "Tekusht limit: " + limit + " bot/bota. 1 bot e bezplaten, a Copper (3), Silver (10) i Gold (50) uvelichavat broikata.";
+      if (info) info.textContent = "Лимит: " + limit + " бот/бота (1 безплатен; Copper: 3, Silver: 10, Gold: 50).";
       var list = document.getElementById("botsList");
       if (!list) return;
-      if (bots.length === 0) {
-        list.innerHTML = "<div class=\"small\">Nyama suzdadeni botove oshte. Dobavi purviya bezplaten bot otlyavo.</div>";
+      if (!bots.length) {
+        list.innerHTML = "<div class=\"small\">Няма добавени ботове.</div>";
+        renderLogs();
         return;
       }
       list.innerHTML = bots.map(function(b) {
         return "<div class=\"bot-item\">" +
           "<div><strong>" + b.name + "</strong> <span class=\"small\">[" + b.id + " • " + b.platform.toUpperCase() + "]</span></div>" +
-          "<div class=\"small\" style=\"margin-top:4px;\">Status: " + (b.enabled ? "Aktiven" : "Pauziran") + " • Token/Webhook: " + (b.hasSecret ? "Zadaden" : "Lipsva") + " • Den: " + b.createdDay + "</div>" +
-          "<div style=\"display:flex;gap:8px;margin-top:8px;\">" +
-            "<button type=\"button\" class=\"btn\" onclick=\"toggleBot('" + b.id + "')\">" + (b.enabled ? "Pauziray" : "Pusni") + "</button>" +
-            "<button type=\"button\" class=\"btn red\" onclick=\"deleteBot('" + b.id + "')\">Iztrii</button>" +
+          "<div class=\"small\" style=\"margin-top:4px;color:" + (b.running ? "#19f58b" : "#ffc439") + ";\">Статус: " + (b.running ? "LIVE / АКТИВЕН" : "ПАУЗИРАН") + " • Последен сигнал: " + (b.lastPulse || "-") + "</div>" +
+          (b.hostUrl ? "<div class=\"small\">URL: " + b.hostUrl + "</div>" : "") +
+          "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;\">" +
+            "<button type=\"button\" class=\"btn green\" onclick=\"pulseBot('" + b.id + "')\">Live сигнал</button>" +
+            "<button type=\"button\" class=\"btn\" onclick=\"toggleBot('" + b.id + "')\">" + (b.running ? "Паузирай" : "Пусни") + "</button>" +
+            "<button type=\"button\" class=\"btn red\" onclick=\"deleteBot('" + b.id + "')\">Изтрий</button>" +
           "</div>" +
         "</div>";
       }).join("");
+      renderLogs();
     }
     renderAll();
   </script>
