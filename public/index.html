@@ -1282,5 +1282,48 @@
   })();
 </script>
 <!-- /RED_SECRET_CHAT_QR_MODULE -->
+
+<!-- MARAUDER_SEPARATE_WINDOWS_AUTO -->
+<script>
+  (function(){
+    function openWin(url) {
+      try {
+        var w = window.open(url, "_blank", "noopener,noreferrer,width=980,height=720");
+        if (!w) window.location.href = url;
+      } catch (_) {
+        window.location.href = url;
+      }
+    }
+
+    document.addEventListener("click", function(ev){
+      var el = ev.target && ev.target.closest ? ev.target.closest("button,a") : null;
+      if (!el) return;
+      var txt = (el.textContent || "").trim();
+      var id = el.id || "";
+
+      if (txt.indexOf("+ BOT") !== -1) {
+        ev.preventDefault();
+        try { localStorage.setItem("marauder_auto_bot_open", new Date().toISOString()); } catch (_) {}
+        openWin("/bot-studio.html");
+      } else if (id === "devanBtn" || txt.indexOf("DEVANPORT-AI") !== -1) {
+        ev.preventDefault();
+        try { localStorage.setItem("marauder_auto_dev_open", new Date().toISOString()); } catch (_) {}
+        openWin("/devanport-studio.html");
+      } else if (id === "vpnBtn" || txt === "VPN") {
+        ev.preventDefault();
+        try { localStorage.setItem("marauder_auto_vpn_mode", "ACTIVE"); } catch (_) {}
+        openWin("/kali-root.html#vpn");
+      } else if (txt.indexOf("DARENIYA") !== -1) {
+        ev.preventDefault();
+        openWin("/payments-plans.html");
+      } else if (txt.indexOf("MARAUDER-AL Опции") !== -1) {
+        try { localStorage.setItem("marauder_al_profile", "RED-SOFTWARE-TEAM-BG"); } catch (_) {}
+      } else if (txt.indexOf("FENIX") !== -1) {
+        try { localStorage.setItem("marauder_fenix_profile", "4.8 / 5.3 / 6.2"); } catch (_) {}
+      }
+    }, true);
+  })();
+</script>
+<!-- /MARAUDER_SEPARATE_WINDOWS_AUTO -->
 </body>
 </html>

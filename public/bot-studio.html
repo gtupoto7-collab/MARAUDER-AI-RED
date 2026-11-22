@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BOT Studio (TG / MAIL / FB / DC) — MARAUDER</title>
+  <style>
+    body { font-family: monospace; background: #09090b; color: #f4f4f5; margin: 0; padding: 18px; }
+    .box { max-width: 880px; margin: 0 auto; background: #111115; border: 1px solid #22c55e; border-radius: 10px; padding: 16px; }
+    input, select, button { font-family: monospace; padding: 7px 10px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; }
+    button.go { border-color: #22c55e; background: #14532d; font-weight: bold; cursor: pointer; }
+    pre { background: #09090b; border: 1px solid #27272a; padding: 10px; border-radius: 8px; white-space: pre-wrap; }
+    a { color: #38bdf8; margin-right: 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid #27272a;padding-bottom:10px;margin-bottom:12px;">
+      <h2 style="margin:0;color:#4ade80;">BOT Studio — Автоматизация (TG / MAIL / FB / DC)</h2>
+      <div>
+        <a href="/index.html">Начало</a>
+        <a href="/kali-root.html">Linux Конзола</a>
+        <a href="/devanport-studio.html">DEVANPORT-AI</a>
+        <a href="/payments-plans.html">Плащания</a>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+      <select id="botPlatform">
+        <option value="Telegram">Telegram</option>
+        <option value="Mail">Mail</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Discord">Discord</option>
+      </select>
+      <input id="botName" type="text" placeholder="Име на бота (напр. auto-reply-bot)" style="flex:1;min-width:200px;" />
+      <button id="botGenBtn" class="go" type="button">Генерирай и Авто-Запази Бот</button>
+    </div>
+    <pre id="botLog">Готово за генериране на бот автоматизация.</pre>
+  </div>
+  <script>
+    (function(){
+      var key = "marauder_bots_autosave_v1";
+      var pl = document.getElementById("botPlatform");
+      var nm = document.getElementById("botName");
+      var btn = document.getElementById("botGenBtn");
+      var log = document.getElementById("botLog");
+      function load(){ try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch(_){ return []; } }
+      function save(a){ try { localStorage.setItem(key, JSON.stringify(a)); } catch(_){ } }
+      function render(){
+        var a = load();
+        if (!a.length) return;
+        log.textContent = a.map(function(x, i){
+          return "[" + (i+1) + "] (" + x.platform + ") " + x.name + " -> " + x.savedAt;
+        }).join("\n");
+      }
+      btn.addEventListener("click", function(){
+        var plat = pl ? pl.value : "Telegram";
+        var name = (nm && nm.value || "").trim() || (plat.toLowerCase() + "-worker-" + (load().length + 1));
+        var a = load();
+        a.unshift({ platform: plat, name: name, savedAt: new Date().toLocaleTimeString() });
+        save(a.slice(0, 25));
+        if (nm) nm.value = "";
+        render();
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>
