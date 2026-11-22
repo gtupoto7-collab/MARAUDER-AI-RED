@@ -719,5 +719,89 @@
   });
 })();
 </script>
+
+<div class="kr-panel" id="marauderCategoriesPanel" style="border-color:#38bdf8;">
+  <div style="font-weight:700;color:#7dd3fc;">КАТЕГОРИИ, ИНСТАЛИРАНИ ИНСТРУМЕНТИ &amp; ROOT / API ПРОВЕРКА</div>
+  <div class="kr-row">
+    <select id="marauderCatSel" class="kr-btn">
+      <option value="inventory">Одит на инсталирани инструменти &amp; Root</option>
+      <option value="recon">[01] RECON &amp; DNS</option>
+      <option value="netdiag">[02] NETWORK DIAGNOSTICS</option>
+      <option value="websec">[03] WEB SECURITY</option>
+      <option value="vuln">[04] VULNERABILITY ANALYSIS</option>
+      <option value="traffic">[05] TRAFFIC ANALYSIS</option>
+      <option value="forensics">[06] FORENSICS</option>
+      <option value="reveng">[07] REVERSE ENGINEERING</option>
+      <option value="sysmon">[08] SYSTEM MONITOR</option>
+    </select>
+    <button type="button" class="kr-run" id="marauderCatRunBtn">Провери категория</button>
+  </div>
+</div>
+<script id="marauderCategoriesScript">
+(function(){
+  var btn = document.getElementById("marauderCatRunBtn");
+  var sel = document.getElementById("marauderCatSel");
+  var out = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  function log(m){ if(out){ out.textContent += (out.textContent ? "\n" : "") + m; out.scrollTop = out.scrollHeight; } }
+  if (btn) btn.addEventListener("click", async function(){
+    var cat = sel ? sel.value : "inventory";
+    var target = (tEl && tEl.value.trim()) || "xera.bg";
+    var url = (uEl && uEl.value.trim()) || ("https://" + target);
+    log("[CATEGORIES // " + cat.toUpperCase() + "] Проверка за " + target + "...");
+    var opts = { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ category: cat, target: target, url: url }) };
+    var bases = ["", "http://127.0.0.1:3000"];
+    for (var i = 0; i < bases.length; i++){
+      try {
+        var r = await fetch(bases[i] + "/api/kali/categories", opts);
+        var txt = await r.text();
+        var tr = txt.trim();
+        if (tr.charAt(0) === "{" || tr.charAt(0) === "["){
+          var d = JSON.parse(tr);
+          log(d.output || JSON.stringify(d, null, 2));
+          return;
+        }
+      } catch(e){}
+    }
+    log("[CATEGORIES] Няма активен JSON отговор от /api/kali/categories.");
+  });
+})();
+</script>
+
+<div class="kr-panel" id="marauderMythosPanel" style="border-color:#a855f7;">
+  <div style="font-weight:700;color:#c084fc;">MYTHOS ENGINE // АВТОМАТИЧЕН ПОТОК (MEGATRON -> MYTHOS -> AL-AGENTS -> REPORT)</div>
+  <div class="kr-row">
+    <button type="button" class="kr-run" id="marauderMythosBtn">Пусни MYTHOS ENGINE</button>
+  </div>
+</div>
+<script id="marauderMythosScript">
+(function(){
+  var btn = document.getElementById("marauderMythosBtn");
+  var out = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  function log(m){ if(out){ out.textContent += (out.textContent ? "\n" : "") + m; out.scrollTop = out.scrollHeight; } }
+  if (btn) btn.addEventListener("click", async function(){
+    var target = (tEl && tEl.value.trim()) || (uEl && uEl.value.trim()) || "xera.bg";
+    log("[MYTHOS] Стартира автоматичен анализ за " + target + "...");
+    var opts = { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ target: target }) };
+    var bases = ["", "http://127.0.0.1:3000"];
+    for (var i = 0; i < bases.length; i++){
+      try {
+        var r = await fetch(bases[i] + "/api/kali/mythos", opts);
+        var txt = await r.text();
+        var tr = txt.trim();
+        if (tr.charAt(0) === "{" || tr.charAt(0) === "["){
+          var d = JSON.parse(tr);
+          log(d.output || JSON.stringify(d, null, 2));
+          return;
+        }
+      } catch(e){}
+    }
+    log("[MYTHOS] Няма активен JSON отговор от /api/kali/mythos.");
+  });
+})();
+</script>
 </body>
 </html>
