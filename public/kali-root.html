@@ -75,6 +75,40 @@
   <div id="marauderConsoleModeDesc" style="margin-top:8px;padding:8px 10px;border-left:4px solid #ef4444;background:#1f0d13;color:#fecdd3;font-size:13px;line-height:1.45;">
     Активен режим: MARAUDER-AI-CONSOLE — обединява реални команди, обяснения на кирилица, MYTHOS / AI отчети и Git операции върху същия backend.
   </div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;">
+  <input id="consoleTargetInp" type="text" value="example.com" placeholder="target" style="width:180px;padding:6px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;font-family:monospace;" />
+  <button type="button" id="consoleRunToolBtn" style="padding:6px 12px;border-radius:6px;border:1px solid #38bdf8;background:#0c4a6e;color:#e0f2fe;font-family:monospace;cursor:pointer;">Изпълни Инструмента (Runner API)</button>
+</div>
+<script>
+(function(){
+  var btn = document.getElementById("consoleRunToolBtn");
+  var sel = document.getElementById("consoleCustomToolSel");
+  var out = document.getElementById("consoleCustomToolOut");
+  var tgt = document.getElementById("consoleTargetInp");
+  if (!btn || !sel || !out) return;
+  btn.addEventListener("click", async function(){
+    var list = [];
+    try { list = JSON.parse(localStorage.getItem("marauder_devanport_saved_tools_v1") || "[]"); } catch (_) {}
+    var idx = parseInt(sel.value, 10);
+    var item = !isNaN(idx) ? list[idx] : null;
+    if (!item) { out.textContent = "Първо избери инструмент от списъка."; return; }
+    var runner = item.lang === "python" ? "python3" : (item.lang === "bash" ? "bash" : "node");
+    out.textContent = "Изпълнява се през " + runner + "...";
+    try {
+      var r = await fetch("/api/devanport/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ runner: runner, scriptCode: item.code || "", target: (tgt && tgt.value) || "example.com" })
+      });
+      var data = await r.json();
+      out.textContent = JSON.stringify(data, null, 2);
+    } catch (e) {
+      out.textContent = "Грешка при връзка с /api/devanport/run: " + e.message;
+    }
+  });
+})();
+</script>
 </section>
 
 <script id="marauderDualConsoleScript">
@@ -1669,5 +1703,6 @@ echo "Running tool: " + rawName.replace(/"/g, "") + ""
   })();
 </script>
   <script src="/universal-back.js"></script>
+  <script src="/shield-live.js"></script>
 </body>
 </html>

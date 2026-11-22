@@ -40,5 +40,49 @@
   
   </div>
   <script src="/universal-back.js"></script>
+  <script src="/shield-live.js"></script>
+
+<section id="gitCloneConsoleSection" style="max-width:960px;margin:16px auto;padding:14px;border:1px solid #00f5d4;border-radius:8px;background:#0b0f17;color:#f4f4f5;font-family:monospace;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+    <h3 style="margin:0;color:#00f5d4;">Git Clone — Конзола и MARAUDER (Всички Конзоли)</h3>
+    <button type="button" onclick="this.closest("section").style.display="none"" style="cursor:pointer;background:#111827;color:#00f5d4;border:1px solid #00f5d4;border-radius:6px;padding:4px 10px;font-family:monospace;font-size:12px;">← Назад</button>
+  </div>
+  <p style="margin:0 0 10px 0;font-size:12px;color:#cbd5e1;">Изпълни директно в самата конзола (Linux / WSL / Termux / PowerShell), за да клонираш и пуснеш MARAUDER + конзолния модул с всички функции:</p>
+  <div style="margin-bottom:8px;">
+    <label style="font-size:12px;color:#fbbf24;display:block;margin-bottom:4px;">Repo URL (смени при нужда с твоя GitHub repo):</label>
+    <input id="mRepoUrlInp" type="text" value="https://github.com/gtupoto7-collab/marauder-ai-web.git" style="width:100%;padding:7px 10px;border-radius:6px;border:1px solid #475569;background:#090d14;color:#fff;font-family:monospace;font-size:12px;" />
+  </div>
+  <pre id="mGitCloneCmdBox" style="background:#090d14;border:1px solid #1e293b;padding:10px;border-radius:6px;white-space:pre-wrap;font-size:12px;color:#86efac;margin:0 0 10px 0;"></pre>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <button type="button" id="mCopyGitCmdBtn" style="cursor:pointer;background:#14532d;color:#dcfce7;border:1px solid #22c55e;border-radius:6px;padding:6px 12px;font-family:monospace;font-size:12px;font-weight:bold;">Копирай Git Clone Командите</button>
+  </div>
+  <script>
+  (function(){
+    var inp = document.getElementById("mRepoUrlInp");
+    var box = document.getElementById("mGitCloneCmdBox");
+    var btn = document.getElementById("mCopyGitCmdBtn");
+    function renderCmds() {
+      var u = (inp && inp.value || "").trim() || "https://github.com/gtupoto7-collab/marauder-ai-web.git";
+      box.textContent = [
+        "# 1. Linux / WSL / Termux (работи директно в конзолата):",
+        "git clone " + u + " marauder-ai-web && cd marauder-ai-web && npm install && node scripts/marauder-console-hub.js status",
+        "",
+        "# 2. Стартиране на MARAUDER през конзолата (свързано с всички конзоли):",
+        "node scripts/marauder-console-hub.js start",
+        "",
+        "# 3. Windows PowerShell (клон и старт от конзолата):",
+        "git clone " + u + " marauder-ai-web; Set-Location marauder-ai-web; npm install; node scripts/marauder-console-hub.js status"
+      ].join("\n");
+    }
+    if (inp) inp.addEventListener("input", renderCmds);
+    if (btn) btn.addEventListener("click", function(){
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(box.textContent).catch(function(){});
+      }
+    });
+    renderCmds();
+  })();
+  </script>
+</section>
 </body>
 </html>

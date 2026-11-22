@@ -175,5 +175,73 @@ pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radi
 })();
 </script>
   <script src="/universal-back.js"></script>
+  <script src="/shield-live.js"></script>
+
+<div id="marauder-full-bot-builder" style="margin-top:14px;padding:12px;border:1px solid #22c55e;border-radius:10px;background:#0b1318;">
+  <div style="font-weight:700;margin-bottom:8px;color:#4ade80;">Pulen Syzdatel na Botove (TG / WhatsApp / Discord / Web / Mail / Custom)</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;">
+    <select id="mfb-platform"><option value="Telegram">Telegram Bot</option><option value="Discord">Discord Bot</option><option value="WhatsApp">WhatsApp Bot</option><option value="WebWidget">Web Chat Bot</option><option value="EmailAuto">Email Auto-Bot</option><option value="CustomAPI">Custom Webhook Bot</option></select>
+    <input id="mfb-name" type="text" placeholder="Ime na bota (napr. brokerfree_bot)" />
+    <input id="mfb-role" type="text" placeholder="Nisha / Cel (napr. Imoti, Avtochasti, Poddruzhka)" />
+    <input id="mfb-token" type="text" placeholder="Token / Webhook URL (po jelanie)" />
+    <input id="mfb-cmds" type="text" placeholder="Komandi (napr. /start, /help, /cena, /kontakt)" />
+    <input id="mfb-lang" type="text" placeholder="Ezik i ton (napr. BG, barz i konkreten)" />
+  </div>
+  <div style="margin-top:8px;">
+    <textarea id="mfb-desc" rows="2" placeholder="Pulno opisanie i logika na bota: kak posreshta klienta, kakvi danni sybira i kak otgovarya..." style="width:100%;box-sizing:border-box;"></textarea>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+    <button type="button" id="mfb-create-btn">Suzdai i Zapazi Bota</button>
+    <button type="button" id="mfb-copy-json">Kopirai Konfig JSON</button>
+    <button type="button" id="mfb-clear-btn">Izchisti Spisyka</button>
+  </div>
+  <div id="mfb-list" style="margin-top:10px;font-size:12px;"></div>
+</div>
+<script id="MARAUDER_FULL_BOT_BUILDER_JS">
+(function(){
+  const KEY = "marauder_full_bots_v1";
+  function readBots(){ try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(_) { return []; } }
+  function writeBots(v){ try { localStorage.setItem(KEY, JSON.stringify(v.slice(0, 60))); } catch(_) {} }
+  function render(){
+    const el = document.getElementById("mfb-list");
+    if (!el) return;
+    const bots = readBots();
+    if (!bots.length) { el.innerHTML = "<div style=\"opacity:.75\">Nqma suzdadeni botove s pulna konfiguraciya oshte.</div>"; return; }
+    el.innerHTML = bots.map((b, i) =>
+      "<div style=\"padding:8px;border:1px solid #1e293b;border-radius:8px;margin-bottom:6px;background:#090e17;\">" +
+      "<div><strong>#" + (i+1) + " [" + b.platform + "] " + b.name + "</strong> — <span>" + b.role + "</span> (" + b.lang + ")</div>" +
+      "<div style=\"opacity:.85;margin-top:3px;\">Komandi: " + b.cmds + " | Token/Hook: " + (b.token ? "zadaden" : "lipsva") + "</div>" +
+      "<div style=\"opacity:.8;margin-top:2px;\">" + b.desc + "</div>" +
+      "</div>"
+    ).join("");
+  }
+  function wire(){
+    render();
+    const btn = document.getElementById("mfb-create-btn");
+    if (btn) btn.addEventListener("click", () => {
+      const name = ((document.getElementById("mfb-name")||{}).value || "").trim() || "marauder-bot";
+      const platform = ((document.getElementById("mfb-platform")||{}).value || "Telegram").trim();
+      const role = ((document.getElementById("mfb-role")||{}).value || "Obshta avtomatizaciya").trim();
+      const token = ((document.getElementById("mfb-token")||{}).value || "").trim();
+      const cmds = ((document.getElementById("mfb-cmds")||{}).value || "/start, /help").trim();
+      const lang = ((document.getElementById("mfb-lang")||{}).value || "BG").trim();
+      const desc = ((document.getElementById("mfb-desc")||{}).value || "Avtomatiziran bot na MARAUDER-AI").trim();
+      const bots = readBots();
+      bots.unshift({ platform, name, role, token, cmds, lang, desc, createdAt: new Date().toLocaleString() });
+      writeBots(bots);
+      render();
+    });
+    const copyBtn = document.getElementById("mfb-copy-json");
+    if (copyBtn) copyBtn.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(JSON.stringify(readBots(), null, 2)); } catch(_) {}
+    });
+    const clrBtn = document.getElementById("mfb-clear-btn");
+    if (clrBtn) clrBtn.addEventListener("click", () => { writeBots([]); render(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>
+
 </body>
 </html>

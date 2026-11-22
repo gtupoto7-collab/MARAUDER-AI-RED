@@ -355,6 +355,7 @@
 
         <span id="marauderDropdownWrap" style="position:relative;display:inline-block;">
           <button type="button" id="marauderDropdownBtn" style="border-color:#22c55e;background:#052e16;color:#bbf7d0;">Меню ▾</button>
+<button id="marauderPortfolioBtn" type="button" onclick="window.open('/portfolio','_blank','noopener,noreferrer')" style="background:#182436;color:#e6edf3;border:1px solid #58a6ff;padding:6px 10px;border-radius:6px;font-weight:700;cursor:pointer;">[ PORTOFEIL ]</button>
           <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:295px;max-height:78vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:7px;box-shadow:0 10px 28px rgba(0,0,0,0.85);">
             <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">СТРАНИЦИ &amp; КОНЗОЛА</div>
             <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;">MARAUDER LINUX CONSOLE (/kali-root.html)</a>
@@ -778,5 +779,172 @@
     renderMessages();
   </script>
   <script src="/universal-back.js"></script>
+  <script src="/shield-live.js"></script>
+
+<div id="marauder-full-bot-builder" style="margin-top:14px;padding:12px;border:1px solid #22c55e;border-radius:10px;background:#0b1318;">
+  <div style="font-weight:700;margin-bottom:8px;color:#4ade80;">Pulen Syzdatel na Botove (TG / WhatsApp / Discord / Web / Mail / Custom)</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;">
+    <select id="mfb-platform"><option value="Telegram">Telegram Bot</option><option value="Discord">Discord Bot</option><option value="WhatsApp">WhatsApp Bot</option><option value="WebWidget">Web Chat Bot</option><option value="EmailAuto">Email Auto-Bot</option><option value="CustomAPI">Custom Webhook Bot</option></select>
+    <input id="mfb-name" type="text" placeholder="Ime na bota (napr. brokerfree_bot)" />
+    <input id="mfb-role" type="text" placeholder="Nisha / Cel (napr. Imoti, Avtochasti, Poddruzhka)" />
+    <input id="mfb-token" type="text" placeholder="Token / Webhook URL (po jelanie)" />
+    <input id="mfb-cmds" type="text" placeholder="Komandi (napr. /start, /help, /cena, /kontakt)" />
+    <input id="mfb-lang" type="text" placeholder="Ezik i ton (napr. BG, barz i konkreten)" />
+  </div>
+  <div style="margin-top:8px;">
+    <textarea id="mfb-desc" rows="2" placeholder="Pulno opisanie i logika na bota: kak posreshta klienta, kakvi danni sybira i kak otgovarya..." style="width:100%;box-sizing:border-box;"></textarea>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+    <button type="button" id="mfb-create-btn">Suzdai i Zapazi Bota</button>
+    <button type="button" id="mfb-copy-json">Kopirai Konfig JSON</button>
+    <button type="button" id="mfb-clear-btn">Izchisti Spisyka</button>
+  </div>
+  <div id="mfb-list" style="margin-top:10px;font-size:12px;"></div>
+</div>
+<script id="MARAUDER_FULL_BOT_BUILDER_JS">
+(function(){
+  const KEY = "marauder_full_bots_v1";
+  function readBots(){ try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(_) { return []; } }
+  function writeBots(v){ try { localStorage.setItem(KEY, JSON.stringify(v.slice(0, 60))); } catch(_) {} }
+  function render(){
+    const el = document.getElementById("mfb-list");
+    if (!el) return;
+    const bots = readBots();
+    if (!bots.length) { el.innerHTML = "<div style=\"opacity:.75\">Nqma suzdadeni botove s pulna konfiguraciya oshte.</div>"; return; }
+    el.innerHTML = bots.map((b, i) =>
+      "<div style=\"padding:8px;border:1px solid #1e293b;border-radius:8px;margin-bottom:6px;background:#090e17;\">" +
+      "<div><strong>#" + (i+1) + " [" + b.platform + "] " + b.name + "</strong> — <span>" + b.role + "</span> (" + b.lang + ")</div>" +
+      "<div style=\"opacity:.85;margin-top:3px;\">Komandi: " + b.cmds + " | Token/Hook: " + (b.token ? "zadaden" : "lipsva") + "</div>" +
+      "<div style=\"opacity:.8;margin-top:2px;\">" + b.desc + "</div>" +
+      "</div>"
+    ).join("");
+  }
+  function wire(){
+    render();
+    const btn = document.getElementById("mfb-create-btn");
+    if (btn) btn.addEventListener("click", () => {
+      const name = ((document.getElementById("mfb-name")||{}).value || "").trim() || "marauder-bot";
+      const platform = ((document.getElementById("mfb-platform")||{}).value || "Telegram").trim();
+      const role = ((document.getElementById("mfb-role")||{}).value || "Obshta avtomatizaciya").trim();
+      const token = ((document.getElementById("mfb-token")||{}).value || "").trim();
+      const cmds = ((document.getElementById("mfb-cmds")||{}).value || "/start, /help").trim();
+      const lang = ((document.getElementById("mfb-lang")||{}).value || "BG").trim();
+      const desc = ((document.getElementById("mfb-desc")||{}).value || "Avtomatiziran bot na MARAUDER-AI").trim();
+      const bots = readBots();
+      bots.unshift({ platform, name, role, token, cmds, lang, desc, createdAt: new Date().toLocaleString() });
+      writeBots(bots);
+      render();
+    });
+    const copyBtn = document.getElementById("mfb-copy-json");
+    if (copyBtn) copyBtn.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(JSON.stringify(readBots(), null, 2)); } catch(_) {}
+    });
+    const clrBtn = document.getElementById("mfb-clear-btn");
+    if (clrBtn) clrBtn.addEventListener("click", () => { writeBots([]); render(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>
+
+
+<div id="marauder-full-account-wallet-chat" style="margin-top:14px;padding:12px;border:1px solid #38bdf8;border-radius:10px;background:#0b111d;">
+  <div style="font-weight:700;margin-bottom:8px;color:#7dd3fc;">MARAUDER-AI Hub: Registraciya, Realen Crypto Portofeil (Keeper / TON) i Plashtaniya</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;">
+    <div style="padding:8px;border:1px solid #1e293b;border-radius:8px;">
+      <div style="font-weight:700;margin-bottom:4px;">Registraciya / Profil</div>
+      <input id="mah-user" type="text" placeholder="Ime ili alias (napr. ADMIRALERROR)" style="width:100%;box-sizing:border-box;margin-bottom:6px;" />
+      <input id="mah-email" type="email" placeholder="Imeil za profil / izvestiya" style="width:100%;box-sizing:border-box;margin-bottom:6px;" />
+      <button type="button" id="mah-save-user">Zapazi Registraciya</button>
+      <div id="mah-user-status" style="margin-top:6px;font-size:12px;color:#4ade80;">Profil: ne e zapazen</div>
+    </div>
+    <div style="padding:8px;border:1px solid #1e293b;border-radius:8px;">
+      <div style="font-weight:700;margin-bottom:4px;">Realen Crypto Portofeil (TON / Keeper)</div>
+      <input id="mah-ton-addr" type="text" value="UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H" style="width:100%;box-sizing:border-box;margin-bottom:6px;" />
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button type="button" id="mah-ton-bal">Realen Balans (TON)</button>
+        <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer"><button type="button">PayPal NCP</button></a>
+      </div>
+      <div id="mah-ton-out" style="margin-top:6px;font-size:12px;color:#38bdf8;">Non-custodial: chete realen balans ot TON</div>
+    </div>
+  </div>
+  <div style="margin-top:10px;padding:8px;border:1px solid #1e293b;border-radius:8px;">
+    <div style="font-weight:700;margin-bottom:4px;">Jiv Chat / Sekretno Tablo (raboteshto)</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <input id="mah-chat-input" type="text" placeholder="Napishi syobshtenie ili komanda..." style="flex:1;min-width:180px;" />
+      <button type="button" id="mah-chat-send">Izprati</button>
+      <button type="button" id="mah-chat-clear">Izchisti</button>
+    </div>
+    <div id="mah-chat-feed" style="margin-top:8px;font-size:12px;max-height:170px;overflow:auto;"></div>
+  </div>
+</div>
+<script id="MARAUDER_FULL_HUB_CHAT_JS">
+(function(){
+  const U_KEY = "marauder_hub_profile_v1";
+  const C_KEY = "marauder_hub_chat_v1";
+  function getChat(){ try { return JSON.parse(localStorage.getItem(C_KEY) || "[]"); } catch(_) { return []; } }
+  function setChat(v){ try { localStorage.setItem(C_KEY, JSON.stringify(v.slice(0, 80))); } catch(_) {} }
+  function renderChat(){
+    const box = document.getElementById("mah-chat-feed");
+    if (!box) return;
+    const rows = getChat();
+    if (!rows.length) { box.innerHTML = "<div style=\"opacity:.7\">Nqma syobshteniya oshte.</div>"; return; }
+    box.innerHTML = rows.map(r => "<div style=\"padding:4px 0;border-bottom:1px solid #1e293b;\"><strong>" + r.who + ":</strong> " + r.msg + " <span style=\"opacity:.65\">(" + r.t + ")</span></div>").join("");
+  }
+  function wire(){
+    try {
+      const saved = JSON.parse(localStorage.getItem(U_KEY) || "null");
+      const st = document.getElementById("mah-user-status");
+      if (saved && st) st.textContent = "Registriran: " + (saved.user || "User") + " (" + (saved.email || "bez imeil") + ")";
+    } catch(_) {}
+    renderChat();
+
+    const saveU = document.getElementById("mah-save-user");
+    if (saveU) saveU.addEventListener("click", () => {
+      const user = ((document.getElementById("mah-user")||{}).value || "ADMIRALERROR").trim();
+      const email = ((document.getElementById("mah-email")||{}).value || "").trim();
+      try { localStorage.setItem(U_KEY, JSON.stringify({ user, email })); } catch(_) {}
+      const st = document.getElementById("mah-user-status");
+      if (st) st.textContent = "Registriran: " + user + " (" + (email || "bez imeil") + ")";
+    });
+
+    const tonBtn = document.getElementById("mah-ton-bal");
+    if (tonBtn) tonBtn.addEventListener("click", async () => {
+      const addr = ((document.getElementById("mah-ton-addr")||{}).value || "").trim();
+      const out = document.getElementById("mah-ton-out");
+      if (!addr) return;
+      if (out) out.textContent = "Proveryavam TON balans...";
+      try {
+        const r = await fetch("https://toncenter.com/api/v2/getAddressInformation?address=" + encodeURIComponent(addr));
+        const j = await r.json();
+        const ton = Number((j && j.result && j.result.balance) || 0) / 1e9;
+        if (out) out.textContent = "TON Balans: " + ton.toFixed(4) + " TON (" + addr.slice(0, 8) + "...)";
+      } catch(e) {
+        if (out) out.textContent = "Greshka pri chetene ot TON: " + (e && e.message || "network");
+      }
+    });
+
+    const sendBtn = document.getElementById("mah-chat-send");
+    const inp = document.getElementById("mah-chat-input");
+    function pushMsg(){
+      const msg = ((inp && inp.value) || "").trim();
+      if (!msg) return;
+      const rows = getChat();
+      rows.unshift({ who: "MARAUDER", msg, t: new Date().toLocaleTimeString() });
+      setChat(rows);
+      if (inp) inp.value = "";
+      renderChat();
+    }
+    if (sendBtn) sendBtn.addEventListener("click", pushMsg);
+    if (inp) inp.addEventListener("keydown", (e) => { if (e.key === "Enter") pushMsg(); });
+
+    const clrBtn = document.getElementById("mah-chat-clear");
+    if (clrBtn) clrBtn.addEventListener("click", () => { setChat([]); renderChat(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>
+
 </body>
 </html>
