@@ -4448,5 +4448,49 @@ window.addEventListener("DOMContentLoaded", function() {
   setTimeout(function() { injectMainBotBanner(); addMainBotMenuItem(); }, 400);
 })();
 </script>
+<script id="marauderGiftKeyPatchScript">
+(function() {
+  var GIFT_KEY = "RST-AI-001";
+  function applyGiftKeyToInput() {
+    var inputs = Array.from(document.querySelectorAll("input"));
+    var keyInput = inputs.find(function(inp) {
+      var ph = (inp.getAttribute("placeholder") || "").toLowerCase();
+      return ph.indexOf("access key") !== -1 || ph.indexOf("ключ") !== -1;
+    });
+    if (keyInput) {
+      keyInput.value = GIFT_KEY;
+      keyInput.dispatchEvent(new Event("input", { bubbles: true }));
+      keyInput.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    try { localStorage.setItem("marauder_gift_access_key", GIFT_KEY); } catch (e) {}
+  }
+  function injectGiftBtn() {
+    if (document.getElementById("mGiftKeyBtn")) return;
+    var card = document.getElementById("marauderMainBotCard");
+    var row = card ? card.querySelector(".m-dl-row") : null;
+    var btn = document.createElement("button");
+    btn.id = "mGiftKeyBtn";
+    btn.type = "button";
+    btn.className = "m-dl-btn tg";
+    btn.textContent = "🎁 Подарък ключ: " + GIFT_KEY;
+    btn.addEventListener("click", function(e) {
+      e.preventDefault();
+      applyGiftKeyToInput();
+      btn.textContent = "✅ Приложен ключ: " + GIFT_KEY;
+    });
+    if (row) {
+      row.appendChild(btn);
+    } else if (document.body) {
+      document.body.insertBefore(btn, document.body.firstChild);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", injectGiftBtn);
+  } else {
+    injectGiftBtn();
+  }
+  setTimeout(injectGiftBtn, 400);
+})();
+</script>
 </body>
 </html>
