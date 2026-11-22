@@ -1,0 +1,444 @@
+const fs = require("fs");
+const path = require("path");
+
+const pubDir = path.join(__dirname, "..", "public");
+if (!fs.existsSync(pubDir)) fs.mkdirSync(pubDir, { recursive: true });
+
+const devHtml = `<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DEVANPORT-AI — Full Code & Tool Studio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: monospace; background: #09090b; color: #f4f4f5; margin: 0; padding: 16px; line-height: 1.5; }
+    .wrap { max-width: 1040px; margin: 0 auto; background: #111115; border: 1px solid #f59e0b; border-radius: 10px; padding: 16px; }
+    .top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #27272a; padding-bottom: 10px; margin-bottom: 14px; }
+    .top a { color: #38bdf8; text-decoration: none; margin-right: 10px; font-size: 12px; }
+    .top a:hover { text-decoration: underline; }
+    .tier-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; background: #09090b; border: 1px solid #27272a; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 12px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 10px; }
+    label { display: block; font-size: 12px; color: #d4d4d8; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #52525b; background: #09090b; color: #fff; font-family: monospace; font-size: 13px; }
+    textarea.desc { min-height: 92px; resize: vertical; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    button { padding: 8px 12px; border-radius: 6px; border: 1px solid #52525b; background: #18181b; color: #fff; font-family: monospace; font-size: 12px; font-weight: bold; cursor: pointer; }
+    button.gen { border-color: #22c55e; background: #14532d; color: #dcfce7; }
+    button.warn { border-color: #ef4444; background: #450a0a; color: #fecaca; }
+    button.info { border-color: #38bdf8; background: #0c4a6e; color: #e0f2fe; }
+    pre { background: #09090b; border: 1px solid #27272a; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; max-height: 360px; overflow: auto; font-size: 12px; }
+    .tool-item { border: 1px solid #27272a; background: #09090b; border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+    .tool-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h2 style="margin:0;color:#fbbf24;">DEVANPORT-AI — Full Software, Code &amp; Tool Generator</h2>
+      <div>
+        <a href="/index.html">Начало</a>
+        <a href="/kali-root.html">Хакерска / Linux Конзола</a>
+        <a href="/bot-studio.html">BOT Studio</a>
+        <a href="/payments-plans.html">Абонаменти &amp; Дарения</a>
+        <a href="/mining-optin.html">Pool &amp; 24h</a>
+      </div>
+    </div>
+
+    <div class="tier-bar">
+      <div>
+        <strong>Абонамент / Ниво:</strong> <span id="activePlanBadge" style="color:#facc15;">Free / Standard</span>
+        <span style="color:#a1a1aa;"> • Запазени инструменти: <strong id="savedCountBadge">0</strong></span>
+      </div>
+      <div>
+        <a href="/payments-plans.html" style="color:#facc15;font-weight:bold;text-decoration:none;">Дарения / Абонамент (Keper • PayPal • Stars • TON) -&gt;</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="toolNameInp">Име на инструмент / скрипт / модул</label>
+        <input id="toolNameInp" type="text" placeholder="напр. net-audit-guard.sh или port-scanner.py" />
+      </div>
+      <div>
+        <label for="toolLangSel">Тип / Език на генерация</label>
+        <select id="toolLangSel">
+          <option value="bash">Bash Script (.sh) — Конзола / Linux / Termux</option>
+          <option value="node">Node.js Service / CLI (.js)</option>
+          <option value="python">Python Utility / Audit Script (.py)</option>
+          <option value="web-module">Web / JS Tool Module (.js)</option>
+        </select>
+      </div>
+      <div>
+        <label for="toolCategorySel">Категория в конзолата</label>
+        <select id="toolCategorySel">
+          <option value="Custom Security & Audit">Custom Security &amp; Audit</option>
+          <option value="Network & Recon">Network &amp; Recon</option>
+          <option value="Automation & Bots">Automation &amp; Bots</option>
+          <option value="System & DevOps">System &amp; DevOps</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="toolDescInp">Подробно описание какво да прави софтуерът / инструментът</label>
+      <textarea id="toolDescInp" class="desc" placeholder="Опиши подробно входа, изхода, проверките, флаговете, логовете и поведението на инструмента..."></textarea>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="genAndSaveBtn" class="gen">Генерирай Професионално и Запази Завинаги</button>
+      <button type="button" id="copyPreviewBtn" class="info">Копирай Кода</button>
+      <button type="button" id="downloadPreviewBtn">Свали Файл</button>
+      <button type="button" id="clearAllToolsBtn" class="warn">Изчисти Всички</button>
+    </div>
+
+    <h3 style="margin:12px 0 6px 0;color:#86efac;font-size:13px;">Генериран Код (Преглед):</h3>
+    <pre id="codePreviewBox">Въведи име и подробно описание и натисни "Генерирай Професионално и Запази Завинаги".</pre>
+
+    <h3 style="margin:14px 0 8px 0;color:#fbbf24;font-size:13px;">Постоянни Инструменти в Приложението и Конзолата:</h3>
+    <div id="toolsListWrap">Зареждане...</div>
+  </div>
+
+  <script>
+    (function(){
+      var STORAGE_KEY = "marauder_devanport_saved_tools_v1";
+      var ORDERS_KEY = "marauder_payments_orders_v1";
+
+      var nameInp = document.getElementById("toolNameInp");
+      var langSel = document.getElementById("toolLangSel");
+      var catSel = document.getElementById("toolCategorySel");
+      var descInp = document.getElementById("toolDescInp");
+      var genBtn = document.getElementById("genAndSaveBtn");
+      var copyBtn = document.getElementById("copyPreviewBtn");
+      var dlBtn = document.getElementById("downloadPreviewBtn");
+      var clrBtn = document.getElementById("clearAllToolsBtn");
+      var previewBox = document.getElementById("codePreviewBox");
+      var listWrap = document.getElementById("toolsListWrap");
+      var planBadge = document.getElementById("activePlanBadge");
+      var countBadge = document.getElementById("savedCountBadge");
+
+      var latestCode = "";
+      var latestFileName = "marauder-tool.sh";
+
+      function detectPlan() {
+        try {
+          var orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || "[]");
+          if (Array.isArray(orders) && orders.length > 0 && orders[0].plan) {
+            return orders[0].plan + " (" + orders[0].method + ")";
+          }
+        } catch (_) {}
+        return "Free / Standard";
+      }
+
+      function loadTools() {
+        try {
+          var raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          return Array.isArray(raw) ? raw : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function saveTools(arr) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch (_) {}
+        if (window.fetch) {
+          fetch("/api/devanport/tools", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tools: arr })
+          }).catch(function(){});
+        }
+      }
+
+      function extForLang(lang) {
+        if (lang === "python") return ".py";
+        if (lang === "node" || lang === "web-module") return ".js";
+        return ".sh";
+      }
+
+      function buildProfessionalCode(name, lang, category, desc, plan) {
+        var safeDesc = (desc || "Изпълнение на зададения инструмент по спецификация.").replace(/\\r/g, "");
+        var lines = safeDesc.split("\\n").map(function(l){ return l.trim(); }).filter(Boolean);
+        var specComment = lines.length ? lines.join(" | ") : "Standard execution profile";
+
+        if (lang === "python") {
+          return [
+            "#!/usr/bin/env python3",
+            "\\"\\"\\"",
+            "Tool: " + name,
+            "Category: " + category,
+            "Plan: " + plan,
+            "Specification: " + specComment,
+            "\\"\\"\\"",
+            "import argparse",
+            "import datetime",
+            "import json",
+            "",
+            "def run_tool(target: str, verbose: bool = True) -> dict:",
+            "    started_at = datetime.datetime.utcnow().isoformat() + \\"Z\\"",
+            "    if verbose:",
+            "        print(f\\"[DEVANPORT-AI] Starting {name} on target={target} at {started_at}\\")",
+            "    # TODO: Implement detailed logic for: " + specComment.replace(/"/g, "\\\\""),
+            "    result = {",
+            "        \\"tool\\": \\"" + name.replace(/"/g, "\\\\"") + "\\",",
+            "        \\"category\\": \\"" + category.replace(/"/g, "\\\\"") + "\\",",
+            "        \\"target\\": target,",
+            "        \\"status\\": \\"completed\\",",
+            "        \\"timestamp\\": started_at",
+            "    }",
+            "    return result",
+            "",
+            "def main():",
+            "    parser = argparse.ArgumentParser(description=\\"" + name.replace(/"/g, "\\\\"") + "\\")",
+            "    parser.add_argument(\\"--target\\", default=\\"127.0.0.1\\", help=\\"Target host/endpoint/input\\")",
+            "    parser.add_argument(\\"--quiet\\", action=\\"store_true\\", help=\\"Suppress verbose logs\\")",
+            "    args = parser.parse_args()",
+            "    output = run_tool(args.target, verbose=not args.quiet)",
+            "    print(json.dumps(output, indent=2, ensure_ascii=False))",
+            "",
+            "if __name__ == \\"__main__\\":",
+            "    main()"
+          ].join("\\n");
+        }
+
+        if (lang === "node" || lang === "web-module") {
+          return [
+            "/**",
+            " * Tool: " + name,
+            " * Category: " + category,
+            " * Plan: " + plan,
+            " * Specification: " + specComment,
+            " */",
+            "\\"use strict\\";",
+            "",
+            "async function execute" + name.replace(/[^a-zA-Z0-9]/g, "_") + "(context = {}) {",
+            "  const startedAt = new Date().toISOString();",
+            "  const target = context.target || \\"default\\";",
+            "  console.log(\\"[DEVANPORT-AI] Running " + name.replace(/"/g, "\\\\"") + " ->\\", target);",
+            "  // Specification steps:",
+            "  // " + specComment.replace(/\\n/g, " "),
+            "  return {",
+            "    ok: true,",
+            "    tool: \\"" + name.replace(/"/g, "\\\\"") + "\\",",
+            "    category: \\"" + category.replace(/"/g, "\\\\"") + "\\",",
+            "    startedAt,",
+            "    target",
+            "  };",
+            "}",
+            "",
+            "if (typeof module !== \\"undefined\\" && module.exports) {",
+            "  module.exports = { execute: execute" + name.replace(/[^a-zA-Z0-9]/g, "_") + " };",
+            "}"
+          ].join("\\n");
+        }
+
+        return [
+          "#!/usr/bin/env bash",
+          "set -euo pipefail",
+          "# Tool: " + name,
+          "# Category: " + category,
+          "# Plan: " + plan,
+          "# Specification: " + specComment,
+          "",
+          "TARGET=\\"\${1:-127.0.0.1}\\"",
+          "LOG_FILE=\\"\${LOG_FILE:-/tmp/devanport-" + name.replace(/[^a-zA-Z0-9._-]/g, "_") + ".log}\\"",
+          "",
+          "log() { printf '[%s] %s\\n' \\"\$(date -Iseconds)\\" \\"\$*\\" | tee -a \\"\$LOG_FILE\\"; }",
+          "",
+          "log \\"Starting DEVANPORT-AI tool: " + name.replace(/"/g, "\\\\"") + " (category: " + category.replace(/"/g, "\\\\"") + ")\\"",
+          "log \\"Target: \$TARGET\\"",
+          "# TODO: Add specific checks/actions for: " + specComment.replace(/"/g, "\\\\""),
+          "log \\"Finished cleanly.\\""
+        ].join("\\n");
+      }
+
+      function renderList() {
+        var tools = loadTools();
+        var plan = detectPlan();
+        if (planBadge) planBadge.textContent = plan;
+        if (countBadge) countBadge.textContent = String(tools.length);
+
+        if (!tools.length) {
+          listWrap.innerHTML = "<div style=\\"color:#a1a1aa;font-size:12px;\\">Няма запазени инструменти още. Генерирай първия си инструмент по-горе.</div>";
+          return;
+        }
+
+        listWrap.innerHTML = "";
+        tools.forEach(function(t, idx){
+          var item = document.createElement("div");
+          item.className = "tool-item";
+
+          var head = document.createElement("div");
+          head.className = "tool-head";
+
+          var title = document.createElement("div");
+          title.innerHTML = "<strong style=\\"#fbbf24;color:#fbbf24;\\">" + escapeHtml(t.name) + "</strong> <span style=\\"color:#38bdf8;font-size:11px;\\">[" + escapeHtml(t.category || "Custom") + " • " + escapeHtml(t.lang || "bash") + "]</span> <span style=\\"color:#a1a1aa;font-size:11px;\\">" + escapeHtml(t.savedAt || "") + "</span>";
+
+          var btns = document.createElement("div");
+          var loadBtn = document.createElement("button");
+          loadBtn.type = "button";
+          loadBtn.textContent = "Зареди в Прегледа";
+          loadBtn.addEventListener("click", function(){
+            latestCode = t.code || "";
+            latestFileName = t.fileName || t.name || "tool.sh";
+            previewBox.textContent = latestCode;
+            if (nameInp) nameInp.value = t.name || "";
+            if (descInp) descInp.value = t.description || "";
+          });
+
+          var delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "warn";
+          delBtn.style.marginLeft = "6px";
+          delBtn.textContent = "Изтрий";
+          delBtn.addEventListener("click", function(){
+            var next = loadTools().filter(function(_, i){ return i !== idx; });
+            saveTools(next);
+            renderList();
+          });
+
+          btns.appendChild(loadBtn);
+          btns.appendChild(delBtn);
+          head.appendChild(title);
+          head.appendChild(btns);
+
+          var codePre = document.createElement("pre");
+          codePre.style.maxHeight = "160px";
+          codePre.textContent = t.code || "";
+
+          item.appendChild(head);
+          item.appendChild(codePre);
+          listWrap.appendChild(item);
+        });
+      }
+
+      function escapeHtml(s) {
+        return String(s || "").replace(/[&<>"']/g, function(m){
+          return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\\"": "&quot;", "'": "&#39;" })[m];
+        });
+      }
+
+      genBtn.addEventListener("click", function(){
+        var rawName = (nameInp && nameInp.value || "").trim();
+        var lang = langSel ? langSel.value : "bash";
+        var cat = catSel ? catSel.value : "Custom Security & Audit";
+        var desc = (descInp && descInp.value || "").trim();
+        var plan = detectPlan();
+
+        var baseName = rawName || ("devanport-tool-" + (loadTools().length + 1) + extForLang(lang));
+        var fileName = /\\.[a-z0-9]+$/i.test(baseName) ? baseName : (baseName + extForLang(lang));
+        var code = buildProfessionalCode(baseName, lang, cat, desc, plan);
+
+        latestCode = code;
+        latestFileName = fileName;
+        previewBox.textContent = code;
+
+        var tools = loadTools();
+        tools.unshift({
+          id: "tool_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+          name: baseName,
+          fileName: fileName,
+          lang: lang,
+          category: cat,
+          description: desc,
+          plan: plan,
+          code: code,
+          savedAt: new Date().toLocaleString()
+        });
+        saveTools(tools.slice(0, 100));
+        renderList();
+      });
+
+      copyBtn.addEventListener("click", function(){
+        var txt = latestCode || previewBox.textContent || "";
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).catch(function(){});
+        }
+      });
+
+      dlBtn.addEventListener("click", function(){
+        var txt = latestCode || previewBox.textContent || "";
+        var blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = latestFileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+      });
+
+      clrBtn.addEventListener("click", function(){
+        saveTools([]);
+        renderList();
+      });
+
+      renderList();
+    })();
+  </script>
+</body>
+</html>`;
+
+fs.writeFileSync(path.join(pubDir, "devanport-studio.html"), devHtml, "utf8");
+
+// Link saved DEVANPORT-AI tools into /kali-root.html so they appear as working custom tools inside the console
+const kaliPath = path.join(pubDir, "kali-root.html");
+if (fs.existsSync(kaliPath)) {
+  let k = fs.readFileSync(kaliPath, "utf8");
+  if (!k.includes("id=\"devanportConsoleToolsBridge\"")) {
+    const bridgeBlock = `
+<section id="devanportConsoleToolsBridge" style="max-width:960px;margin:16px auto;padding:14px;border:1px solid #38bdf8;border-radius:8px;background:#111115;color:#f4f4f5;font-family:monospace;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+    <h3 style="margin:0;color:#38bdf8;">DEVANPORT-AI Инструменти в Конзолата</h3>
+    <a href="/devanport-studio.html" style="color:#fbbf24;font-size:12px;">Отвори DEVANPORT-AI Studio -&gt;</a>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+    <select id="consoleCustomToolSel" style="flex:1;min-width:220px;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;"></select>
+    <button type="button" id="consoleRunCustomToolBtn" style="padding:7px 12px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:bold;cursor:pointer;">Изпълни / Покажи Инструмента</button>
+  </div>
+  <pre id="consoleCustomToolOut" style="background:#09090b;border:1px solid #27272a;padding:10px;border-radius:6px;max-height:220px;overflow:auto;white-space:pre-wrap;">Зареждане на инструментите от DEVANPORT-AI...</pre>
+</section>
+<script>
+  (function(){
+    var key = "marauder_devanport_saved_tools_v1";
+    var sel = document.getElementById("consoleCustomToolSel");
+    var btn = document.getElementById("consoleRunCustomToolBtn");
+    var out = document.getElementById("consoleCustomToolOut");
+    if (!sel || !btn || !out) return;
+    function load(){ try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch(_){ return []; } }
+    function refresh(){
+      var arr = load();
+      sel.innerHTML = "";
+      if (!arr.length) {
+        var opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Няма създадени инструменти в DEVANPORT-AI";
+        sel.appendChild(opt);
+        out.textContent = "Създай нов инструмент в /devanport-studio.html и той ще се появи тук.";
+        return;
+      }
+      arr.forEach(function(t, i){
+        var opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = (t.name || "tool") + " [" + (t.category || "Custom") + "]";
+        sel.appendChild(opt);
+      });
+    }
+    btn.addEventListener("click", function(){
+      var arr = load();
+      var idx = parseInt(sel.value, 10);
+      if (isNaN(idx) || !arr[idx]) return;
+      var t = arr[idx];
+      out.textContent = "=== ИНСТРУМЕНТ: " + t.name + " (" + (t.lang || "bash") + ") ===\\n" + (t.code || "");
+    });
+    window.addEventListener("storage", refresh);
+    refresh();
+  })();
+</script>`;
+    k = k.includes("</body>") ? k.replace("</body>", bridgeBlock + "\n</body>") : (k + bridgeBlock);
+    fs.writeFileSync(kaliPath, k, "utf8");
+  }
+}
+
+console.log("DEVANPORT_FULL_BUILD_OK");

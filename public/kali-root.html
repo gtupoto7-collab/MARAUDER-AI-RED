@@ -1619,5 +1619,54 @@ echo "Running tool: " + rawName.replace(/"/g, "") + ""
     render();
   })();
 </script>
+
+<section id="devanportConsoleToolsBridge" style="max-width:960px;margin:16px auto;padding:14px;border:1px solid #38bdf8;border-radius:8px;background:#111115;color:#f4f4f5;font-family:monospace;">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+    <h3 style="margin:0;color:#38bdf8;">DEVANPORT-AI Инструменти в Конзолата</h3>
+    <a href="/devanport-studio.html" style="color:#fbbf24;font-size:12px;">Отвори DEVANPORT-AI Studio -&gt;</a>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+    <select id="consoleCustomToolSel" style="flex:1;min-width:220px;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;"></select>
+    <button type="button" id="consoleRunCustomToolBtn" style="padding:7px 12px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:bold;cursor:pointer;">Изпълни / Покажи Инструмента</button>
+  </div>
+  <pre id="consoleCustomToolOut" style="background:#09090b;border:1px solid #27272a;padding:10px;border-radius:6px;max-height:220px;overflow:auto;white-space:pre-wrap;">Зареждане на инструментите от DEVANPORT-AI...</pre>
+</section>
+<script>
+  (function(){
+    var key = "marauder_devanport_saved_tools_v1";
+    var sel = document.getElementById("consoleCustomToolSel");
+    var btn = document.getElementById("consoleRunCustomToolBtn");
+    var out = document.getElementById("consoleCustomToolOut");
+    if (!sel || !btn || !out) return;
+    function load(){ try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch(_){ return []; } }
+    function refresh(){
+      var arr = load();
+      sel.innerHTML = "";
+      if (!arr.length) {
+        var opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Няма създадени инструменти в DEVANPORT-AI";
+        sel.appendChild(opt);
+        out.textContent = "Създай нов инструмент в /devanport-studio.html и той ще се появи тук.";
+        return;
+      }
+      arr.forEach(function(t, i){
+        var opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = (t.name || "tool") + " [" + (t.category || "Custom") + "]";
+        sel.appendChild(opt);
+      });
+    }
+    btn.addEventListener("click", function(){
+      var arr = load();
+      var idx = parseInt(sel.value, 10);
+      if (isNaN(idx) || !arr[idx]) return;
+      var t = arr[idx];
+      out.textContent = "=== ИНСТРУМЕНТ: " + t.name + " (" + (t.lang || "bash") + ") ===\n" + (t.code || "");
+    });
+    window.addEventListener("storage", refresh);
+    refresh();
+  })();
+</script>
 </body>
 </html>
