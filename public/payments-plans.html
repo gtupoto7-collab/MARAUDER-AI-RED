@@ -240,5 +240,209 @@
 })();
 </script>
 
+<!-- =============== BEGIN RED-BANK SUITE =============== -->
+<section id="red-bank-suite" style="margin:14px auto;max-width:980px;padding:14px;border:1px solid #facc15;border-radius:12px;background:#090c13;color:#f1f5f9;font-family:Consolas,'Segoe UI',sans-serif;">
+  <style>
+    .rb-card { border:1px solid #1e293b; border-radius:10px; padding:12px; margin-bottom:12px; background:#0d1320; }
+    .rb-title { font-weight:700; font-size:14px; color:#facc15; margin-bottom:8px; }
+    .rb-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:8px; }
+    .rb-btn { background:#172136; color:#f8fafc; border:1px solid #38bdf8; border-radius:6px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:5px; }
+    .rb-btn.ok { border-color:#22c55e; color:#86efac; }
+    .rb-btn.gold { border-color:#eab308; color:#fde047; }
+    .rb-btn.red { border-color:#ef4444; color:#fca5a5; }
+    .rb-status { margin-top:8px; font-size:12px; color:#93c5fd; }
+    .rb-nfc-card { border:1px solid #facc15; border-radius:12px; padding:14px; background:linear-gradient(135deg,#171426 0%,#0b1526 60%,#1a0d1c 100%); box-shadow:0 8px 24px rgba(0,0,0,0.55); margin-top:8px; }
+    .rb-nfc-chip { display:inline-block; padding:3px 8px; border-radius:5px; border:1px solid #facc15; color:#fde047; font-size:11px; font-weight:700; }
+  </style>
+
+  <!-- METODI ZA PLASHTANE: GOOGLE PLAY / BANKA / TELEFONEN NOMER PREZ GOOGLE -> KEPER & PAYPAL -->
+  <div class="rb-card" id="rb-pay-methods">
+    <div class="rb-title">PLASHTANIQ — GOOGLE PLAY, BANKA &amp; TELEFONEN NOMER (PREZ GOOGLE) -> KEPER / PAYPAL</div>
+    <div class="rb-grid">
+      <button type="button" class="rb-btn ok rb-pay-pick" data-method="Google Play">Google Play plashtane</button>
+      <button type="button" class="rb-btn rb-pay-pick" data-method="Banka">Banka (bankov prevod / karta)</button>
+      <button type="button" class="rb-btn gold rb-pay-pick" data-method="Telefonen nomer prez Google">Telefonen nomer prez Google (Carrier Billing)</button>
+      <a href="https://www.paypal.com/ncp/payment/RPTDVVN5XA4XC" target="_blank" rel="noopener noreferrer" class="rb-btn gold">PayPal akaunt</a>
+      <button type="button" class="rb-btn ok" id="rb-keper-route">Keper (Keplr) nasochvane</button>
+    </div>
+    <div id="rb-pay-status" class="rb-status">Izberi metod za plashtane (sredstvata se nasochvat kum Keper / PayPal spored konfiguraciqta).</div>
+  </div>
+
+  <!-- REALEN MODUL PORTOFEIL RED-BANK + SMETKA + CRYPTO + VERIFIKACIQ + VIRTUALNA NFC KARTA -->
+  <div class="rb-card" id="rb-wallet-box">
+    <div class="rb-title">RED-BANK — PORTOFEIL, SMETKA, CRYPTO, VERIFIKACIQ &amp; VIRTUALNA NFC KARTA</div>
+    <div class="rb-grid">
+      <input id="rb-holder-name" type="text" placeholder="Pulno ime na potrebitelq (napr. Ivan Petrov)" />
+      <input id="rb-iban-acc" type="text" placeholder="Smetka / IBAN / ID (napr. BG80RBOS9155...)" />
+      <input id="rb-crypto-addr" type="text" placeholder="Crypto adres / Wallet (TON / Keplr / BTC)" />
+      <input id="rb-phone-num" type="text" placeholder="Telefonen nomer (napr. +35988...)" />
+    </div>
+
+    <div class="rb-grid" style="margin-top:8px;">
+      <label style="font-size:12px;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rb-ver-id" /> Verifikaciq: Profil / Identichnost</label>
+      <label style="font-size:12px;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rb-ver-pay" /> Verifikaciq: PayPal / Keper</label>
+      <label style="font-size:12px;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rb-ver-gplay" /> Verifikaciq: Google Play / Telefon</label>
+      <label style="font-size:12px;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="rb-ver-crypto" /> Verifikaciq: Crypto Portfeil</label>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">
+      <button type="button" class="rb-btn ok" id="rb-save-wallet">Suzdai / Zapazi RED-BANK Portfeil</button>
+      <button type="button" class="rb-btn gold" id="rb-gen-nfc">Generirai Virtualna NFC Karta</button>
+      <button type="button" class="rb-btn" id="rb-copy-nfc">Kopirai NFC Token</button>
+      <button type="button" class="rb-btn red" id="rb-reset-wallet">Izchisti Portfeil</button>
+    </div>
+
+    <div class="rb-nfc-card" id="rb-nfc-preview">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <strong style="color:#facc15;font-size:14px;">RED-BANK VIRTUAL NFC</strong>
+        <span class="rb-nfc-chip" id="rb-nfc-badge">NFC READY</span>
+      </div>
+      <div id="rb-card-holder" style="margin-top:8px;font-size:13px;color:#f8fafc;">Pritejatel: NEZADADEN</div>
+      <div id="rb-card-iban" style="margin-top:4px;font-size:12px;color:#93c5fd;">Smetka: -</div>
+      <div id="rb-card-crypto" style="margin-top:4px;font-size:12px;color:#86efac;">Crypto: -</div>
+      <div id="rb-card-nfc-id" style="margin-top:6px;font-size:12px;color:#fde047;">NFC Token: NFC-RB-0000-0000</div>
+      <div id="rb-card-ver-sum" style="margin-top:4px;font-size:11px;color:#cbd5e1;">Verifikacii: 0/4</div>
+    </div>
+
+    <div id="rb-status" class="rb-status">RED-BANK portfeilut e gotov za konfiguraciq.</div>
+  </div>
+
+  <script id="RED_BANK_SUITE_JS">
+  (function(){
+    "use strict";
+    const RB_KEY = "marauder_red_bank_wallet_v1";
+
+    function defaultWallet() {
+      return {
+        holder: "",
+        iban: "",
+        crypto: "",
+        phone: "",
+        method: "Google Play",
+        nfcToken: "NFC-RB-" + Math.random().toString(36).slice(2, 6).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase(),
+        ver: { id: false, pay: false, gplay: false, crypto: false }
+      };
+    }
+
+    function loadWallet() {
+      try {
+        const d = JSON.parse(localStorage.getItem(RB_KEY) || "null");
+        return Object.assign(defaultWallet(), d || {}, { ver: Object.assign(defaultWallet().ver, (d && d.ver) || {}) });
+      } catch(_) {
+        return defaultWallet();
+      }
+    }
+
+    let wallet = loadWallet();
+
+    function saveWallet() {
+      try { localStorage.setItem(RB_KEY, JSON.stringify(wallet)); } catch(_) {}
+    }
+
+    function renderWallet() {
+      const hEl = document.getElementById("rb-holder-name");
+      const iEl = document.getElementById("rb-iban-acc");
+      const cEl = document.getElementById("rb-crypto-addr");
+      const pEl = document.getElementById("rb-phone-num");
+      if (hEl) hEl.value = wallet.holder;
+      if (iEl) iEl.value = wallet.iban;
+      if (cEl) cEl.value = wallet.crypto;
+      if (pEl) pEl.value = wallet.phone;
+
+      if (document.getElementById("rb-ver-id")) document.getElementById("rb-ver-id").checked = Boolean(wallet.ver.id);
+      if (document.getElementById("rb-ver-pay")) document.getElementById("rb-ver-pay").checked = Boolean(wallet.ver.pay);
+      if (document.getElementById("rb-ver-gplay")) document.getElementById("rb-ver-gplay").checked = Boolean(wallet.ver.gplay);
+      if (document.getElementById("rb-ver-crypto")) document.getElementById("rb-ver-crypto").checked = Boolean(wallet.ver.crypto);
+
+      const count = ["id", "pay", "gplay", "crypto"].filter(k => wallet.ver[k]).length;
+      if (document.getElementById("rb-card-holder")) document.getElementById("rb-card-holder").textContent = "Pritejatel: " + (wallet.holder || "NEZADADEN");
+      if (document.getElementById("rb-card-iban")) document.getElementById("rb-card-iban").textContent = "Smetka: " + (wallet.iban || "-");
+      if (document.getElementById("rb-card-crypto")) document.getElementById("rb-card-crypto").textContent = "Crypto: " + (wallet.crypto || "-");
+      if (document.getElementById("rb-card-nfc-id")) document.getElementById("rb-card-nfc-id").textContent = "NFC Token: " + wallet.nfcToken;
+      if (document.getElementById("rb-card-ver-sum")) document.getElementById("rb-card-ver-sum").textContent = "Verifikacii: " + count + "/4 | Metod: " + wallet.method;
+    }
+
+    document.querySelectorAll(".rb-pay-pick").forEach(btn => {
+      btn.addEventListener("click", () => {
+        wallet.method = btn.getAttribute("data-method") || "Google Play";
+        saveWallet();
+        renderWallet();
+        const ps = document.getElementById("rb-pay-status");
+        if (ps) ps.textContent = "Izbran metod: " + wallet.method + " -> nasochvane kum Keper / PayPal.";
+      });
+    });
+
+    const kpBtn = document.getElementById("rb-keper-route");
+    if (kpBtn) {
+      kpBtn.addEventListener("click", () => {
+        wallet.method = "Keper (Keplr)";
+        saveWallet();
+        renderWallet();
+        const ps = document.getElementById("rb-pay-status");
+        if (ps) ps.textContent = "Aktivno nasochvane kum Keper (Keplr) i PayPal.";
+      });
+    }
+
+    const saveBtn = document.getElementById("rb-save-wallet");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", () => {
+        wallet.holder = (document.getElementById("rb-holder-name").value || "").trim();
+        wallet.iban = (document.getElementById("rb-iban-acc").value || "").trim();
+        wallet.crypto = (document.getElementById("rb-crypto-addr").value || "").trim();
+        wallet.phone = (document.getElementById("rb-phone-num").value || "").trim();
+        wallet.ver = {
+          id: Boolean(document.getElementById("rb-ver-id").checked),
+          pay: Boolean(document.getElementById("rb-ver-pay").checked),
+          gplay: Boolean(document.getElementById("rb-ver-gplay").checked),
+          crypto: Boolean(document.getElementById("rb-ver-crypto").checked)
+        };
+        saveWallet();
+        renderWallet();
+        const st = document.getElementById("rb-status");
+        if (st) st.textContent = "RED-BANK portfeilut e zapazen lokalno.";
+      });
+    }
+
+    const genNfcBtn = document.getElementById("rb-gen-nfc");
+    if (genNfcBtn) {
+      genNfcBtn.addEventListener("click", () => {
+        wallet.nfcToken = "NFC-RB-" + Math.random().toString(36).slice(2, 6).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+        saveWallet();
+        renderWallet();
+        const st = document.getElementById("rb-status");
+        if (st) st.textContent = "Generirana nova virtualna NFC karta: " + wallet.nfcToken;
+      });
+    }
+
+    const copyNfcBtn = document.getElementById("rb-copy-nfc");
+    if (copyNfcBtn) {
+      copyNfcBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(wallet.nfcToken);
+          const st = document.getElementById("rb-status");
+          if (st) st.textContent = "NFC tokenut e kopiran: " + wallet.nfcToken;
+        } catch(_) {
+          const st = document.getElementById("rb-status");
+          if (st) st.textContent = "Kopiraneto ne uspq.";
+        }
+      });
+    }
+
+    const resetBtn = document.getElementById("rb-reset-wallet");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        wallet = defaultWallet();
+        saveWallet();
+        renderWallet();
+        const st = document.getElementById("rb-status");
+        if (st) st.textContent = "RED-BANK portfeilut e izchisten.";
+      });
+    }
+
+    renderWallet();
+  })();
+  </script>
+</section>
+<!-- =============== END RED-BANK SUITE =============== -->
 </body>
 </html>
