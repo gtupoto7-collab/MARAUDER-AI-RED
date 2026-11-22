@@ -7,6 +7,6 @@
     "descBg": "Бърза проверка на цел и локални интерфейси.",
     "infoBg": "Връща подадената цел и IP адресите на интерфейса.",
     "sample": "bash /mnt/c/Users/gtupo/marauder-ai-web/tools/custom/net-check.sh {target}",
-    "installedAt": "2026-11-22T09:22:26.001Z"
+    "installedAt": "2026-11-22T09:23:06.711Z"
   }
 ]
