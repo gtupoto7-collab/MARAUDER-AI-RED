@@ -549,3 +549,122 @@ async function callLocalOllamaSoftware(promptText, modelName = process.env.OLLAM
     clearTimeout(timeout);
   }
 }
+
+const crypto = require('crypto');
+
+const secretRooms = new Map();
+const SECRET_ROOM_TTL_MS = 5 * 60 * 1000;
+
+function cleanupExpiredRooms() {
+  const now = Date.now();
+  for (const [token, room] of secretRooms.entries()) {
+    if (now - room.lastActivity > SECRET_ROOM_TTL_MS) {
+      secretRooms.delete(token);
+    }
+  }
+}
+
+function findRoomByTokenOrPin(query) {
+  cleanupExpiredRooms();
+  const clean = String(query || "").trim();
+  if (!clean) return null;
+  if (secretRooms.has(clean)) return secretRooms.get(clean);
+  for (const room of secretRooms.values()) {
+    if (room.pin === clean || room.token.startsWith(clean)) return room;
+  }
+  return null;
+}
+
+app.post("/api/secret-room/create", (req, res) => {
+  cleanupExpiredRooms();
+  const token = crypto.randomBytes(20).toString("hex");
+  const pin = String(Math.floor(100000 + Math.random() * 900000));
+  const room = {
+    token,
+    pin,
+    mode: (req.body && req.body.mode) || "5m",
+    chatType: (req.body && req.body.chatType) || "dm",
+    locked: false,
+    participants: 1,
+    messages: [],
+    lastActivity: Date.now()
+  };
+  secretRooms.set(token, room);
+  return res.json({ ok: true, token, pin, participants: room.participants });
+});
+
+app.post("/api/secret-room/join", (req, res) => {
+  const { codeOrToken } = req.body || {};
+  const room = findRoomByTokenOrPin(codeOrToken);
+  if (!room) {
+    return res.status(404).json({ ok: false, error: "Стаята не е намерена или е изтекла." });
+  }
+  if (room.locked) {
+    return res.status(403).json({ ok: false, error: "Стаята е заключена." });
+  }
+  room.participants = Math.min(2, (room.participants || 1) + 1);
+  room.lastActivity = Date.now();
+  return res.json({
+    ok: true,
+    token: room.token,
+    pin: room.pin,
+    participants: room.participants,
+    messages: room.messages
+  });
+});
+
+app.get("/api/secret-room/poll", (req, res) => {
+  const room = findRoomByTokenOrPin(req.query.token || req.query.pin || "");
+  if (!room) {
+    return res.status(404).json({ ok: false, error: "Стаята не съществува или е изтрита." });
+  }
+  room.lastActivity = Date.now();
+  return res.json({
+    ok: true,
+    token: room.token,
+    pin: room.pin,
+    locked: room.locked,
+    participants: room.participants,
+    messages: room.messages
+  });
+});
+
+app.post("/api/secret-room/send", (req, res) => {
+  const { token, sender, text } = req.body || {};
+  const room = findRoomByTokenOrPin(token);
+  if (!room) {
+    return res.status(404).json({ ok: false, error: "Стаята не е активна." });
+  }
+  if (room.locked) {
+    return res.status(403).json({ ok: false, error: "Стаята е заключена." });
+  }
+  const cleanText = String(text || "").trim();
+  if (!cleanText) {
+    return res.status(400).json({ ok: false, error: "Празно съобщение." });
+  }
+  const msg = {
+    id: crypto.randomBytes(6).toString("hex"),
+    sender: String(sender || "Анонимен").slice(0, 24),
+    text: cleanText.slice(0, 4000),
+    ts: Date.now()
+  };
+  room.messages.push(msg);
+  room.lastActivity = Date.now();
+  return res.json({ ok: true, message: msg, messages: room.messages });
+});
+
+app.post("/api/secret-room/lock", (req, res) => {
+  const { token, locked } = req.body || {};
+  const room = findRoomByTokenOrPin(token);
+  if (!room) return res.status(404).json({ ok: false, error: "Стаята не е намерена." });
+  room.locked = Boolean(locked);
+  room.lastActivity = Date.now();
+  return res.json({ ok: true, locked: room.locked });
+});
+
+app.post("/api/secret-room/delete", (req, res) => {
+  const { token } = req.body || {};
+  const room = findRoomByTokenOrPin(token);
+  if (room) secretRooms.delete(room.token);
+  return res.json({ ok: true });
+});
