@@ -1509,6 +1509,53 @@
 
     saveBtn.parentElement.insertBefore(b3001, saveBtn);
     saveBtn.parentElement.insertBefore(b3000, b3001);
+
+  const vpnSel = document.createElement("select");
+  vpnSel.id = "selVpnTelemetryPlatform";
+  vpnSel.style.cssText = "padding:7px 9px;border-radius:6px;border:1px solid #f59e0b;background:#18181b;color:#fef3c7;font-size:12px;";
+  [["auto","VPN+AntiTel: Auto"],["windows","Windows (DiagTrack/dmwap)"],["android","Android (ADB/Privacy)"],["ios","iOS (VPN & Steps)"]].forEach(([v,lbl]) => {
+    const o = document.createElement("option"); o.value = v; o.textContent = lbl; vpnSel.appendChild(o);
+  });
+
+  const vpnApply = document.createElement("select");
+  vpnApply.id = "selVpnTelemetryApply";
+  vpnApply.style.cssText = "padding:7px 9px;border-radius:6px;border:1px solid #a855f7;background:#18181b;color:#f3e8ff;font-size:12px;";
+  [["false","Само проверка"],["true","Приложи (Apply)"]].forEach(([v,lbl]) => {
+    const o = document.createElement("option"); o.value = v; o.textContent = lbl; vpnApply.appendChild(o);
+  });
+
+  const bVpn = document.createElement("button");
+  bVpn.type = "button";
+  bVpn.id = "btnVpnAntiTelemetry";
+  bVpn.textContent = "VPN & Anti-Telemetry";
+  bVpn.style.cssText = "padding:7px 11px;border-radius:6px;border:1px solid #f59e0b;background:#78350f;color:#fff;font-weight:700;cursor:pointer;font-size:12px;";
+  bVpn.addEventListener("click", async () => {
+    const plat = vpnSel.value || "auto";
+    const apply = vpnApply.value === "true";
+    const base = (typeof getBackendUrl === "function" ? getBackendUrl() : "") || "http://127.0.0.1:3000";
+    const vpnInfo = "VPN ЗАЩИТА: VPN тунелът криптира трафика до VPN сървъра и прикрива IP адреса в мрежата, но сам по себе си не спира вградена телеметрия на ОС или тракери в скриптове. Пълната защита изисква спиране на телеметрията + чисти скриптове + активен VPN.";
+    const outEl = document.getElementById("krOutput") || document.getElementById("alOutput");
+    const writeLog = (txt) => {
+      if (outEl) { outEl.textContent += "\n" + txt; outEl.scrollTop = outEl.scrollHeight; }
+      else { console.log(txt); }
+    };
+    writeLog("[VPN & ANTI-TELEMETRY] Платформа: " + plat + " | Apply: " + apply + "\n" + vpnInfo);
+    try {
+      const r = await fetch(base + "/api/kali/telemetry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ platform: plat, apply })
+      });
+      const d = await r.json();
+      writeLog(d.output || JSON.stringify(d, null, 2));
+    } catch (e) {
+      writeLog("[VPN & ANTI-TELEMETRY] Грешка при връзка с " + base + "/api/kali/telemetry: " + (e && e.message ? e.message : e));
+    }
+  });
+
+  saveBtn.parentElement.appendChild(vpnSel);
+  saveBtn.parentElement.appendChild(vpnApply);
+  saveBtn.parentElement.appendChild(bVpn);
   }
 })();
 </script>
