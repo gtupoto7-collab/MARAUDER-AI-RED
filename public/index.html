@@ -4495,5 +4495,10 @@ window.addEventListener("DOMContentLoaded", function() {
   setTimeout(keepMainPageClean, 250);
 })();
 </script>
+<style id="marauderLeftPanelClipFix">
+  #marauderMainBotCard, #marauderMainBotCard * { min-width: 0; max-width: 100%; }
+  #marauderMainBotCard { overflow-wrap: anywhere; word-break: break-word; }
+  #marauderMainBotCard .m-dl-btn { white-space: normal; text-align: left; }
+</style>
 </body>
 </html>
