@@ -1473,5 +1473,44 @@
   }
 })();
 </script>
+
+<script id="marauderQuickBackendButtonsV1">
+(function(){
+  const STORAGE_KEY = "marauder_api_base_v1";
+  const saveBtn = document.getElementById("btnSaveApiBase");
+  const apiInput = document.getElementById("marauderApiBaseInput");
+
+  function setBackendUrl(url) {
+    const clean = String(url || "").trim().replace(/\/+$/, "");
+    if (!clean) return;
+    localStorage.setItem(STORAGE_KEY, clean);
+    window.__MARAUDER_API_BASE__ = clean;
+    if (apiInput) apiInput.value = clean;
+    const desc = document.getElementById("marauderConsoleModeDesc");
+    if (desc) {
+      desc.textContent = "Активен API бекенд: " + clean + " (превключено с бърз бутон).";
+    }
+  }
+
+  if (saveBtn && saveBtn.parentElement && !document.getElementById("btnQuickLaptop3000")) {
+    const b3000 = document.createElement("button");
+    b3000.type = "button";
+    b3000.id = "btnQuickLaptop3000";
+    b3000.textContent = "Laptop :3000";
+    b3000.style.cssText = "padding:7px 11px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:700;cursor:pointer;font-size:12px;";
+    b3000.addEventListener("click", () => setBackendUrl("http://127.0.0.1:3000"));
+
+    const b3001 = document.createElement("button");
+    b3001.type = "button";
+    b3001.id = "btnQuickNetHunter3001";
+    b3001.textContent = "NetHunter :3001";
+    b3001.style.cssText = "padding:7px 11px;border-radius:6px;border:1px solid #38bdf8;background:#0c4a6e;color:#fff;font-weight:700;cursor:pointer;font-size:12px;";
+    b3001.addEventListener("click", () => setBackendUrl("http://127.0.0.1:3001"));
+
+    saveBtn.parentElement.insertBefore(b3001, saveBtn);
+    saveBtn.parentElement.insertBefore(b3000, b3001);
+  }
+})();
+</script>
 </body>
 </html>
