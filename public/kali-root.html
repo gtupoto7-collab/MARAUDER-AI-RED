@@ -509,5 +509,76 @@
   if (uBtn) uBtn.addEventListener("click", function() { sendGit("push"); });
 })();
 </script>
+
+<!-- MARAUDER_MULTI_TARGET_FIELDS -->
+<div class="kr-row" id="krExtraInputsRow">
+  <input type="text" id="krUrl" placeholder="Link (URL): https://example.com" />
+  <input type="text" id="krPhone" placeholder="Телефон / номер: +359888123456" />
+  <input type="text" id="krOptions" placeholder="Опции / флагове: -sV -T4" />
+</div>
+<script id="marauderMultiTargetScript">
+(function() {
+  var targetEl = document.getElementById("krTarget");
+  var urlEl = document.getElementById("krUrl");
+  var phoneEl = document.getElementById("krPhone");
+  var optsEl = document.getElementById("krOptions");
+  var cmdEl = document.getElementById("krCmd");
+  var execBtn = document.getElementById("krExecBtn");
+  var outEl = document.getElementById("krOutput");
+  if (targetEl) targetEl.placeholder = "IP адрес или домейн (напр. 45.33.32.156 или scanme.nmap.org)";
+  function buildFinalCmd(rawCmd) {
+    var c = (rawCmd || (cmdEl ? cmdEl.value : "") || "uname -a").trim();
+    var tgt = (targetEl && targetEl.value ? targetEl.value.trim() : "scanme.nmap.org");
+    var lnk = (urlEl && urlEl.value ? urlEl.value.trim() : "");
+    var phn = (phoneEl && phoneEl.value ? phoneEl.value.trim() : "");
+    var ops = (optsEl && optsEl.value ? optsEl.value.trim() : "");
+    var hostFromUrl = lnk ? lnk.replace(/^https?:\/\//i, "").split("/")[0] : "";
+    var effectiveTarget = tgt || hostFromUrl || "scanme.nmap.org";
+    var effectiveUrl = lnk || ("https://" + effectiveTarget);
+    c = c.replace(/\{target\}/g, effectiveTarget).replace(/\{url\}/g, effectiveUrl).replace(/\{phone\}/g, phn);
+    if (lnk && /^https?:\/\//i.test(lnk) && c.indexOf(lnk) === -1) {
+      c = c.replace(/https?:\/\/[^\s]+/g, lnk);
+    }
+    if (ops && c.indexOf(ops) === -1) {
+      c = c + " " + ops;
+    }
+    return { cmd: c, target: effectiveTarget, url: lnk, phone: phn, options: ops };
+  }
+  if (execBtn && !execBtn.dataset.multiBound) {
+    execBtn.dataset.multiBound = "1";
+    execBtn.addEventListener("click", async function(ev) {
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      var info = buildFinalCmd(cmdEl ? cmdEl.value : "");
+      if (outEl) {
+        outEl.textContent += "\nmarauder@linux-console:~# " + info.cmd + (info.phone ? " [тел: " + info.phone + "]" : "");
+        outEl.scrollTop = outEl.scrollHeight;
+      }
+      try {
+        var r = await fetch("/api/kali/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ command: info.cmd, target: info.target, url: info.url, phone: info.phone, options: "" })
+        });
+        var txt = await r.text();
+        if (outEl) {
+          try {
+            var j = JSON.parse(txt);
+            outEl.textContent += "\n" + (j.output || JSON.stringify(j));
+          } catch (pe) {
+            outEl.textContent += "\n[ОТГОВОР] " + txt.slice(0, 300);
+          }
+          outEl.scrollTop = outEl.scrollHeight;
+        }
+      } catch (e) {
+        if (outEl) {
+          outEl.textContent += "\n[ГРЕШКА] " + (e && e.message ? e.message : "Network error");
+          outEl.scrollTop = outEl.scrollHeight;
+        }
+      }
+    }, true);
+  }
+})();
+</script>
 </body>
 </html>
