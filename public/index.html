@@ -424,6 +424,14 @@
         </div>
       </div>
 
+      <div id="marauderTopControls" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 10px;">
+        <button id="marauderTopVersionsBtn" type="button" onclick="openMarauderVersionsModal()" style="background:linear-gradient(135deg,#190916,#2c0d24);color:#00f5d4;border:1px solid #00f5d4;border-radius:8px;padding:6px 10px;font-weight:700;font-size:12px;cursor:pointer;">
+          MARAUDER-AI 4.8 FENIX / 5.3 / 6.2
+        </button>
+        <button id="devanportTopBtn" type="button" onclick="openDevanportPage()" style="background:linear-gradient(135deg,#1d0a12,#3a0e22);color:#ff2a55;border:1px solid #ff2a55;border-radius:8px;padding:6px 10px;font-weight:700;font-size:12px;cursor:pointer;">
+          DEVANPORT-AI (CODE STUDIO)
+        </button>
+      </div>
       <div class="symbol-strip" aria-hidden="true">
         <span>💀</span>
         <span>⚡</span>
@@ -971,5 +979,477 @@
       });
     })();
   </script>
+
+<!-- MARAUDER-AI VERSIONS & DEVANPORT-AI ADDON -->
+<div id="marauderVersionsModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(5,5,10,0.88);backdrop-filter:blur(4px);padding:16px;overflow:auto;">
+  <div style="max-width:780px;margin:24px auto;background:#0d0b14;border:1px solid #00f5d4;border-radius:14px;padding:18px;color:#f4f4f8;box-shadow:0 0 28px rgba(0,245,212,0.18);">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
+      <div>
+        <div style="font-size:18px;font-weight:800;color:#00f5d4;">MARAUDER-AI — ИЗБОР НА ВЕРСИЯ</div>
+        <div style="font-size:12px;color:#b5b3c7;">4.8 FENIX (безплатна + ключ RST-AI-001) • 5.3 SECURITY (22 EUR) • 6.2 HACKER (33 EUR)</div>
+      </div>
+      <button type="button" onclick="closeMarauderVersionsModal()" style="background:#26101b;color:#ff6b88;border:1px solid #ff2a55;border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:700;">Затвори</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;">
+      <div style="background:#141021;border:1px solid #00f5d4;border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:#00f5d4;">MARAUDER-AI 4.8 FENIX</div>
+          <div style="font-size:12px;color:#7cf8e7;margin:4px 0 8px;">Цена: БЕЗПЛАТЕН</div>
+          <div style="font-size:12px;color:#d6d4e6;line-height:1.45;">При натискане автоматично генерира и попълва ключ <b>RST-AI-001</b> за ползване на версия 4.8 FENIX.</div>
+        </div>
+        <button type="button" onclick="selectMarauderVersion('4.8 FENIX', true)" style="background:#00f5d4;color:#080810;border:none;border-radius:8px;padding:9px 10px;font-weight:800;cursor:pointer;">Активирай 4.8 FENIX (RST-AI-001)</button>
+      </div>
+
+      <div style="background:#141021;border:1px solid #ffbe0b;border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:#ffbe0b;">MARAUDER-AI 5.3 SECURITY</div>
+          <div style="font-size:12px;color:#ffd166;margin:4px 0 8px;">Цена: 22 EUR (RED SOFTWARE TEAM)</div>
+          <div style="font-size:12px;color:#d6d4e6;line-height:1.45;">Пълен пакет с всички останали ключове за защита и одит, закупува се за <b>22 EUR</b> от сайта на RED SOFTWARE TEAM.</div>
+        </div>
+        <button type="button" onclick="selectMarauderVersion('5.3 SECURITY', false)" style="background:#ffbe0b;color:#111;border:none;border-radius:8px;padding:9px 10px;font-weight:800;cursor:pointer;">Избери 5.3 SECURITY (22 EUR)</button>
+      </div>
+
+      <div style="background:#141021;border:1px solid #ff2a55;border-radius:12px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:#ff2a55;">MARAUDER-AI 6.2 HACKER</div>
+          <div style="font-size:12px;color:#ff758f;margin:4px 0 8px;">Абонамент: 33 EURO</div>
+          <div style="font-size:12px;color:#d6d4e6;line-height:1.45;">Разширен абонаментен достъп за <b>33 EURO</b> с активиране на профил MARAUDER-AI 6.2 HACKER.</div>
+        </div>
+        <button type="button" onclick="selectMarauderVersion('6.2 HACKER', false)" style="background:#ff2a55;color:#fff;border:none;border-radius:8px;padding:9px 10px;font-weight:800;cursor:pointer;">Избери 6.2 HACKER (33 EUR)</button>
+      </div>
+    </div>
+
+    <div id="marauderVersionStatus" style="margin-top:14px;padding:10px 12px;border-radius:8px;background:#181329;color:#00f5d4;font-size:13px;display:none;"></div>
+  </div>
+</div>
+
+<div id="devanportPageOverlay" style="display:none;position:fixed;inset:0;z-index:10000;background:#090810;overflow:auto;padding:18px;color:#f4f4f8;">
+  <div style="max-width:980px;margin:0 auto;background:#100d1a;border:1px solid #ff2a55;border-radius:14px;padding:20px;box-shadow:0 0 32px rgba(255,42,85,0.2);">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div>
+        <div style="font-size:20px;font-weight:900;color:#ff2a55;">DEVANPORT-AI — АВТОМАТИЗИРАНА СИСТЕМА ЗА ПРОГРАМИРАНЕ</div>
+        <div style="font-size:12px;color:#b8b6cc;">Генериране на готов софтуерен код на всички езици + празни шаблони за скриптове</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button type="button" onclick="loadEmptyScriptTemplate()" style="background:#1a152b;color:#00f5d4;border:1px solid #00f5d4;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer;">Празен шаблон за скрипт</button>
+        <button type="button" onclick="closeDevanportPage()" style="background:#29101a;color:#fff;border:1px solid #ff2a55;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer;">Назад към MARAUDER-AI</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:12px;">
+      <div>
+        <label style="display:block;font-size:12px;font-weight:700;color:#00f5d4;margin-bottom:5px;">Език за програмиране (всички езици)</label>
+        <select id="devLangSelect" onchange="applyLanguagePreset()" style="width:100%;padding:9px 10px;border-radius:8px;background:#171326;color:#fff;border:1px solid #3c355c;">
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript (Node.js / Browser)</option>
+          <option value="typescript">TypeScript</option>
+          <option value="bash">Bash / Shell Script</option>
+          <option value="powershell">PowerShell</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="csharp">C#</option>
+          <option value="java">Java</option>
+          <option value="go">Go</option>
+          <option value="rust">Rust</option>
+          <option value="php">PHP</option>
+          <option value="sql">SQL</option>
+          <option value="html">HTML / CSS / JS</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;font-weight:700;color:#00f5d4;margin-bottom:5px;">1. ИМЕ НА SOFTWARE / CODE</label>
+        <input id="devSoftName" type="text" placeholder="Пример: port_audit_tool или auto_backup_agent" style="width:100%;padding:9px 10px;border-radius:8px;background:#171326;color:#fff;border:1px solid #3c355c;" />
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px;">
+      <div>
+        <label style="display:block;font-size:12px;font-weight:700;color:#00f5d4;margin-bottom:5px;">2. ФУНКЦИИ</label>
+        <textarea id="devFunctions" rows="3" placeholder="Изброй функциите (напр. init_config, scan_targets, export_report, handle_errors)..." style="width:100%;padding:9px 10px;border-radius:8px;background:#171326;color:#fff;border:1px solid #3c355c;"></textarea>
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;font-weight:700;color:#00f5d4;margin-bottom:5px;">3. ОПИСВАНЕ НА ФУНКЦИИ (РЕАЛНИ)</label>
+        <textarea id="devFuncDesc" rows="3" placeholder="Опиши реално как работи всяка функция, какви входни данни приема и какво връща..." style="width:100%;padding:9px 10px;border-radius:8px;background:#171326;color:#fff;border:1px solid #3c355c;"></textarea>
+      </div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:#ffbe0b;margin-bottom:5px;">4. ЗАДАВАНЕ НА ТОЧНИ ФУНКЦИИ — КАКВО ДА ПРАВИ SOFTWARE И КАК ДА РАБОТИ</label>
+      <textarea id="devExactBehavior" rows="4" placeholder="Точни инструкции: последователност на изпълнение, логове, обработка на грешки, формати на изход и поведение при старт..." style="width:100%;padding:9px 10px;border-radius:8px;background:#171326;color:#fff;border:1px solid #3c355c;"></textarea>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+      <button type="button" onclick="generateDevanportCode()" style="background:linear-gradient(135deg,#00f5d4,#00bbf9);color:#090912;border:none;border-radius:9px;padding:10px 18px;font-weight:900;cursor:pointer;">ГЕНЕРИРАЙ ГОТОВ КОД</button>
+      <button type="button" onclick="copyDevanportCode()" style="background:#1f1933;color:#fff;border:1px solid #7268a6;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer;">Копирай кода</button>
+      <button type="button" onclick="downloadDevanportCode()" style="background:#1f1933;color:#ffbe0b;border:1px solid #ffbe0b;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer;">Свали файл</button>
+    </div>
+
+    <div>
+      <label style="display:block;font-size:12px;font-weight:700;color:#00f5d4;margin-bottom:6px;">ГОТОВ КОД НА SOFTWARE</label>
+      <pre id="devGeneratedCode" style="background:#06050b;border:1px solid #2b2542;border-radius:10px;padding:14px;min-height:240px;max-height:460px;overflow:auto;font-family:Consolas,Monaco,monospace;font-size:12.5px;line-height:1.5;color:#e6f9f5;white-space:pre;"></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  window.openMarauderVersionsModal = function() {
+    const m = document.getElementById("marauderVersionsModal");
+    if (m) m.style.display = "block";
+  };
+
+  window.closeMarauderVersionsModal = function() {
+    const m = document.getElementById("marauderVersionsModal");
+    if (m) m.style.display = "none";
+  };
+
+  function findAccessKeyInput() {
+    return (
+      document.querySelector('input[placeholder*="Access Key"]') ||
+      document.querySelector('input[placeholder*="ключ"]') ||
+      document.querySelector('input[id*="key" i]') ||
+      document.querySelector('input[type="password"], input[type="text"]')
+    );
+  }
+
+  window.selectMarauderVersion = function(versionName, isFreeFenik) {
+    localStorage.setItem("marauder_selected_version", versionName);
+    const topBtn = document.getElementById("marauderTopVersionsBtn");
+    if (topBtn) topBtn.textContent = "MARAUDER-AI " + versionName;
+
+    const statusBox = document.getElementById("marauderVersionStatus");
+    const keyInput = findAccessKeyInput();
+
+    if (isFreeFenik) {
+      const freeKey = "RST-AI-001";
+      localStorage.setItem("marauder_fenix_key", freeKey);
+      if (keyInput) {
+        keyInput.value = freeKey;
+        keyInput.dispatchEvent(new Event("input", { bubbles: true }));
+        keyInput.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      if (statusBox) {
+        statusBox.style.display = "block";
+        statusBox.style.color = "#00f5d4";
+        statusBox.textContent = "Активирана е безплатната версия MARAUDER-AI 4.8 FENIX. Генериран и попълнен е ключ: " + freeKey;
+      }
+    } else if (versionName.indexOf("5.3") !== -1) {
+      if (statusBox) {
+        statusBox.style.display = "block";
+        statusBox.style.color = "#ffbe0b";
+        statusBox.textContent = "Избрана е MARAUDER-AI 5.3 SECURITY (22 EUR от RED SOFTWARE TEAM). Въведи закупения ключ в полето за достъп.";
+      }
+    } else {
+      if (statusBox) {
+        statusBox.style.display = "block";
+        statusBox.style.color = "#ff2a55";
+        statusBox.textContent = "Избран е абонамент MARAUDER-AI 6.2 HACKER (33 EURO). Въведи абонаментния ключ за активиране.";
+      }
+    }
+  };
+
+  window.openDevanportPage = function() {
+    const p = document.getElementById("devanportPageOverlay");
+    if (p) {
+      p.style.display = "block";
+      const out = document.getElementById("devGeneratedCode");
+      if (out && !out.textContent.trim()) loadEmptyScriptTemplate();
+    }
+  };
+
+  window.closeDevanportPage = function() {
+    const p = document.getElementById("devanportPageOverlay");
+    if (p) p.style.display = "none";
+  };
+
+  window.loadEmptyScriptTemplate = function() {
+    const lang = (document.getElementById("devLangSelect") || {}).value || "python";
+    const softName = ((document.getElementById("devSoftName") || {}).value || "marauder_script").trim() || "marauder_script";
+    const out = document.getElementById("devGeneratedCode");
+    if (!out) return;
+
+    const templates = {
+      python: `#!/usr/bin/env python3
+# Software: ${softName}
+# Generator: DEVANPORT-AI
+
+import sys
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
+def init_software():
+    # TODO: Начална конфигурация и проверка на зависимости
+    pass
+
+def run_functions():
+    # TODO: Реализация на зададените функции
+    pass
+
+def main():
+    init_software()
+    run_functions()
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+`,
+      javascript: `// Software: ${softName}
+// Generator: DEVANPORT-AI
+
+"use strict";
+
+function initSoftware() {
+  // TODO: Начална конфигурация
+}
+
+function runFunctions(inputData = {}) {
+  // TODO: Реализация на зададените функции
+  return inputData;
+}
+
+async function main() {
+  initSoftware();
+  const result = runFunctions({});
+  return result;
+}
+
+main().catch((err) => {
+  console.error("[DEVANPORT-AI ERROR]", err);
+  process.exitCode = 1;
+});
+`,
+      bash: `#!/usr/bin/env bash
+set -euo pipefail
+
+# Software: ${softName}
+# Generator: DEVANPORT-AI
+
+init_software() {
+  # TODO: Проверка на инструменти и параметри
+  :
+}
+
+run_functions() {
+  # TODO: Реализация на зададените функции
+  :
+}
+
+main() {
+  init_software
+  run_functions
+}
+
+main "$@"
+`,
+      powershell: `# Software: ${softName}
+# Generator: DEVANPORT-AI
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+function Initialize-Software {
+    # TODO: Начални проверки и конфигурация
+}
+
+function Invoke-SoftwareFunctions {
+    # TODO: Реализация на зададените функции
+}
+
+Initialize-Software
+Invoke-SoftwareFunctions
+`
+    };
+
+    out.textContent = templates[lang] || `// Software: ${softName} (${lang})
+// Generator: DEVANPORT-AI
+
+// TODO: Празен шаблон за скрипт — попълни 4-те полета и натисни ГЕНЕРИРАЙ ГОТОВ КОД.
+`;
+  };
+
+  window.applyLanguagePreset = function() {
+    loadEmptyScriptTemplate();
+  };
+
+  function parseList(raw) {
+    return (raw || "")
+      .split(/[
+,;]+/)
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  window.generateDevanportCode = function() {
+    const lang = (document.getElementById("devLangSelect") || {}).value || "python";
+    const nameRaw = ((document.getElementById("devSoftName") || {}).value || "CustomSoftware").trim() || "CustomSoftware";
+    const funcsRaw = (document.getElementById("devFunctions") || {}).value || "";
+    const descRaw = (document.getElementById("devFuncDesc") || {}).value || "";
+    const behaviorRaw = (document.getElementById("devExactBehavior") || {}).value || "";
+    const out = document.getElementById("devGeneratedCode");
+    if (!out) return;
+
+    const funcs = parseList(funcsRaw);
+    const fnList = funcs.length ? funcs : ["initialize", "executeCoreTask", "handleErrors"];
+    const safeIdent = (s) => (s.replace(/[^a-zA-Z0-9_]/g, "_") || "task_fn");
+
+    let code = "";
+    if (lang === "python") {
+      code += `#!/usr/bin/env python3
+"""
+Software: ${nameRaw}
+Generated by DEVANPORT-AI
+
+Реално описание на функциите:
+${descRaw || "Посочени в спецификацията"}
+
+Точно поведение и работа:
+${behaviorRaw || "Стандартно изпълнение на стъпките с логове и обработка на грешки."}
+"""
+
+import logging
+import sys
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
+`;
+      for (const fn of fnList) {
+        const id = safeIdent(fn);
+        code += `def ${id}(payload=None):
+    """Функция: ${fn}
+    Описание: ${descRaw.replace(/
+/g, " ") || "Изпълнява логиката за " + fn}
+    """
+    logging.info("Изпълнение на функция: ${fn}")
+    # Точно поведение: ${behaviorRaw.replace(/
+/g, " ") || "Изпълнява основната операция"}
+    return {"status": "ok", "function": "${fn}", "data": payload}
+
+`;
+      }
+      code += `def main():
+    logging.info("Стартиране на ${nameRaw}...")
+    state = None
+`;
+      for (const fn of fnList) {
+        code += `    state = ${safeIdent(fn)}(state)
+`;
+      }
+      code += `    logging.info("Завършено успешно: ${nameRaw}")
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+`;
+    } else if (lang === "bash") {
+      code += `#!/usr/bin/env bash
+set -euo pipefail
+
+# Software: ${nameRaw}
+# Generated by DEVANPORT-AI
+# Описание на функциите: ${descRaw.replace(/
+/g, " ") || "Реални функции на софтуера"}
+# Точно поведение: ${behaviorRaw.replace(/
+/g, " ") || "Последователно изпълнение и контрол на грешки"}
+
+log_info() { echo "[$(date '+%F %T')] [INFO] $*"; }
+log_err()  { echo "[$(date '+%F %T')] [ERROR] $*" >&2; }
+
+`;
+      for (const fn of fnList) {
+        const id = safeIdent(fn);
+        code += `${id}() {
+  log_info "Старт на функция: ${fn}"
+  # Описание: ${descRaw.replace(/
+/g, " ") || "Логика на " + fn}
+  # Поведение: ${behaviorRaw.replace(/
+/g, " ") || "Изпълнява задачата"}
+}
+
+`;
+      }
+      code += `main() {
+  log_info "Стартиране на ${nameRaw}"
+`;
+      for (const fn of fnList) {
+        code += `  ${safeIdent(fn)}
+`;
+      }
+      code += `  log_info "${nameRaw} приключи успешно."
+}
+
+main "$@"
+`;
+    } else {
+      const extComment = (lang === "sql") ? "--" : "//";
+      code += `${extComment} Software: ${nameRaw} (${lang})
+${extComment} Generated by DEVANPORT-AI
+${extComment} Описание на функциите: ${descRaw.replace(/
+/g, " ") || "Реални функции на системата"}
+${extComment} Точно поведение и работа: ${behaviorRaw.replace(/
+/g, " ") || "Изпълнение на зададените модули и връщане на резултат"}
+
+`;
+      for (const fn of fnList) {
+        const id = safeIdent(fn);
+        code += `function ${id}(context = {}) {
+  console.log("[DEVANPORT-AI] ${fn}:", context);
+  // Описание: ${descRaw.replace(/
+/g, " ") || "Изпълнява " + fn}
+  // Поведение: ${behaviorRaw.replace(/
+/g, " ") || "Обработва данните и предава резултата"}
+  return { ...context, lastStep: "${fn}", ok: true };
+}
+
+`;
+      }
+      code += `function run_${safeIdent(nameRaw)}() {
+  let ctx = { app: "${nameRaw}", startedAt: new Date().toISOString() };
+`;
+      for (const fn of fnList) {
+        code += `  ctx = ${safeIdent(fn)}(ctx);
+`;
+      }
+      code += `  return ctx;
+}
+
+run_${safeIdent(nameRaw)}();
+`;
+    }
+
+    out.textContent = code;
+  };
+
+  window.copyDevanportCode = function() {
+    const out = document.getElementById("devGeneratedCode");
+    if (!out) return;
+    navigator.clipboard?.writeText(out.textContent || "").catch(() => {});
+  };
+
+  window.downloadDevanportCode = function() {
+    const lang = (document.getElementById("devLangSelect") || {}).value || "python";
+    const nameRaw = (((document.getElementById("devSoftName") || {}).value || "marauder_code").trim().replace(/[^a-zA-Z0-9_-]/g, "_")) || "marauder_code";
+    const out = document.getElementById("devGeneratedCode");
+    const extMap = { python: "py", javascript: "js", typescript: "ts", bash: "sh", powershell: "ps1", c: "c", cpp: "cpp", csharp: "cs", java: "java", go: "go", rust: "rs", php: "php", sql: "sql", html: "html" };
+    const blob = new Blob([(out && out.textContent) || ""], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${nameRaw}.${extMap[lang] || "txt"}`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  window.addEventListener("DOMContentLoaded", function() {
+    const savedVer = localStorage.getItem("marauder_selected_version");
+    const topBtn = document.getElementById("marauderTopVersionsBtn");
+    if (savedVer && topBtn) {
+      topBtn.textContent = "MARAUDER-AI " + savedVer;
+    }
+  });
+})();
+</script>
+<!-- END MARAUDER-AI VERSIONS & DEVANPORT-AI ADDON -->
+
 </body>
 </html>
