@@ -1830,5 +1830,453 @@
   </script>
 </section>
 <!-- =============== END MARAUDER 5-6 SUITE =============== -->
+<!-- =============== BEGIN MARAUDER SECRET INVITE HUB =============== -->
+<section id="marauder-secret-invite-hub" style="margin:14px auto;max-width:980px;padding:14px;border:1px solid #ef4444;border-radius:12px;background:#090b12;color:#f1f5f9;font-family:Consolas,'Segoe UI',sans-serif;">
+  <style>
+    .msh-card { border:1px solid #1f2937; border-radius:10px; padding:12px; margin-bottom:12px; background:#0d121d; }
+    .msh-title { font-weight:700; font-size:14px; color:#f87171; margin-bottom:8px; }
+    .msh-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .msh-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:8px; }
+    .msh-btn { background:#172033; color:#f8fafc; border:1px solid #38bdf8; border-radius:6px; padding:7px 11px; font-size:12px; font-weight:700; cursor:pointer; }
+    .msh-btn.red { border-color:#ef4444; color:#fca5a5; }
+    .msh-btn.grn { border-color:#22c55e; color:#86efac; }
+    .msh-btn.gld { border-color:#eab308; color:#fde047; }
+    .msh-status { margin-top:8px; font-size:12px; color:#93c5fd; }
+    .msh-room-list { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+    .msh-room-pill { background:#111827; border:1px solid #334155; color:#e2e8f0; border-radius:999px; padding:5px 10px; font-size:12px; cursor:pointer; }
+    .msh-room-pill.active { border-color:#ef4444; color:#fca5a5; background:#261018; }
+    .msh-msg-box { max-height:220px; overflow-y:auto; border:1px solid #1e293b; border-radius:8px; padding:8px; background:#070b12; margin:8px 0; display:flex; flex-direction:column; gap:6px; }
+    .msh-msg { border:1px solid #1e293b; border-radius:7px; padding:7px 9px; background:#0c1322; font-size:12px; }
+    #msh-qr-canvas { background:#ffffff; border-radius:8px; padding:6px; display:inline-block; }
+    #msh-cam-video { width:100%; max-width:340px; border-radius:8px; border:1px solid #38bdf8; display:none; margin-top:8px; }
+  </style>
+
+  <div class="msh-card">
+    <div class="msh-title">RED SECRET CHAT — STAII / GRUPI / PAROLA / KOD / UNIKALEN QR + AVTO VLIZANE</div>
+
+    <!-- Suzdavane na chat / grupa + parola + iztrivane -->
+    <div class="msh-grid" style="margin-bottom:8px;">
+      <input id="msh-new-room-name" type="text" placeholder="Ime na chat ili grupa (napr. Grupa Alpha)" />
+      <select id="msh-new-room-type">
+        <option value="group">Grupa</option>
+        <option value="direct">Priqtelski chat (1-na-1)</option>
+      </select>
+      <input id="msh-new-room-pass" type="password" placeholder="Parola na chata (po jelanie)" />
+    </div>
+    <div class="msh-row" style="margin-bottom:10px;">
+      <button type="button" class="msh-btn grn" id="msh-create-room">Suzdai Chat / Grupa</button>
+      <button type="button" class="msh-btn gld" id="msh-set-pass">Zadai / Smeni Parola</button>
+      <button type="button" class="msh-btn red" id="msh-delete-room">Delete Chat</button>
+      <button type="button" class="msh-btn" id="msh-discreet-toggle">Diskreten rejim: VKLYUCHEN</button>
+    </div>
+
+    <div class="msh-room-list" id="msh-room-list"></div>
+
+    <!-- Dobavqne na priqtel + kod za pokana + vkarvane na kod -->
+    <div class="msh-grid" style="margin-bottom:8px;">
+      <input id="msh-friend-name" type="text" placeholder="Ime / ID na priqtel za dobavqne" />
+      <button type="button" class="msh-btn" id="msh-add-friend">Dobavi Priqtel v Chata</button>
+      <button type="button" class="msh-btn grn" id="msh-gen-code">Generirai Kod za Priqtel</button>
+      <input id="msh-invite-code-input" type="text" placeholder="Vkari kod za vlizane (napr. SEC-...)" />
+      <button type="button" class="msh-btn gld" id="msh-join-code">Vliza s Kod</button>
+    </div>
+
+    <!-- Unikalen QR + snimane/skanirane s avto vlizane -->
+    <div class="msh-row" style="margin-bottom:8px;">
+      <button type="button" class="msh-btn" id="msh-gen-qr">Generirai Unikalen QR</button>
+      <button type="button" class="msh-btn grn" id="msh-scan-qr">Snimai / Skanirai QR (Avto vlizane)</button>
+      <button type="button" class="msh-btn red" id="msh-stop-cam">Spra kamera</button>
+      <input id="msh-unlock-pass" type="password" placeholder="Parola za vlizane v zakluchen chat" />
+      <button type="button" class="msh-btn" id="msh-unlock-btn">Otkluchi Chat</button>
+    </div>
+
+    <div class="msh-row" style="align-items:flex-start;">
+      <div>
+        <canvas id="msh-qr-canvas" width="148" height="148"></canvas>
+      </div>
+      <div style="flex:1;min-width:220px;">
+        <div id="msh-code-display" style="font-size:12px;color:#86efac;word-break:break-all;margin-bottom:6px;">Kod za pokana: nqma generiran oshte.</div>
+        <div id="msh-members-display" style="font-size:12px;color:#cbd5e1;">Uchastnici: nqma</div>
+        <video id="msh-cam-video" playsinline muted></video>
+      </div>
+    </div>
+
+    <!-- Subshteniq v aktivniq chat -->
+    <div class="msh-msg-box" id="msh-msg-box"></div>
+    <div class="msh-row">
+      <input id="msh-msg-input" type="text" placeholder="Napishete diskretno subshtenie..." style="flex:1;min-width:220px;" />
+      <button type="button" class="msh-btn grn" id="msh-send-msg">Prati</button>
+    </div>
+
+    <div id="msh-status" class="msh-status">Gotov za diskreten chat, pokani s kod i QR.</div>
+  </div>
+
+  <script id="MARAUDER_SECRET_INVITE_JS">
+  (function(){
+    "use strict";
+    const STORAGE_KEY = "marauder_secret_rooms_v1";
+    let discreetMode = true;
+    let camStream = null;
+    let scanTimer = null;
+
+    function defaultState() {
+      return {
+        activeId: "room_main",
+        rooms: [
+          {
+            id: "room_main",
+            name: "Secret Room #1",
+            kind: "group",
+            passwordHash: "",
+            members: ["Ti"],
+            inviteCode: "SEC-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
+            messages: []
+          }
+        ]
+      };
+    }
+
+    function simpleHash(str) {
+      if (!str) return "";
+      let h = 2166136261;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return (h >>> 0).toString(16);
+    }
+
+    function loadState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (parsed && Array.isArray(parsed.rooms) && parsed.rooms.length) return parsed;
+      } catch(_) {}
+      return defaultState();
+    }
+
+    let state = loadState();
+    let unlockedRooms = new Set();
+
+    function saveState() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(_) {}
+    }
+
+    function getActiveRoom() {
+      return state.rooms.find(r => r.id === state.activeId) || state.rooms[0];
+    }
+
+    function setStatus(txt) {
+      const el = document.getElementById("msh-status");
+      if (el) el.textContent = txt;
+    }
+
+    // Deterministic QR matrix renderer on canvas
+    function drawUniqueQr(payloadText) {
+      const canvas = document.getElementById("msh-qr-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const size = 21;
+      const cell = Math.floor(canvas.width / size);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#090b12";
+
+      function drawFinder(ox, oy) {
+        for (let y = 0; y < 7; y++) {
+          for (let x = 0; x < 7; x++) {
+            const border = x === 0 || x === 6 || y === 0 || y === 6;
+            const center = x >= 2 && x <= 4 && y >= 2 && y <= 4;
+            if (border || center) ctx.fillRect((ox + x) * cell, (oy + y) * cell, cell, cell);
+          }
+        }
+      }
+      drawFinder(0, 0);
+      drawFinder(size - 7, 0);
+      drawFinder(0, size - 7);
+
+      let seed = 1337;
+      for (let i = 0; i < payloadText.length; i++) {
+        seed = (seed * 31 + payloadText.charCodeAt(i) * (i + 7)) >>> 0;
+      }
+
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const inTopLeft = x < 8 && y < 8;
+          const inTopRight = x >= size - 8 && y < 8;
+          const inBotLeft = x < 8 && y >= size - 8;
+          if (inTopLeft || inTopRight || inBotLeft) continue;
+          seed = (seed * 1664525 + 1013904223) >>> 0;
+          if ((seed & 1) === 1) {
+            ctx.fillRect(x * cell, y * cell, cell, cell);
+          }
+        }
+      }
+    }
+
+    function isRoomLocked(room) {
+      return Boolean(room.passwordHash) && !unlockedRooms.has(room.id);
+    }
+
+    function renderAll() {
+      const roomListEl = document.getElementById("msh-room-list");
+      const room = getActiveRoom();
+      if (!room) return;
+
+      if (roomListEl) {
+        roomListEl.innerHTML = "";
+        state.rooms.forEach(r => {
+          const pill = document.createElement("button");
+          pill.type = "button";
+          pill.className = "msh-room-pill" + (r.id === room.id ? " active" : "");
+          const lockTag = r.passwordHash ? " [PAROLA]" : "";
+          const kindTag = r.kind === "group" ? "Grupa" : "Chat";
+          pill.textContent = r.name + " (" + kindTag + lockTag + ")";
+          pill.addEventListener("click", () => {
+            state.activeId = r.id;
+            saveState();
+            renderAll();
+          });
+          roomListEl.appendChild(pill);
+        });
+      }
+
+      const codeEl = document.getElementById("msh-code-display");
+      if (codeEl) codeEl.textContent = "Kod za pokana: " + room.inviteCode;
+
+      const memEl = document.getElementById("msh-members-display");
+      if (memEl) memEl.textContent = "Uchastnici (" + room.members.length + "): " + room.members.join(", ");
+
+      drawUniqueQr("MARAUDER_INVITE:" + room.inviteCode);
+
+      const msgBox = document.getElementById("msh-msg-box");
+      if (msgBox) {
+        msgBox.innerHTML = "";
+        if (isRoomLocked(room)) {
+          msgBox.innerHTML = '<div style="color:#fde047;font-size:12px;">Chatut e zakluchen s parola. Vuvedi parola i natisni "Otkluchi Chat".</div>';
+          return;
+        }
+        if (!room.messages.length) {
+          msgBox.innerHTML = '<div style="color:#64748b;font-size:12px;">Nqma subshteniq v tozi chat.</div>';
+          return;
+        }
+        room.messages.forEach(m => {
+          const d = document.createElement("div");
+          d.className = "msh-msg";
+          const head = document.createElement("div");
+          head.style.color = "#38bdf8";
+          head.style.fontSize = "11px";
+          head.textContent = (discreetMode ? "ANON" : m.sender) + (discreetMode ? "" : (" • " + m.time));
+          const body = document.createElement("div");
+          body.style.marginTop = "3px";
+          body.textContent = m.text;
+          d.appendChild(head);
+          d.appendChild(body);
+          msgBox.appendChild(d);
+        });
+        msgBox.scrollTop = msgBox.scrollHeight;
+      }
+    }
+
+    document.getElementById("msh-create-room").addEventListener("click", () => {
+      const nameRaw = (document.getElementById("msh-new-room-name").value || "").trim();
+      const kind = document.getElementById("msh-new-room-type").value;
+      const passRaw = (document.getElementById("msh-new-room-pass").value || "").trim();
+      const id = "room_" + Date.now().toString(36);
+      const room = {
+        id,
+        name: nameRaw || (kind === "group" ? ("Grupa #" + (state.rooms.length + 1)) : ("Chat #" + (state.rooms.length + 1))),
+        kind,
+        passwordHash: passRaw ? simpleHash(passRaw) : "",
+        members: ["Ti"],
+        inviteCode: "SEC-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
+        messages: []
+      };
+      state.rooms.push(room);
+      state.activeId = id;
+      if (passRaw) unlockedRooms.add(id);
+      document.getElementById("msh-new-room-name").value = "";
+      document.getElementById("msh-new-room-pass").value = "";
+      saveState();
+      renderAll();
+      setStatus("Suzdaden nov " + (kind === "group" ? "gruppov chat" : "chat") + ": " + room.name);
+    });
+
+    document.getElementById("msh-set-pass").addEventListener("click", () => {
+      const room = getActiveRoom();
+      if (!room) return;
+      const p = (document.getElementById("msh-new-room-pass").value || "").trim();
+      room.passwordHash = p ? simpleHash(p) : "";
+      if (p) unlockedRooms.add(room.id);
+      document.getElementById("msh-new-room-pass").value = "";
+      saveState();
+      renderAll();
+      setStatus(p ? ("Zadadena nova parola za: " + room.name) : ("Premahnata parola za: " + room.name));
+    });
+
+    document.getElementById("msh-delete-room").addEventListener("click", () => {
+      if (state.rooms.length <= 1) {
+        const only = state.rooms[0];
+        only.messages = [];
+        only.passwordHash = "";
+        only.members = ["Ti"];
+        saveState();
+        renderAll();
+        setStatus("Edinstveniq chat e izchisten.");
+        return;
+      }
+      const delId = getActiveRoom().id;
+      state.rooms = state.rooms.filter(r => r.id !== delId);
+      state.activeId = state.rooms[0].id;
+      unlockedRooms.delete(delId);
+      saveState();
+      renderAll();
+      setStatus("Chatut e iztrit (Delete Chat).");
+    });
+
+    document.getElementById("msh-discreet-toggle").addEventListener("click", function() {
+      discreetMode = !discreetMode;
+      this.textContent = "Diskreten rejim: " + (discreetMode ? "VKLYUCHEN" : "IZKLYUCHEN");
+      renderAll();
+    });
+
+    document.getElementById("msh-add-friend").addEventListener("click", () => {
+      const room = getActiveRoom();
+      const friend = (document.getElementById("msh-friend-name").value || "").trim();
+      if (!room || !friend) { setStatus("Vuvedi ime/ID na priqtel."); return; }
+      if (!room.members.includes(friend)) room.members.push(friend);
+      document.getElementById("msh-friend-name").value = "";
+      saveState();
+      renderAll();
+      setStatus("Dobaven priqtel '" + friend + "' v " + room.name);
+    });
+
+    document.getElementById("msh-gen-code").addEventListener("click", () => {
+      const room = getActiveRoom();
+      if (!room) return;
+      room.inviteCode = "SEC-" + Math.random().toString(36).slice(2, 9).toUpperCase();
+      saveState();
+      renderAll();
+      setStatus("Generiran nov kod: " + room.inviteCode);
+    });
+
+    function joinByCodeValue(codeVal) {
+      const clean = (codeVal || "").trim().toUpperCase();
+      if (!clean) { setStatus("Vuvedi kod za vlizane."); return; }
+      let target = state.rooms.find(r => r.inviteCode.toUpperCase() === clean);
+      if (!target) {
+        target = {
+          id: "room_" + Date.now().toString(36),
+          name: "Joined (" + clean + ")",
+          kind: "direct",
+          passwordHash: "",
+          members: ["Ti", "Pokanen"],
+          inviteCode: clean,
+          messages: []
+        };
+        state.rooms.push(target);
+      } else if (!target.members.includes("Pokanen")) {
+        target.members.push("Pokanen");
+      }
+      state.activeId = target.id;
+      saveState();
+      renderAll();
+      setStatus("Avtomatichno vlizane v chata chrez kod: " + clean);
+    }
+
+    document.getElementById("msh-join-code").addEventListener("click", () => {
+      joinByCodeValue(document.getElementById("msh-invite-code-input").value);
+    });
+
+    document.getElementById("msh-gen-qr").addEventListener("click", () => {
+      const room = getActiveRoom();
+      if (!room) return;
+      drawUniqueQr("MARAUDER_INVITE:" + room.inviteCode);
+      setStatus("Generiran unikalen QR kod za " + room.inviteCode);
+    });
+
+    function stopCamera() {
+      if (scanTimer) { clearInterval(scanTimer); scanTimer = null; }
+      if (camStream) {
+        camStream.getTracks().forEach(t => t.stop());
+        camStream = null;
+      }
+      const vid = document.getElementById("msh-cam-video");
+      if (vid) vid.style.display = "none";
+    }
+
+    document.getElementById("msh-stop-cam").addEventListener("click", () => {
+      stopCamera();
+      setStatus("Kamerata za QR e sprqna.");
+    });
+
+    document.getElementById("msh-scan-qr").addEventListener("click", async () => {
+      const room = getActiveRoom();
+      const vid = document.getElementById("msh-cam-video");
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        if (room) joinByCodeValue(room.inviteCode);
+        return;
+      }
+      try {
+        stopCamera();
+        camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        vid.srcObject = camStream;
+        vid.style.display = "block";
+        await vid.play();
+        setStatus("Kamerata e aktivna — nasochi kum QR koda za avto vlizane...");
+
+        const hasDetector = ("BarcodeDetector" in window);
+        const detector = hasDetector ? new window.BarcodeDetector({ formats: ["qr_code"] }) : null;
+        scanTimer = setInterval(async () => {
+          if (!detector || vid.readyState < 2) return;
+          try {
+            const codes = await detector.detect(vid);
+            if (codes && codes.length) {
+              const raw = String(codes[0].rawValue || "");
+              const extracted = raw.includes(":") ? raw.split(":")[1] : raw;
+              stopCamera();
+              joinByCodeValue(extracted || (room && room.inviteCode));
+            }
+          } catch(_) {}
+        }, 450);
+      } catch(_) {
+        if (room) joinByCodeValue(room.inviteCode);
+      }
+    });
+
+    document.getElementById("msh-unlock-btn").addEventListener("click", () => {
+      const room = getActiveRoom();
+      const entered = (document.getElementById("msh-unlock-pass").value || "").trim();
+      if (!room) return;
+      if (!room.passwordHash || simpleHash(entered) === room.passwordHash) {
+        unlockedRooms.add(room.id);
+        document.getElementById("msh-unlock-pass").value = "";
+        renderAll();
+        setStatus("Chatut '" + room.name + "' e otkluchen.");
+      } else {
+        setStatus("Greshna parola za chata.");
+      }
+    });
+
+    document.getElementById("msh-send-msg").addEventListener("click", () => {
+      const room = getActiveRoom();
+      const inp = document.getElementById("msh-msg-input");
+      const txt = (inp.value || "").trim();
+      if (!room || !txt) return;
+      if (isRoomLocked(room)) { setStatus("Chatut e zakluchen s parola."); return; }
+      room.messages.push({
+        sender: "Ti",
+        text: txt,
+        time: new Date().toLocaleTimeString()
+      });
+      inp.value = "";
+      saveState();
+      renderAll();
+    });
+
+    renderAll();
+  })();
+  </script>
+</section>
+<!-- =============== END MARAUDER SECRET INVITE HUB =============== -->
 </body>
 </html>
