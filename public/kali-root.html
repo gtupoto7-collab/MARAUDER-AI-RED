@@ -297,5 +297,38 @@
   }
 })();
 </script>
+
+<script id="megatronSecuritySubOption">
+(function(){
+  var clearBtn = document.getElementById("krClearBtn");
+  var outEl = document.getElementById("krOutput");
+  var tEl = document.getElementById("krTarget");
+  var uEl = document.getElementById("krUrl");
+  if (clearBtn && clearBtn.parentNode && !document.getElementById("krMegatronBtn")) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = "krMegatronBtn";
+    btn.className = "kr-btn";
+    btn.textContent = "MEGATRON-SECURITY";
+    btn.addEventListener("click", async function(){
+      var tgt = (tEl && tEl.value) ? tEl.value.trim() : "scanme.nmap.org";
+      var lnk = (uEl && uEl.value) ? uEl.value.trim() : ("https://" + tgt);
+      if (outEl) { outEl.textContent += "\n[MEGATRON-SECURITY] Анализ на " + tgt + "..."; outEl.scrollTop = outEl.scrollHeight; }
+      try {
+        var r = await fetch("/api/kali/megatron-security", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ target: tgt, url: lnk })
+        });
+        var d = await r.json();
+        if (outEl) { outEl.textContent += "\n" + (d.output || JSON.stringify(d)); outEl.scrollTop = outEl.scrollHeight; }
+      } catch(e) {
+        if (outEl) { outEl.textContent += "\n[ГРЕШКА] " + (e.message || "Error"); }
+      }
+    });
+    clearBtn.parentNode.insertBefore(btn, clearBtn);
+  }
+})();
+</script>
 </body>
 </html>
