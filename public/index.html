@@ -474,27 +474,45 @@
         <button type="button" id="vpnBtn">VPN</button>
   <span id="marauderDropdownWrap" style="position:relative;display:inline-block;margin-left:6px;">
     <button type="button" id="marauderDropdownBtn" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#052e16;color:#bbf7d0;font-weight:700;font-size:12px;cursor:pointer;">Меню ▾</button>
-    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:295px;max-height:78vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:7px;box-shadow:0 10px 28px rgba(0,0,0,0.8);">
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">КОНЗОЛА &amp; РЕЖИМИ</div>
+    <div id="marauderDropdownMenu" style="display:none;position:absolute;top:110%;left:0;min-width:305px;max-height:80vh;overflow-y:auto;z-index:9999;background:#09090b;border:1px solid #3f3f46;border-radius:8px;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,0.85);">
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">КОНЗОЛА, STUDIO &amp; 24H</div>
       <a href="/kali-root.html" style="display:block;padding:6px 10px;color:#38bdf8;text-decoration:none;font-size:12px;border-radius:6px;">MARAUDER LINUX CONSOLE (/kali-root.html)</a>
-      <button type="button" data-mode="MARAUDER OPCI: Активни разширени опции на MARAUDER." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER OPCI</button>
-      <button type="button" data-mode="OFFLINE РЕЖИМ: Работи локално без външни заявки." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">Offline Режим</button>
-      <button type="button" data-mode="INLINE РЕЖИМ: Бързи команди и отговори на място." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#4ade80;font-size:12px;cursor:pointer;border-radius:6px;">Inline Режим</button>
       <a href="/kali-root.html#dev" style="display:block;padding:6px 10px;color:#f59e0b;text-decoration:none;font-size:12px;border-radius:6px;">DEVANPORT-AI (Auto-Save Dev Studio)</a>
       <a href="/mining-optin.html" style="display:block;padding:6px 10px;color:#86efac;text-decoration:none;font-size:12px;border-radius:6px;">Pool &amp; 24h (Opt-In)</a>
+      <a href="/index.html" style="display:block;padding:6px 10px;color:#f4f4f5;text-decoration:none;font-size:12px;border-radius:6px;">MARAUDER Home (/index.html)</a>
 
       <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">ПЛАЩАНЕ (АКТУАЛНИ НАЧИНИ)</div>
-      <button type="button" data-pay="Keper (Keplr / Crypto)" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#a78bfa;font-size:12px;cursor:pointer;border-radius:6px;">Keper (Keplr)</button>
-      <button type="button" data-pay="PayPal" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fde047;font-size:12px;cursor:pointer;border-radius:6px;">PayPal</button>
-      <button type="button" data-pay="Telegram Stars" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#38bdf8;font-size:12px;cursor:pointer;border-radius:6px;">Telegram Stars</button>
-      <button type="button" data-pay="TON" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#22d3ee;font-size:12px;cursor:pointer;border-radius:6px;">TON</button>
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">РЕЖИМИ &amp; ПРОФИЛИ</div>
+      <button type="button" data-mode="MARAUDER OPCI: Активни пълни опции на MARAUDER." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER OPCI</button>
+      <button type="button" data-mode="OFFLINE РЕЖИМ: Локален режим без външни заявки." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">Offline Режим</button>
+      <button type="button" data-mode="INLINE РЕЖИМ: Бързи inline команди и отговори." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#4ade80;font-size:12px;cursor:pointer;border-radius:6px;">Inline Режим</button>
+      <button type="button" data-trigger-text="BOT" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#4ade80;font-size:12px;cursor:pointer;border-radius:6px;">+ BOT (TG/MAIL/FB/DC)</button>
+      <button type="button" data-trigger-text="MARAUDER-AL" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER-AL Опции</button>
+      <button type="button" data-trigger-text="FENIX" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">MARAUDER-AI 4.8 FENIX / 5.3 / 6.2</button>
+      <button type="button" data-trigger-id="devanBtn" data-trigger-text="DEVANPORT-AI" data-fallback="/kali-root.html#dev" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#fbbf24;font-size:12px;cursor:pointer;border-radius:6px;">DEVANPORT-AI (CODE STUDIO)</button>
+      <button type="button" data-trigger-id="vpnBtn" data-trigger-text="VPN" data-fallback="/kali-root.html#vpn" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#c084fc;font-size:12px;cursor:pointer;border-radius:6px;">VPN</button>
+      <button type="button" id="openSecretFromMenuBtn" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#f87171;font-size:12px;cursor:pointer;border-radius:6px;">[ RED SECRET CHAT + QR ]</button>
 
       <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
-      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">DOWNLOAD (ANDROID / IOS / WIN 11)</div>
-      <button type="button" data-dl="Android" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#86efac;font-size:12px;cursor:pointer;border-radius:6px;">Download за Android</button>
-      <button type="button" data-dl="iOS" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">Download за iOS</button>
-      <button type="button" data-dl="Windows 11" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:6px 10px;background:none;border:none;color:#93c5fd;font-size:12px;cursor:pointer;border-radius:6px;">Download за Windows 11</button>
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">НИВА (COPPER / SILVER / GOLD)</div>
+      <button type="button" data-mode="Ниво FREE (до 1 бот) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#d4d4d8;font-size:12px;cursor:pointer;border-radius:6px;">Free (до 1 бот)</button>
+      <button type="button" data-mode="Ниво COPPER (до 3 бота) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#d97706;font-size:12px;cursor:pointer;border-radius:6px;">Copper (до 3 бота)</button>
+      <button type="button" data-mode="Ниво SILVER (до 10 бота) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#cbd5e1;font-size:12px;cursor:pointer;border-radius:6px;">Silver (до 10 бота)</button>
+      <button type="button" data-mode="Ниво GOLD (до 50 бота) избрано." class="m-mode-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#facc15;font-size:12px;cursor:pointer;border-radius:6px;">Gold (до 50 бота)</button>
+
+      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">ПЛАЩАНЕ (KEPER / PAYPAL / STARS / TON)</div>
+      <button type="button" data-pay="Keper (Keplr)" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#a78bfa;font-size:12px;cursor:pointer;border-radius:6px;">Keper (Keplr)</button>
+      <button type="button" data-pay="PayPal" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#fde047;font-size:12px;cursor:pointer;border-radius:6px;">PayPal</button>
+      <button type="button" data-pay="Telegram Stars" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#38bdf8;font-size:12px;cursor:pointer;border-radius:6px;">Telegram Stars</button>
+      <button type="button" data-pay="TON" class="m-pay-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#22d3ee;font-size:12px;cursor:pointer;border-radius:6px;">TON</button>
+      <button type="button" data-trigger-text="DARENIYA" data-fallback="/index.html" class="m-drop-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#facc15;font-size:12px;cursor:pointer;border-radius:6px;">DARENIYA (PayPal / TON)</button>
+
+      <div style="border-top:1px solid #27272a;margin:5px 0;"></div>
+      <div style="font-size:10px;color:#a1a1aa;padding:3px 10px;">DOWNLOAD (ANDROID / IOS / WINDOWS 11)</div>
+      <button type="button" data-dl="Android" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#86efac;font-size:12px;cursor:pointer;border-radius:6px;">Download за Android</button>
+      <button type="button" data-dl="iOS" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#e4e4e7;font-size:12px;cursor:pointer;border-radius:6px;">Download за iOS</button>
+      <button type="button" data-dl="Windows 11" class="m-dl-act" style="display:block;width:100%;text-align:left;padding:5px 10px;background:none;border:none;color:#93c5fd;font-size:12px;cursor:pointer;border-radius:6px;">Download за Windows 11</button>
     </div>
   </span>
   <script>
@@ -525,6 +543,15 @@
         menu.style.display = "none";
       });
 
+      var secFromMenu = document.getElementById("openSecretFromMenuBtn");
+      if (secFromMenu) {
+        secFromMenu.addEventListener("click", function(ev){
+          ev.stopPropagation();
+          menu.style.display = "none";
+          if (typeof window.openRedSecretPanel === "function") window.openRedSecretPanel();
+        });
+      }
+
       menu.querySelectorAll(".m-mode-act").forEach(function(el){
         el.addEventListener("click", function(ev){
           ev.stopPropagation();
@@ -540,7 +567,7 @@
           ev.stopPropagation();
           menu.style.display = "none";
           var method = el.getAttribute("data-pay") || "Плащане";
-          postNotice("Избран метод за плащане: " + method + " (активен за ключове / подкрепа на RED SOFTWARE TEAM).");
+          postNotice("Избран метод за плащане: " + method + " (RED SOFTWARE TEAM).");
         });
       });
 
@@ -550,14 +577,37 @@
           menu.style.display = "none";
           var plat = el.getAttribute("data-dl") || "Платформа";
           var targetUrl = "/release-manifest.json";
-          postNotice("Пакет / Download за " + plat + ": провери /release-manifest.json или репозитория на RED SOFTWARE TEAM.");
+          postNotice("Download за " + plat + ": отваряне на /release-manifest.json.");
           fetch(targetUrl).then(function(r){
             if (r.ok) window.open(targetUrl, "_blank");
           }).catch(function(){});
         });
       });
+
+      menu.querySelectorAll(".m-drop-act").forEach(function(act){
+        act.addEventListener("click", function(ev){
+          ev.stopPropagation();
+          menu.style.display = "none";
+          var tid = act.getAttribute("data-trigger-id");
+          var txt = act.getAttribute("data-trigger-text");
+          var fb = act.getAttribute("data-fallback");
+          var target = tid ? document.getElementById(tid) : null;
+          if (!target && txt) {
+            var allBtns = Array.prototype.slice.call(document.querySelectorAll("button,a"));
+            target = allBtns.find(function(b){
+              return b !== btn && !b.classList.contains("m-drop-act") && (b.textContent || "").indexOf(txt) !== -1;
+            }) || null;
+          }
+          if (target) {
+            target.click();
+          } else if (fb) {
+            window.location.href = fb;
+          }
+        });
+      });
     })();
   </script>
+  
   
   
   
@@ -1085,6 +1135,8 @@
 
 
 
+
+
 <!-- RED_SECRET_CHAT_QR_MODULE -->
 <div id="redSecretModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.82);padding:16px;overflow:auto;">
   <div style="max-width:740px;margin:24px auto;background:#09090b;border:1px solid #ef4444;border-radius:10px;padding:16px;color:#f4f4f5;font-family:monospace;">
@@ -1092,21 +1144,19 @@
       <strong style="color:#f87171;">[ RED SECRET CHAT • QR &amp; TOOLS ]</strong>
       <button type="button" id="closeSecretModalBtn" style="padding:4px 10px;border-radius:6px;border:1px solid #52525b;background:#18181b;color:#fff;cursor:pointer;">Затвори</button>
     </div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:12px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
       <div style="border:1px solid #27272a;border-radius:8px;padding:10px;background:#111115;">
-        <div style="font-size:12px;color:#fca5a5;margin-bottom:6px;">QR Генератор за Секретен Чат / Код</div>
-        <input id="qrInputText" type="text" placeholder="Въведи текст, ключ или линк за QR..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
+        <div style="font-size:12px;color:#fca5a5;margin-bottom:6px;">QR Генератор</div>
+        <input id="qrInputText" type="text" placeholder="Текст, ключ или линк за QR..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
         <button type="button" id="btnGenQr" style="padding:6px 12px;border-radius:6px;border:1px solid #ef4444;background:#7f1d1d;color:#fff;font-weight:bold;cursor:pointer;margin-right:6px;">Генерирай QR</button>
         <button type="button" id="btnCopyQrText" style="padding:6px 12px;border-radius:6px;border:1px solid #52525b;background:#18181b;color:#fff;cursor:pointer;">Копирай</button>
-        <div id="qrPreviewWrap" style="margin-top:10px;padding:10px;background:#ffffff;border-radius:8px;display:inline-block;min-height:96px;min-width:96px;">
+        <div style="margin-top:10px;padding:10px;background:#ffffff;border-radius:8px;display:inline-block;">
           <canvas id="qrCanvas" width="160" height="160"></canvas>
         </div>
       </div>
-
       <div style="border:1px solid #27272a;border-radius:8px;padding:10px;background:#111115;">
-        <div style="font-size:12px;color:#86efac;margin-bottom:6px;">Секретни Съобщения &amp; Други Опции</div>
-        <input id="secretMsgInp" type="text" placeholder="Напиши секретно съобщение..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
+        <div style="font-size:12px;color:#86efac;margin-bottom:6px;">Секретни Записи &amp; Кодове</div>
+        <input id="secretMsgInp" type="text" placeholder="Секретно съобщение..." style="width:100%;box-sizing:border-box;padding:7px;border-radius:6px;border:1px solid #52525b;background:#09090b;color:#fff;margin-bottom:8px;" />
         <button type="button" id="btnSendSecretMsg" style="padding:6px 10px;border-radius:6px;border:1px solid #22c55e;background:#14532d;color:#fff;font-weight:bold;cursor:pointer;margin-right:6px;margin-bottom:6px;">Добави</button>
         <button type="button" id="btnMakeInviteCode" style="padding:6px 10px;border-radius:6px;border:1px solid #38bdf8;background:#0c4a6e;color:#fff;cursor:pointer;margin-right:6px;margin-bottom:6px;">Нов Код</button>
         <button type="button" id="btnClearSecretMsgs" style="padding:6px 10px;border-radius:6px;border:1px solid #ef4444;background:#450a0a;color:#fecaca;cursor:pointer;margin-bottom:6px;">Изчисти</button>
@@ -1130,20 +1180,6 @@
     var logEl = document.getElementById("secretMsgsLog");
     var storageKey = "marauder_red_secret_msgs_v1";
 
-    function openSecretPanel() {
-      if (modal) {
-        modal.style.display = "block";
-        renderMsgs();
-        drawQr(qrInp && qrInp.value ? qrInp.value : "RED-SECRET-CHAT");
-      }
-    }
-    window.openRedSecretPanel = openSecretPanel;
-
-    if (closeBtn && modal) {
-      closeBtn.addEventListener("click", function(){ modal.style.display = "none"; });
-      modal.addEventListener("click", function(ev){ if (ev.target === modal) modal.style.display = "none"; });
-    }
-
     function drawQr(text) {
       if (!canvas) return;
       var ctx = canvas.getContext("2d");
@@ -1152,17 +1188,14 @@
       var cell = Math.floor(canvas.width / size);
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       var hash = 2166136261;
       for (var i = 0; i < val.length; i++) {
         hash ^= val.charCodeAt(i);
         hash = Math.imul(hash, 16777619);
       }
-
       function isFinder(r, c) {
         return (r < 7 && c < 7) || (r < 7 && c >= size - 7) || (r >= size - 7 && c < 7);
       }
-
       ctx.fillStyle = "#09090b";
       for (var r = 0; r < size; r++) {
         for (var c = 0; c < size; c++) {
@@ -1175,27 +1208,9 @@
             var bitSeed = (hash ^ (r * 73856093) ^ (c * 19349663) ^ val.charCodeAt(r % val.length));
             dark = ((bitSeed >>> ((r + c) % 16)) & 1) === 1;
           }
-          if (dark) {
-            ctx.fillRect(c * cell, r * cell, cell, cell);
-          }
+          if (dark) ctx.fillRect(c * cell, r * cell, cell, cell);
         }
       }
-    }
-
-    if (genQrBtn) {
-      genQrBtn.addEventListener("click", function(){
-        var txt = (qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT";
-        drawQr(txt);
-      });
-    }
-
-    if (copyQrBtn) {
-      copyQrBtn.addEventListener("click", function(){
-        var txt = (qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT";
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(txt).catch(function(){});
-        }
-      });
     }
 
     function loadMsgs() {
@@ -1211,36 +1226,46 @@
 ") : "Няма запазени секретни записи.";
     }
 
-    if (sendBtn) {
-      sendBtn.addEventListener("click", function(){
-        var t = (msgInp && msgInp.value || "").trim();
-        if (!t) return;
-        var arr = loadMsgs();
-        arr.push("[" + new Date().toLocaleTimeString() + "] " + t);
-        saveMsgs(arr.slice(-40));
-        if (msgInp) msgInp.value = "";
+    function openSecretPanel() {
+      if (modal) {
+        modal.style.display = "block";
         renderMsgs();
-      });
+        drawQr(qrInp && qrInp.value ? qrInp.value : "RED-SECRET-CHAT");
+      }
     }
+    window.openRedSecretPanel = openSecretPanel;
 
-    if (invBtn) {
-      invBtn.addEventListener("click", function(){
-        var code = "RED-KEY-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-        if (qrInp) qrInp.value = code;
-        drawQr(code);
-        var arr = loadMsgs();
-        arr.push("[" + new Date().toLocaleTimeString() + "] Генериран код: " + code);
-        saveMsgs(arr.slice(-40));
-        renderMsgs();
-      });
+    if (closeBtn && modal) {
+      closeBtn.addEventListener("click", function(){ modal.style.display = "none"; });
+      modal.addEventListener("click", function(ev){ if (ev.target === modal) modal.style.display = "none"; });
     }
-
-    if (clrBtn) {
-      clrBtn.addEventListener("click", function(){
-        saveMsgs([]);
-        renderMsgs();
-      });
-    }
+    if (genQrBtn) genQrBtn.addEventListener("click", function(){ drawQr((qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT"); });
+    if (copyQrBtn) copyQrBtn.addEventListener("click", function(){
+      var txt = (qrInp && qrInp.value || "").trim() || "RED-SECRET-CHAT";
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).catch(function(){});
+    });
+    if (sendBtn) sendBtn.addEventListener("click", function(){
+      var t = (msgInp && msgInp.value || "").trim();
+      if (!t) return;
+      var arr = loadMsgs();
+      arr.push("[" + new Date().toLocaleTimeString() + "] " + t);
+      saveMsgs(arr.slice(-40));
+      if (msgInp) msgInp.value = "";
+      renderMsgs();
+    });
+    if (invBtn) invBtn.addEventListener("click", function(){
+      var code = "RED-KEY-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+      if (qrInp) qrInp.value = code;
+      drawQr(code);
+      var arr = loadMsgs();
+      arr.push("[" + new Date().toLocaleTimeString() + "] Генериран код: " + code);
+      saveMsgs(arr.slice(-40));
+      renderMsgs();
+    });
+    if (clrBtn) clrBtn.addEventListener("click", function(){
+      saveMsgs([]);
+      renderMsgs();
+    });
 
     document.addEventListener("click", function(ev){
       var el = ev.target && ev.target.closest ? ev.target.closest("button,a") : null;
