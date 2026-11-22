@@ -803,5 +803,72 @@
   });
 })();
 </script>
+
+<div class="kr-panel" id="marauderAiReportPanel" style="border-color:#10b981;">
+  <div style="font-weight:700;color:#34d399;">AI ANALYZER &amp; REPORT CENTER // РЕАЛЕН АНАЛИЗ + ЕКСПОРТ (JSON / TXT / HTML)</div>
+  <div class="kr-row">
+    <button type="button" class="kr-run" id="marauderAiRunBtn">Пусни AI Анализ по фактите</button>
+    <button type="button" class="kr-btn" id="marauderExpJsonBtn">Експорт JSON</button>
+    <button type="button" class="kr-btn" id="marauderExpTxtBtn">Експорт TXT</button>
+    <button type="button" class="kr-btn" id="marauderExpHtmlBtn">Експорт HTML</button>
+  </div>
+</div>
+<script id="marauderAiReportScript">
+(function(){
+  let lastExports = null;
+  let lastId = 'marauder-report';
+  const out = document.getElementById('krOutput');
+  const tEl = document.getElementById('krTarget');
+  const uEl = document.getElementById('krUrl');
+  function log(m){ if(out){ out.textContent += (out.textContent ? '\n' : '') + m; out.scrollTop = out.scrollHeight; } }
+  function downloadFile(content, filename, mime){
+    if (!content) { log('[REPORT] Няма генериран отчет за експорт. Първо пусни AI Анализ.'); return; }
+    const blob = new Blob([content], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    log('[REPORT] Свален файл: ' + filename);
+  }
+  async function runAi(){
+    const target = (tEl && tEl.value.trim()) || (uEl && uEl.value.trim()) || 'xera.bg';
+    log('[AI ANALYZER] Събиране на факти и анализ за ' + target + '...');
+    const bases = ['', 'http://127.0.0.1:3000'];
+    for (const b of bases){
+      try {
+        const r = await fetch(b + '/api/kali/ai-report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target })
+        });
+        const txt = await r.text();
+        if (txt.trim().startsWith('{')){
+          const d = JSON.parse(txt);
+          if (d.ok){
+            lastExports = d.exports || null;
+            lastId = d.reportId || 'marauder-report';
+            log('[AI ANALYZER // ' + lastId + ' // ' + (d.engine || 'engine') + ']');
+            log(d.analysis || d.output || '');
+            return;
+          }
+        }
+      } catch(e){}
+    }
+    log('[AI ANALYZER] Грешка при връзка с /api/kali/ai-report.');
+  }
+  const runBtn = document.getElementById('marauderAiRunBtn');
+  const jBtn = document.getElementById('marauderExpJsonBtn');
+  const xBtn = document.getElementById('marauderExpTxtBtn');
+  const hBtn = document.getElementById('marauderExpHtmlBtn');
+  if (runBtn) runBtn.addEventListener('click', runAi);
+  if (jBtn) jBtn.addEventListener('click', () => downloadFile(lastExports && lastExports.json, lastId + '.json', 'application/json;charset=utf-8'));
+  if (xBtn) xBtn.addEventListener('click', () => downloadFile(lastExports && lastExports.txt, lastId + '.txt', 'text/plain;charset=utf-8'));
+  if (hBtn) hBtn.addEventListener('click', () => downloadFile(lastExports && lastExports.html, lastId + '.html', 'text/html;charset=utf-8'));
+})();
+</script>
 </body>
 </html>
