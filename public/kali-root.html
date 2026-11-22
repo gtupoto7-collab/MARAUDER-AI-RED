@@ -1168,5 +1168,103 @@
   }
 })();
 </script>
+
+<section id="marauderGitSection" style="margin:14px 0;padding:14px;border:1px solid #a855f7;border-radius:10px;background:#120d1d;color:#f3e8ff;font-family:inherit;">
+  <div style="font-size:18px;font-weight:800;color:#d8b4fe;margin-bottom:8px;">
+    GIT РЕПОЗИТОРИО (STATUS / LOG / PULL / COMMIT &amp; PUSH)
+  </div>
+  <div style="font-size:14px;line-height:1.45;padding:8px 10px;margin-bottom:10px;border-left:4px solid #a855f7;background:#1b132b;color:#e9d5ff;">
+    Обяснение (Кирилица): Изпълнява реални Git команди върху избраното репозиторио — преглед на промени (Status), история на комитите (Log), изтегляне на промени (Pull) и запис с качване (Commit &amp; Push).
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+    <select id="gitRepoSelect" style="padding:8px 10px;border-radius:6px;border:1px solid #9333ea;background:#0b0812;color:#fff;font-size:14px;">
+      <option value="/mnt/c/Users/gtupo/marauder-ai-web">marauder-ai-web</option>
+      <option value="/home/admiralerror/marauder-tg-live-bot">marauder-tg-live-bot</option>
+    </select>
+    <input id="gitCommitMessage" type="text" placeholder="Commit съобщение..." style="flex:1;min-width:220px;padding:8px 10px;border-radius:6px;border:1px solid #9333ea;background:#0b0812;color:#fff;font-size:14px;" />
+    <button type="button" data-git-act="status" style="padding:8px 14px;border-radius:6px;border:1px solid #c084fc;background:#24163b;color:#fff;font-weight:700;cursor:pointer;">Git Status</button>
+    <button type="button" data-git-act="log" style="padding:8px 14px;border-radius:6px;border:1px solid #c084fc;background:#24163b;color:#fff;font-weight:700;cursor:pointer;">Git Log</button>
+    <button type="button" data-git-act="pull" style="padding:8px 14px;border-radius:6px;border:1px solid #c084fc;background:#24163b;color:#fff;font-weight:700;cursor:pointer;">Git Pull</button>
+    <button type="button" data-git-act="commit_push" style="padding:8px 14px;border-radius:6px;border:1px solid #f43f5e;background:#7f1d1d;color:#fff;font-weight:800;cursor:pointer;">Commit &amp; Push</button>
+  </div>
+</section>
+
+<script id="marauderGitControllerScript">
+(function(){
+  function appendConsoleLog(line) {
+    const candidates = ["krOutput", "consoleOutput", "terminalOutput", "outputBox", "logOutput"];
+    let targetEl = null;
+    for (const id of candidates) {
+      const el = document.getElementById(id);
+      if (el) { targetEl = el; break; }
+    }
+    if (!targetEl) {
+      targetEl = document.querySelector("pre, textarea, .console-output, .output");
+    }
+    if (targetEl) {
+      if ("value" in targetEl && targetEl.tagName === "TEXTAREA") {
+        targetEl.value += (targetEl.value ? "\n\n" : "") + line;
+        targetEl.scrollTop = targetEl.scrollHeight;
+      } else {
+        targetEl.textContent += (targetEl.textContent ? "\n\n" : "") + line;
+        targetEl.scrollTop = targetEl.scrollHeight;
+      }
+    } else {
+      console.log(line);
+    }
+  }
+
+  function buildCandidateUrls() {
+    const list = [];
+    if (window.location && window.location.protocol.startsWith("http")) {
+      list.push(window.location.origin.replace(//+$/, "") + "/api/kali/git");
+    }
+    const local3000 = "http://127.0.0.1:3000/api/kali/git";
+    if (!list.includes(local3000)) list.push(local3000);
+    return list;
+  }
+
+  async function executeGit(action) {
+    const repoEl = document.getElementById("gitRepoSelect");
+    const msgEl = document.getElementById("gitCommitMessage");
+    const repo = (repoEl && repoEl.value) || "/mnt/c/Users/gtupo/marauder-ai-web";
+    const message = ((msgEl && msgEl.value) || "").trim() || "Update from MARAUDER-LINUX-CONSOLE";
+    const payload = JSON.stringify({ action, repo, cwd: repo, message });
+
+    appendConsoleLog("[GIT] Стартиране на '" + action + "' за " + repo + "...");
+    const urls = buildCandidateUrls();
+    let lastErr = null;
+
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload
+        });
+        const text = await res.text();
+        let parsed = null;
+        try { parsed = JSON.parse(text); } catch (e) {}
+        const out = parsed
+          ? (parsed.output || parsed.stdout || parsed.stderr || JSON.stringify(parsed, null, 2))
+          : text;
+        appendConsoleLog("[GIT // " + action.toUpperCase() + " @ " + url + "] (HTTP " + res.status + ")\n" + out);
+        return;
+      } catch (err) {
+        lastErr = err;
+      }
+    }
+
+    appendConsoleLog("[GIT ГРЕШКА] Неуспешна връзка към /api/kali/git (" + (lastErr && lastErr.message ? lastErr.message : "Failed to fetch") + "). Провери дали сървърът работи на http://127.0.0.1:3000.");
+  }
+
+  document.querySelectorAll("[data-git-act]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const act = btn.getAttribute("data-git-act");
+      if (act) executeGit(act);
+    });
+  });
+})();
+</script>
 </body>
 </html>
