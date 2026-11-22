@@ -301,6 +301,40 @@ function setExample(text) {
     document.getElementById("description").value = text;
 }
 
+
+async function tryLocalOllamaFallback(description, type) {
+    const baseUrl = "http://127.0.0.1:11434";
+    const models = ["dark-mega:latest", "llama3.2:latest", "phi3:mini"];
+    const prompt = [
+        "Ти си RED SOFTWARE TEAM AI SOFTWARE BUILDER.",
+        "Създай работещ софтуер на български/код според описанието.",
+        "Тип: " + type,
+        "Описание: " + description,
+        "Върни само чист код или ясно обяснение с код."
+    ].join("\n");
+
+    for (const model of models) {
+        try {
+            const r = await fetch(baseUrl + "/api/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ model, prompt, stream: false })
+            });
+            if (!r.ok) continue;
+            const j = await r.json();
+            if (j && j.response) {
+                const ext = type === "python" ? "py" : (type === "node" ? "js" : "html");
+                return {
+                    summary: "Генерирано локално на Windows чрез Ollama (" + model + ").",
+                    filename: "marauder-windows-app." + ext,
+                    code: j.response
+                };
+            }
+        } catch (_) {}
+    }
+    return null;
+}
+
 async function generateSoftware() {
     const description = document.getElementById("description").value.trim();
     const type = document.getElementById("softwareType").value;
@@ -344,7 +378,18 @@ async function generateSoftware() {
         document.getElementById("result").style.display = "block";
         status.innerText = "✅ Генерирането приключи успешно!";
     } catch (error) {
-        status.innerText = "❌ " + error.message;
+        status.innerText = "⚠️ Сървърът не отговори, пробвам локален Ollama на Windows (127.0.0.1:11434)...";
+        const localRes = await tryLocalOllamaFallback(description, type);
+        if (localRes) {
+            generatedCode = localRes.code || "";
+            generatedFilename = localRes.filename || "marauder-windows-app.html";
+            document.getElementById("summary").textContent = localRes.summary;
+            document.getElementById("code").textContent = generatedCode;
+            document.getElementById("result").style.display = "block";
+            status.innerText = "✅ Генерирано локално чрез Ollama на Windows!";
+        } else {
+            status.innerText = "❌ " + error.message + " (Провери сървъра или пусни Ollama на 127.0.0.1:11434)";
+        }
     }
 
     btn.disabled = false;

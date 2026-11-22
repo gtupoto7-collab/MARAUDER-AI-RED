@@ -1,2 +1,4 @@
-MARAUDER-AI за iOS
-Използвай уеб версията https://marauder-ai-hacker.onrender.com в Safari и добави на начален екран (Share -> Add to Home Screen), а за VPN/Tor ползвай клиент от App Store.
+MARAUDER-AI (RED-SOFTWARE-TEAM-BG) — iOS бележки
+1. Отвори уеб адреса на MARAUDER-AI в Safari на iPhone/iPad.
+2. Натисни бутона Share (квадратче със стрелка нагоре) -> "Add to Home Screen" ("Добави към начален екран").
+3. За VPN / защита на IP: инсталирай официалния WireGuard клиент от App Store, импортирай marauder-wg0.conf и включи тунела.

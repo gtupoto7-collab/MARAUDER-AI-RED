@@ -1814,25 +1814,26 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
 <!-- MARAUDER SVALI DROPDOWN ON CLICK -->
 <div id="marauderSvaliMenu" style="display:none;position:fixed;z-index:99999;background:#130f24;border:1px solid #6a54a8;border-radius:10px;padding:12px;min-width:250px;box-shadow:0 12px 32px rgba(0,0,0,0.75);color:#f4f2ff;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-    <span style="font-size:12px;font-weight:bold;color:#00f5d4;">Izberi kakvo da svalish:</span>
+    <span style="font-size:12px;font-weight:bold;color:#00f5d4;">Избери какво да свалиш:</span>
     <button type="button" onclick="closeMarauderSvaliMenu()" style="background:#261d45;color:#fff;border:1px solid #6a54a8;border-radius:5px;padding:2px 7px;cursor:pointer;font-size:11px;">✕</button>
   </div>
   <select id="marauderSvaliSelect" onchange="syncMarauderSvaliLink()" style="width:100%;background:#1c1536;color:#fff;border:1px solid #6a54a8;border-radius:7px;padding:7px 9px;font-size:12px;margin-bottom:8px;">
-    <option value="windows">Windows (.ZIP)</option>
-    <option value="android">Android (.APK)</option>
-    <option value="ios">iOS (Info / Web)</option>
+    <option value="windows">💻 Windows (.ZIP)</option>
+    <option value="android">🤖 Android (.APK)</option>
+    <option value="ios">🍎 iOS (Info / Web)</option>
   </select>
-  <a id="marauderSvaliGoBtn" href="/downloads/MARAUDER-AI-Windows.zip" download="MARAUDER-AI-Windows.zip" onclick="setTimeout(closeMarauderSvaliMenu, 250)" style="display:block;text-align:center;background:#00f5d4;color:#090712;text-decoration:none;font-weight:bold;font-size:12px;padding:8px 10px;border-radius:7px;">Svali Windows (.ZIP)</a>
+  <a id="marauderSvaliGoBtn" href="/downloads/MARAUDER-AI-Windows.zip" download="MARAUDER-AI-Windows.zip" onclick="setTimeout(closeMarauderSvaliMenu, 250)" style="display:block;text-align:center;background:#00f5d4;color:#090712;text-decoration:none;font-weight:bold;font-size:12px;padding:8px 10px;border-radius:7px;">⬇ Свали Windows (.ZIP)</a>
 </div>
 <script>
 (function() {
   const ITEMS = {
-    windows: { href: "/downloads/MARAUDER-AI-Windows.zip", file: "MARAUDER-AI-Windows.zip", text: "Svali Windows (.ZIP)" },
-    android: { href: "/downloads/MARAUDER-AI.apk", file: "MARAUDER-AI.apk", text: "Svali Android (.APK)" },
-    ios: { href: "/downloads/MARAUDER-AI-iOS-INFO.txt", file: "MARAUDER-AI-iOS-INFO.txt", text: "Svali iOS info" }
+    windows: { href: "/downloads/MARAUDER-AI-Windows.zip", file: "MARAUDER-AI-Windows.zip", text: "⬇ Свали Windows (.ZIP)" },
+    android: { href: "/downloads/MARAUDER-AI.apk", file: "MARAUDER-AI.apk", text: "⬇ Свали Android (.APK)" },
+    ios: { href: "/downloads/MARAUDER-AI-iOS-INFO.txt", file: "MARAUDER-AI-iOS-INFO.txt", text: "⬇ Свали iOS ръководство" }
   };
 
   window.syncMarauderSvaliLink = function() {
@@ -1853,8 +1854,7 @@ window.addEventListener("DOMContentLoaded", function() {
   window.toggleMarauderSvaliMenu = function(anchorEl) {
     const menu = document.getElementById("marauderSvaliMenu");
     if (!menu) return;
-    const isOpen = menu.style.display === "block";
-    if (isOpen) {
+    if (menu.style.display === "block") {
       menu.style.display = "none";
       return;
     }
@@ -1863,7 +1863,7 @@ window.addEventListener("DOMContentLoaded", function() {
     if (anchorEl && anchorEl.getBoundingClientRect) {
       const r = anchorEl.getBoundingClientRect();
       const left = Math.min(window.innerWidth - 270, Math.max(10, r.left));
-      const top = Math.min(window.innerHeight - 150, Math.max(10, r.bottom + 6));
+      const top = Math.min(window.innerHeight - 160, Math.max(10, r.bottom + 6));
       menu.style.left = left + "px";
       menu.style.top = top + "px";
     } else {
@@ -1904,5 +1904,134 @@ window.addEventListener("DOMContentLoaded", function() {
 })();
 </script>
 <!-- END MARAUDER SVALI DROPDOWN ON CLICK -->
+<!-- MARAUDER REAL WIREGUARD VPN PANEL -->
+<div id="marauderRealWgBox" style="margin-top:16px;padding:14px;background:#120d24;border:1px solid #00f5d4;border-radius:10px;color:#f4f2ff;">
+  <h3 style="margin:0 0 8px 0;color:#00f5d4;font-size:15px;">Realen WireGuard VPN i postoyanna zashtita na IP</h3>
+  <p style="margin:0 0 10px 0;font-size:12px;color:#cfc9eb;">
+    Za realno skrivanje na IP-to e nuzhen aktiven WireGuard tunel kum tvoi VPS (<code>wg0</code>) + vklyuchen Always-on / Kill Switch na ustroystvoto.
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:10px;">
+    <input id="wgServerIp" type="text" placeholder="VPS Public IP (napr. 1.2.3.4)" style="background:#090614;color:#fff;border:1px solid #4d3b82;border-radius:6px;padding:7px 9px;font-size:12px;">
+    <input id="wgServerPort" type="text" value="51820" placeholder="Port (51820)" style="background:#090614;color:#fff;border:1px solid #4d3b82;border-radius:6px;padding:7px 9px;font-size:12px;">
+    <input id="wgServerPubKey" type="text" placeholder="Server PublicKey" style="background:#090614;color:#fff;border:1px solid #4d3b82;border-radius:6px;padding:7px 9px;font-size:12px;">
+    <input id="wgClientPrivKey" type="text" placeholder="Client PrivateKey" style="background:#090614;color:#fff;border:1px solid #4d3b82;border-radius:6px;padding:7px 9px;font-size:12px;">
+  </div>
+  <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:10px;cursor:pointer;">
+    <input id="wgAlwaysOnFlag" type="checkbox" checked>
+    <span>Postoyanna zashtita na IP (AllowedIPs = 0.0.0.0/0, DNS 1.1.1.1 + Kill Switch iziskvane)</span>
+  </label>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+    <button type="button" onclick="marauderDownloadWgConf()" style="background:#00f5d4;color:#090712;border:none;border-radius:6px;padding:7px 12px;font-weight:bold;font-size:12px;cursor:pointer;">Svali marauder-wg0.conf</button>
+    <button type="button" onclick="marauderCheckPublicIp()" style="background:#241a42;color:#fff;border:1px solid #6a54a8;border-radius:6px;padding:7px 12px;font-size:12px;cursor:pointer;">Proveri tekusht IP</button>
+  </div>
+  <div id="marauderWgIpStatus" style="font-size:12px;color:#ffbe0b;margin-bottom:8px;">IP status: ne e provereno oshte.</div>
+  <pre id="marauderWgPreview" style="margin:0;padding:10px;background:#070510;border:1px solid #2e2352;border-radius:8px;color:#00ff9c;font-size:11px;overflow-x:auto;"></pre>
+</div>
+<script>
+(function() {
+  function buildWgConf() {
+    const ip = (document.getElementById("wgServerIp")?.value || "YOUR_VPS_IP").trim();
+    const port = (document.getElementById("wgServerPort")?.value || "51820").trim();
+    const pub = (document.getElementById("wgServerPubKey")?.value || "SERVER_PUBLIC_KEY").trim();
+    const priv = (document.getElementById("wgClientPrivKey")?.value || "CLIENT_PRIVATE_KEY").trim();
+    const alwaysOn = !!document.getElementById("wgAlwaysOnFlag")?.checked;
+    const allowed = alwaysOn ? "0.0.0.0/0" : "10.66.66.0/24";
+    return [
+      "[Interface]",
+      "PrivateKey = " + priv,
+      "Address = 10.66.66.2/32",
+      "DNS = 1.1.1.1, 9.9.9.9",
+      "",
+      "[Peer]",
+      "PublicKey = " + pub,
+      "Endpoint = " + ip + ":" + port,
+      "AllowedIPs = " + allowed,
+      "PersistentKeepalive = 25"
+    ].join("\n");
+  }
+
+  function refreshWgPreview() {
+    const pre = document.getElementById("marauderWgPreview");
+    if (pre) pre.textContent = buildWgConf();
+  }
+
+  window.marauderDownloadWgConf = function() {
+    const conf = buildWgConf();
+    const blob = new Blob([conf], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "marauder-wg0.conf";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  window.marauderCheckPublicIp = async function() {
+    const el = document.getElementById("marauderWgIpStatus");
+    if (!el) return;
+    el.textContent = "Proveryavam tekushtiya vunshen IP adres...";
+    try {
+      const r = await fetch("https://api.ipify.org?format=json");
+      const d = await r.json();
+      el.textContent = "Tekusht vunshen IP adres: " + (d.ip || "neizvesten") + " (sravni s IP-to na tvoya VPS)";
+    } catch (e) {
+      el.textContent = "Ne uspyah da proverya IP-to avtomatichno (" + e.message + ").";
+    }
+  };
+
+  window.addEventListener("DOMContentLoaded", function() {
+    ["wgServerIp", "wgServerPort", "wgServerPubKey", "wgClientPrivKey", "wgAlwaysOnFlag"].forEach(id => {
+      const node = document.getElementById(id);
+      if (node) {
+        node.addEventListener("input", refreshWgPreview);
+        node.addEventListener("change", refreshWgPreview);
+      }
+    });
+    refreshWgPreview();
+  });
+})();
+</script>
+<!-- END MARAUDER REAL WIREGUARD VPN PANEL -->
+<!-- MARAUDER MODEL/VERSION TOGGLE ON BUTTON CLICK -->
+<script>
+(function() {
+  function findModelBar() {
+    const all = Array.from(document.querySelectorAll("div, section, form, p"));
+    return all.find(el => {
+      if (el.id === "marauderSvaliMenu" || el.id === "marauderRealWgBox") return false;
+      if (el.offsetHeight > 220) return false;
+      const t = (el.textContent || "").toLowerCase();
+      return (t.includes("офлайн ai") || t.includes("oflain ai") || t.includes("127.0.0.1:11434")) &&
+             (t.includes("модел") || t.includes("model") || el.querySelector("select, input"));
+    }) || null;
+  }
+
+  function findMarauderVersionBtn() {
+    const btns = Array.from(document.querySelectorAll("button, a, div, span"));
+    return btns.find(el => {
+      if (el.children.length > 3) return false;
+      const t = (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      return t.includes("marauder-ai") && (t.includes("fenix") || t.includes("5.3") || t.includes("6.2"));
+    }) || null;
+  }
+
+  window.addEventListener("DOMContentLoaded", function() {
+    const bar = findModelBar();
+    const btn = findMarauderVersionBtn();
+    if (!bar) return;
+
+    bar.dataset.marauderHiddenByDefault = "1";
+    bar.style.display = "none";
+
+    if (btn && !btn.dataset.marauderModelToggleBound) {
+      btn.dataset.marauderModelToggleBound = "1";
+      btn.addEventListener("click", function(e) {
+        const isHidden = bar.style.display === "none";
+        bar.style.display = isHidden ? "" : "none";
+      });
+    }
+  });
+})();
+</script>
+<!-- END MARAUDER MODEL/VERSION TOGGLE ON BUTTON CLICK -->
 </body>
 </html>
