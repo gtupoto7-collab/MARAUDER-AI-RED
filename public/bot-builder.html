@@ -1047,5 +1047,117 @@
   setTimeout(addKaliAndNetHunterToDrawer, 650);
 })();
 </script>
+<style id="marauderDirectOptionsFixStyle">
+  #marauderAlOptionsDrawer { display: none !important; }
+  #marauderAlOptionsDrawer.open {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 12px !important;
+    margin: 8px 0 !important;
+    border-radius: 10px !important;
+    border: 1px solid #38bdf8 !important;
+    background: #071322 !important;
+    color: #e6f1ff !important;
+    max-width: 460px !important;
+    width: 100% !important;
+    position: relative !important;
+    z-index: 9999 !important;
+  }
+</style>
+<script id="marauderDirectOptionsFixScript">
+(function() {
+  function ensureDrawerExists() {
+    var drawer = document.getElementById("marauderAlOptionsDrawer");
+    if (!drawer) {
+      drawer = document.createElement("div");
+      drawer.id = "marauderAlOptionsDrawer";
+      var anchor = document.querySelector(".chat-wrap, .chat-container, .main-panel, .app-main, main") || document.body;
+      anchor.insertBefore(drawer, anchor.firstChild);
+    }
+    if (!document.getElementById("openKaliLinuxRootPageBtn")) {
+      var kBtn = document.createElement("a");
+      kBtn.id = "openKaliLinuxRootPageBtn";
+      kBtn.href = "/kali-root.html";
+      kBtn.target = "_blank";
+      kBtn.rel = "noopener noreferrer";
+      kBtn.style.cssText = "display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 11px;border-radius:8px;border:1px solid #f87171;background:#22090e;color:#fca5a5;font-weight:700;text-decoration:none;";
+      kBtn.innerHTML = "<span>KONZOLA KALI LINUX ROOT</span><span>100 ИНСТРУМЕНТА →</span>";
+      drawer.insertBefore(kBtn, drawer.firstChild);
+    }
+    if (!document.getElementById("openKaliNetHunterMobileBtn")) {
+      var nhBtn = document.createElement("a");
+      nhBtn.id = "openKaliNetHunterMobileBtn";
+      nhBtn.href = "/kali-root.html?profile=nethunter-mobile";
+      nhBtn.target = "_blank";
+      nhBtn.rel = "noopener noreferrer";
+      nhBtn.style.cssText = "display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 11px;border-radius:8px;border:1px solid #38bdf8;background:#081c2e;color:#7dd3fc;font-weight:700;text-decoration:none;";
+      nhBtn.innerHTML = "<span>KALI NETHUNTER (ANDROID / iOS)</span><span>MOBILE LIVE →</span>";
+      var kEl = document.getElementById("openKaliLinuxRootPageBtn");
+      if (kEl && kEl.nextSibling) {
+        drawer.insertBefore(nhBtn, kEl.nextSibling);
+      } else {
+        drawer.appendChild(nhBtn);
+      }
+    }
+    return drawer;
+  }
+  function toggleMarauderOptionsDrawer(forceOpen) {
+    var drawer = ensureDrawerExists();
+    if (forceOpen === true) {
+      drawer.classList.add("open");
+    } else if (forceOpen === false) {
+      drawer.classList.remove("open");
+    } else {
+      drawer.classList.toggle("open");
+    }
+    if (drawer.classList.contains("open")) {
+      drawer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+  function bindDirectOptionTriggers() {
+    ensureDrawerExists();
+    var newBtn = document.getElementById("marauderNewAlMenuBtn");
+    if (!newBtn) {
+      var dots = Array.from(document.querySelectorAll("button, [role=button]")).filter(function(b) {
+        var t = (b.textContent || "").trim();
+        return t === "⋮" || t === "..." || t === "•••";
+      });
+      var anchorBtn = dots[0] || document.querySelector("button, [role=button]");
+      if (anchorBtn && anchorBtn.parentNode) {
+        newBtn = document.createElement("button");
+        newBtn.type = "button";
+        newBtn.id = "marauderNewAlMenuBtn";
+        newBtn.textContent = "MARAUDER-AL Опции";
+        newBtn.style.cssText = "display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:8px;border:1px solid #38bdf8;background:#08192c;color:#7dd3fc;font-weight:700;font-size:12px;cursor:pointer;";
+        anchorBtn.parentNode.insertBefore(newBtn, anchorBtn.nextSibling);
+      }
+    }
+    if (newBtn && !newBtn.dataset.directBound) {
+      newBtn.dataset.directBound = "1";
+      newBtn.addEventListener("click", function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        toggleMarauderOptionsDrawer();
+      }, true);
+    }
+  }
+  document.addEventListener("click", function(ev) {
+    var target = ev.target && ev.target.closest ? ev.target.closest("button, a, [role=button]") : null;
+    if (!target) return;
+    if (target.id === "marauderNewAlMenuBtn") {
+      ev.preventDefault();
+      ev.stopPropagation();
+      toggleMarauderOptionsDrawer();
+    }
+  }, true);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function() { setTimeout(bindDirectOptionTriggers, 150); });
+  } else {
+    setTimeout(bindDirectOptionTriggers, 150);
+  }
+  setTimeout(bindDirectOptionTriggers, 500);
+})();
+</script>
 </body>
 </html>
