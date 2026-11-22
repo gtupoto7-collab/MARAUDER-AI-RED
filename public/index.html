@@ -2998,5 +2998,124 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 })();
 </script>
+
+<style id="marauderStrictThreeDotOnlyStyle">
+  #marauderKeepVisibleStyle,
+  #marauderStrictMenuStyle {
+    display: none !important;
+  }
+  #marauderUnifiedBar,
+  #marauderMobileDonatePanel,
+  #marauderTierBox,
+  #marauderLiveRoomPanel,
+  #marauderStrictMenuBar,
+  #marauderLangSwitcherWrap,
+  #marauderTopControlBar {
+    display: none !important;
+  }
+  body.marauder-three-dot-menu-open #marauderTopControlBar {
+    display: flex !important;
+    position: fixed !important;
+    top: 44px !important;
+    left: 12px !important;
+    right: 12px !important;
+    max-width: 540px !important;
+    z-index: 99999 !important;
+    background: #0d131e !important;
+    border: 1px solid #ffc439 !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.75) !important;
+  }
+  body.marauder-three-dot-menu-open #marauderThreeDotDropdown,
+  body.marauder-three-dot-menu-open #marauderLangSwitcherWrap {
+    display: flex !important;
+  }
+  body.marauder-open-donate #marauderMobileDonatePanel,
+  body.marauder-open-donate #marauderTierBox {
+    display: block !important;
+  }
+  body.marauder-open-unified #marauderUnifiedBar {
+    display: flex !important;
+  }
+  body.marauder-open-room #marauderLiveRoomPanel {
+    display: block !important;
+  }
+  #marauderMiniHeaderDotsBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-left: 8px;
+    border-radius: 7px;
+    border: 1px solid #ffc439;
+    background: #1b150b;
+    color: #ffc439;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+</style>
+
+<button id="marauderMiniHeaderDotsBtn" type="button" title="Опции" onclick="window.toggleMiniThreeDotMenu()">⋮</button>
+
+<script>
+(function() {
+  const OPEN_CLASSES = [
+    "marauder-three-dot-menu-open",
+    "marauder-dots-open",
+    "marauder-open-donate",
+    "marauder-open-unified",
+    "marauder-open-room"
+  ];
+
+  function resetAllPanels() {
+    document.body.classList.remove(...OPEN_CLASSES);
+  }
+
+  window.toggleMiniThreeDotMenu = function() {
+    const isOpen = document.body.classList.contains("marauder-three-dot-menu-open");
+    resetAllPanels();
+    if (!isOpen) {
+      document.body.classList.add("marauder-three-dot-menu-open");
+      document.body.classList.add("marauder-dots-open");
+    }
+  };
+
+  window.openStrictMenuPanel = function(panelKey) {
+    document.body.classList.remove("marauder-open-donate", "marauder-open-unified", "marauder-open-room");
+    document.body.classList.add("marauder-three-dot-menu-open");
+    document.body.classList.add("marauder-dots-open");
+    if (panelKey === "donate") document.body.classList.add("marauder-open-donate");
+    if (panelKey === "unified") document.body.classList.add("marauder-open-unified");
+    if (panelKey === "room") document.body.classList.add("marauder-open-room");
+  };
+
+  window.selectMenuOption = function(key) {
+    if (key === null) {
+      resetAllPanels();
+      return;
+    }
+    window.openStrictMenuPanel(key);
+  };
+
+  document.addEventListener("DOMContentLoaded", function() {
+    resetAllPanels();
+    const miniBtn = document.getElementById("marauderMiniHeaderDotsBtn");
+    if (miniBtn) {
+      const brandEl = Array.from(document.querySelectorAll("h1, h2, h3, div, span, a")).find(
+        el => (el.textContent || "").includes("MARAUDER-AI") && el.children.length <= 2 && el.offsetHeight < 80
+      );
+      if (brandEl && brandEl.parentElement) {
+        brandEl.insertAdjacentElement("afterend", miniBtn);
+      } else {
+        document.body.insertBefore(miniBtn, document.body.firstChild);
+      }
+    }
+  });
+})();
+</script>
 </body>
 </html>
