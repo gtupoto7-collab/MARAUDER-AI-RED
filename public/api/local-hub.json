@@ -1,0 +1,35 @@
+{
+  "updatedAt": "2026-11-23T21:44:42.864Z",
+  "connection": "LOCAL",
+  "targets": {
+    "powershell": {
+      "status": "CONNECTED",
+      "mode": "local-host"
+    },
+    "ubuntuWsl": {
+      "status": "CONNECTED",
+      "distros": [
+        "Ubuntu",
+        "kali-linux"
+      ]
+    },
+    "kaliLinux": {
+      "status": "CONNECTED",
+      "lab": "KALI LAB CONTROL"
+    },
+    "termux": {
+      "status": "OFFLINE",
+      "bridge": "android-ssh-or-termux-api"
+    },
+    "docker": {
+      "status": "OFFLINE",
+      "runningContainers": 0
+    }
+  },
+  "system": {
+    "cpuLoad1m": "0.12",
+    "ramUsedPct": 16,
+    "linuxKernel": "6.18.58.1-microsoft-standard-WSL2",
+    "hostname": "admiralerror"
+  }
+}
