@@ -137,6 +137,43 @@
   font-size: 15px;
   letter-spacing: 1px;
 }
+.bilingual-box {
+  background: #090d14;
+  border: 1px solid #2c3648;
+  border-left: 4px solid #38bdf8;
+  border-radius: 5px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 1.5;
+}
+.bilingual-en {
+  color: #93c5fd;
+  border-top: 1px dashed #222b3a;
+  padding-top: 8px;
+  font-size: 13px;
+}
+.red-chat-box {
+  background: #14070b;
+  border: 2px solid #ff2a4b;
+  border-radius: 6px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chat-feed {
+  background: #05070b;
+  border: 1px solid #29131a;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 150px;
+  max-height: 280px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
 .m-row {
   display: flex;
   gap: 10px;
@@ -252,7 +289,7 @@
 <button class="top-tab-btn" data-tab="HOME">HOME</button>
 <button class="top-tab-btn" data-tab="CYBER AI">CYBER AI</button>
 <button class="top-tab-btn" data-tab="DARK-VPN">DARK-VPN</button>
-<button class="top-tab-btn" data-tab="MARKETPLACE">MARKETPLACE</button>
+<button class="top-tab-btn" data-tab="SECRET CHAT">SECRET CHAT</button>
 <button class="top-tab-btn" data-tab="OSINT">OSINT</button>
 <button class="top-tab-btn" data-tab="DARK WEB">DARK WEB</button>
 <button class="top-tab-btn" data-tab="EXPLOIT">EXPLOIT</button>
@@ -276,6 +313,9 @@ const KEEPER_ADDR = "UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H";
 const PAYPAL_BASE_URL = "https://www.paypal.com/ncp/payment/BWG4AH3MMH8T6";
 const EASYPAY_PHONE = "0879813928";
 const EASYPAY_NOTICE = "ZVUNETE NA TOQ NOMER DA POLUCHITE EGN I IMENA ZA PREVOD !!! SNIMAITE PREVODA I GO PAZETE  !!!!";
+
+const DESC_BG = "ВЪНШНА ЗАЩИТА ЗА АНОНИМНОСТ // MARAUDER-AI работи с вградените VPN профили за Windows, iOS и Android в приложението. Третата външна защита е сваляне на Orbot и свързване на MARAUDER-AI към него от опцията за приложения, така че Orbot да работи постоянно докато използвате MARAUDER-AI, а когато излезете от приложението, да можете да изключите Orbot.";
+const DESC_EN = "EXTERNAL ANONYMITY SHIELD // MARAUDER-AI works with built-in VPN profiles for Windows, iOS, and Android inside the app. The third external protection layer is installing Orbot and linking MARAUDER-AI to it from the app options so Orbot stays active while using MARAUDER-AI and can be turned off when outside the app.";
 
 const VPN_SERVERS = [
   { id: "BG-SOF-01", country: "Bulgaria", flag: "BG", endpoint: "bg-sof-01.marauder-vpn.local:51820", vip: "185.142.xxx.11", baseMs: 24 },
@@ -377,6 +417,7 @@ const state = {
   })),
   darkVpn: JSON.parse(localStorage.getItem("marauder_dark_vpn") || JSON.stringify({
     connected: true,
+    shieldMode: "TOR + VPN",
     serverId: "BG-SOF-01",
     alwaysOn24x7: true,
     autoReconnect: true,
@@ -384,20 +425,25 @@ const state = {
     dns: "1.1.1.1, 9.9.9.9",
     latencyMs: 24,
     platform: "Windows + Android + iOS/iPadOS",
-    localPubKey: "WG_PUB_LOCAL_GENERATED_ON_DEVICE"
+    localPubKey: "WG_PUB_LOCAL_GENERATED_ON_DEVICE",
+    orbotInstalled: true,
+    orbotLinkedToMarauder: true,
+    orbotRunWhileInApp: true
   })),
+  redChat: {
+    token: "",
+    expiresAt: 0,
+    roomOpen: false,
+    maxUsers: 150,
+    messages: [],
+    lastWipeAt: Date.now()
+  },
   reports: JSON.parse(localStorage.getItem("marauder_reports") || "[]"),
   settings: JSON.parse(localStorage.getItem("marauder_settings") || JSON.stringify({
     stealth: true,
     timeoutSec: 180,
     accent: "#ff2a4b"
-  })),
-  marketItems: [
-    { id: "MOD-AI-CORE", name: "Cyber AI Prompt Engine v4", ver: "4.2", status: "INSTALLED" },
-    { id: "MOD-VPN-WG", name: "MARAUDER WireGuard Core", ver: "3.0", status: "ACTIVE" },
-    { id: "MOD-OSINT-IDX", name: "OSINT Recon Indexer", ver: "3.1", status: "READY" },
-    { id: "MOD-FOR-HASH", name: "Forensics SHA/Log Analyzer", ver: "1.8", status: "READY" }
-  ]
+  }))
 };
 
 const drawer = document.getElementById("marauderDrawer");
@@ -445,6 +491,49 @@ async function sha256Text(str) {
   return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+function generateSecureToken7() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const arr = new Uint8Array(7);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, n => chars[n % chars.length]).join("");
+}
+
+function getRemainingTokenSec() {
+  if (!state.redChat.token || !state.redChat.expiresAt) return 0;
+  const rem = Math.ceil((state.redChat.expiresAt - Date.now()) / 1000);
+  if (rem <= 0) {
+    state.redChat.token = "";
+    state.redChat.expiresAt = 0;
+    return 0;
+  }
+  return rem;
+}
+
+function getRemainingWipeSec() {
+  const elapsed = Math.floor((Date.now() - state.redChat.lastWipeAt) / 1000);
+  const rem = 120 - (elapsed % 120);
+  return rem === 0 ? 120 : rem;
+}
+
+setInterval(() => {
+  if (!drawer.classList.contains("open")) return;
+  if (Date.now() - state.redChat.lastWipeAt >= 120000) {
+    state.redChat.messages = [];
+    state.redChat.lastWipeAt = Date.now();
+    const feed = document.getElementById("redChatFeed");
+    if (feed) feed.textContent = "[RED SECRET CHAT] Auto-wipe (120s) executed for all users.";
+  }
+  const tokTimer = document.getElementById("tokenCountdown");
+  if (tokTimer) {
+    const sec = getRemainingTokenSec();
+    tokTimer.textContent = sec > 0 ? sec + "s" : "EXPIRED / INVALID";
+  }
+  const wipeTimer = document.getElementById("wipeCountdown");
+  if (wipeTimer) {
+    wipeTimer.textContent = getRemainingWipeSec() + "s";
+  }
+}, 1000);
+
 function clampEur(val) {
   const n = Number(val);
   if (Number.isNaN(n)) return 5;
@@ -462,6 +551,113 @@ function getCurrentVpnServer() {
   return VPN_SERVERS.find(s => s.id === state.darkVpn.serverId) || VPN_SERVERS[0];
 }
 
+function renderSecretChatWindow() {
+  const remToken = getRemainingTokenSec();
+  const remWipe = getRemainingWipeSec();
+
+  drawerBody.innerHTML = `
+    <div class="red-chat-box">
+      <div class="malware-top-title">RED SECRET CHAT // 30s TOKEN · ADD TOKEN OPEN CHAT · 120s AUTO-WIPE · MANUAL WIPE</div>
+      <div class="m-row">
+        <button class="m-btn primary" id="genChatTokenBtn">GENERATE TOKEN (30s)</button>
+        <button class="m-btn" id="copyChatTokenBtn">COPY TOKEN</button>
+        <div>Token: <strong class="m-badge" id="activeTokenDisplay">${state.redChat.token || "NONE"}</strong></div>
+        <div>Expires: <strong class="m-warn" id="tokenCountdown">${remToken > 0 ? remToken + "s" : "EXPIRED / INVALID"}</strong></div>
+        <div>Auto-Wipe: <strong class="m-badge" id="wipeCountdown">${remWipe}s</strong></div>
+        <div>Max Users: <strong class="m-badge">${state.redChat.maxUsers}</strong></div>
+      </div>
+      <div class="m-row">
+        <input class="m-input" id="enterChatTokenInput" maxlength="7" placeholder="Vuvedi 7-simvolen token (ADD TOKEN OPEN CHAT)..." />
+        <button class="m-btn success" id="addTokenOpenChatBtn">ADD TOKEN OPEN CHAT</button>
+        <button class="m-btn danger" id="manualWipeChatBtn">IZTRII MOMENTALNO (WIPE NOW)</button>
+        <button class="m-btn" id="closeRedRoomBtn">CLOSE ROOM</button>
+      </div>
+      <div class="chat-feed" id="redChatFeed">${
+        state.redChat.roomOpen
+          ? (state.redChat.messages.length
+              ? state.redChat.messages.join("\n")
+              : "[RED SECRET CHAT] Anonymous room active (Max users: 150). Auto-wipe every 120s for all users.")
+          : "[RED SECRET CHAT] Locked. Generate a 30s token and press ADD TOKEN OPEN CHAT."
+      }</div>
+      ${state.redChat.roomOpen ? `
+        <div class="m-row">
+          <input class="m-input" id="redChatMsgInput" placeholder="Napishi anonimno suobshtenie (trie se na 120s)..." />
+          <button class="m-btn primary" id="redChatSendBtn">SEND ANON</button>
+        </div>
+      ` : ""}
+      <div class="m-log" id="secretChatLog">[SECRET CHAT] Ready. Token lifetime: 30s | Message wipe interval: 120s for all users.</div>
+    </div>
+  `;
+
+  const logEl = document.getElementById("secretChatLog");
+  const appendChatLog = (line) => {
+    logEl.textContent += "\n[" + new Date().toLocaleTimeString() + "] " + line;
+    logEl.scrollTop = logEl.scrollHeight;
+  };
+
+  document.getElementById("genChatTokenBtn").onclick = () => {
+    const tok = generateSecureToken7();
+    state.redChat.token = tok;
+    state.redChat.expiresAt = Date.now() + 30000;
+    document.getElementById("enterChatTokenInput").value = tok;
+    appendChatLog(`Generated 30s RED SECRET CHAT token: ${tok} (valid 30 seconds).`);
+    addReport("RED-SECRET-CHAT", "Generated 30s token", tok);
+    renderSecretChatWindow();
+  };
+
+  document.getElementById("copyChatTokenBtn").onclick = async () => {
+    if (getRemainingTokenSec() <= 0 || !state.redChat.token) {
+      appendChatLog("Token expired or missing. Generate a new 30s token.");
+      return;
+    }
+    try { await navigator.clipboard.writeText(state.redChat.token); } catch (_) {}
+    appendChatLog(`Copied token: ${state.redChat.token}`);
+  };
+
+  document.getElementById("addTokenOpenChatBtn").onclick = () => {
+    const entered = (document.getElementById("enterChatTokenInput").value || "").trim().toUpperCase();
+    if (getRemainingTokenSec() <= 0 || !state.redChat.token || entered !== state.redChat.token) {
+      appendChatLog("INVALID OR EXPIRED TOKEN (30s lifetime). Generate a new token.");
+      return;
+    }
+    state.redChat.roomOpen = true;
+    state.redChat.lastWipeAt = Date.now();
+    appendChatLog(`Token accepted. Anonymous RED SECRET CHAT opened (120s auto-wipe active).`);
+    addReport("RED-SECRET-CHAT", "Room opened via token", entered);
+    renderSecretChatWindow();
+  };
+
+  document.getElementById("manualWipeChatBtn").onclick = () => {
+    state.redChat.messages = [];
+    state.redChat.lastWipeAt = Date.now();
+    appendChatLog("MANUAL WIPE EXECUTED: All messages cleared immediately for all users.");
+    addReport("RED-SECRET-CHAT", "Manual wipe executed", "All chat messages wiped.");
+    renderSecretChatWindow();
+  };
+
+  document.getElementById("closeRedRoomBtn").onclick = () => {
+    state.redChat.roomOpen = false;
+    state.redChat.messages = [];
+    state.redChat.token = "";
+    state.redChat.expiresAt = 0;
+    appendChatLog("ROOM CLOSED: Session and token invalidated.");
+    renderSecretChatWindow();
+  };
+
+  const sendBtn = document.getElementById("redChatSendBtn");
+  if (sendBtn) {
+    sendBtn.onclick = () => {
+      const inp = document.getElementById("redChatMsgInput");
+      const txt = inp.value.trim();
+      if (!txt) return;
+      const anonId = "ANON-" + generateSecureToken7().slice(0, 4);
+      state.redChat.messages.push(`[${new Date().toLocaleTimeString()}] ${anonId}: ${txt}`);
+      inp.value = "";
+      renderSecretChatWindow();
+    };
+  }
+}
+
 function renderDarkVpnWindow() {
   const vpn = state.darkVpn;
   const srv = getCurrentVpnServer();
@@ -474,6 +670,11 @@ function renderDarkVpnWindow() {
           <button class="m-btn success" id="vpnConnectBtn">CONNECT VPN</button>
           <button class="m-btn danger" id="vpnDisconnectBtn">DISCONNECT</button>
           <button class="m-btn primary" id="vpnChangeServerBtn">CHANGE SERVER</button>
+          <select class="m-select" id="shieldModeSelect">
+            <option value="NORMAL" ${vpn.shieldMode === "NORMAL" ? "selected" : ""}>NORMAL (HTTPS)</option>
+            <option value="TOR PROTECTED" ${vpn.shieldMode === "TOR PROTECTED" ? "selected" : ""}>TOR PROTECTED (Orbot/Tor)</option>
+            <option value="TOR + VPN" ${vpn.shieldMode === "TOR + VPN" ? "selected" : ""}>TOR + VPN</option>
+          </select>
         </div>
       </div>
 
@@ -481,7 +682,7 @@ function renderDarkVpnWindow() {
         <div class="m-card">
           <div>STATUS</div>
           <div class="${vpn.connected ? "m-badge" : "m-warn"}">${vpn.connected ? "CONNECTED" : "DISCONNECTED"}</div>
-          <div>Protocol: WireGuard | Encryption: ACTIVE</div>
+          <div>Mode: ${vpn.shieldMode} | WireGuard ACTIVE</div>
         </div>
         <div class="m-card">
           <div>LOCATION &amp; SERVER</div>
@@ -489,14 +690,14 @@ function renderDarkVpnWindow() {
           <div>Virtual IP: ${srv.vip}</div>
         </div>
         <div class="m-card">
-          <div>LATENCY &amp; QUALITY</div>
+          <div>LATENCY &amp; 24/7</div>
           <div class="m-badge">${vpn.latencyMs} ms</div>
-          <div>24/7 365 Always-On: ${vpn.alwaysOn24x7 ? "ON" : "OFF"}</div>
+          <div>Always-On 24/7 365: ${vpn.alwaysOn24x7 ? "ON" : "OFF"}</div>
         </div>
         <div class="m-card">
-          <div>KILL SWITCH &amp; AUTO-RECONNECT</div>
-          <div class="m-badge">KS: ${vpn.killSwitch ? "FAIL-CLOSED" : "OFF"} | AR: ${vpn.autoReconnect ? "ON" : "OFF"}</div>
-          <div>DNS: ${vpn.dns}</div>
+          <div>ORBOT EXTERNAL LAYER</div>
+          <div class="m-badge">${vpn.orbotLinkedToMarauder && vpn.orbotRunWhileInApp ? "LINKED IN APP" : "ORBOT OFF / STANDBY"}</div>
+          <div>Installed: ${vpn.orbotInstalled ? "YES" : "NO"}</div>
         </div>
       </div>
 
@@ -524,24 +725,19 @@ function renderDarkVpnWindow() {
         </div>
       </div>
 
-      <div class="home-box">
-        <div class="home-box-title">LOCAL WIREGUARD KEYS &amp; DEVICE CONFIG (PRIVATE KEY NEVER SENT TO SERVER)</div>
+      <div class="bilingual-box">
+        <div class="home-box-title">ВЪНШНА ЗАЩИТА ЗА АНОНИМНОСТ // EXTERNAL ANONYMITY SHIELD</div>
+        <div>${DESC_BG}</div>
         <div class="m-row">
-          <button class="m-btn primary" id="genLocalWgBtn">GENERATE LOCAL WIREGUARD PROFILE</button>
+          <label><input type="checkbox" id="orbotInstalledChk" ${vpn.orbotInstalled ? "checked" : ""} /> Orbot свален / инсталиран (Orbot Installed)</label>
+          <label><input type="checkbox" id="orbotLinkAppChk" ${vpn.orbotLinkedToMarauder ? "checked" : ""} /> Връзка на MARAUDER-AI към Orbot от опцията за приложения</label>
+          <label><input type="checkbox" id="orbotRunInAppChk" ${vpn.orbotRunWhileInApp ? "checked" : ""} /> Orbot работи постоянно докато сте в MARAUDER-AI (изключва се извън приложението)</label>
+          <button class="m-btn" id="saveOrbotBtn">ЗАПАЗИ ВЪНШНАТА ЗАЩИТА</button>
         </div>
-        <div class="code-box" id="wgProfilePreview">[Interface]
-# Generated locally on device for ${vpn.platform}
-# Local Public Key (shared with server): ${vpn.localPubKey}
-DNS = ${vpn.dns}
-
-[Peer]
-# Server: ${srv.country} (${srv.id})
-Endpoint = ${srv.endpoint}
-AllowedIPs = 0.0.0.0/0, ::/0
-PersistentKeepalive = 25</div>
+        <div class="bilingual-en">${DESC_EN}</div>
       </div>
 
-      <div class="m-log" id="darkVpnLog">[DARK-VPN] MARAUDER WireGuard ready | Server: ${srv.country} (${srv.id}) | Status: ${vpn.connected ? "CONNECTED" : "DISCONNECTED"} | 24/7 365 Profile: ${vpn.alwaysOn24x7 ? "ACTIVE" : "STANDBY"}.</div>
+      <div class="m-log" id="darkVpnLog">[DARK-VPN] MARAUDER WireGuard ready | Server: ${srv.country} (${srv.id}) | Mode: ${vpn.shieldMode} | Orbot in-app: ${vpn.orbotRunWhileInApp ? "ACTIVE WHILE IN APP" : "OFF"}.</div>
     </div>
   `;
 
@@ -556,15 +752,15 @@ PersistentKeepalive = 25</div>
     state.darkVpn.connected = true;
     state.darkVpn.latencyMs = activeSrv.baseMs + Math.floor(Math.random() * 14);
     saveState();
-    appendVpnLog(`CONNECTED -> ${activeSrv.country} (${activeSrv.id}) | WireGuard ACTIVE | Latency: ${state.darkVpn.latencyMs} ms.`);
-    addReport("DARK-VPN", "CONNECTED " + activeSrv.id, `Latency: ${state.darkVpn.latencyMs} ms`);
+    appendVpnLog(`CONNECTED -> ${activeSrv.country} (${activeSrv.id}) | Mode: ${state.darkVpn.shieldMode} | Latency: ${state.darkVpn.latencyMs} ms.`);
+    addReport("DARK-VPN", "CONNECTED " + activeSrv.id, `Mode=${state.darkVpn.shieldMode}`);
     renderDarkVpnWindow();
   };
 
   document.getElementById("vpnDisconnectBtn").onclick = () => {
     state.darkVpn.connected = false;
     saveState();
-    appendVpnLog(`DISCONNECTED | Kill Switch state: ${state.darkVpn.killSwitch ? "BLOCKING NON-VPN TRAFFIC (FAIL-CLOSED)" : "UNRESTRICTED"}.`);
+    appendVpnLog(`DISCONNECTED | Kill Switch: ${state.darkVpn.killSwitch ? "FAIL-CLOSED" : "OFF"}.`);
     addReport("DARK-VPN", "DISCONNECTED", "KillSwitch=" + state.darkVpn.killSwitch);
     renderDarkVpnWindow();
   };
@@ -576,8 +772,14 @@ PersistentKeepalive = 25</div>
     state.darkVpn.connected = true;
     state.darkVpn.latencyMs = next.baseMs + Math.floor(Math.random() * 12);
     saveState();
-    appendVpnLog(`Server switched -> [${next.flag}] ${next.country} (${next.id}) | Latency: ${state.darkVpn.latencyMs} ms.`);
-    addReport("DARK-VPN", "Server -> " + next.id, next.endpoint);
+    appendVpnLog(`Server switched -> [${next.flag}] ${next.country} (${next.id}).`);
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("shieldModeSelect").onchange = (e) => {
+    state.darkVpn.shieldMode = e.target.value;
+    saveState();
+    appendVpnLog(`Shield mode switched -> ${state.darkVpn.shieldMode}.`);
     renderDarkVpnWindow();
   };
 
@@ -602,17 +804,16 @@ PersistentKeepalive = 25</div>
     state.darkVpn.dns = document.getElementById("vpnDnsInput").value.trim() || "1.1.1.1, 9.9.9.9";
     saveState();
     appendVpnLog(`Saved VPN config: 24/7=${state.darkVpn.alwaysOn24x7}, AutoReconnect=${state.darkVpn.autoReconnect}, KillSwitch=${state.darkVpn.killSwitch}, DNS=${state.darkVpn.dns}.`);
-    addReport("DARK-VPN-CFG", "Config saved", JSON.stringify(state.darkVpn));
     renderDarkVpnWindow();
   };
 
-  document.getElementById("genLocalWgBtn").onclick = async () => {
-    const seed = `${state.darkVpn.serverId}|${state.darkVpn.platform}|${Date.now()}|${Math.random()}`;
-    const digest = await sha256Text(seed);
-    state.darkVpn.localPubKey = "WG_PUB_" + digest.slice(0, 32).toUpperCase();
+  document.getElementById("saveOrbotBtn").onclick = () => {
+    state.darkVpn.orbotInstalled = document.getElementById("orbotInstalledChk").checked;
+    state.darkVpn.orbotLinkedToMarauder = document.getElementById("orbotLinkAppChk").checked;
+    state.darkVpn.orbotRunWhileInApp = document.getElementById("orbotRunInAppChk").checked;
     saveState();
-    appendVpnLog(`Generated local WireGuard public key (${state.darkVpn.localPubKey}) for ${state.darkVpn.platform}. Private key stays local only.`);
-    addReport("DARK-VPN-KEYS", "Local WG profile generated", state.darkVpn.localPubKey);
+    appendVpnLog(`Orbot external shield updated: installed=${state.darkVpn.orbotInstalled}, linkedToMarauder=${state.darkVpn.orbotLinkedToMarauder}, activeWhileInApp=${state.darkVpn.orbotRunWhileInApp}.`);
+    addReport("ORBOT-SHIELD", "Updated Orbot app link", JSON.stringify(state.darkVpn));
     renderDarkVpnWindow();
   };
 }
@@ -1036,35 +1237,8 @@ function renderTab(tab) {
     return;
   }
 
-  if (tab === "MARKETPLACE") {
-    drawerBody.innerHTML = `
-      <div class="m-row">
-        <input class="m-input" id="mktFilter" placeholder="Filtrirai moduli po ime ili ID..." />
-      </div>
-      <div class="m-grid" id="mktGrid"></div>
-      <div class="m-log" id="mktLog">[MARKETPLACE] Select a module to toggle state.</div>
-    `;
-    const drawGrid = (filter = "") => {
-      const grid = document.getElementById("mktGrid");
-      grid.innerHTML = "";
-      state.marketItems
-        .filter(i => (i.name + i.id).toLowerCase().includes(filter.toLowerCase()))
-        .forEach(item => {
-          const card = document.createElement("div");
-          card.className = "m-card";
-          card.innerHTML = `<div><strong>${item.name}</strong></div><div>ID: ${item.id} (v${item.ver})</div><div>Status: <span class="m-badge">${item.status}</span></div><br/><button class="m-btn">TOGGLE</button>`;
-          card.querySelector("button").onclick = () => {
-            item.status = item.status === "ACTIVE" ? "STANDBY" : "ACTIVE";
-            const msg = `[${new Date().toLocaleTimeString()}] ${item.id} -> ${item.status}`;
-            document.getElementById("mktLog").textContent += "\n" + msg;
-            addReport("MARKETPLACE", msg, JSON.stringify(item));
-            drawGrid(document.getElementById("mktFilter").value);
-          };
-          grid.appendChild(card);
-        });
-    };
-    document.getElementById("mktFilter").oninput = e => drawGrid(e.target.value);
-    drawGrid();
+  if (tab === "SECRET CHAT") {
+    renderSecretChatWindow();
     return;
   }
 
