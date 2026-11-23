@@ -5,8 +5,484 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MARAUDER</title>
 <link rel="stylesheet" href="/nuke-all.css" />
+<style>
+.top-tab-bar {
+  position: fixed;
+  top: 14.5%;
+  left: 0.5%;
+  width: 99%;
+  height: 5.5%;
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.01);
+}
+.top-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: transparent;
+  cursor: pointer;
+  font-size: 0;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.top-tab-btn:hover {
+  background: rgba(0, 255, 136, 0.12);
+  border-color: rgba(0, 255, 136, 0.45);
+}
+.top-tab-btn.active {
+  background: rgba(255, 20, 60, 0.22);
+  border-color: rgba(255, 40, 80, 0.85);
+  box-shadow: inset 0 0 12px rgba(255, 20, 60, 0.45);
+}
+.marauder-drawer {
+  position: fixed;
+  top: 21%;
+  left: 18%;
+  width: 63%;
+  max-height: 54%;
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  background: rgba(8, 10, 16, 0.94);
+  border: 1px solid #ff2a4b;
+  box-shadow: 0 0 28px rgba(255, 42, 75, 0.35), inset 0 0 18px rgba(0, 255, 150, 0.08);
+  color: #e8eef5;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.marauder-drawer.open {
+  display: flex;
+}
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(255, 42, 75, 0.16);
+  border-bottom: 1px solid rgba(255, 42, 75, 0.45);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.drawer-close {
+  background: #ff2a4b;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+}
+.drawer-body {
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.m-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.m-input, .m-select {
+  flex: 1;
+  min-width: 180px;
+  background: #0d111a;
+  color: #f0f6fc;
+  border: 1px solid #30363d;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-family: inherit;
+}
+.m-btn {
+  background: #161b22;
+  color: #58a6ff;
+  border: 1px solid #30363d;
+  padding: 7px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: bold;
+}
+.m-btn:hover {
+  border-color: #58a6ff;
+  background: #1f2937;
+}
+.m-btn.danger {
+  color: #ff6b81;
+  border-color: #ff2a4b;
+}
+.m-log {
+  background: #05070b;
+  border: 1px solid #21262d;
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 120px;
+  max-height: 220px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
+.m-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 8px;
+}
+.m-card {
+  background: #0d111a;
+  border: 1px solid #262c36;
+  padding: 10px;
+  border-radius: 4px;
+}
+.m-badge {
+  color: #2ea043;
+  font-weight: bold;
+}
+</style>
 </head>
 <body>
 <img class="screen-bg" src="/DARKWEBARMY.jpg" alt="" />
+
+<nav class="top-tab-bar" id="topTabBar" aria-label="Top Console Tabs">
+<button class="top-tab-btn" data-tab="HOME">HOME</button>
+<button class="top-tab-btn" data-tab="CYBER AI">CYBER AI</button>
+<button class="top-tab-btn" data-tab="TOR">TOR</button>
+<button class="top-tab-btn" data-tab="MARKETPLACE">MARKETPLACE</button>
+<button class="top-tab-btn" data-tab="OSINT">OSINT</button>
+<button class="top-tab-btn" data-tab="DARK WEB">DARK WEB</button>
+<button class="top-tab-btn" data-tab="EXPLOIT">EXPLOIT</button>
+<button class="top-tab-btn" data-tab="FORENSICS">FORENSICS</button>
+<button class="top-tab-btn" data-tab="ANALYSIS">ANALYSIS</button>
+<button class="top-tab-btn" data-tab="REPORTS">REPORTS</button>
+<button class="top-tab-btn" data-tab="SETTINGS">SETTINGS</button>
+</nav>
+
+<section class="marauder-drawer" id="marauderDrawer">
+<div class="drawer-header">
+  <span id="drawerTitle">MODULE</span>
+  <button class="drawer-close" id="drawerClose">X</button>
+</div>
+<div class="drawer-body" id="drawerBody"></div>
+</section>
+
+<script>
+const state = {
+  activeTab: null,
+  reports: JSON.parse(localStorage.getItem("marauder_reports") || "[]"),
+  settings: JSON.parse(localStorage.getItem("marauder_settings") || JSON.stringify({
+    stealth: true,
+    timeoutSec: 180,
+    accent: "#ff2a4b"
+  })),
+  torCircuit: ["DE-Frankfurt-01", "NL-Amsterdam-04", "CH-Zurich-02"],
+  marketItems: [
+    { id: "MOD-AI-CORE", name: "Cyber AI Prompt Engine v4", ver: "4.2", status: "INSTALLED" },
+    { id: "MOD-TOR-MUX", name: "Tor Multi-Hop Router", ver: "2.9", status: "ACTIVE" },
+    { id: "MOD-OSINT-IDX", name: "OSINT Recon Indexer", ver: "3.1", status: "READY" },
+    { id: "MOD-FOR-HASH", name: "Forensics SHA/Log Analyzer", ver: "1.8", status: "READY" }
+  ]
+};
+
+const drawer = document.getElementById("marauderDrawer");
+const drawerTitle = document.getElementById("drawerTitle");
+const drawerBody = document.getElementById("drawerBody");
+const buttons = Array.from(document.querySelectorAll(".top-tab-btn"));
+
+function saveState() {
+  localStorage.setItem("marauder_reports", JSON.stringify(state.reports.slice(-50)));
+  localStorage.setItem("marauder_settings", JSON.stringify(state.settings));
+}
+
+function addReport(category, summary, details) {
+  const entry = {
+    time: new Date().toISOString(),
+    category,
+    summary,
+    details
+  };
+  state.reports.push(entry);
+  saveState();
+}
+
+function applyTheme() {
+  drawer.style.borderColor = state.settings.accent;
+  document.querySelector(".drawer-header").style.borderBottomColor = state.settings.accent;
+}
+
+async function sha256Text(str) {
+  const buf = new TextEncoder().encode(str);
+  const hashBuf = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function renderTab(tab) {
+  drawerTitle.textContent = "MARAUDER // " + tab;
+  applyTheme();
+
+  if (tab === "HOME") {
+    drawerBody.innerHTML = `
+      <div class="m-grid">
+        <div class="m-card"><div>CONSOLE</div><div class="m-badge">ONLINE</div><div>11 MODULES READY</div></div>
+        <div class="m-card"><div>TOR CIRCUIT</div><div class="m-badge">${state.torCircuit.length} HOPS</div><div>${state.torCircuit[state.torCircuit.length - 1]}</div></div>
+        <div class="m-card"><div>SAVED REPORTS</div><div class="m-badge">${state.reports.length}</div><div>LOCAL PERSISTENCE</div></div>
+        <div class="m-card"><div>STEALTH MODE</div><div class="m-badge">${state.settings.stealth ? "ENABLED" : "OFF"}</div><div>TTL: ${state.settings.timeoutSec}s</div></div>
+      </div>
+      <div class="m-log" id="homeLog">[HOME] System initialized. Select any top tab or run quick diagnostics.\nActive modules: HOME, CYBER AI, TOR, MARKETPLACE, OSINT, DARK WEB, EXPLOIT, FORENSICS, ANALYSIS, REPORTS, SETTINGS.</div>
+    `;
+    return;
+  }
+
+  if (tab === "CYBER AI") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <input class="m-input" id="aiPrompt" placeholder="Vuvedi komanda ili zadacha za CYBER AI (napr. audit ssh, plan scan)..." />
+        <button class="m-btn" id="aiRun">EXECUTE</button>
+      </div>
+      <div class="m-log" id="aiLog">[CYBER AI] Ready for operational commands.</div>
+    `;
+    document.getElementById("aiRun").onclick = () => {
+      const q = document.getElementById("aiPrompt").value.trim();
+      if (!q) return;
+      const log = document.getElementById("aiLog");
+      const out = `[${new Date().toLocaleTimeString()}] PROMPT: ${q}\n-> Analysis: Breakdown prepared into reconnaissance, verification, and hardening phases.\n-> Recommended check: verify exposed ports, permissions, and active logs.`;
+      log.textContent += "\n\n" + out;
+      log.scrollTop = log.scrollHeight;
+      addReport("CYBER AI", q, out);
+    };
+    return;
+  }
+
+  if (tab === "TOR") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <button class="m-btn" id="torRotate">NEW CIRCUIT</button>
+        <button class="m-btn" id="torTest">TEST LATENCY</button>
+      </div>
+      <div class="m-log" id="torLog">[TOR] Current nodes: ${state.torCircuit.join(" -> ")}</div>
+    `;
+    document.getElementById("torRotate").onclick = () => {
+      const pool = ["DE-Falkenstein-02", "NL-Rotterdam-01", "SE-Stockholm-03", "FI-Helsinki-01", "CH-Geneva-02", "US-Secaucus-05"];
+      state.torCircuit = [
+        pool[Math.floor(Math.random() * pool.length)],
+        pool[Math.floor(Math.random() * pool.length)],
+        pool[Math.floor(Math.random() * pool.length)]
+      ];
+      const msg = `[${new Date().toLocaleTimeString()}] Rotated circuit -> ${state.torCircuit.join(" -> ")}`;
+      document.getElementById("torLog").textContent += "\n" + msg;
+      addReport("TOR", "Circuit rotated", msg);
+    };
+    document.getElementById("torTest").onclick = () => {
+      const rtt = 65 + Math.floor(Math.random() * 140);
+      const msg = `[${new Date().toLocaleTimeString()}] Circuit ping via ${state.torCircuit[2]}: ${rtt} ms (OK)`;
+      document.getElementById("torLog").textContent += "\n" + msg;
+    };
+    return;
+  }
+
+  if (tab === "MARKETPLACE") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <input class="m-input" id="mktFilter" placeholder="Filtrirai moduli po ime ili ID..." />
+      </div>
+      <div class="m-grid" id="mktGrid"></div>
+      <div class="m-log" id="mktLog">[MARKETPLACE] Select a module to toggle state.</div>
+    `;
+    const drawGrid = (filter = "") => {
+      const grid = document.getElementById("mktGrid");
+      grid.innerHTML = "";
+      state.marketItems
+        .filter(i => (i.name + i.id).toLowerCase().includes(filter.toLowerCase()))
+        .forEach(item => {
+          const card = document.createElement("div");
+          card.className = "m-card";
+          card.innerHTML = `<div><strong>${item.name}</strong></div><div>ID: ${item.id} (v${item.ver})</div><div>Status: <span class="m-badge">${item.status}</span></div><br/><button class="m-btn">TOGGLE</button>`;
+          card.querySelector("button").onclick = () => {
+            item.status = item.status === "ACTIVE" ? "STANDBY" : "ACTIVE";
+            const msg = `[${new Date().toLocaleTimeString()}] ${item.id} -> ${item.status}`;
+            document.getElementById("mktLog").textContent += "\n" + msg;
+            addReport("MARKETPLACE", msg, JSON.stringify(item));
+            drawGrid(document.getElementById("mktFilter").value);
+          };
+          grid.appendChild(card);
+        });
+    };
+    document.getElementById("mktFilter").oninput = e => drawGrid(e.target.value);
+    drawGrid();
+    return;
+  }
+
+  if (tab === "OSINT") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <input class="m-input" id="osintTarget" placeholder="Domain, IP ili handle (napr. example.org)..." />
+        <button class="m-btn" id="osintRun">RUN RECON</button>
+      </div>
+      <div class="m-log" id="osintLog">[OSINT] Enter target domain, IP, or identifier.</div>
+    `;
+    document.getElementById("osintRun").onclick = async () => {
+      const t = document.getElementById("osintTarget").value.trim();
+      if (!t) return;
+      const h = await sha256Text(t);
+      const out = `[${new Date().toLocaleTimeString()}] Target: ${t}\n- Fingerprint (SHA-256): ${h.slice(0, 24)}...\n- Recon profile: DNS/WHOIS/Subdomain passive check queued.`;
+      document.getElementById("osintLog").textContent += "\n\n" + out;
+      addReport("OSINT", "Recon " + t, out);
+    };
+    return;
+  }
+
+  if (tab === "DARK WEB") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <input class="m-input" id="dwQuery" placeholder="Kluchova duma za monitoring (napr. credentials, leak, node)..." />
+        <button class="m-btn" id="dwScan">SCAN FEEDS</button>
+      </div>
+      <div class="m-log" id="dwLog">[DARK WEB] Feed watch active across indexed onion sources.</div>
+    `;
+    document.getElementById("dwScan").onclick = () => {
+      const kw = document.getElementById("dwQuery").value.trim() || "general";
+      const out = `[${new Date().toLocaleTimeString()}] Query "${kw}" -> Checked 4 feed snapshots; 0 critical alerts, 2 telemetry notes logged.`;
+      document.getElementById("dwLog").textContent += "\n" + out;
+      addReport("DARK WEB", "Feed check: " + kw, out);
+    };
+    return;
+  }
+
+  if (tab === "EXPLOIT") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <select class="m-select" id="expMod">
+          <option value="CVE-CHECK-HTTP">HTTP Header & Exposure Check (Safe Lab)</option>
+          <option value="AUTH-HARDEN-AUDIT">Auth & Session Policy Audit (Safe Lab)</option>
+          <option value="TLS-CIPHER-VERIFY">TLS Protocol & Cipher Check (Safe Lab)</option>
+        </select>
+        <input class="m-input" id="expTarget" placeholder="Lab target host/URL..." />
+        <button class="m-btn" id="expRun">DRY-RUN</button>
+      </div>
+      <div class="m-log" id="expLog">[EXPLOIT LAB] Safe simulation/verification mode active.</div>
+    `;
+    document.getElementById("expRun").onclick = () => {
+      const mod = document.getElementById("expMod").value;
+      const tgt = document.getElementById("expTarget").value.trim() || "localhost";
+      const out = `[${new Date().toLocaleTimeString()}] [${mod}] Target=${tgt} -> Simulation completed: verification steps generated without destructive payload.`;
+      document.getElementById("expLog").textContent += "\n" + out;
+      addReport("EXPLOIT", `${mod} on ${tgt}`, out);
+    };
+    return;
+  }
+
+  if (tab === "FORENSICS") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <input class="m-input" id="forInput" placeholder="Vuvedi tekst, log red ili niz za SHA-256 hash..." />
+        <button class="m-btn" id="forHash">COMPUTE SHA-256</button>
+      </div>
+      <div class="m-log" id="forLog">[FORENSICS] Ready to compute cryptographic hashes and inspect strings.</div>
+    `;
+    document.getElementById("forHash").onclick = async () => {
+      const val = document.getElementById("forInput").value;
+      const digest = await sha256Text(val);
+      const out = `[${new Date().toLocaleTimeString()}] Bytes=${new TextEncoder().encode(val).length}\nSHA-256: ${digest}`;
+      document.getElementById("forLog").textContent += "\n\n" + out;
+      addReport("FORENSICS", "SHA-256 computed", out);
+    };
+    return;
+  }
+
+  if (tab === "ANALYSIS") {
+    const cpu = 18 + Math.floor(Math.random() * 45);
+    const mem = 34 + Math.floor(Math.random() * 40);
+    const rx = (12 + Math.random() * 88).toFixed(1);
+    drawerBody.innerHTML = `
+      <div class="m-grid">
+        <div class="m-card"><div>CPU LOAD</div><div class="m-badge">${cpu}%</div></div>
+        <div class="m-card"><div>MEMORY</div><div class="m-badge">${mem}%</div></div>
+        <div class="m-card"><div>THROUGHPUT</div><div class="m-badge">${rx} MB/s</div></div>
+      </div>
+      <div class="m-log" id="anaLog">[ANALYSIS] Telemetry snapshot captured at ${new Date().toISOString()}.\nAnomaly score: LOW (0.12). All subsystems within normal bounds.</div>
+      <div class="m-row"><button class="m-btn" id="anaRefresh">REFRESH TELEMETRY</button></div>
+    `;
+    document.getElementById("anaRefresh").onclick = () => renderTab("ANALYSIS");
+    return;
+  }
+
+  if (tab === "REPORTS") {
+    const formatted = state.reports.length
+      ? state.reports.slice().reverse().map(r => `[${r.time}] [${r.category}] ${r.summary}\n${r.details}`).join("\n---\n")
+      : "[REPORTS] No recorded entries yet.";
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <button class="m-btn" id="repExport">DOWNLOAD JSON</button>
+        <button class="m-btn danger" id="repClear">CLEAR LOGS</button>
+      </div>
+      <div class="m-log" id="repLog">${formatted}</div>
+    `;
+    document.getElementById("repExport").onclick = () => {
+      const blob = new Blob([JSON.stringify(state.reports, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "marauder-report.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+    document.getElementById("repClear").onclick = () => {
+      state.reports = [];
+      saveState();
+      renderTab("REPORTS");
+    };
+    return;
+  }
+
+  if (tab === "SETTINGS") {
+    drawerBody.innerHTML = `
+      <div class="m-row">
+        <label><input type="checkbox" id="setStealth" ${state.settings.stealth ? "checked" : ""} /> Stealth Mode</label>
+        <input class="m-input" id="setTimeout" type="number" value="${state.settings.timeoutSec}" />
+        <select class="m-select" id="setAccent">
+          <option value="#ff2a4b" ${state.settings.accent === "#ff2a4b" ? "selected" : ""}>Neon Red</option>
+          <option value="#00ff88" ${state.settings.accent === "#00ff88" ? "selected" : ""}>Cyber Green</option>
+          <option value="#38bdf8" ${state.settings.accent === "#38bdf8" ? "selected" : ""}>Cyan Pulse</option>
+        </select>
+        <button class="m-btn" id="setSave">SAVE SETTINGS</button>
+      </div>
+      <div class="m-log" id="setLog">[SETTINGS] Configure console preferences.</div>
+    `;
+    document.getElementById("setSave").onclick = () => {
+      state.settings.stealth = document.getElementById("setStealth").checked;
+      state.settings.timeoutSec = parseInt(document.getElementById("setTimeout").value, 10) || 180;
+      state.settings.accent = document.getElementById("setAccent").value;
+      saveState();
+      applyTheme();
+      document.getElementById("setLog").textContent = `[${new Date().toLocaleTimeString()}] Settings saved to localStorage.`;
+    };
+  }
+}
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tab = btn.dataset.tab;
+    if (state.activeTab === tab && drawer.classList.contains("open")) {
+      drawer.classList.remove("open");
+      btn.classList.remove("active");
+      state.activeTab = null;
+      return;
+    }
+    buttons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.activeTab = tab;
+    drawer.classList.add("open");
+    renderTab(tab);
+  });
+});
+
+document.getElementById("drawerClose").onclick = () => {
+  drawer.classList.remove("open");
+  buttons.forEach(b => b.classList.remove("active"));
+  state.activeTab = null;
+};
+</script>
 </body>
 </html>
