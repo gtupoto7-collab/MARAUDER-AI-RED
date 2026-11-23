@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-11-23T20:18:25.351Z",
+  "files": [
+    {
+      "file": "MARAUDER-AI-Android.apk",
+      "bytes": 3817869
+    },
+    {
+      "file": "MARAUDER-AI-Windows.zip",
+      "bytes": 2160
+    },
+    {
+      "file": "MARAUDER-AI-iOS-INFO.txt",
+      "bytes": 168
+    },
+    {
+      "file": "release-manifest.json",
+      "bytes": 278
+    }
+  ]
+}
