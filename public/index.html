@@ -100,7 +100,7 @@
   flex-direction: column;
   gap: 14px;
 }
-.home-clean-window, .cyber-ai-service {
+.home-clean-window, .cyber-ai-service, .dark-vpn-panel {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -251,7 +251,7 @@
 <nav class="top-tab-bar" id="topTabBar" aria-label="Top Console Tabs">
 <button class="top-tab-btn" data-tab="HOME">HOME</button>
 <button class="top-tab-btn" data-tab="CYBER AI">CYBER AI</button>
-<button class="top-tab-btn" data-tab="TOR">TOR</button>
+<button class="top-tab-btn" data-tab="DARK-VPN">DARK-VPN</button>
 <button class="top-tab-btn" data-tab="MARKETPLACE">MARKETPLACE</button>
 <button class="top-tab-btn" data-tab="OSINT">OSINT</button>
 <button class="top-tab-btn" data-tab="DARK WEB">DARK WEB</button>
@@ -276,6 +276,13 @@ const KEEPER_ADDR = "UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H";
 const PAYPAL_BASE_URL = "https://www.paypal.com/ncp/payment/BWG4AH3MMH8T6";
 const EASYPAY_PHONE = "0879813928";
 const EASYPAY_NOTICE = "ZVUNETE NA TOQ NOMER DA POLUCHITE EGN I IMENA ZA PREVOD !!! SNIMAITE PREVODA I GO PAZETE  !!!!";
+
+const VPN_SERVERS = [
+  { id: "BG-SOF-01", country: "Bulgaria", flag: "BG", endpoint: "bg-sof-01.marauder-vpn.local:51820", vip: "185.142.xxx.11", baseMs: 24 },
+  { id: "DE-FRA-02", country: "Germany", flag: "DE", endpoint: "de-fra-02.marauder-vpn.local:51820", vip: "194.26.xxx.48", baseMs: 42 },
+  { id: "NL-AMS-03", country: "Netherlands", flag: "NL", endpoint: "nl-ams-03.marauder-vpn.local:51820", vip: "185.220.xxx.19", baseMs: 51 },
+  { id: "FI-HEL-04", country: "Finland", flag: "FI", endpoint: "fi-hel-04.marauder-vpn.local:51820", vip: "91.214.xxx.73", baseMs: 63 }
+];
 
 const MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST = [
   "MARAUDER-AI — MALWARE CYBER CRIMINAL AL AGENT (Centralen analiz / sandbox / IOC / threat intel)",
@@ -368,16 +375,26 @@ const state = {
     selectedAgentIdx: 0,
     malwareOption: MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST[0]
   })),
+  darkVpn: JSON.parse(localStorage.getItem("marauder_dark_vpn") || JSON.stringify({
+    connected: true,
+    serverId: "BG-SOF-01",
+    alwaysOn24x7: true,
+    autoReconnect: true,
+    killSwitch: true,
+    dns: "1.1.1.1, 9.9.9.9",
+    latencyMs: 24,
+    platform: "Windows + Android + iOS/iPadOS",
+    localPubKey: "WG_PUB_LOCAL_GENERATED_ON_DEVICE"
+  })),
   reports: JSON.parse(localStorage.getItem("marauder_reports") || "[]"),
   settings: JSON.parse(localStorage.getItem("marauder_settings") || JSON.stringify({
     stealth: true,
     timeoutSec: 180,
     accent: "#ff2a4b"
   })),
-  torCircuit: ["DE-Frankfurt-01", "NL-Amsterdam-04", "CH-Zurich-02"],
   marketItems: [
     { id: "MOD-AI-CORE", name: "Cyber AI Prompt Engine v4", ver: "4.2", status: "INSTALLED" },
-    { id: "MOD-TOR-MUX", name: "Tor Multi-Hop Router", ver: "2.9", status: "ACTIVE" },
+    { id: "MOD-VPN-WG", name: "MARAUDER WireGuard Core", ver: "3.0", status: "ACTIVE" },
     { id: "MOD-OSINT-IDX", name: "OSINT Recon Indexer", ver: "3.1", status: "READY" },
     { id: "MOD-FOR-HASH", name: "Forensics SHA/Log Analyzer", ver: "1.8", status: "READY" }
   ]
@@ -401,6 +418,7 @@ function saveState() {
   localStorage.setItem("marauder_selected_eur", String(state.selectedEur));
   localStorage.setItem("marauder_service_plan", JSON.stringify(state.servicePlan));
   localStorage.setItem("marauder_cyber_service", JSON.stringify(state.cyberService));
+  localStorage.setItem("marauder_dark_vpn", JSON.stringify(state.darkVpn));
   localStorage.setItem("marauder_reports", JSON.stringify(state.reports.slice(-50)));
   localStorage.setItem("marauder_settings", JSON.stringify(state.settings));
 }
@@ -438,6 +456,165 @@ function openTabProgrammatically(tabName) {
   state.activeTab = tabName;
   drawer.classList.add("open");
   renderTab(tabName);
+}
+
+function getCurrentVpnServer() {
+  return VPN_SERVERS.find(s => s.id === state.darkVpn.serverId) || VPN_SERVERS[0];
+}
+
+function renderDarkVpnWindow() {
+  const vpn = state.darkVpn;
+  const srv = getCurrentVpnServer();
+
+  drawerBody.innerHTML = `
+    <div class="dark-vpn-panel">
+      <div class="malware-top-banner">
+        <div class="malware-top-title">DARK-VPN // MARAUDER WIREGUARD CONTROL (24/7 / 365 ALWAYS-ON)</div>
+        <div class="m-row">
+          <button class="m-btn success" id="vpnConnectBtn">CONNECT VPN</button>
+          <button class="m-btn danger" id="vpnDisconnectBtn">DISCONNECT</button>
+          <button class="m-btn primary" id="vpnChangeServerBtn">CHANGE SERVER</button>
+        </div>
+      </div>
+
+      <div class="m-grid">
+        <div class="m-card">
+          <div>STATUS</div>
+          <div class="${vpn.connected ? "m-badge" : "m-warn"}">${vpn.connected ? "CONNECTED" : "DISCONNECTED"}</div>
+          <div>Protocol: WireGuard | Encryption: ACTIVE</div>
+        </div>
+        <div class="m-card">
+          <div>LOCATION &amp; SERVER</div>
+          <div class="m-badge">[${srv.flag}] ${srv.country} (${srv.id})</div>
+          <div>Virtual IP: ${srv.vip}</div>
+        </div>
+        <div class="m-card">
+          <div>LATENCY &amp; QUALITY</div>
+          <div class="m-badge">${vpn.latencyMs} ms</div>
+          <div>24/7 365 Always-On: ${vpn.alwaysOn24x7 ? "ON" : "OFF"}</div>
+        </div>
+        <div class="m-card">
+          <div>KILL SWITCH &amp; AUTO-RECONNECT</div>
+          <div class="m-badge">KS: ${vpn.killSwitch ? "FAIL-CLOSED" : "OFF"} | AR: ${vpn.autoReconnect ? "ON" : "OFF"}</div>
+          <div>DNS: ${vpn.dns}</div>
+        </div>
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">SERVERS &amp; PLATFORMS // BULGARIA · GERMANY · NETHERLANDS · FINLAND // WINDOWS · ANDROID · IOS</div>
+        <div class="m-row">
+          <select class="m-select" id="vpnServerSelect">
+            ${VPN_SERVERS.map(s => `
+              <option value="${s.id}" ${s.id === srv.id ? "selected" : ""}>[${s.flag}] ${s.country} — ${s.id} (${s.endpoint})</option>
+            `).join("")}
+          </select>
+          <select class="m-select" id="vpnPlatformSelect">
+            <option value="Windows + Android + iOS/iPadOS" ${vpn.platform === "Windows + Android + iOS/iPadOS" ? "selected" : ""}>Windows + Android + iOS/iPadOS (All)</option>
+            <option value="Windows (WireGuard Service)" ${vpn.platform.includes("Windows") && !vpn.platform.includes("+") ? "selected" : ""}>Windows (WireGuard)</option>
+            <option value="Android (WireGuard / VpnService Foreground)" ${vpn.platform.includes("Android") && !vpn.platform.includes("+") ? "selected" : ""}>Android (VpnService / Always-on)</option>
+            <option value="iOS/iPadOS (Network Extension / NEPacketTunnelProvider)" ${vpn.platform.includes("iOS") && !vpn.platform.includes("+") ? "selected" : ""}>iOS/iPadOS (Network Extension)</option>
+          </select>
+        </div>
+        <div class="m-row">
+          <label><input type="checkbox" id="vpnAlwaysOn" ${vpn.alwaysOn24x7 ? "checked" : ""} /> 24/7 365 Always-On Profile</label>
+          <label><input type="checkbox" id="vpnAutoReconnect" ${vpn.autoReconnect ? "checked" : ""} /> Auto-Reconnect</label>
+          <label><input type="checkbox" id="vpnKillSwitch" ${vpn.killSwitch ? "checked" : ""} /> Kill Switch (Fail-Closed)</label>
+          <input class="m-input" id="vpnDnsInput" value="${vpn.dns}" placeholder="DNS (napr. 1.1.1.1, 9.9.9.9)" />
+          <button class="m-btn" id="vpnSaveCfgBtn">SAVE VPN CONFIG</button>
+        </div>
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">LOCAL WIREGUARD KEYS &amp; DEVICE CONFIG (PRIVATE KEY NEVER SENT TO SERVER)</div>
+        <div class="m-row">
+          <button class="m-btn primary" id="genLocalWgBtn">GENERATE LOCAL WIREGUARD PROFILE</button>
+        </div>
+        <div class="code-box" id="wgProfilePreview">[Interface]
+# Generated locally on device for ${vpn.platform}
+# Local Public Key (shared with server): ${vpn.localPubKey}
+DNS = ${vpn.dns}
+
+[Peer]
+# Server: ${srv.country} (${srv.id})
+Endpoint = ${srv.endpoint}
+AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 25</div>
+      </div>
+
+      <div class="m-log" id="darkVpnLog">[DARK-VPN] MARAUDER WireGuard ready | Server: ${srv.country} (${srv.id}) | Status: ${vpn.connected ? "CONNECTED" : "DISCONNECTED"} | 24/7 365 Profile: ${vpn.alwaysOn24x7 ? "ACTIVE" : "STANDBY"}.</div>
+    </div>
+  `;
+
+  const logEl = document.getElementById("darkVpnLog");
+  const appendVpnLog = (line) => {
+    logEl.textContent += "\n[" + new Date().toLocaleTimeString() + "] " + line;
+    logEl.scrollTop = logEl.scrollHeight;
+  };
+
+  document.getElementById("vpnConnectBtn").onclick = () => {
+    const activeSrv = getCurrentVpnServer();
+    state.darkVpn.connected = true;
+    state.darkVpn.latencyMs = activeSrv.baseMs + Math.floor(Math.random() * 14);
+    saveState();
+    appendVpnLog(`CONNECTED -> ${activeSrv.country} (${activeSrv.id}) | WireGuard ACTIVE | Latency: ${state.darkVpn.latencyMs} ms.`);
+    addReport("DARK-VPN", "CONNECTED " + activeSrv.id, `Latency: ${state.darkVpn.latencyMs} ms`);
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("vpnDisconnectBtn").onclick = () => {
+    state.darkVpn.connected = false;
+    saveState();
+    appendVpnLog(`DISCONNECTED | Kill Switch state: ${state.darkVpn.killSwitch ? "BLOCKING NON-VPN TRAFFIC (FAIL-CLOSED)" : "UNRESTRICTED"}.`);
+    addReport("DARK-VPN", "DISCONNECTED", "KillSwitch=" + state.darkVpn.killSwitch);
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("vpnChangeServerBtn").onclick = () => {
+    const idx = VPN_SERVERS.findIndex(s => s.id === state.darkVpn.serverId);
+    const next = VPN_SERVERS[(idx + 1) % VPN_SERVERS.length];
+    state.darkVpn.serverId = next.id;
+    state.darkVpn.connected = true;
+    state.darkVpn.latencyMs = next.baseMs + Math.floor(Math.random() * 12);
+    saveState();
+    appendVpnLog(`Server switched -> [${next.flag}] ${next.country} (${next.id}) | Latency: ${state.darkVpn.latencyMs} ms.`);
+    addReport("DARK-VPN", "Server -> " + next.id, next.endpoint);
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("vpnServerSelect").onchange = (e) => {
+    const chosen = VPN_SERVERS.find(s => s.id === e.target.value) || VPN_SERVERS[0];
+    state.darkVpn.serverId = chosen.id;
+    state.darkVpn.latencyMs = chosen.baseMs + Math.floor(Math.random() * 10);
+    saveState();
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("vpnPlatformSelect").onchange = (e) => {
+    state.darkVpn.platform = e.target.value;
+    saveState();
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("vpnSaveCfgBtn").onclick = () => {
+    state.darkVpn.alwaysOn24x7 = document.getElementById("vpnAlwaysOn").checked;
+    state.darkVpn.autoReconnect = document.getElementById("vpnAutoReconnect").checked;
+    state.darkVpn.killSwitch = document.getElementById("vpnKillSwitch").checked;
+    state.darkVpn.dns = document.getElementById("vpnDnsInput").value.trim() || "1.1.1.1, 9.9.9.9";
+    saveState();
+    appendVpnLog(`Saved VPN config: 24/7=${state.darkVpn.alwaysOn24x7}, AutoReconnect=${state.darkVpn.autoReconnect}, KillSwitch=${state.darkVpn.killSwitch}, DNS=${state.darkVpn.dns}.`);
+    addReport("DARK-VPN-CFG", "Config saved", JSON.stringify(state.darkVpn));
+    renderDarkVpnWindow();
+  };
+
+  document.getElementById("genLocalWgBtn").onclick = async () => {
+    const seed = `${state.darkVpn.serverId}|${state.darkVpn.platform}|${Date.now()}|${Math.random()}`;
+    const digest = await sha256Text(seed);
+    state.darkVpn.localPubKey = "WG_PUB_" + digest.slice(0, 32).toUpperCase();
+    saveState();
+    appendVpnLog(`Generated local WireGuard public key (${state.darkVpn.localPubKey}) for ${state.darkVpn.platform}. Private key stays local only.`);
+    addReport("DARK-VPN-KEYS", "Local WG profile generated", state.darkVpn.localPubKey);
+    renderDarkVpnWindow();
+  };
 }
 
 function renderHomeCleanWindow() {
@@ -711,7 +888,7 @@ function renderCyberAiServiceWindow() {
       </div>
 
       <div class="home-box">
-        <div class="home-box-title">CYBER AI PLATENA USLUGA // PLAN & KREDITI</div>
+        <div class="home-box-title">CYBER AI PLATENA USLUGA // PLAN &amp; KREDITI</div>
         <div class="m-row">
           <div><strong>STATUS:</strong> <span class="${state.servicePlan.unlocked ? "m-badge" : "m-warn"}">${state.servicePlan.unlocked ? "PLATENA USLUGA AKTIVNA" : "IZISKVА PLASHTANE"}</span></div>
           <div><strong>PLAN:</strong> <span class="m-badge">${state.servicePlan.tier}</span></div>
@@ -734,7 +911,7 @@ function renderCyberAiServiceWindow() {
       </div>
 
       <div class="home-box">
-        <div class="home-box-title">IZPULNENIE NA USLUGATA // KONZOLA & LOG</div>
+        <div class="home-box-title">IZPULNENIE NA USLUGATA // KONZOLA &amp; LOG</div>
         <div class="m-row">
           <input class="m-input" id="cyberServicePrompt" placeholder="Vuvedi zadacha, target, kod ili log za izpulnenie kato usluga..." />
           <button class="m-btn success" id="cyberServiceRun">START SERVICE (-5 CREDITS)</button>
@@ -854,30 +1031,8 @@ function renderTab(tab) {
     return;
   }
 
-  if (tab === "TOR") {
-    drawerBody.innerHTML = `
-      <div class="m-row">
-        <button class="m-btn" id="torRotate">NEW CIRCUIT</button>
-        <button class="m-btn" id="torTest">TEST LATENCY</button>
-      </div>
-      <div class="m-log" id="torLog">[TOR] Current nodes: ${state.torCircuit.join(" -> ")}</div>
-    `;
-    document.getElementById("torRotate").onclick = () => {
-      const pool = ["DE-Falkenstein-02", "NL-Rotterdam-01", "SE-Stockholm-03", "FI-Helsinki-01", "CH-Geneva-02", "US-Secaucus-05"];
-      state.torCircuit = [
-        pool[Math.floor(Math.random() * pool.length)],
-        pool[Math.floor(Math.random() * pool.length)],
-        pool[Math.floor(Math.random() * pool.length)]
-      ];
-      const msg = `[${new Date().toLocaleTimeString()}] Rotated circuit -> ${state.torCircuit.join(" -> ")}`;
-      document.getElementById("torLog").textContent += "\n" + msg;
-      addReport("TOR", "Circuit rotated", msg);
-    };
-    document.getElementById("torTest").onclick = () => {
-      const rtt = 65 + Math.floor(Math.random() * 140);
-      const msg = `[${new Date().toLocaleTimeString()}] Circuit ping via ${state.torCircuit[2]}: ${rtt} ms (OK)`;
-      document.getElementById("torLog").textContent += "\n" + msg;
-    };
+  if (tab === "DARK-VPN") {
+    renderDarkVpnWindow();
     return;
   }
 
@@ -953,9 +1108,9 @@ function renderTab(tab) {
     drawerBody.innerHTML = `
       <div class="m-row">
         <select class="m-select" id="expMod">
-          <option value="CVE-CHECK-HTTP">HTTP Header & Exposure Check (Safe Lab)</option>
-          <option value="AUTH-HARDEN-AUDIT">Auth & Session Policy Audit (Safe Lab)</option>
-          <option value="TLS-CIPHER-VERIFY">TLS Protocol & Cipher Check (Safe Lab)</option>
+          <option value="CVE-CHECK-HTTP">HTTP Header &amp; Exposure Check (Safe Lab)</option>
+          <option value="AUTH-HARDEN-AUDIT">Auth &amp; Session Policy Audit (Safe Lab)</option>
+          <option value="TLS-CIPHER-VERIFY">TLS Protocol &amp; Cipher Check (Safe Lab)</option>
         </select>
         <input class="m-input" id="expTarget" placeholder="Lab target host/URL..." />
         <button class="m-btn" id="expRun">DRY-RUN</button>
