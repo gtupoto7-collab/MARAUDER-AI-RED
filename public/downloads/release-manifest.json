@@ -4,6 +4,7 @@
   "targets": {
     "windows": "/downloads/MARAUDER-AI-Windows.zip",
     "android": "/downloads/MARAUDER-AI-Android.apk",
+    "termuxApk": "/downloads/Termux-FDroid.apk",
     "iosInfo": "/downloads/MARAUDER-AI-iOS-INFO.txt",
     "termux": "/downloads/MARAUDER-AI-Termux.sh",
     "ubuntu": "/downloads/MARAUDER-AI-Ubuntu.sh"
