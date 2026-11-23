@@ -1,16 +1,9 @@
 {
-  "app": "MARAUDER-AI",
-  "updatedAt": "2026-11-22T23:42:31.939Z",
-  "packages": {
-    "windows": {
-      "file": "MARAUDER-AI-Windows.zip",
-      "route": "/download/windows",
-      "present": true
-    },
-    "android": {
-      "file": "MARAUDER-AI.apk",
-      "route": "/download/android",
-      "present": true
-    }
+  "name": "MARAUDER-AI",
+  "repo": "https://github.com/gtupoto7-collab/MARAUDER-AI-RED.git",
+  "downloads": {
+    "windows": "/downloads/MARAUDER-AI-Windows.zip",
+    "android": "/downloads/MARAUDER-AI-Android.apk",
+    "ios_info": "/downloads/MARAUDER-AI-iOS-INFO.txt"
   }
 }

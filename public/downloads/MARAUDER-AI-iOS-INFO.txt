@@ -1,4 +1,3 @@
-MARAUDER-AI (RED-SOFTWARE-TEAM-BG) — iOS бележки
-1. Отвори уеб адреса на MARAUDER-AI в Safari на iPhone/iPad.
-2. Натисни бутона Share (квадратче със стрелка нагоре) -> "Add to Home Screen" ("Добави към начален екран").
-3. За VPN / защита на IP: инсталирай официалния WireGuard клиент от App Store, импортирай marauder-wg0.conf и включи тунела.
+MARAUDER-AI iOS PACKAGE
+Status: Web / PWA & Side-load / AltStore / TrollStore package info
+Clone repo: git clone https://github.com/gtupoto7-collab/MARAUDER-AI-RED.git
