@@ -81,10 +81,10 @@
   flex-direction: column;
   gap: 10px;
 }
-.home-clean-window {
+.home-clean-window, .cyber-ai-service {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 .home-box {
   background: #0c1018;
@@ -101,6 +101,21 @@
   letter-spacing: 0.6px;
   border-bottom: 1px solid #1e2430;
   padding-bottom: 5px;
+}
+.malware-top-banner {
+  background: #1b070c;
+  border: 1px solid #ff2a4b;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.malware-top-title {
+  color: #ff3b5c;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 .m-row {
   display: flex;
@@ -156,7 +171,7 @@
   padding: 10px;
   border-radius: 4px;
   min-height: 90px;
-  max-height: 180px;
+  max-height: 190px;
   overflow-y: auto;
   white-space: pre-wrap;
   line-height: 1.45;
@@ -176,6 +191,10 @@
   color: #2ea043;
   font-weight: bold;
 }
+.m-warn {
+  color: #ff5c77;
+  font-weight: bold;
+}
 .easypay-banner {
   background: #1b0c12;
   border: 1px solid #ff2a4b;
@@ -193,6 +212,16 @@
   border-radius: 4px;
   word-break: break-all;
   font-weight: bold;
+}
+.agent-list-box {
+  background: #070a10;
+  border: 1px solid #222936;
+  border-radius: 4px;
+  padding: 8px 10px;
+  max-height: 135px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.4;
 }
 </style>
 </head>
@@ -227,12 +256,97 @@ const PAYPAL_BASE_URL = "https://www.paypal.com/ncp/payment/BWG4AH3MMH8T6";
 const EASYPAY_PHONE = "0879813928";
 const EASYPAY_NOTICE = "ZVUNETE NA TOQ NOMER DA POLUCHITE EGN I IMENA ZA PREVOD !!! SNIMAITE PREVODA I GO PAZETE  !!!!";
 
+const AL_MASS_AGENTS = [
+  "1. ChatGPT Agent — Многоцелеви агент: web, файлове, код, анализ, изпълнение на задачи",
+  "2. Claude Code — Сложно програмиране, цели repositories, terminal, debugging",
+  "3. OpenAI Codex — Дълги coding задачи, промени по много файлове, тестове и automation",
+  "4. Gemini — Google екосистема, multimodal, research, Workspace",
+  "5. Microsoft Copilot — Office, Windows, enterprise workflow и корпоративни данни",
+  "6. Cursor Agent — AI-native IDE, multi-file coding и codebase reasoning",
+  "7. Devin — Автономна software engineering работа — задачи -> код -> PR",
+  "8. GitHub Copilot — Coding + GitHub workflow + agent mode",
+  "9. Perplexity — Research, web search, събиране и синтезиране на източници",
+  "10. Manus — Multi-step autonomous tasks, research и automation",
+  "11. Amazon Q Developer — AWS/cloud development и enterprise coding",
+  "12. Windsurf — Agentic coding в IDE, Cascade workflow",
+  "13. Grok — Research, информация в реално време и reasoning",
+  "14. OpenAI Operator / computer-use агенти — Работа с браузър и компютърни интерфейси",
+  "15. Claude computer-use — Browser/desktop automation и computer interaction",
+  "16. Google Antigravity — Agentic development, IDE/CLI workflow",
+  "17. Cline — Open/extensible coding agent с инструменти и terminal",
+  "18. OpenHands — Open-source autonomous software engineering",
+  "19. Kiro — Spec-driven software development",
+  "20. Replit Agent — Създаване на приложения от естествен език",
+  "21. Salesforce Agentforce — Автоматизация на CRM и customer workflows",
+  "22. ServiceNow AI Agents — Enterprise IT/service automation",
+  "23. IBM watsonx Orchestrate — Enterprise agent orchestration",
+  "24. UiPath Agents — RPA + AI automation",
+  "25. Glean Agents — Enterprise knowledge/search agents",
+  "26. Sierra — Customer-service агенти",
+  "27. Zapier Agents — Свързване на приложения и автоматизирани workflows",
+  "28. NotebookLM — Source-grounded research върху предоставени документи",
+  "29. AutoGen / Microsoft Agent Framework — Изграждане на multi-agent системи",
+  "30. CrewAI — Multi-agent orchestration — няколко специализирани агента работят като екип"
+];
+
+const CYBER_SECURITY_AL_AGENTS = [
+  "1. Microsoft Security Copilot — AI SOC анализ, Defender/Sentinel/Entra, разследване и response",
+  "2. CrowdStrike Charlotte AI — Endpoint/SOC investigation, detection triage и response",
+  "3. Palo Alto Cortex AgentiX — Agentic SOC, автоматично разследване и response",
+  "4. SentinelOne Purple AI — Threat hunting, investigation и remediation",
+  "5. Google Security Operations + Gemini — SIEM/SOAR + threat intelligence и investigation",
+  "6. Darktrace Cyber AI Analyst — Поведенчески анализ и автономно разследване",
+  "7. Torq HyperSOC / HyperAgents — SOC automation и multi-agent workflows",
+  "8. Dropzone AI — AI SOC analyst, автоматично triage/investigation",
+  "9. Prophet Security — Detection, threat hunting и alert investigation",
+  "10. Radiant Security — Autonomous alert triage и SOC automation",
+  "11. Simbian — AI SOC agent и автоматизация на security operations",
+  "12. Intezer — Malware analysis, forensic investigation",
+  "13. Exaforce — Agentic detection/investigation",
+  "14. Legion Security — AI SOC analyst, обучение от analyst workflows",
+  "15. Mate Security — Широка agentic security автоматизация",
+  "16. Vectra AI — Network detection & response",
+  "17. Recorded Future — Threat intelligence и threat investigation",
+  "18. Wiz — Cloud security / AI-SPM / cloud exposure",
+  "19. Orca Security — Cloud security и risk prioritization",
+  "20. Abnormal Security — AI защита от phishing/BEC/email attacks",
+  "21. Sophos XDR — XDR + AI-assisted detection/response",
+  "22. Splunk Enterprise Security AI — SIEM, detection, investigation и response",
+  "23. IBM Guardium AI Security — AI security, governance и data protection",
+  "24. Cisco AI Defense — Защита на AI приложения и модели",
+  "25. Noma Security — AI-agent/MCP security и runtime protection",
+  "26. Mindgard — AI red-team/testing и adversarial security",
+  "27. Lakera — Prompt-injection и LLM security",
+  "28. Snyk — AI-assisted application/code security",
+  "29. Rapid7 — Exposure management + AI-assisted SOC",
+  "30. Tenable One — Vulnerability/exposure management и risk prioritization"
+];
+
+const MALWARE_CYBER_CRIMINAL_AL_ITEMS = [
+  "MARAUDER-AI — Централен аналитичен и sandbox модул за оценка на заплахи, IOC, поведение и защита (най-отгоре)",
+  "LAMEHUG — Динамично генериране на команди по време на изпълнение (анализ на runtime поведение и детекция)",
+  "PromptLock — Динамична логика чрез LLM (sandbox симулация на поведение, IOC и устойчивост)",
+  "s1ngularity — Злоупотреба с локални AI developer инструменти за търсене на секрети/credentials (одит и изолация)",
+  "EvilAI — Зловредно приложение, маскирано като легитимен AI продукт (backdoor/exfiltration анализ и блокиране)",
+  "GTG-20006 — AI-driven верига от етапи (recon, phishing, persistence, credential harvesting, exfiltration — защита и мониторинг)"
+];
+
 const state = {
   activeTab: null,
   accounts: JSON.parse(localStorage.getItem("marauder_accounts") || "[]"),
   currentUser: JSON.parse(localStorage.getItem("marauder_current_user") || "null"),
   savedLogin: JSON.parse(localStorage.getItem("marauder_saved_login") || "null"),
   selectedEur: Number(localStorage.getItem("marauder_selected_eur") || "25"),
+  servicePlan: JSON.parse(localStorage.getItem("marauder_service_plan") || JSON.stringify({
+    unlocked: true,
+    tier: "PRO-SERVICE",
+    credits: 500
+  })),
+  cyberService: JSON.parse(localStorage.getItem("marauder_cyber_service") || JSON.stringify({
+    suite: "AL-MASS AGENT",
+    selectedAgentIdx: 0,
+    malwareOption: MALWARE_CYBER_CRIMINAL_AL_ITEMS[0]
+  })),
   reports: JSON.parse(localStorage.getItem("marauder_reports") || "[]"),
   settings: JSON.parse(localStorage.getItem("marauder_settings") || JSON.stringify({
     stealth: true,
@@ -258,6 +372,8 @@ function saveState() {
   localStorage.setItem("marauder_current_user", JSON.stringify(state.currentUser));
   localStorage.setItem("marauder_saved_login", JSON.stringify(state.savedLogin));
   localStorage.setItem("marauder_selected_eur", String(state.selectedEur));
+  localStorage.setItem("marauder_service_plan", JSON.stringify(state.servicePlan));
+  localStorage.setItem("marauder_cyber_service", JSON.stringify(state.cyberService));
   localStorage.setItem("marauder_reports", JSON.stringify(state.reports.slice(-50)));
   localStorage.setItem("marauder_settings", JSON.stringify(state.settings));
 }
@@ -288,6 +404,13 @@ function clampEur(val) {
   const n = Number(val);
   if (Number.isNaN(n)) return 5;
   return Math.min(50000, Math.max(5, Math.round(n * 100) / 100));
+}
+
+function openTabProgrammatically(tabName) {
+  buttons.forEach(b => b.classList.toggle("active", b.dataset.tab === tabName));
+  state.activeTab = tabName;
+  drawer.classList.add("open");
+  renderTab(tabName);
 }
 
 function renderHomeCleanWindow() {
@@ -529,6 +652,152 @@ function renderHomeCleanWindow() {
   };
 }
 
+function renderCyberAiServiceWindow() {
+  const suite = state.cyberService.suite || "AL-MASS AGENT";
+  const activeList = suite === "CYBER SECURITY AL AGENTS" ? CYBER_SECURITY_AL_AGENTS : AL_MASS_AGENTS;
+  const safeIdx = Math.min(activeList.length - 1, Math.max(0, Number(state.cyberService.selectedAgentIdx || 0)));
+  const currentMalware = state.cyberService.malwareOption || MALWARE_CYBER_CRIMINAL_AL_ITEMS[0];
+
+  drawerBody.innerHTML = `
+    <div class="cyber-ai-service">
+      <div class="malware-top-banner">
+        <div class="malware-top-title">MALWARE-CYBER-CRIMINAL-AL // MARAUDER-AI</div>
+        <div class="m-row">
+          <select class="m-select" id="malwareSelect">
+            ${MALWARE_CYBER_CRIMINAL_AL_ITEMS.map(item => `
+              <option value="${item.replace(/"/g, "&quot;")}" ${item === currentMalware ? "selected" : ""}>${item}</option>
+            `).join("")}
+          </select>
+          <button class="m-btn primary" id="runMalwareOptionBtn">AKTIVIRAI OPCIQ</button>
+        </div>
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">CYBER AI PLATENA USLUGA // PLAN & KREDITI</div>
+        <div class="m-row">
+          <div><strong>STATUS:</strong> <span class="${state.servicePlan.unlocked ? "m-badge" : "m-warn"}">${state.servicePlan.unlocked ? "PLATENA USLUGA AKTIVNA" : "IZISKVА PLASHTANE"}</span></div>
+          <div><strong>PLAN:</strong> <span class="m-badge">${state.servicePlan.tier}</span></div>
+          <div><strong>KREDITI:</strong> <span class="m-badge" id="creditsVal">${state.servicePlan.credits}</span></div>
+          <button class="m-btn success" id="topupCreditsBtn">+250 KREDITA (PRO)</button>
+          <button class="m-btn" id="openHomePayBtn">PLASHTANE V HOME (5-50000 EUR)</button>
+        </div>
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">IZBOR NA REZHIM // AL-MASS AGENT · CYBER SECURITY AL AGENTS</div>
+        <div class="m-row">
+          <button class="m-btn ${suite === "AL-MASS AGENT" ? "primary" : ""}" id="btnSuiteMass">AL-MASS AGENT (30)</button>
+          <button class="m-btn ${suite === "CYBER SECURITY AL AGENTS" ? "primary" : ""}" id="btnSuiteSec">CYBER SECURITY AL AGENTS (30)</button>
+        </div>
+        <div class="m-row">
+          <select class="m-select" id="agentSelect">
+            ${activeList.map((entry, idx) => `
+              <option value="${idx}" ${idx === safeIdx ? "selected" : ""}>${entry}</option>
+            `).join("")}
+          </select>
+        </div>
+        <div class="agent-list-box">${activeList.join("<br/>")}</div>
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">IZPULNENIE NA USLUGATA // KONZOLA & LOG</div>
+        <div class="m-row">
+          <input class="m-input" id="cyberServicePrompt" placeholder="Vuvedi zadacha, target, kod ili log za izpulnenie kato usluga..." />
+          <button class="m-btn success" id="cyberServiceRun">START SERVICE (-5 CREDITS)</button>
+          <button class="m-btn" id="cyberServiceClear">CLEAR</button>
+        </div>
+        <div class="m-log" id="cyberServiceLog">[CYBER AI SERVICE] Rezhim: ${suite} | Aktivna opciq: ${currentMalware}</div>
+      </div>
+    </div>
+  `;
+
+  const logEl = document.getElementById("cyberServiceLog");
+  const appendServiceLog = (text) => {
+    logEl.textContent += "\n" + text;
+    logEl.scrollTop = logEl.scrollHeight;
+  };
+
+  document.getElementById("malwareSelect").onchange = (e) => {
+    state.cyberService.malwareOption = e.target.value;
+    saveState();
+  };
+
+  document.getElementById("runMalwareOptionBtn").onclick = () => {
+    const chosen = document.getElementById("malwareSelect").value;
+    state.cyberService.malwareOption = chosen;
+    saveState();
+    const msg = `[${new Date().toLocaleTimeString()}] [MALWARE-CYBER-CRIMINAL-AL -> MARAUDER-AI] Aktivirana opciq: ${chosen} | Sandbox isolation: ON | IOC/behavior analysis ready.`;
+    appendServiceLog(msg);
+    addReport("MALWARE-CYBER-CRIMINAL-AL", chosen, msg);
+  };
+
+  document.getElementById("btnSuiteMass").onclick = () => {
+    state.cyberService.suite = "AL-MASS AGENT";
+    state.cyberService.selectedAgentIdx = 0;
+    saveState();
+    renderCyberAiServiceWindow();
+  };
+
+  document.getElementById("btnSuiteSec").onclick = () => {
+    state.cyberService.suite = "CYBER SECURITY AL AGENTS";
+    state.cyberService.selectedAgentIdx = 0;
+    saveState();
+    renderCyberAiServiceWindow();
+  };
+
+  document.getElementById("agentSelect").onchange = (e) => {
+    state.cyberService.selectedAgentIdx = Number(e.target.value) || 0;
+    saveState();
+  };
+
+  document.getElementById("topupCreditsBtn").onclick = () => {
+    state.servicePlan.unlocked = true;
+    state.servicePlan.credits = Number(state.servicePlan.credits || 0) + 250;
+    saveState();
+    document.getElementById("creditsVal").textContent = state.servicePlan.credits;
+    appendServiceLog(`[${new Date().toLocaleTimeString()}] Dobaveni +250 kredita. Tekusht balans: ${state.servicePlan.credits}.`);
+    addReport("CYBER-AI-BILLING", "+250 credits", "Balance: " + state.servicePlan.credits);
+  };
+
+  document.getElementById("openHomePayBtn").onclick = () => {
+    openTabProgrammatically("HOME");
+  };
+
+  document.getElementById("cyberServiceRun").onclick = () => {
+    const promptText = document.getElementById("cyberServicePrompt").value.trim();
+    if (!promptText) {
+      appendServiceLog(`[${new Date().toLocaleTimeString()}] GRESHKА: Vuvedi zadacha za izpulnenie.`);
+      return;
+    }
+    if (!state.servicePlan.unlocked || Number(state.servicePlan.credits) < 5) {
+      appendServiceLog(`[${new Date().toLocaleTimeString()}] Nqma dostatuchno krediti. Otvori HOME za plashtane ili natisni +250 KREDITA.`);
+      return;
+    }
+    state.servicePlan.credits = Number(state.servicePlan.credits) - 5;
+    saveState();
+    document.getElementById("creditsVal").textContent = state.servicePlan.credits;
+
+    const idx = Number(state.cyberService.selectedAgentIdx || 0);
+    const agentLine = activeList[idx] || activeList[0];
+    const result = [
+      `[${new Date().toLocaleTimeString()}] === CYBER AI PAID SERVICE EXECUTION ===`,
+      `Suite: ${suite}`,
+      `Selected Agent: ${agentLine}`,
+      `Top Option: ${state.cyberService.malwareOption}`,
+      `Task: ${promptText}`,
+      `Status: COMPLETED (-5 credits | Remaining: ${state.servicePlan.credits})`,
+      `Action Plan: 1) Scope & target validation  2) Telemetry/artifact collection  3) Risk scoring & defensive remediation`
+    ].join("\n");
+
+    appendServiceLog("\n" + result);
+    addReport("CYBER-AI-SERVICE", suite + " :: " + promptText.slice(0, 50), result);
+  };
+
+  document.getElementById("cyberServiceClear").onclick = () => {
+    logEl.textContent = `[CYBER AI SERVICE] Rezhim: ${suite} | Aktivna opciq: ${state.cyberService.malwareOption}`;
+  };
+}
+
 function renderTab(tab) {
   drawerTitle.textContent = "MARAUDER // " + tab;
   applyTheme();
@@ -539,22 +808,7 @@ function renderTab(tab) {
   }
 
   if (tab === "CYBER AI") {
-    drawerBody.innerHTML = `
-      <div class="m-row">
-        <input class="m-input" id="aiPrompt" placeholder="Vuvedi komanda ili zadacha za CYBER AI (napr. audit ssh, plan scan)..." />
-        <button class="m-btn" id="aiRun">EXECUTE</button>
-      </div>
-      <div class="m-log" id="aiLog">[CYBER AI] Ready for operational commands.</div>
-    `;
-    document.getElementById("aiRun").onclick = () => {
-      const q = document.getElementById("aiPrompt").value.trim();
-      if (!q) return;
-      const log = document.getElementById("aiLog");
-      const out = `[${new Date().toLocaleTimeString()}] PROMPT: ${q}\n-> Analysis: Breakdown prepared into reconnaissance, verification, and hardening phases.\n-> Recommended check: verify exposed ports, permissions, and active logs.`;
-      log.textContent += "\n\n" + out;
-      log.scrollTop = log.scrollHeight;
-      addReport("CYBER AI", q, out);
-    };
+    renderCyberAiServiceWindow();
     return;
   }
 
@@ -773,11 +1027,7 @@ buttons.forEach(btn => {
       state.activeTab = null;
       return;
     }
-    buttons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    state.activeTab = tab;
-    drawer.classList.add("open");
-    renderTab(tab);
+    openTabProgrammatically(tab);
   });
 });
 
