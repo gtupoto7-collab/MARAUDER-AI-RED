@@ -1,0 +1,29 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #050208;
+  background-image: url("/images/MARAUDER.jpg");[cite: 1]
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #ffffff;
+}
+
+body > div,
+main,
+section,
+.app,
+.main,
+.container,
+.wrapper,
+.content,
+.chat-container,
+.chat-box,
+.chat-area,
+.messages {
+  background-color: transparent !important;
+}
