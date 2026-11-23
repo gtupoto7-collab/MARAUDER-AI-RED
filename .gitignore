@@ -16,3 +16,4 @@ data/portfolio-ledger.json
 *.key
 .env
 /tmp/marauder_server.log
+public/downloads/Termux-FDroid.apk
