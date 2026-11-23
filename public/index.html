@@ -39,11 +39,11 @@
   top: 21%;
   left: 18%;
   width: 63%;
-  max-height: 54%;
+  max-height: 56%;
   z-index: 60;
   display: none;
   flex-direction: column;
-  background: rgba(8, 10, 16, 0.94);
+  background: rgba(8, 10, 16, 0.96);
   border: 1px solid #ff2a4b;
   box-shadow: 0 0 28px rgba(255, 42, 75, 0.35), inset 0 0 18px rgba(0, 255, 150, 0.08);
   color: #e8eef5;
@@ -81,6 +81,27 @@
   flex-direction: column;
   gap: 10px;
 }
+.home-clean-window {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.home-box {
+  background: #0c1018;
+  border: 1px solid #252c38;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.home-box-title {
+  font-weight: bold;
+  color: #ff4d6d;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid #1e2430;
+  padding-bottom: 5px;
+}
 .m-row {
   display: flex;
   gap: 8px;
@@ -89,7 +110,7 @@
 }
 .m-input, .m-select {
   flex: 1;
-  min-width: 180px;
+  min-width: 150px;
   background: #0d111a;
   color: #f0f6fc;
   border: 1px solid #30363d;
@@ -106,10 +127,24 @@
   border-radius: 4px;
   font-family: inherit;
   font-weight: bold;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .m-btn:hover {
   border-color: #58a6ff;
   background: #1f2937;
+}
+.m-btn.primary {
+  background: #ff2a4b;
+  color: #ffffff;
+  border-color: #ff2a4b;
+}
+.m-btn.success {
+  background: #132a1c;
+  color: #3fb950;
+  border-color: #2ea043;
 }
 .m-btn.danger {
   color: #ff6b81;
@@ -120,8 +155,8 @@
   border: 1px solid #21262d;
   padding: 10px;
   border-radius: 4px;
-  min-height: 120px;
-  max-height: 220px;
+  min-height: 90px;
+  max-height: 180px;
   overflow-y: auto;
   white-space: pre-wrap;
   line-height: 1.45;
@@ -139,6 +174,24 @@
 }
 .m-badge {
   color: #2ea043;
+  font-weight: bold;
+}
+.easypay-banner {
+  background: #1b0c12;
+  border: 1px solid #ff2a4b;
+  color: #ffd6de;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+.code-box {
+  background: #06090f;
+  border: 1px dashed #38bdf8;
+  color: #7dd3fc;
+  padding: 8px 10px;
+  border-radius: 4px;
+  word-break: break-all;
   font-weight: bold;
 }
 </style>
@@ -169,8 +222,17 @@
 </section>
 
 <script>
+const KEEPER_ADDR = "UQBOxLg-Vq86U_y1oJyUFTmvn6tedptaPQ4d3CDUq4O2T_7H";
+const PAYPAL_BASE_URL = "https://www.paypal.com/ncp/payment/BWG4AH3MMH8T6";
+const EASYPAY_PHONE = "0879813928";
+const EASYPAY_NOTICE = "ZVUNETE NA TOQ NOMER DA POLUCHITE EGN I IMENA ZA PREVOD !!! SNIMAITE PREVODA I GO PAZETE  !!!!";
+
 const state = {
   activeTab: null,
+  accounts: JSON.parse(localStorage.getItem("marauder_accounts") || "[]"),
+  currentUser: JSON.parse(localStorage.getItem("marauder_current_user") || "null"),
+  savedLogin: JSON.parse(localStorage.getItem("marauder_saved_login") || "null"),
+  selectedEur: Number(localStorage.getItem("marauder_selected_eur") || "25"),
   reports: JSON.parse(localStorage.getItem("marauder_reports") || "[]"),
   settings: JSON.parse(localStorage.getItem("marauder_settings") || JSON.stringify({
     stealth: true,
@@ -192,6 +254,10 @@ const drawerBody = document.getElementById("drawerBody");
 const buttons = Array.from(document.querySelectorAll(".top-tab-btn"));
 
 function saveState() {
+  localStorage.setItem("marauder_accounts", JSON.stringify(state.accounts));
+  localStorage.setItem("marauder_current_user", JSON.stringify(state.currentUser));
+  localStorage.setItem("marauder_saved_login", JSON.stringify(state.savedLogin));
+  localStorage.setItem("marauder_selected_eur", String(state.selectedEur));
   localStorage.setItem("marauder_reports", JSON.stringify(state.reports.slice(-50)));
   localStorage.setItem("marauder_settings", JSON.stringify(state.settings));
 }
@@ -218,20 +284,257 @@ async function sha256Text(str) {
   return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+function clampEur(val) {
+  const n = Number(val);
+  if (Number.isNaN(n)) return 5;
+  return Math.min(50000, Math.max(5, Math.round(n * 100) / 100));
+}
+
+function renderHomeCleanWindow() {
+  const eur = clampEur(state.selectedEur);
+  state.selectedEur = eur;
+  const starsApprox = Math.max(100, Math.round(eur * 50));
+  const user = state.currentUser;
+  const saved = state.savedLogin || {};
+
+  drawerBody.innerHTML = `
+    <div class="home-clean-window">
+      <div class="home-box">
+        <div class="home-box-title">REGISTRACIQ // GMAIL · NAME · PASS · PASS</div>
+        <div class="m-row">
+          <input class="m-input" id="regGmail" type="email" placeholder="GMAIL (napr. user@gmail.com)" />
+          <input class="m-input" id="regName" type="text" placeholder="NAME (ime / profil)" />
+        </div>
+        <div class="m-row">
+          <input class="m-input" id="regPass1" type="password" placeholder="PASS (parola)" />
+          <input class="m-input" id="regPass2" type="password" placeholder="PASS (povtori parola)" />
+          <button class="m-btn primary" id="regSubmit">REGISTRIRAI PROFIL</button>
+        </div>
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">LOGIN // LOGIN · PASS · ZAPAZI PROFILA</div>
+        <div class="m-row">
+          <input class="m-input" id="loginId" type="text" value="${saved.login || ""}" placeholder="LOGIN (GMAIL ili NAME)" />
+          <input class="m-input" id="loginPass" type="password" value="${saved.pass || ""}" placeholder="PASS" />
+        </div>
+        <div class="m-row">
+          <button class="m-btn success" id="loginEnter">LOGIN</button>
+          <button class="m-btn" id="saveProfileBtn">ZAPAZI PROFILA</button>
+          ${user ? `<button class="m-btn danger" id="logoutBtn">IZLEZ OT PROFILA</button>` : ""}
+        </div>
+      </div>
+
+      <div class="home-box" id="accountPanel">
+        <div class="home-box-title">ACCOUNT // ${user ? "AKTIVEN PROFIL" : "NE E VLEZNATO V PROFIL"}</div>
+        ${user ? `
+          <div><strong>ACCOUNT:</strong> <span class="m-badge">${user.gmail}</span></div>
+          <div><strong>NAME:</strong> <span>${user.name}</span></div>
+          <div class="m-row">
+            <input class="m-input" id="chgOldPass" type="password" placeholder="TEGUSHTA PAROLA" />
+            <input class="m-input" id="chgNewPass1" type="password" placeholder="NOVA PAROLA" />
+            <input class="m-input" id="chgNewPass2" type="password" placeholder="POVTORI NOVA PAROLA" />
+            <button class="m-btn primary" id="chgPassBtn">SMQNA NA PASSWORD</button>
+          </div>
+        ` : `
+          <div>Vlezte v profil ili se registriraite po-gore, za da upravlyavate ACCOUNT, NAME i SMQNA NA PASSWORD.</div>
+        `}
+      </div>
+
+      <div class="home-box">
+        <div class="home-box-title">PLASHTANE // OT 5 DO 50000 EVRO (PAYPAL · DEBITNA KARTA · BANKOVA SMETKA · KEEPER · TELEGRAM ZVEZDI · EASY PAY)</div>
+        <div class="m-row">
+          <input class="m-input" id="payEurInput" type="number" min="5" max="50000" step="1" value="${eur}" />
+          <button class="m-btn" data-eur="5">5 EUR</button>
+          <button class="m-btn" data-eur="50">50 EUR</button>
+          <button class="m-btn" data-eur="500">500 EUR</button>
+          <button class="m-btn" data-eur="5000">5000 EUR</button>
+          <button class="m-btn" data-eur="50000">50000 EUR</button>
+        </div>
+
+        <div class="m-row">
+          <a class="m-btn primary" id="paypalDirectLink" href="${PAYPAL_BASE_URL}" target="_blank" rel="noopener noreferrer">
+            PAYPAL DIREKTEN LINK (<span id="paypalEurLabel">${eur}</span> EUR)
+          </a>
+          <span class="m-badge">Debitna karta · Bankova smetka · PayPal</span>
+        </div>
+        <div class="code-box">${PAYPAL_BASE_URL}</div>
+
+        <div class="m-row">
+          <strong>KEEPER DIREKTEN METOD:</strong>
+          <button class="m-btn" id="copyKeeperBtn">KOPIRAI KEEPER ADRES</button>
+        </div>
+        <div class="code-box" id="keeperAddrBox">${KEEPER_ADDR}</div>
+
+        <div class="m-row">
+          <strong>TELEGRAM PLASHTANE PREZ BOT SUS ZVEZDI:</strong>
+          <button class="m-btn success" id="tgStarsBtn">
+            PLATI SUS TELEGRAM ZVEZDI (~<span id="starsCountLabel">${starsApprox}</span> STARS / <span id="starsEurLabel">${eur}</span> EUR)
+          </button>
+        </div>
+
+        <div class="easypay-banner">
+          <div>EASY PAY — TELEFON: <strong>${EASYPAY_PHONE}</strong></div>
+          <div>${EASYPAY_NOTICE}</div>
+        </div>
+      </div>
+
+      <div class="m-log" id="homeCleanLog">[HOME] Chist modul zareden. Izbrana suma: ${eur} EUR (diapazon: 5 - 50000 EUR).</div>
+    </div>
+  `;
+
+  const logEl = document.getElementById("homeCleanLog");
+  const writeHomeLog = (msg) => {
+    logEl.textContent += "\n[" + new Date().toLocaleTimeString() + "] " + msg;
+    logEl.scrollTop = logEl.scrollHeight;
+  };
+
+  document.getElementById("regSubmit").onclick = () => {
+    const gmail = document.getElementById("regGmail").value.trim();
+    const name = document.getElementById("regName").value.trim();
+    const pass1 = document.getElementById("regPass1").value;
+    const pass2 = document.getElementById("regPass2").value;
+
+    if (!gmail || !name || !pass1 || !pass2) {
+      writeHomeLog("GRESHKА: Popalni GMAIL, NAME i dvete poleta PASS.");
+      return;
+    }
+    if (pass1 !== pass2) {
+      writeHomeLog("GRESHKА: Dvete poleta PASS ne suvpadat.");
+      return;
+    }
+
+    const existingIdx = state.accounts.findIndex(a => a.gmail.toLowerCase() === gmail.toLowerCase() || a.name.toLowerCase() === name.toLowerCase());
+    const accObj = { gmail, name, pass: pass1 };
+    if (existingIdx >= 0) {
+      state.accounts[existingIdx] = accObj;
+    } else {
+      state.accounts.push(accObj);
+    }
+    state.currentUser = accObj;
+    state.savedLogin = { login: gmail, pass: pass1 };
+    saveState();
+    addReport("HOME-AUTH", "Registraciq: " + gmail, "Name: " + name);
+    renderHomeCleanWindow();
+  };
+
+  document.getElementById("loginEnter").onclick = () => {
+    const loginVal = document.getElementById("loginId").value.trim();
+    const passVal = document.getElementById("loginPass").value;
+    if (!loginVal || !passVal) {
+      writeHomeLog("GRESHKА: Vuvedi LOGIN i PASS.");
+      return;
+    }
+    const found = state.accounts.find(a =>
+      (a.gmail.toLowerCase() === loginVal.toLowerCase() || a.name.toLowerCase() === loginVal.toLowerCase()) &&
+      a.pass === passVal
+    );
+    if (!found) {
+      writeHomeLog("GRESHKА: Greshni LOGIN ili PASS.");
+      return;
+    }
+    state.currentUser = { ...found };
+    saveState();
+    addReport("HOME-AUTH", "Login: " + found.gmail, "Name: " + found.name);
+    renderHomeCleanWindow();
+  };
+
+  document.getElementById("saveProfileBtn").onclick = () => {
+    const loginVal = document.getElementById("loginId").value.trim();
+    const passVal = document.getElementById("loginPass").value;
+    state.savedLogin = { login: loginVal, pass: passVal };
+    if (state.currentUser) {
+      state.currentUser = { ...state.currentUser, pass: passVal || state.currentUser.pass };
+      const idx = state.accounts.findIndex(a => a.gmail === state.currentUser.gmail);
+      if (idx >= 0) state.accounts[idx] = { ...state.currentUser };
+    }
+    saveState();
+    writeHomeLog("PROFILUT I DANITE ZA LOGIN SA ZAPAZENI (ZAPAZI PROFILA).");
+    addReport("HOME-PROFILE", "Zapazen profil", "Login: " + loginVal);
+  };
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.onclick = () => {
+      state.currentUser = null;
+      saveState();
+      renderHomeCleanWindow();
+    };
+  }
+
+  const chgPassBtn = document.getElementById("chgPassBtn");
+  if (chgPassBtn) {
+    chgPassBtn.onclick = () => {
+      const oldP = document.getElementById("chgOldPass").value;
+      const newP1 = document.getElementById("chgNewPass1").value;
+      const newP2 = document.getElementById("chgNewPass2").value;
+      if (!state.currentUser) return;
+      if (oldP !== state.currentUser.pass) {
+        writeHomeLog("GRESHKА: Tegushtata parola e greshna.");
+        return;
+      }
+      if (!newP1 || newP1 !== newP2) {
+        writeHomeLog("GRESHKА: Novata parola i povtorenieto ne suvpadat.");
+        return;
+      }
+      state.currentUser.pass = newP1;
+      const idx = state.accounts.findIndex(a => a.gmail === state.currentUser.gmail);
+      if (idx >= 0) state.accounts[idx].pass = newP1;
+      if (state.savedLogin) state.savedLogin.pass = newP1;
+      saveState();
+      writeHomeLog("USPEShNA SMQNA NA PASSWORD za " + state.currentUser.gmail);
+      addReport("HOME-SECURITY", "Smenena parola", "Account: " + state.currentUser.gmail);
+      renderHomeCleanWindow();
+    };
+  }
+
+  const payEurInput = document.getElementById("payEurInput");
+  const syncAmounts = (rawVal) => {
+    const clamped = clampEur(rawVal);
+    state.selectedEur = clamped;
+    saveState();
+    payEurInput.value = clamped;
+    document.getElementById("paypalEurLabel").textContent = clamped;
+    document.getElementById("starsEurLabel").textContent = clamped;
+    document.getElementById("starsCountLabel").textContent = Math.max(100, Math.round(clamped * 50));
+  };
+
+  payEurInput.oninput = (e) => syncAmounts(e.target.value);
+  document.querySelectorAll("[data-eur]").forEach(btn => {
+    btn.onclick = () => {
+      syncAmounts(btn.getAttribute("data-eur"));
+      writeHomeLog("Izbrana suma: " + state.selectedEur + " EUR.");
+    };
+  });
+
+  document.getElementById("paypalDirectLink").onclick = () => {
+    writeHomeLog("Otvoren PayPal link (" + PAYPAL_BASE_URL + ") za suma: " + state.selectedEur + " EUR (debitna karta / bankova smetka / PayPal).");
+    addReport("PAYMENT-PAYPAL", state.selectedEur + " EUR", PAYPAL_BASE_URL);
+  };
+
+  document.getElementById("copyKeeperBtn").onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(KEEPER_ADDR);
+    } catch (_) {}
+    writeHomeLog("Kopiran Keeper adres: " + KEEPER_ADDR + " | Suma: " + state.selectedEur + " EUR.");
+    addReport("PAYMENT-KEEPER", state.selectedEur + " EUR", KEEPER_ADDR);
+  };
+
+  document.getElementById("tgStarsBtn").onclick = () => {
+    const stars = Math.max(100, Math.round(state.selectedEur * 50));
+    const tgUrl = "https://t.me/brokerfree_bot?start=stars_" + state.selectedEur + "eur_" + stars + "stars";
+    writeHomeLog("Telegram bot plashtane sus zvezdi: " + stars + " Stars (~" + state.selectedEur + " EUR) -> " + tgUrl);
+    addReport("PAYMENT-TELEGRAM-STARS", stars + " Stars (" + state.selectedEur + " EUR)", tgUrl);
+    window.open(tgUrl, "_blank", "noopener,noreferrer");
+  };
+}
+
 function renderTab(tab) {
   drawerTitle.textContent = "MARAUDER // " + tab;
   applyTheme();
 
   if (tab === "HOME") {
-    drawerBody.innerHTML = `
-      <div class="m-grid">
-        <div class="m-card"><div>CONSOLE</div><div class="m-badge">ONLINE</div><div>11 MODULES READY</div></div>
-        <div class="m-card"><div>TOR CIRCUIT</div><div class="m-badge">${state.torCircuit.length} HOPS</div><div>${state.torCircuit[state.torCircuit.length - 1]}</div></div>
-        <div class="m-card"><div>SAVED REPORTS</div><div class="m-badge">${state.reports.length}</div><div>LOCAL PERSISTENCE</div></div>
-        <div class="m-card"><div>STEALTH MODE</div><div class="m-badge">${state.settings.stealth ? "ENABLED" : "OFF"}</div><div>TTL: ${state.settings.timeoutSec}s</div></div>
-      </div>
-      <div class="m-log" id="homeLog">[HOME] System initialized. Select any top tab or run quick diagnostics.\nActive modules: HOME, CYBER AI, TOR, MARKETPLACE, OSINT, DARK WEB, EXPLOIT, FORENSICS, ANALYSIS, REPORTS, SETTINGS.</div>
-    `;
+    renderHomeCleanWindow();
     return;
   }
 
