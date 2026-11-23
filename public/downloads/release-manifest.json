@@ -1,9 +1,11 @@
 {
-  "name": "MARAUDER-AI",
+  "project": "MARAUDER-AI",
   "repo": "https://github.com/gtupoto7-collab/MARAUDER-AI-RED.git",
-  "downloads": {
+  "targets": {
     "windows": "/downloads/MARAUDER-AI-Windows.zip",
     "android": "/downloads/MARAUDER-AI-Android.apk",
-    "ios_info": "/downloads/MARAUDER-AI-iOS-INFO.txt"
+    "iosInfo": "/downloads/MARAUDER-AI-iOS-INFO.txt",
+    "termux": "/downloads/MARAUDER-AI-Termux.sh",
+    "ubuntu": "/downloads/MARAUDER-AI-Ubuntu.sh"
   }
 }
