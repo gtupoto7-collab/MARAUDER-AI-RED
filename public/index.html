@@ -280,11 +280,14 @@
       font-size: 13px;
       line-height: 1.45;
     }
+    .ai-agent-corner-btn { position: fixed; top: 5%; left: 79%; width: 7%; height: 9%; z-index: 60; background: rgba(255, 42, 75, 0.01); border: 1px solid transparent; cursor: pointer; color: transparent; font-size: 0; }
+    .ai-agent-corner-btn:hover { background: rgba(255, 42, 75, 0.18); border-color: rgba(255, 65, 100, 0.75); }
   </style>
 </head>
 <body>
   <img class="screen-bg" src="/DARKWEBARMY.jpg" alt="" />
 
+  <button class="ai-agent-corner-btn" id="aiAgentCornerBtn" data-tab="AI AGENT">AI AGENT</button>
   <nav class="top-tab-bar" id="topTabBar" aria-label="Top Console Tabs">
     <button class="top-tab-btn" data-tab="HOME">HOME</button>
     <button class="top-tab-btn" data-tab="CYBER AI">CYBER AI</button>
@@ -1247,6 +1250,35 @@
       drawerTitle.textContent = "MARAUDER // " + tab;
       applyTheme();
 
+      if (tab === "AI AGENT") {
+        const repoUrl = "https://github.com/ADMIRALERROR/marauder-ai-web.git";
+        const cloneCmd = "git clone " + repoUrl;
+        drawerBody.innerHTML = `
+          <div class="malware-top-banner">
+            <div class="malware-top-title">MARAUDER-AI // DOWNLOADS (ANDROID · WINDOWS-LINUX · IOS) &amp; GITHUB REPOSITORY</div>
+          </div>
+          <div class="m-grid">
+            <div class="m-card"><div><strong>MARAUDER-AI ANDROID</strong></div><div class="m-badge">ANDROID</div><br/><a class="m-btn primary" href="https://github.com/ADMIRALERROR/marauder-ai-web/releases" target="_blank" rel="noopener noreferrer">DOWNLOAD ANDROID</a></div>
+            <div class="m-card"><div><strong>MARAUDER-AI WINDOWS-LINUX</strong></div><div class="m-badge">WINDOWS &amp; LINUX</div><br/><a class="m-btn primary" href="https://github.com/ADMIRALERROR/marauder-ai-web/releases" target="_blank" rel="noopener noreferrer">DOWNLOAD WINDOWS-LINUX</a></div>
+            <div class="m-card"><div><strong>MARAUDER-AI IOS</strong></div><div class="m-badge">IOS</div><br/><a class="m-btn primary" href="https://github.com/ADMIRALERROR/marauder-ai-web/releases" target="_blank" rel="noopener noreferrer">DOWNLOAD IOS</a></div>
+          </div>
+          <div class="home-box">
+            <div class="home-box-title">GITHUB REPOSITORY &amp; GIT CLONE</div>
+            <div>Repo: <span class="m-badge">${repoUrl}</span></div>
+            <div class="code-box">${cloneCmd}</div>
+            <div class="m-row">
+              <button class="m-btn success" id="copyGitCloneBtn">KOPIRAI GIT CLONE</button>
+              <a class="m-btn" href="https://github.com/ADMIRALERROR/marauder-ai-web" target="_blank" rel="noopener noreferrer">OTVORI GITHUB REPO</a>
+            </div>
+          </div>
+          <div class="m-log" id="aiAgentCornerLog">[AI AGENT] Ready.</div>
+        `;
+        document.getElementById("copyGitCloneBtn").onclick = async () => {
+          try { await navigator.clipboard.writeText(cloneCmd); } catch (_) {}
+          document.getElementById("aiAgentCornerLog").textContent += "\nCopied: " + cloneCmd;
+        };
+        return;
+      }
       if (tab === "HOME") {
         renderHomeCleanWindow();
         return;
@@ -1433,6 +1465,13 @@
       btn.onclick = handleSingleOptionClick;
     });
 
+    const cornerBtn = document.getElementById("aiAgentCornerBtn");
+    if (cornerBtn) {
+      cornerBtn.onclick = () => {
+        if (state.activeTab === "AI AGENT" && drawer.classList.contains("open")) { closeToMainSite(); return; }
+        openTabProgrammatically("AI AGENT");
+      };
+    }
     document.getElementById("backToMainBtn").onclick = closeToMainSite;
     document.getElementById("drawerClose").onclick = closeToMainSite;
   </script>
