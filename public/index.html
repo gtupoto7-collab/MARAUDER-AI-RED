@@ -103,16 +103,17 @@
   padding-bottom: 5px;
 }
 .malware-top-banner {
-  background: #1b070c;
-  border: 1px solid #ff2a4b;
+  background: #22070e;
+  border: 2px solid #ff2a4b;
   border-radius: 6px;
   padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  box-shadow: 0 0 14px rgba(255, 42, 75, 0.25);
 }
 .malware-top-title {
-  color: #ff3b5c;
+  color: #ff4766;
   font-weight: bold;
   font-size: 14px;
   letter-spacing: 1px;
@@ -256,6 +257,15 @@ const PAYPAL_BASE_URL = "https://www.paypal.com/ncp/payment/BWG4AH3MMH8T6";
 const EASYPAY_PHONE = "0879813928";
 const EASYPAY_NOTICE = "ZVUNETE NA TOQ NOMER DA POLUCHITE EGN I IMENA ZA PREVOD !!! SNIMAITE PREVODA I GO PAZETE  !!!!";
 
+const MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST = [
+  "MARAUDER-AI — MALWARE CYBER CRIMINAL AL AGENT (Centralen analiz / sandbox / IOC / threat intel)",
+  "LAMEHUG — Dynamic command generation via LLM (runtime behavior & detection analysis)",
+  "PromptLock — LLM-driven dynamic logic (sandbox behavior, IOC & persistence audit)",
+  "s1ngularity — Local AI dev tool credential/secret exposure check & isolation",
+  "EvilAI — Deceptive AI app backdoor/exfiltration behavior inspection & blocking",
+  "GTG-20006 — Multi-stage AI-driven workflow defense & telemetry monitoring"
+];
+
 const AL_MASS_AGENTS = [
   "1. ChatGPT Agent — Многоцелеви агент: web, файлове, код, анализ, изпълнение на задачи",
   "2. Claude Code — Сложно програмиране, цели repositories, terminal, debugging",
@@ -322,15 +332,6 @@ const CYBER_SECURITY_AL_AGENTS = [
   "30. Tenable One — Vulnerability/exposure management и risk prioritization"
 ];
 
-const MALWARE_CYBER_CRIMINAL_AL_ITEMS = [
-  "MARAUDER-AI — Централен аналитичен и sandbox модул за оценка на заплахи, IOC, поведение и защита (най-отгоре)",
-  "LAMEHUG — Динамично генериране на команди по време на изпълнение (анализ на runtime поведение и детекция)",
-  "PromptLock — Динамична логика чрез LLM (sandbox симулация на поведение, IOC и устойчивост)",
-  "s1ngularity — Злоупотреба с локални AI developer инструменти за търсене на секрети/credentials (одит и изолация)",
-  "EvilAI — Зловредно приложение, маскирано като легитимен AI продукт (backdoor/exfiltration анализ и блокиране)",
-  "GTG-20006 — AI-driven верига от етапи (recon, phishing, persistence, credential harvesting, exfiltration — защита и мониторинг)"
-];
-
 const state = {
   activeTab: null,
   accounts: JSON.parse(localStorage.getItem("marauder_accounts") || "[]"),
@@ -343,9 +344,9 @@ const state = {
     credits: 500
   })),
   cyberService: JSON.parse(localStorage.getItem("marauder_cyber_service") || JSON.stringify({
-    suite: "AL-MASS AGENT",
+    suite: "MALWARE CYBER CRIMINAL AL AGENT",
     selectedAgentIdx: 0,
-    malwareOption: MALWARE_CYBER_CRIMINAL_AL_ITEMS[0]
+    malwareOption: MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST[0]
   })),
   reports: JSON.parse(localStorage.getItem("marauder_reports") || "[]"),
   settings: JSON.parse(localStorage.getItem("marauder_settings") || JSON.stringify({
@@ -653,22 +654,33 @@ function renderHomeCleanWindow() {
 }
 
 function renderCyberAiServiceWindow() {
-  const suite = state.cyberService.suite || "AL-MASS AGENT";
-  const activeList = suite === "CYBER SECURITY AL AGENTS" ? CYBER_SECURITY_AL_AGENTS : AL_MASS_AGENTS;
+  const suite = state.cyberService.suite || "MALWARE CYBER CRIMINAL AL AGENT";
+  const activeList =
+    suite === "CYBER SECURITY AL AGENTS"
+      ? CYBER_SECURITY_AL_AGENTS
+      : suite === "AL-MASS AGENT"
+        ? AL_MASS_AGENTS
+        : MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST;
+
   const safeIdx = Math.min(activeList.length - 1, Math.max(0, Number(state.cyberService.selectedAgentIdx || 0)));
-  const currentMalware = state.cyberService.malwareOption || MALWARE_CYBER_CRIMINAL_AL_ITEMS[0];
+  const currentMalware = state.cyberService.malwareOption || MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST[0];
 
   drawerBody.innerHTML = `
     <div class="cyber-ai-service">
       <div class="malware-top-banner">
-        <div class="malware-top-title">MALWARE-CYBER-CRIMINAL-AL // MARAUDER-AI</div>
+        <div class="malware-top-title">MARAUDER-AI // MALWARE CYBER CRIMINAL AL AGENT</div>
+        <div class="m-row">
+          <button class="m-btn primary" id="btnSuiteMalwareAgent">MALWARE CYBER CRIMINAL AL AGENT</button>
+          <button class="m-btn ${suite === "AL-MASS AGENT" ? "primary" : ""}" id="btnSuiteMass">AL-MASS AGENT (30)</button>
+          <button class="m-btn ${suite === "CYBER SECURITY AL AGENTS" ? "primary" : ""}" id="btnSuiteSec">CYBER SECURITY AL AGENTS (30)</button>
+        </div>
         <div class="m-row">
           <select class="m-select" id="malwareSelect">
-            ${MALWARE_CYBER_CRIMINAL_AL_ITEMS.map(item => `
+            ${MALWARE_CYBER_CRIMINAL_AL_AGENT_LIST.map(item => `
               <option value="${item.replace(/"/g, "&quot;")}" ${item === currentMalware ? "selected" : ""}>${item}</option>
             `).join("")}
           </select>
-          <button class="m-btn primary" id="runMalwareOptionBtn">AKTIVIRAI OPCIQ</button>
+          <button class="m-btn primary" id="runMalwareOptionBtn">AKTIVIRAI AGENT</button>
         </div>
       </div>
 
@@ -684,11 +696,7 @@ function renderCyberAiServiceWindow() {
       </div>
 
       <div class="home-box">
-        <div class="home-box-title">IZBOR NA REZHIM // AL-MASS AGENT · CYBER SECURITY AL AGENTS</div>
-        <div class="m-row">
-          <button class="m-btn ${suite === "AL-MASS AGENT" ? "primary" : ""}" id="btnSuiteMass">AL-MASS AGENT (30)</button>
-          <button class="m-btn ${suite === "CYBER SECURITY AL AGENTS" ? "primary" : ""}" id="btnSuiteSec">CYBER SECURITY AL AGENTS (30)</button>
-        </div>
+        <div class="home-box-title">TEGUSHT SPISUK // ${suite}</div>
         <div class="m-row">
           <select class="m-select" id="agentSelect">
             ${activeList.map((entry, idx) => `
@@ -706,7 +714,7 @@ function renderCyberAiServiceWindow() {
           <button class="m-btn success" id="cyberServiceRun">START SERVICE (-5 CREDITS)</button>
           <button class="m-btn" id="cyberServiceClear">CLEAR</button>
         </div>
-        <div class="m-log" id="cyberServiceLog">[CYBER AI SERVICE] Rezhim: ${suite} | Aktivna opciq: ${currentMalware}</div>
+        <div class="m-log" id="cyberServiceLog">[CYBER AI SERVICE] Rezhim: ${suite} | Agent: ${currentMalware}</div>
       </div>
     </div>
   `;
@@ -717,18 +725,11 @@ function renderCyberAiServiceWindow() {
     logEl.scrollTop = logEl.scrollHeight;
   };
 
-  document.getElementById("malwareSelect").onchange = (e) => {
-    state.cyberService.malwareOption = e.target.value;
+  document.getElementById("btnSuiteMalwareAgent").onclick = () => {
+    state.cyberService.suite = "MALWARE CYBER CRIMINAL AL AGENT";
+    state.cyberService.selectedAgentIdx = 0;
     saveState();
-  };
-
-  document.getElementById("runMalwareOptionBtn").onclick = () => {
-    const chosen = document.getElementById("malwareSelect").value;
-    state.cyberService.malwareOption = chosen;
-    saveState();
-    const msg = `[${new Date().toLocaleTimeString()}] [MALWARE-CYBER-CRIMINAL-AL -> MARAUDER-AI] Aktivirana opciq: ${chosen} | Sandbox isolation: ON | IOC/behavior analysis ready.`;
-    appendServiceLog(msg);
-    addReport("MALWARE-CYBER-CRIMINAL-AL", chosen, msg);
+    renderCyberAiServiceWindow();
   };
 
   document.getElementById("btnSuiteMass").onclick = () => {
@@ -743,6 +744,21 @@ function renderCyberAiServiceWindow() {
     state.cyberService.selectedAgentIdx = 0;
     saveState();
     renderCyberAiServiceWindow();
+  };
+
+  document.getElementById("malwareSelect").onchange = (e) => {
+    state.cyberService.malwareOption = e.target.value;
+    saveState();
+  };
+
+  document.getElementById("runMalwareOptionBtn").onclick = () => {
+    const chosen = document.getElementById("malwareSelect").value;
+    state.cyberService.malwareOption = chosen;
+    state.cyberService.suite = "MALWARE CYBER CRIMINAL AL AGENT";
+    saveState();
+    const msg = `[${new Date().toLocaleTimeString()}] [MARAUDER-AI // MALWARE CYBER CRIMINAL AL AGENT] Aktiviran agent: ${chosen} | Sandbox isolation: ON | IOC/behavior analysis ready.`;
+    appendServiceLog(msg);
+    addReport("MALWARE CYBER CRIMINAL AL AGENT", chosen, msg);
   };
 
   document.getElementById("agentSelect").onchange = (e) => {
@@ -783,7 +799,7 @@ function renderCyberAiServiceWindow() {
       `[${new Date().toLocaleTimeString()}] === CYBER AI PAID SERVICE EXECUTION ===`,
       `Suite: ${suite}`,
       `Selected Agent: ${agentLine}`,
-      `Top Option: ${state.cyberService.malwareOption}`,
+      `Malware Agent Option: ${state.cyberService.malwareOption}`,
       `Task: ${promptText}`,
       `Status: COMPLETED (-5 credits | Remaining: ${state.servicePlan.credits})`,
       `Action Plan: 1) Scope & target validation  2) Telemetry/artifact collection  3) Risk scoring & defensive remediation`
@@ -794,7 +810,7 @@ function renderCyberAiServiceWindow() {
   };
 
   document.getElementById("cyberServiceClear").onclick = () => {
-    logEl.textContent = `[CYBER AI SERVICE] Rezhim: ${suite} | Aktivna opciq: ${state.cyberService.malwareOption}`;
+    logEl.textContent = `[CYBER AI SERVICE] Rezhim: ${suite} | Agent: ${state.cyberService.malwareOption}`;
   };
 }
 
