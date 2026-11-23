@@ -55,4 +55,10 @@ router.post("/gangsta/forge", (req, res) => {
   }
 });
 
+router.get("/gangsta/local-hub", (req, res) => {
+  const hubPath = path.join(rootDir, "public", "api", "local-hub.json");
+  const hub = fs.existsSync(hubPath) ? JSON.parse(fs.readFileSync(hubPath, "utf8")) : null;
+  res.json({ ok: true, hub });
+});
+
 module.exports = router;
