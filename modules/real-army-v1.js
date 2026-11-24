@@ -153,6 +153,93 @@ class RealArmyCore extends EventEmitter {
       systems: Array.from(this.localSystems.values())
     };
   }
+  getMissionArchive(jobId) {
+    const job = this.jobs.find((j) => j.id === jobId);
+
+    if (!job) {
+      return {
+        jobId,
+        integrity: {
+          valid: false,
+          reason: "JOB_NOT_FOUND"
+        },
+        entries: []
+      };
+    }
+
+    const entries = [];
+
+    if (job.createdAt) {
+      entries.push({
+        type: "JOB_CREATED",
+        jobId: job.id,
+        timestamp: job.createdAt
+      });
+    }
+
+    if (job.startedAt) {
+      entries.push({
+        type: "JOB_STARTED",
+        jobId: job.id,
+        timestamp: job.startedAt
+      });
+    }
+
+    if (job.stage) {
+      entries.push({
+        type: "JOB_STAGE",
+        jobId: job.id,
+        stage: job.stage,
+        stageIndex: job.stageIndex
+      });
+    }
+
+    if (job.result) {
+      entries.push({
+        type: "JOB_RESULT",
+        jobId: job.id,
+        result: job.result
+      });
+    }
+
+    if (job.finishedAt) {
+      entries.push({
+        type: "JOB_FINISHED",
+        jobId: job.id,
+        status: job.status,
+        verified: job.verified,
+        timestamp: job.finishedAt
+      });
+    }
+
+    let ledgerValid = false;
+
+    try {
+      const { MarauderRootController } = require("./marauder-root-controller");
+      const ctrl = new MarauderRootController({
+        rootDir: this.projectDir || process.cwd()
+      });
+
+      ledgerValid =
+        typeof ctrl.verifyLedger === "function" &&
+        Boolean(ctrl.verifyLedger().valid);
+    } catch {
+      ledgerValid = false;
+    }
+
+    return {
+      jobId: job.id,
+      integrity: {
+        valid: ledgerValid,
+        status: ledgerValid
+          ? "LEDGER_VERIFIED"
+          : "LEDGER_UNVERIFIED"
+      },
+      entries,
+      mission: job
+    };
+  }
+
 }
 
 module.exports = { RealArmyCore, LOOP_STAGES };
