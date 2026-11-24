@@ -1,0 +1,24 @@
+{
+  "target": "MARAUDER v1",
+  "positioning": "AI Cybersecurity Operating System",
+  "principle": "NO FAKE AGENTS. REAL TOOLS. REAL INTELLIGENCE. VERIFIED RESULTS.",
+  "competitorComparison": [
+    { "area": "UI / Command Center", "marauderNow": "Силен прототип", "marauderV1Goal": "Стабилен команден център с реални проверки" },
+    { "area": "AI агенти", "marauderNow": "Архитектура / прототип", "marauderV1Goal": "Малък брой реално вързани агенти с права и памет" },
+    { "area": "Malware & Threat Intel", "marauderNow": "Каталог / анализ", "marauderV1Goal": "Повторяем анализ в изолирана среда + одит" },
+    { "area": "Autonomous Pentesting & SOC", "marauderNow": "Ранен етап", "marauderV1Goal": "Контролирани проверки само в разрешен обхват" },
+    { "area": "Local Execution & Security", "marauderNow": "Концепция", "marauderV1Goal": "Мост към локалните среди с минимални права и бенчмарк" }
+  ],
+  "v1Core10": [
+    "1. Director OS Approvals & Emergency Stop",
+    "2. Read-Only Default & Root Lockout Guard",
+    "3. Local AI Node Check (Ollama / Llama 3.2)",
+    "4. Installed Tools & Version Checker",
+    "5. Malware Intelligence Lookup & Scoring",
+    "6. YARA / Rule & Artifact Validation",
+    "7. Threat Intel Indicator Correlation",
+    "8. Autonomous SOC 7-Step Flow",
+    "9. Local Environment Bridge (WSL / Kali / Windows / Termux)",
+    "10. Benchmark & Audit Log Runner"
+  ]
+}
