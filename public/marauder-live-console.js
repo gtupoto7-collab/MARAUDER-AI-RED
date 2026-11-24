@@ -182,6 +182,89 @@
       </main>
     `;
     document.body.appendChild(app);
+// Долна лента: TRENIE NA MAZALO, AUTO PLUS, EXIT
+    let mazaloActive = false;
+    let autoPlusActive = true;
+    let mazaloTimer = null;
+
+    const footerBar = document.createElement("div");
+    footerBar.id = "mrd-bottom-bar";
+    footerBar.style.cssText = [
+      "display:flex",
+      "flex-wrap:wrap",
+      "align-items:center",
+      "justify-content:space-between",
+      "gap:8px",
+      "padding:8px 12px",
+      "border:1px solid #991b1b",
+      "border-radius:10px",
+      "background:linear-gradient(90deg,#19070a,#0b0e14 55%,#091a10)",
+      "box-shadow:0 0 16px rgba(239,68,68,.25)"
+    ].join(";");
+
+    footerBar.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:12px;font-weight:900;letter-spacing:.1em;color:#f87171">MARAUDER // ULTIMATE PLATFORM</span>
+        <span id="mrd-mode-readout" style="font-size:11px;color:#fca5a5">MODE: AUTO PLUS ON</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <button id="mrd-btn-mazalo" class="mrd-btn">TRENIE NA MAZALO</button>
+        <button id="mrd-btn-autoplus" class="mrd-btn mrd-btn-green">AUTO PLUS: ON</button>
+        <button id="mrd-btn-exit" class="mrd-btn" style="border-color:#f97316;background:linear-gradient(180deg,#9a3412,#431407)">EXIT</button>
+      </div>
+    `;
+
+    app.appendChild(footerBar);
+
+    const readoutEl = document.getElementById("mrd-mode-readout");
+    const mazaloBtn = document.getElementById("mrd-btn-mazalo");
+    const autoBtn = document.getElementById("mrd-btn-autoplus");
+    const exitBtn = document.getElementById("mrd-btn-exit");
+
+    function syncReadout() {
+      if (!readoutEl) return;
+      readoutEl.textContent = `MAZALO: ${mazaloActive ? "TURBO ACTIVE" : "IDLE"} • AUTO PLUS: ${autoPlusActive ? "ON" : "OFF"}`;
+    }
+
+    mazaloBtn.onclick = () => {
+      mazaloActive = !mazaloActive;
+      mazaloBtn.textContent = mazaloActive ? "TRENIE NA MAZALO: ACTIVE" : "TRENIE NA MAZALO";
+      syncReadout();
+      if (mazaloActive) {
+        appendMsg("ai", "MAZALO ENGINE", "Активиран е <strong>TRENIE NA MAZALO</strong> — ускорен поток за разархивиране, разхеширане и телеметрия.");
+        mazaloTimer = setInterval(() => {
+          if (typeof feedIdx !== "undefined" && typeof renderLiveFeed === "function") {
+            feedIdx++;
+            renderLiveFeed(typeof activeChannel !== "undefined" ? activeChannel : "");
+          }
+        }, 1200);
+      } else {
+        if (mazaloTimer) clearInterval(mazaloTimer);
+        appendMsg("sys", "MAZALO ENGINE", "Турбо режимът <strong>TRENIE NA MAZALO</strong> е спрян.");
+      }
+    };
+
+    autoBtn.onclick = () => {
+      autoPlusActive = !autoPlusActive;
+      autoBtn.textContent = `AUTO PLUS: ${autoPlusActive ? "ON" : "OFF"}`;
+      syncReadout();
+      appendMsg("ai", "AUTO PLUS", autoPlusActive ? "Автоматичният поток и анализ са включени." : "Автоматичният режим е на пауза.");
+    };
+
+    exitBtn.onclick = () => {
+      mazaloActive = false;
+      autoPlusActive = false;
+      if (mazaloTimer) clearInterval(mazaloTimer);
+      mazaloBtn.textContent = "TRENIE NA MAZALO";
+      autoBtn.textContent = "AUTO PLUS: OFF";
+      syncReadout();
+      const log = document.getElementById("mrd-chat-log");
+      if (log) {
+        log.innerHTML = `<div class="mrd-msg"><strong style="color:#f87171">MARAUDER SESSION RESET:</strong> Активната сесия е затворена и изчистена. Готово за нов старт.</div>`;
+      }
+    };
+
+    syncReadout();
 
     // Табове горе
     const navEl = document.getElementById("mrd-nav");
