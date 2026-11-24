@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T23:23:58.465Z",
+  "updatedAt": "2026-11-24T01:42:36.755Z",
   "connection": "LOCAL",
   "targets": {
     "powershell": {
@@ -27,7 +27,7 @@
     }
   },
   "system": {
-    "cpuLoad1m": "0.05",
+    "cpuLoad1m": "0.00",
     "ramUsedPct": 15,
     "linuxKernel": "6.18.58.1-microsoft-standard-WSL2",
     "hostname": "admiralerror"
