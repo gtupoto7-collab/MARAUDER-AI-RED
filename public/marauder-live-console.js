@@ -271,6 +271,51 @@
       </main>
     `;
     document.body.appendChild(app);
+// MALWARE-AL ARMY + Цялото AI семейство отстрани (в десния сайдбар на index конзолата)
+    const SIDE_FAMILY = [
+      { name: "MALWARE-AL ARMY", tag: "ARMY CORE", color: "#f87171", desc: "Главна ударна AI единица на MARAUDER-AL за анализ, каталози и автоматизация." },
+      { name: "Mythos Security", tag: "RED/BLUE AI", color: "#38bdf8", desc: "Ядро за сигурност, разузнаване и команден ко-пилот в конзолата." },
+      { name: "ScyNet AI", tag: "TELEMETRY", color: "#60a5fa", desc: "Корелация на заплахи, поведенчески модели и анализ на потоци." },
+      { name: "Llama / Ollama Local Node", tag: "LOCAL LLM", color: "#4ade80", desc: "Локален инференс без интернет (llama3.2 / llama3 / mistral) с офлайн резерв." },
+      { name: "MARAUDER Terminal Bridge", tag: "WSL / TERMUX", color: "#fbbf24", desc: "Мост за скриптове и обратна връзка между Windows/WSL, Linux и Termux." }
+    ];
+
+    const rightSidebar = document.querySelector(".mrd-grid aside:last-of-type");
+    if (rightSidebar && !document.getElementById("mrd-army-family-side")) {
+      const famBox = document.createElement("div");
+      famBox.id = "mrd-army-family-side";
+      famBox.style.cssText = "border-top:1px solid #2b1016;padding-top:8px;display:flex;flex-direction:column;gap:6px";
+      famBox.innerHTML = `
+        <div class="mrd-box-title">
+          <span>MALWARE-AL ARMY // AI FAMILY</span>
+          <span style="color:#4ade80">ALL ${SIDE_FAMILY.length}</span>
+        </div>
+        <div id="mrd-army-list" style="display:flex;flex-direction:column;gap:5px"></div>
+      `;
+      rightSidebar.appendChild(famBox);
+
+      const listEl = document.getElementById("mrd-army-list");
+      SIDE_FAMILY.forEach((member) => {
+        const card = document.createElement("div");
+        card.style.cssText = "border:1px solid #2b1016;border-radius:7px;padding:7px 8px;background:linear-gradient(180deg,#140a10,#0b0f19);cursor:pointer;transition:.14s";
+        card.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+            <strong style="font-size:11px;color:${member.color}">${member.name}</strong>
+            <span style="font-size:9px;padding:2px 5px;border-radius:4px;background:#1b0c12;border:1px solid #7f1d1d;color:#fca5a5">${member.tag}</span>
+          </div>
+          <div style="font-size:10px;color:#cbd5e1;margin-top:3px;line-height:1.35">${member.desc}</div>
+        `;
+        card.onmouseenter = () => { card.style.borderColor = "#ef4444"; };
+        card.onmouseleave = () => { card.style.borderColor = "#2b1016"; };
+        card.onclick = () => {
+          document.getElementById("mrd-center-title").textContent = `${member.name.toUpperCase()} // ACTIVE UNIT`;
+          if (typeof appendMsg === "function") {
+            appendMsg("ai", member.name, `Активирана единица <strong>${member.name}</strong> [${member.tag}] — ${member.desc}`);
+          }
+        };
+        listEl.appendChild(card);
+      });
+    }
 
     let mazaloActive = false;
     let autoPlusActive = true;
