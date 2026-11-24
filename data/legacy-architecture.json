@@ -1,0 +1,25 @@
+{
+  "organization": "RED SOFTWARE TEAM",
+  "founded": 2026,
+  "architecture": "RED SOFTWARE TEAM — LEGACY ARCHITECTURE",
+  "corePrinciple": "MARAUDER SHOULDN'T NEED US FOREVER.",
+  "chain": [
+    "FOUNDER",
+    "RED SOFTWARE TEAM",
+    "DIRECTOR SYSTEM",
+    "AI COUNCIL (GPT / GEMINI / LLAMA -> FUTURE AI SYSTEMS)",
+    "MARAUDER CORE",
+    "OPEN / DOCUMENTED APIs",
+    "FUTURE AI SYSTEMS"
+  ],
+  "continuityPillars": [
+    { "id": "DOCS", "title": "Пълна техническа документация", "status": "ACTIVE_SPEC" },
+    { "id": "CRYPTO_RECOVERY", "title": "Криптографски защитени ключове и recovery процедури", "status": "POLICY_DEFINED" },
+    { "id": "SUCCESSION", "title": "Succession plan — кой поема управлението и оперативния контрол", "status": "TO_BE_FORMALIZED" },
+    { "id": "LEGAL_IP", "title": "Юридическа структура за наследяване и права върху код, марка и ИС", "status": "TO_BE_FORMALIZED" },
+    { "id": "BACKUPS", "title": "Независими backup-и на кода, конфигурациите и документацията", "status": "GIT_AND_LOCAL_MIRROR" },
+    { "id": "MODEL_AGNOSTIC_AI", "title": "Model-independent AI interfaces (адаптерен слой без твърда обвързаност към модел)", "status": "IN_PROGRESS" },
+    { "id": "AUTOMATED_TESTS", "title": "Автоматични тестове, доказващи работоспособността на системата", "status": "NODE_CHECKS_ACTIVE" },
+    { "id": "IP_RIGHTS", "title": "Ясно описани права върху кода, марката и интелектуалната собственост", "status": "FOUNDED_2026" }
+  ]
+}
