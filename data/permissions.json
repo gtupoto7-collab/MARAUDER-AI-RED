@@ -1,0 +1,11 @@
+{
+  "defaultMode": "read-only",
+  "requireExplicitApprovalFor": [
+    "system-modification",
+    "device-blocking",
+    "administrative-action",
+    "active-network-test"
+  ],
+  "rootAccessPolicy": "denied-by-default-per-agent",
+  "auditLogRequired": true
+}
