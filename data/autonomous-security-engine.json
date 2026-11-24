@@ -1,0 +1,54 @@
+{
+  "engine": "AUTONOMOUS SECURITY ENGINE",
+  "principle": "AUTONOMOUS != UNCONTROLLED",
+  "defaults": {
+    "target": "local-lab-host",
+    "scope": "approved assets",
+    "mode": "continuous",
+    "risk": "production-safe",
+    "autoFix": false
+  },
+  "controlTiers": {
+    "AUTO": {
+      "badge": "GREEN",
+      "description": "Безопасни операции: inventory, логове, configuration checks, vulnerability scanning."
+    },
+    "APPROVAL": {
+      "badge": "YELLOW",
+      "description": "По-инвазивни проверки и действия: изискват изричен APPROVE от ръководството."
+    },
+    "BLOCKED": {
+      "badge": "RED",
+      "description": "Действия извън разрешения scope или опасни операции: отказват се автоматично."
+    }
+  },
+  "loopStages": [
+    "ASSET DISCOVERY",
+    "INVENTORY / MAP",
+    "RISK ASSESSMENT",
+    "VULNERABILITY SCAN",
+    "AI CORRELATION",
+    "SAFE VALIDATION",
+    "FALSE POSITIVE / REAL RISK",
+    "PRIORITIZATION",
+    "REMEDIATION PLAN",
+    "PATCH / FIX",
+    "RE-SCAN",
+    "VERIFIED"
+  ],
+  "liveTelemetry": {
+    "assetsTotal": 2,
+    "healthy": 2,
+    "needsAttention": 0,
+    "critical": 0,
+    "lastScan": "2026-11-24T04:13:29.649Z",
+    "nextScan": "automatic",
+    "activeAgents": 1,
+    "threatsDetected": 0,
+    "falsePositives": 0,
+    "verifiedFixes": 0,
+    "emergencyStop": false
+  },
+  "findings": [],
+  "pendingApprovals": []
+}
