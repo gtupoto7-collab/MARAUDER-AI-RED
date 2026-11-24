@@ -27,15 +27,21 @@
 
   const TABS = ["HOME", "CYBER AI", "TOR", "MARKETPLACE", "OSINT", "DARK WEB", "EXPLOIT", "FORENSICS", "ANALYSIS", "REPORTS", "SETTINGS"];
 
+  const FEED_ITEMS = [
+    { type: "VIDEO", name: "cam_feed_04.mp4", archive: "archive_04.zip -> UNZIPPED", hash: "SHA256: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", status: "DEHASHED & READY" },
+    { type: "FILES", name: "device_dump_2026.tar.gz", archive: "tar.gz -> EXTRACTED (148 files)", hash: "MD5: 5d41402abc4b2a76b9719d911017c592 -> VERIFIED", status: "UNPACKED LIVE" },
+    { type: "MEDIA", name: "snap_stream_09.png", archive: "pack_media.7z -> UNPACKED", hash: "SHA1: aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d -> DECODED", status: "STREAMING" },
+    { type: "VOICE", name: "voice_note_12.wav", archive: "audio_bundle.rar -> EXTRACTED", hash: "HASH: e3b0c44298fc1c149afbf4c8996fb924 -> UNLOCKED", status: "LIVE AUDIO" }
+  ];
+
   function buildConsole() {
-    // Премахваме старите долепени панели и статични изображения, за да няма двойни елементи
-    ["mrd-malware-intel-panel", "mrd-tags-seo-matrix"].forEach((id) => {
+    ["mrd-malware-intel-panel", "mrd-tags-seo-matrix", "mrd-bottom-bar"].forEach((id) => {
       const old = document.getElementById(id);
       if (old) old.remove();
     });
 
     document.body.style.margin = "0";
-    document.body.style.background = "#06080d";
+    document.body.style.background = "#05060a";
     document.body.style.color = "#f3f4f6";
     document.body.style.fontFamily = "'Segoe UI', system-ui, sans-serif";
     document.body.innerHTML = "";
@@ -44,40 +50,115 @@
     style.textContent = `
       * { box-sizing: border-box; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
-      ::-webkit-scrollbar-track { background: #090c12; }
-      ::-webkit-scrollbar-thumb { background: #7f1d1d; border-radius: 4px; }
-      .mrd-app { min-height: 100vh; background: radial-gradient(circle at 50% 0%, #2a0808 0%, #07090f 55%); padding: 8px; display: flex; flex-direction: column; gap: 8px; }
-      .mrd-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border: 1px solid #991b1b; border-radius: 10px; background: linear-gradient(180deg, #160a0d, #0b0e14); box-shadow: 0 0 20px rgba(220,38,38,.22); }
-      .mrd-brand { font-size: 24px; font-weight: 900; letter-spacing: .12em; color: #fff; text-shadow: 0 0 14px #ef4444; }
-      .mrd-sub { font-size: 11px; color: #fca5a5; letter-spacing: .16em; font-weight: 700; }
+      ::-webkit-scrollbar-track { background: #07090f; }
+      ::-webkit-scrollbar-thumb { background: #991b1b; border-radius: 4px; }
+      .mrd-app {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(185,28,28,0.28) 0%, rgba(5,6,10,0.96) 52%),
+          linear-gradient(180deg, #090609 0%, #05060a 100%);
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .mrd-topbar {
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+        padding: 10px 14px; border: 1px solid #b91c1c; border-radius: 10px;
+        background: linear-gradient(180deg, #1b070b, #090c14);
+        box-shadow: 0 0 24px rgba(220,38,38,.28);
+      }
+      .mrd-brand { font-size: 24px; font-weight: 900; letter-spacing: .14em; color: #fff; text-shadow: 0 0 16px #ef4444; }
+      .mrd-sub { font-size: 11px; color: #fca5a5; letter-spacing: .16em; font-weight: 800; }
       .mrd-badges { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-      .mrd-badge { padding: 6px 10px; border-radius: 8px; border: 1px solid #374151; background: #0f1420; font-size: 11px; font-weight: 700; cursor: pointer; transition: .15s; }
-      .mrd-badge:hover { border-color: #ef4444; box-shadow: 0 0 10px rgba(239,68,68,.3); }
-      .mrd-nav { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border: 1px solid #7f1d1d; border-radius: 10px; background: #0b0e14; }
-      .mrd-tab { flex: 1 1 auto; text-align: center; padding: 8px 10px; border-radius: 7px; border: 1px solid #1f2937; background: #101522; color: #e5e7eb; font-size: 11px; font-weight: 800; cursor: pointer; transition: .15s; }
-      .mrd-tab:hover, .mrd-tab.active { background: linear-gradient(180deg, #991b1b, #5f1111); border-color: #f87171; color: #fff; box-shadow: 0 0 12px rgba(239,68,68,.35); }
+      .mrd-badge {
+        padding: 6px 10px; border-radius: 8px; border: 1px solid #7f1d1d;
+        background: linear-gradient(180deg, #150b10, #0b0f19);
+        font-size: 11px; font-weight: 800; cursor: pointer; transition: .15s;
+      }
+      .mrd-badge:hover { border-color: #f87171; box-shadow: 0 0 12px rgba(239,68,68,.4); }
+      .mrd-nav {
+        display: flex; flex-wrap: wrap; gap: 6px; padding: 6px;
+        border: 1px solid #991b1b; border-radius: 10px;
+        background: linear-gradient(180deg, #12070a, #090c13);
+      }
+      .mrd-tab {
+        flex: 1 1 auto; text-align: center; padding: 8px 10px; border-radius: 7px;
+        border: 1px solid #2b1116; background: #0e121c; color: #e5e7eb;
+        font-size: 11px; font-weight: 900; letter-spacing: .04em; cursor: pointer; transition: .15s;
+      }
+      .mrd-tab:hover, .mrd-tab.active {
+        background: linear-gradient(180deg, #b91c1c, #690d0d);
+        border-color: #f87171; color: #fff; box-shadow: 0 0 14px rgba(239,68,68,.45);
+      }
       .mrd-grid { display: grid; grid-template-columns: 270px 1fr 310px; gap: 8px; flex: 1; }
       @media (max-width: 1024px) { .mrd-grid { grid-template-columns: 1fr; } }
-      .mrd-box { border: 1px solid #7f1d1d; border-radius: 10px; background: #0b0e14; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-      .mrd-box-title { font-size: 12px; font-weight: 900; letter-spacing: .08em; color: #fca5a5; border-bottom: 1px solid #1f2937; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
-      .mrd-search { width: 100%; padding: 8px 10px; border-radius: 7px; border: 1px solid #7f1d1d; background: #07090e; color: #fff; font-size: 12px; outline: none; }
-      .mrd-search:focus { border-color: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,.35); }
+      .mrd-box {
+        border: 1px solid #991b1b; border-radius: 10px;
+        background: linear-gradient(180deg, #10080c 0%, #090c14 140px);
+        padding: 10px; display: flex; flex-direction: column; gap: 8px;
+        box-shadow: inset 0 0 18px rgba(153,27,27,.14);
+      }
+      .mrd-box-title {
+        font-size: 12px; font-weight: 900; letter-spacing: .09em; color: #fca5a5;
+        border-bottom: 1px solid #2a1016; padding-bottom: 6px;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .mrd-search {
+        width: 100%; padding: 8px 10px; border-radius: 7px;
+        border: 1px solid #7f1d1d; background: #06080e; color: #fff;
+        font-size: 12px; outline: none;
+      }
+      .mrd-search:focus { border-color: #ef4444; box-shadow: 0 0 10px rgba(239,68,68,.35); }
       .mrd-cat-list { max-height: 430px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
-      .mrd-cat-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 9px; border-radius: 6px; border: 1px solid #182030; background: #0f1420; color: #e5e7eb; font-size: 12px; cursor: pointer; transition: .12s; }
-      .mrd-cat-item:hover, .mrd-cat-item.active { border-color: #ef4444; background: #260c10; color: #fff; }
+      .mrd-cat-item {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 7px 9px; border-radius: 6px; border: 1px solid #231117;
+        background: #0d111b; color: #e5e7eb; font-size: 12px; cursor: pointer; transition: .12s;
+      }
+      .mrd-cat-item:hover, .mrd-cat-item.active {
+        border-color: #ef4444; background: linear-gradient(90deg, #380b12, #120b12); color: #fff;
+      }
       .mrd-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-      .mrd-qbtn { padding: 7px; border-radius: 6px; border: 1px solid #991b1b; background: #141926; color: #fca5a5; font-size: 11px; font-weight: 800; cursor: pointer; }
+      .mrd-qbtn {
+        padding: 7px; border-radius: 6px; border: 1px solid #991b1b;
+        background: #120a10; color: #fca5a5; font-size: 11px; font-weight: 800; cursor: pointer;
+      }
       .mrd-qbtn:hover { background: #991b1b; color: #fff; }
-      .mrd-btn { padding: 8px 12px; border-radius: 7px; border: 1px solid #ef4444; background: linear-gradient(180deg, #b91c1c, #7f1d1d); color: #fff; font-size: 11px; font-weight: 800; cursor: pointer; }
-      .mrd-btn:hover { filter: brightness(1.15); }
-      .mrd-btn-green { border-color: #22c55e; background: linear-gradient(180deg, #15803d, #14532d); }
-      .mrd-chat-log { flex: 1; min-height: 220px; max-height: 300px; overflow-y: auto; border: 1px solid #1f2937; border-radius: 8px; background: #07090e; padding: 10px; display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
-      .mrd-msg { padding: 8px 10px; border-radius: 7px; border-left: 3px solid #ef4444; background: #101522; }
+      .mrd-secret-banner {
+        border: 1px solid #dc2626; border-radius: 10px; padding: 10px 12px;
+        background: linear-gradient(90deg, #2d070d, #110912 55%, #24070c);
+        box-shadow: 0 0 18px rgba(220,38,38,.25); cursor: pointer;
+        display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
+      }
+      .mrd-secret-banner:hover { border-color: #f87171; box-shadow: 0 0 24px rgba(239,68,68,.45); }
+      .mrd-btn {
+        padding: 8px 12px; border-radius: 7px; border: 1px solid #ef4444;
+        background: linear-gradient(180deg, #b91c1c, #6f0f0f); color: #fff;
+        font-size: 11px; font-weight: 900; letter-spacing: .04em; cursor: pointer;
+      }
+      .mrd-btn:hover { filter: brightness(1.18); box-shadow: 0 0 10px rgba(239,68,68,.35); }
+      .mrd-btn-green {
+        border-color: #22c55e; background: linear-gradient(180deg, #15803d, #0d3b1e);
+      }
+      .mrd-chat-log {
+        flex: 1; min-height: 210px; max-height: 290px; overflow-y: auto;
+        border: 1px solid #2b1016; border-radius: 8px; background: #06080e;
+        padding: 10px; display: flex; flex-direction: column; gap: 8px; font-size: 12px;
+      }
+      .mrd-msg { padding: 8px 10px; border-radius: 7px; border-left: 3px solid #ef4444; background: #0f131f; }
       .mrd-msg.ai { border-left-color: #38bdf8; }
       .mrd-msg.user { border-left-color: #22c55e; }
       .mrd-tools-view { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; }
-      .mrd-tool-card { border: 1px solid #1f2937; border-radius: 8px; background: #101522; padding: 9px; display: flex; flex-direction: column; gap: 6px; }
-      .mrd-bars { display: flex; align-items: flex-end; gap: 3px; height: 26px; padding: 4px; background: #07090e; border-radius: 6px; border: 1px solid #1f2937; }
+      .mrd-tool-card {
+        border: 1px solid #2b1016; border-radius: 8px;
+        background: linear-gradient(180deg, #130b11, #0c101a); padding: 9px;
+        display: flex; flex-direction: column; gap: 6px;
+      }
+      .mrd-bars {
+        display: flex; align-items: flex-end; gap: 3px; height: 26px;
+        padding: 4px; background: #06080e; border-radius: 6px; border: 1px solid #2b1016;
+      }
       .mrd-bar { flex: 1; background: #22c55e; border-radius: 2px; transition: height .18s; }
     `;
     document.head.appendChild(style);
@@ -87,7 +168,7 @@
     app.innerHTML = `
       <header class="mrd-topbar">
         <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:42px;height:42px;border-radius:10px;border:1px solid #ef4444;background:#1f090d;display:flex;align-items:center;justify-content:center;font-weight:900;color:#ef4444;box-shadow:0 0 12px rgba(239,68,68,.4)">M</div>
+          <div style="width:42px;height:42px;border-radius:10px;border:1px solid #ef4444;background:#24080d;display:flex;align-items:center;justify-content:center;font-weight:900;color:#ef4444;box-shadow:0 0 14px rgba(239,68,68,.45)">M</div>
           <div>
             <div class="mrd-brand">MARAUDER</div>
             <div class="mrd-sub">ULTIMATE HACKER CONSOLE v12.0 AI // #1 RED SOFTWARE</div>
@@ -109,7 +190,7 @@
             <span>AI TOOLS (1000+)</span>
             <span id="mrd-cat-count" style="color:#4ade80">23 CATS</span>
           </div>
-          <input id="mrd-tool-search" class="mrd-search" type="text" placeholder="Search tools & categories..." />
+          <input id="mrd-tool-search" class="mrd-search" type="text" placeholder="Търси инструмент или категория..." />
           <div id="mrd-cat-list" class="mrd-cat-list"></div>
           <div class="mrd-box-title" style="margin-top:4px"><span>QUICK ACCESS</span></div>
           <div class="mrd-quick">
@@ -120,23 +201,33 @@
           </div>
         </aside>
 
-        <section class="mrd-box">
+        <section class="mrd-box" id="mrd-center-panel">
+          <div id="mrd-secret-trigger" class="mrd-secret-banner" title="Кликни за пълен автоматизиран RED-SECRET CHAT">
+            <div>
+              <div style="font-size:15px;font-weight:900;letter-spacing:.08em;color:#fff;text-shadow:0 0 10px rgba(239,68,68,.5)">
+                RED-SECRET CHAT // END-TO-END ENCRYPTED • AUTO DESTROY • 3 MIN
+              </div>
+              <div style="font-size:11px;color:#fca5a5">MARAUDER AI Secret Communication — кликни тук за автоматичен секретен канал</div>
+            </div>
+            <span id="mrd-timer" style="color:#f87171;font-size:16px;font-weight:900;padding:4px 10px;border:1px solid #dc2626;border-radius:7px;background:#160609">03:00</span>
+          </div>
+
           <div class="mrd-box-title">
-            <span id="mrd-center-title">RED-SECRET CHAT // END-TO-END ENCRYPTED</span>
-            <span id="mrd-timer" style="color:#f87171;font-size:14px">03:00</span>
+            <span id="mrd-center-title">RED-SECRET CHAT // LIVE AUTOMATED CHANNEL</span>
+            <span id="mrd-secret-state" style="color:#4ade80">AUTO-LINK: READY</span>
           </div>
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div style="border:1px solid #1f2937;border-radius:8px;padding:8px;background:#0f1420;display:flex;flex-direction:column;gap:6px">
+            <div style="border:1px solid #2b1016;border-radius:8px;padding:8px;background:#0c101a;display:flex;flex-direction:column;gap:6px">
               <div style="font-size:11px;color:#fca5a5;font-weight:800">GENERATE CHAT KEY</div>
               <input id="mrd-gen-key" class="mrd-search" readonly value="MRD-7XQ9-KL2F-8V6P" />
               <input id="mrd-gen-pass" class="mrd-search" readonly value="zF9k-Qp3m-7H2v" />
               <button id="mrd-btn-gen" class="mrd-btn">GENERATE NEW KEY</button>
             </div>
-            <div style="border:1px solid #1f2937;border-radius:8px;padding:8px;background:#0f1420;display:flex;flex-direction:column;gap:6px">
+            <div style="border:1px solid #2b1016;border-radius:8px;padding:8px;background:#0c101a;display:flex;flex-direction:column;gap:6px">
               <div style="font-size:11px;color:#86efac;font-weight:800">CONNECT TO SECRET CHAT</div>
               <input id="mrd-conn-key" class="mrd-search" value="MRD-7XQ9-KL2F-8V6P" />
-              <div style="font-size:11px;color:#4ade80">Connection: SUCCESS • Mode: SECRET</div>
+              <div id="mrd-conn-status" style="font-size:11px;color:#4ade80">Connection: SUCCESS • Mode: SECRET AUTO</div>
               <button id="mrd-btn-conn" class="mrd-btn mrd-btn-green">ENTER & CONNECT</button>
             </div>
           </div>
@@ -144,19 +235,19 @@
           <div id="mrd-workspace" class="mrd-tools-view"></div>
 
           <div id="mrd-chat-log" class="mrd-chat-log">
-            <div class="mrd-msg"><strong style="color:#f87171">MARAUDER:</strong> Секретният чат и живата конзола са активирани. Избери категория отляво или пиши директно.</div>
-            <div class="mrd-msg ai"><strong style="color:#38bdf8">AI Agent (Mythos):</strong> Готов съм. Всички 23 категории и локалният Ollama/Offline режим са свързани.</div>
+            <div class="mrd-msg"><strong style="color:#f87171">MARAUDER:</strong> Секретният чат е активен и автоматизиран. Съобщенията се ротират на всеки 3 минути.</div>
+            <div class="mrd-msg ai"><strong style="color:#38bdf8">AI Agent (Mythos):</strong> Свързан съм към RED-SECRET CHAT. Кажи команда или задача.</div>
           </div>
 
           <div style="display:flex;gap:6px">
-            <input id="mrd-chat-input" class="mrd-search" type="text" placeholder="Напиши съобщение или команда..." />
+            <input id="mrd-chat-input" class="mrd-search" type="text" placeholder="Напиши съобщение в RED-SECRET CHAT..." />
             <button id="mrd-chat-send" class="mrd-btn">SEND</button>
           </div>
         </section>
 
         <aside class="mrd-box">
           <div class="mrd-box-title">
-            <span>VOICE CHAT & AI STREAM</span>
+            <span>VOICE CHAT & LIVE STREAM</span>
             <span style="color:#4ade80">ON</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
@@ -165,9 +256,7 @@
             <button class="mrd-qbtn" data-media="VIDEO">VIDEO</button>
             <button class="mrd-qbtn" data-media="FILES">FILES</button>
           </div>
-          <div id="mrd-media-box" style="border:1px solid #1f2937;border-radius:8px;padding:10px;background:#0f1420;font-size:12px;color:#d1d5db">
-            Active Channel: <strong>CYBER AI STREAM</strong> • Mythos + ScyNet + Termux Free Bridge Ready.
-          </div>
+          <div id="mrd-media-box" style="border:1px solid #2b1016;border-radius:8px;padding:10px;background:#0c101a;font-size:12px;color:#d1d5db"></div>
           <div class="mrd-box-title"><span>MICROPHONE 2.0</span><span id="mrd-mic-state" style="color:#4ade80">Voice Active</span></div>
           <div id="mrd-bars" class="mrd-bars"></div>
           <div style="display:flex;gap:6px">
@@ -182,10 +271,13 @@
       </main>
     `;
     document.body.appendChild(app);
-// Долна лента: TRENIE NA MAZALO, AUTO PLUS, EXIT
+
     let mazaloActive = false;
     let autoPlusActive = true;
     let mazaloTimer = null;
+    let seconds = 180;
+    let feedIdx = 0;
+    let activeChannel = "";
 
     const footerBar = document.createElement("div");
     footerBar.id = "mrd-bottom-bar";
@@ -196,16 +288,16 @@
       "justify-content:space-between",
       "gap:8px",
       "padding:8px 12px",
-      "border:1px solid #991b1b",
+      "border:1px solid #b91c1c",
       "border-radius:10px",
-      "background:linear-gradient(90deg,#19070a,#0b0e14 55%,#091a10)",
-      "box-shadow:0 0 16px rgba(239,68,68,.25)"
+      "background:linear-gradient(90deg,#21060b,#090c14 55%,#081b10)",
+      "box-shadow:0 0 18px rgba(239,68,68,.28)"
     ].join(";");
 
     footerBar.innerHTML = `
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:900;letter-spacing:.1em;color:#f87171">MARAUDER // ULTIMATE PLATFORM</span>
-        <span id="mrd-mode-readout" style="font-size:11px;color:#fca5a5">MODE: AUTO PLUS ON</span>
+        <span style="font-size:12px;font-weight:900;letter-spacing:.1em;color:#f87171">MARAUDER // THE ULTIMATE PLATFORM</span>
+        <span id="mrd-mode-readout" style="font-size:11px;color:#fca5a5"></span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
         <button id="mrd-btn-mazalo" class="mrd-btn">TRENIE NA MAZALO</button>
@@ -213,60 +305,38 @@
         <button id="mrd-btn-exit" class="mrd-btn" style="border-color:#f97316;background:linear-gradient(180deg,#9a3412,#431407)">EXIT</button>
       </div>
     `;
-
     app.appendChild(footerBar);
 
-    const readoutEl = document.getElementById("mrd-mode-readout");
-    const mazaloBtn = document.getElementById("mrd-btn-mazalo");
-    const autoBtn = document.getElementById("mrd-btn-autoplus");
-    const exitBtn = document.getElementById("mrd-btn-exit");
-
-    function syncReadout() {
-      if (!readoutEl) return;
-      readoutEl.textContent = `MAZALO: ${mazaloActive ? "TURBO ACTIVE" : "IDLE"} • AUTO PLUS: ${autoPlusActive ? "ON" : "OFF"}`;
+    function appendMsg(role, sender, html) {
+      const log = document.getElementById("mrd-chat-log");
+      if (!log) return;
+      const div = document.createElement("div");
+      div.className = `mrd-msg ${role}`;
+      div.innerHTML = `<strong>${sender}:</strong> ${html}`;
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
     }
 
-    mazaloBtn.onclick = () => {
-      mazaloActive = !mazaloActive;
-      mazaloBtn.textContent = mazaloActive ? "TRENIE NA MAZALO: ACTIVE" : "TRENIE NA MAZALO";
-      syncReadout();
-      if (mazaloActive) {
-        appendMsg("ai", "MAZALO ENGINE", "Активиран е <strong>TRENIE NA MAZALO</strong> — ускорен поток за разархивиране, разхеширане и телеметрия.");
-        mazaloTimer = setInterval(() => {
-          if (typeof feedIdx !== "undefined" && typeof renderLiveFeed === "function") {
-            feedIdx++;
-            renderLiveFeed(typeof activeChannel !== "undefined" ? activeChannel : "");
-          }
-        }, 1200);
-      } else {
-        if (mazaloTimer) clearInterval(mazaloTimer);
-        appendMsg("sys", "MAZALO ENGINE", "Турбо режимът <strong>TRENIE NA MAZALO</strong> е спрян.");
-      }
-    };
+    function activateRedSecretChat(autoGenerated = false) {
+      seconds = 180;
+      document.getElementById("mrd-center-title").textContent = "RED-SECRET CHAT // AUTOMATED ENCRYPTED LINK ACTIVE";
+      document.getElementById("mrd-secret-state").textContent = "SECRET CHAT: ACTIVE";
+      document.getElementById("mrd-conn-status").textContent = "Connection: SUCCESS • Auto-Destroy: 03:00";
+      const inputEl = document.getElementById("mrd-chat-input");
+      if (inputEl) inputEl.focus();
+      const keyVal = document.getElementById("mrd-conn-key").value;
+      appendMsg(
+        "ai",
+        "RED-SECRET ENGINE",
+        `${autoGenerated ? "Автоматично активиран" : "Отворен"} криптиран секретен канал <strong>${keyVal}</strong>. Готов за незабавни команди и автоматизирани отговори.`
+      );
+    }
 
-    autoBtn.onclick = () => {
-      autoPlusActive = !autoPlusActive;
-      autoBtn.textContent = `AUTO PLUS: ${autoPlusActive ? "ON" : "OFF"}`;
-      syncReadout();
-      appendMsg("ai", "AUTO PLUS", autoPlusActive ? "Автоматичният поток и анализ са включени." : "Автоматичният режим е на пауза.");
-    };
+    document.getElementById("mrd-secret-trigger").addEventListener("click", () => {
+      activateRedSecretChat(false);
+    });
 
-    exitBtn.onclick = () => {
-      mazaloActive = false;
-      autoPlusActive = false;
-      if (mazaloTimer) clearInterval(mazaloTimer);
-      mazaloBtn.textContent = "TRENIE NA MAZALO";
-      autoBtn.textContent = "AUTO PLUS: OFF";
-      syncReadout();
-      const log = document.getElementById("mrd-chat-log");
-      if (log) {
-        log.innerHTML = `<div class="mrd-msg"><strong style="color:#f87171">MARAUDER SESSION RESET:</strong> Активната сесия е затворена и изчистена. Готово за нов старт.</div>`;
-      }
-    };
-
-    syncReadout();
-
-    // Табове горе
+    // Горни табове
     const navEl = document.getElementById("mrd-nav");
     TABS.forEach((tab, idx) => {
       const btn = document.createElement("button");
@@ -275,13 +345,17 @@
       btn.onclick = () => {
         document.querySelectorAll(".mrd-tab").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        document.getElementById("mrd-center-title").textContent = `${tab} // MARAUDER LIVE MODULE`;
-        appendMsg("ai", "AI Agent (Mythos)", `Превключено към модул <strong>${tab}</strong>. Всички инструменти са заредени без презареждане.`);
+        if (tab === "HOME") {
+          activateRedSecretChat(true);
+        } else {
+          document.getElementById("mrd-center-title").textContent = `${tab} // MARAUDER LIVE MODULE`;
+          appendMsg("ai", "AI Agent (Mythos)", `Превключено към <strong>${tab}</strong>. Секретният чат остава свързан на заден план.`);
+        }
       };
       navEl.appendChild(btn);
     });
 
-    // Категории вляво (1000+)
+    // Категории вляво
     const catListEl = document.getElementById("mrd-cat-list");
     const workspaceEl = document.getElementById("mrd-workspace");
 
@@ -303,7 +377,7 @@
     }
 
     window.__mrdRunTool = (catName, toolName) => {
-      appendMsg("ai", "MARAUDER CORE", `Стартиран модул <strong>${toolName}</strong> [${catName}] в изолирана конзолна сесия.`);
+      appendMsg("ai", "MARAUDER CORE", `Изпълнен модул <strong>${toolName}</strong> [${catName}] в активна сесия.`);
     };
 
     function renderCategories(filter = "") {
@@ -327,39 +401,28 @@
     document.getElementById("mrd-tool-search").addEventListener("input", (e) => renderCategories(e.target.value));
     renderCategories();
 
-    // Quick Access бутони
     document.querySelectorAll("[data-quick]").forEach((btn) => {
       btn.onclick = () => {
-        const name = btn.dataset.quick;
-        appendMsg("ai", "QUICK ACCESS", `Зареден бърз профил за <strong>${name}</strong> — готов за конзолен мост.`);
+        appendMsg("ai", "QUICK ACCESS", `Зареден бърз профил <strong>${btn.dataset.quick}</strong> в активната сесия.`);
       };
     });
 
-    // Media бутони вдясно
-    document.querySelectorAll("[data-media]").forEach((btn) => {
-      btn.onclick = () => {
-        document.getElementById("mrd-media-box").innerHTML = `Active Channel: <strong>${btn.dataset.media}</strong> • Encrypted stream active.`;
-      };
-    });
-
-    // Генератор на ключ и таймер
     function randChunk(len) {
       const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
       return Array.from({ length: len }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
     }
-    let seconds = 180;
+
     document.getElementById("mrd-btn-gen").onclick = () => {
       const k = `MRD-${randChunk(4)}-${randChunk(4)}-${randChunk(4)}`;
       const p = `${randChunk(4).toLowerCase()}-${randChunk(4)}-${randChunk(4)}`;
       document.getElementById("mrd-gen-key").value = k;
       document.getElementById("mrd-gen-pass").value = p;
       document.getElementById("mrd-conn-key").value = k;
-      seconds = 180;
-      appendMsg("sys", "KEYGEN", `Генериран нов криптиран ключ: <strong>${k}</strong>`);
+      activateRedSecretChat(true);
     };
+
     document.getElementById("mrd-btn-conn").onclick = () => {
-      seconds = 180;
-      appendMsg("sys", "SECRET CHAT", `Свързан към сесия <strong>${document.getElementById("mrd-conn-key").value}</strong>.`);
+      activateRedSecretChat(false);
     };
 
     setInterval(() => {
@@ -370,7 +433,48 @@
       if (tEl) tEl.textContent = `${m}:${s}`;
     }, 1000);
 
-    // Анимиран еквалайзер/микрофон вдясно
+    // Десен жив поток за файлове, видеа, разархивиране и разхеширане
+    function renderLiveFeed(channelFilter = "") {
+      const mediaBox = document.getElementById("mrd-media-box");
+      if (!mediaBox) return;
+      const pool = channelFilter ? FEED_ITEMS.filter((x) => x.type === channelFilter) : FEED_ITEMS;
+      const item = (pool.length ? pool : FEED_ITEMS)[feedIdx % (pool.length ? pool : FEED_ITEMS).length];
+      mediaBox.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <strong style="color:#f87171">LIVE STREAM // ${item.type}</strong>
+          <span style="font-size:10px;padding:2px 6px;border-radius:4px;background:#14532d;color:#86efac">${item.status}</span>
+        </div>
+        <div style="font-size:12px;color:#fff;font-weight:700">${item.name}</div>
+        <div style="font-size:11px;color:#fca5a5;margin-top:2px">${item.archive}</div>
+        <div style="font-size:10px;color:#93c5fd;margin-top:4px;word-break:break-all">${item.hash}</div>
+        <div style="margin-top:6px;display:flex;gap:6px">
+          <button id="mrd-next-feed" class="mrd-btn" style="padding:4px 8px;font-size:10px">NEXT / UNPACK</button>
+          <button id="mrd-push-chat" class="mrd-btn mrd-btn-green" style="padding:4px 8px;font-size:10px">SEND TO CHAT</button>
+        </div>
+      `;
+      const nextBtn = document.getElementById("mrd-next-feed");
+      if (nextBtn) nextBtn.onclick = () => { feedIdx++; renderLiveFeed(channelFilter); };
+      const pushBtn = document.getElementById("mrd-push-chat");
+      if (pushBtn) pushBtn.onclick = () => {
+        appendMsg("ai", "LIVE EXTRACTOR", `Разархивиран и разхеширан обект: <strong>${item.name}</strong> (${item.archive}) • ${item.status}`);
+      };
+    }
+
+    document.querySelectorAll("[data-media]").forEach((btn) => {
+      btn.onclick = () => {
+        activeChannel = btn.dataset.media;
+        renderLiveFeed(activeChannel);
+      };
+    });
+    renderLiveFeed("");
+    setInterval(() => {
+      if (autoPlusActive) {
+        feedIdx++;
+        renderLiveFeed(activeChannel);
+      }
+    }, 4500);
+
+    // Еквалайзер лента
     const barsEl = document.getElementById("mrd-bars");
     for (let i = 0; i < 22; i++) {
       const b = document.createElement("div");
@@ -384,16 +488,7 @@
       });
     }, 220);
 
-    // Чат с онлайн -> Ollama -> Offline fallback
-    function appendMsg(role, sender, html) {
-      const log = document.getElementById("mrd-chat-log");
-      const div = document.createElement("div");
-      div.className = `mrd-msg ${role}`;
-      div.innerHTML = `<strong>${sender}:</strong> ${html}`;
-      log.appendChild(div);
-      log.scrollTop = log.scrollHeight;
-    }
-
+    // Автоматизиран чат с онлайн -> Ollama -> Offline fallback
     async function sendChat() {
       const inp = document.getElementById("mrd-chat-input");
       const text = inp.value.trim();
@@ -405,13 +500,13 @@
         const res = await fetch("/api/gangsta/forge", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: text, mode: "marauder" })
+          body: JSON.stringify({ prompt: text, mode: "marauder-secret" })
         });
         if (res.ok) {
           const data = await res.json();
           const reply = data.reply || data.output || data.message;
           if (reply) {
-            appendMsg("ai", "Mythos AI", String(reply));
+            appendMsg("ai", "RED-SECRET AI", String(reply));
             return;
           }
         }
@@ -432,7 +527,11 @@
         }
       } catch {}
 
-      appendMsg("ai", "MARAUDER OFFLINE-CORE", `Командата "<strong>${text.replace(/</g, "&lt;")}</strong>" е обработена локално. Всички модули са в готовност.`);
+      const autoReplies = [
+        `RED-SECRET потвърди командата "<strong>${text.replace(/</g, "&lt;")}</strong>" и стартира автоматичен анализ.`,
+        `Mythos + ScyNet обработиха заявката "<strong>${text.replace(/</g, "&lt;")}</strong>" в криптиран секретен режим.`
+      ];
+      appendMsg("ai", "RED-SECRET AUTO", autoReplies[Math.floor(Math.random() * autoReplies.length)]);
     }
 
     document.getElementById("mrd-chat-send").onclick = sendChat;
@@ -440,7 +539,56 @@
       if (e.key === "Enter") sendChat();
     });
 
-    // Зареждаме и броя от malware-intelligence.json ако е наличен
+    // Долни бутони
+    const readoutEl = document.getElementById("mrd-mode-readout");
+    const mazaloBtn = document.getElementById("mrd-btn-mazalo");
+    const autoBtn = document.getElementById("mrd-btn-autoplus");
+    const exitBtn = document.getElementById("mrd-btn-exit");
+
+    function syncReadout() {
+      if (readoutEl) {
+        readoutEl.textContent = `MAZALO: ${mazaloActive ? "TURBO ACTIVE" : "IDLE"} • AUTO PLUS: ${autoPlusActive ? "ON" : "OFF"}`;
+      }
+    }
+
+    mazaloBtn.onclick = () => {
+      mazaloActive = !mazaloActive;
+      mazaloBtn.textContent = mazaloActive ? "TRENIE NA MAZALO: ACTIVE" : "TRENIE NA MAZALO";
+      syncReadout();
+      if (mazaloActive) {
+        appendMsg("ai", "MAZALO ENGINE", "Активиран е <strong>TRENIE NA MAZALO</strong> — ускорен поток.");
+        mazaloTimer = setInterval(() => {
+          feedIdx++;
+          renderLiveFeed(activeChannel);
+        }, 1200);
+      } else {
+        if (mazaloTimer) clearInterval(mazaloTimer);
+        appendMsg("sys", "MAZALO ENGINE", "Турбо режимът <strong>TRENIE NA MAZALO</strong> е спрян.");
+      }
+    };
+
+    autoBtn.onclick = () => {
+      autoPlusActive = !autoPlusActive;
+      autoBtn.textContent = `AUTO PLUS: ${autoPlusActive ? "ON" : "OFF"}`;
+      syncReadout();
+      appendMsg("ai", "AUTO PLUS", autoPlusActive ? "Автоматичният режим е ВКЛЮЧЕН." : "Автоматичният режим е ИЗКЛЮЧЕН.");
+    };
+
+    exitBtn.onclick = () => {
+      mazaloActive = false;
+      autoPlusActive = false;
+      if (mazaloTimer) clearInterval(mazaloTimer);
+      mazaloBtn.textContent = "TRENIE NA MAZALO";
+      autoBtn.textContent = "AUTO PLUS: OFF";
+      syncReadout();
+      const log = document.getElementById("mrd-chat-log");
+      if (log) {
+        log.innerHTML = `<div class="mrd-msg"><strong style="color:#f87171">MARAUDER SESSION RESET:</strong> Сесията е затворена и изчистена.</div>`;
+      }
+    };
+
+    syncReadout();
+
     fetch("/data/malware-intelligence.json", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
