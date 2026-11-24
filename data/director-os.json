@@ -1,0 +1,129 @@
+{
+  "osName": "RED COMMAND — DIRECTOR OS",
+  "tagline": "ONE COMPANY. ONE COMMAND CENTER. MULTIPLE AI INTELLIGENCES.",
+  "mission": "BUILD. PROTECT. AUTOMATE. INNOVATE.",
+  "executiveCommand": [
+    {
+      "role": "CEO / FOUNDER",
+      "holder": "ADMIRALERROR (Даниел Данаилов)",
+      "responsibility": "Собственост, стратегия и окончателни решения"
+    },
+    {
+      "role": "AI TECHNICAL DIRECTOR",
+      "holder": "GPT-6",
+      "responsibility": "Архитектура, програмиране, системен дизайн и анализ"
+    },
+    {
+      "role": "AI DEVELOPMENT DIRECTOR",
+      "holder": "Gemini",
+      "responsibility": "Разработка, второ мнение и проверка на решенията"
+    },
+    {
+      "role": "AI SYSTEMS DIRECTOR",
+      "holder": "Llama 3.2",
+      "responsibility": "Локален AI, работа офлайн и локална автоматизация"
+    },
+    {
+      "role": "SECURITY DIRECTOR",
+      "holder": "MEGATRON SECURITY",
+      "responsibility": "Защитна инфраструктура и мониторинг"
+    },
+    {
+      "role": "OPERATIONS DIRECTOR",
+      "holder": "MARAUDER COMMANDER",
+      "responsibility": "Координация на задачи и оперативни потоци"
+    }
+  ],
+  "departments": [
+    "AI Research Division",
+    "Cybersecurity Division",
+    "Software Engineering Division",
+    "Malware Intelligence Division",
+    "Infrastructure Division",
+    "Network Security Division",
+    "Digital Forensics Division",
+    "Client Services Division",
+    "Finance Division",
+    "Innovation Division"
+  ],
+  "projects": [
+    {
+      "id": "PRJ-MARAUDER",
+      "name": "MARAUDER AI Ecosystem & Live Console",
+      "director": "MEGATRON SECURITY / MARAUDER COMMANDER",
+      "agents": [
+        "MARAUDER COMMANDER",
+        "MALWARE HUNTER",
+        "AI FIREWALL"
+      ],
+      "budget": "Self-Hosted / Render Free Tier",
+      "deadline": "Continuous",
+      "status": "ACTIVE",
+      "history": [
+        "Инициализирана конзола и каталози за агенти и заплахи"
+      ],
+      "report": "Модулите са заредени; изисква се проверка на реални локални бинарни файлове преди изпълнение."
+    },
+    {
+      "id": "PRJ-DURVODELEC",
+      "name": "DURVODELEC Web & Client Delivery",
+      "director": "AI DEVELOPMENT DIRECTOR (Gemini)",
+      "agents": [
+        "CODE SECURITY AI"
+      ],
+      "budget": "Client Project",
+      "deadline": "Delivered / Maintenance",
+      "status": "MAINTENANCE",
+      "history": [
+        "Изграден и публикуван уеб проект"
+      ],
+      "report": "Статичен/уеб пакет в поддръжка."
+    }
+  ],
+  "approvalsQueue": [
+    {
+      "id": "APR-001",
+      "title": "Проверка на налични инструменти в локалната среда (read-only)",
+      "requestedBy": "MARAUDER COMMANDER",
+      "actionType": "read-only-check",
+      "decision": "REVIEW",
+      "updatedAt": "2026-11-24T04:00:19.966Z"
+    },
+    {
+      "id": "APR-002",
+      "title": "Промяна на системни конфигурации / мрежови тестове",
+      "requestedBy": "RED SENTINEL",
+      "actionType": "system-modification",
+      "decision": "LOCKED-UNTIL-APPROVED"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TSK-101",
+      "title": "Валидация на JSON регистри и модули в репозитория",
+      "owner": "GPT-6",
+      "state": "OPEN"
+    },
+    {
+      "id": "TSK-102",
+      "title": "Преглед на потребителския поток и UI реакции в конзолата",
+      "owner": "Gemini",
+      "state": "OPEN"
+    }
+  ],
+  "auditLog": [
+    {
+      "ts": "2026-11-24T00:00:00.000Z",
+      "actor": "SYSTEM",
+      "action": "INIT",
+      "detail": "RED COMMAND — DIRECTOR OS инициализиран в безопасен режим."
+    },
+    {
+      "ts": "2026-11-24T04:00:19.970Z",
+      "actor": "CEO / FOUNDER",
+      "action": "REVIEW",
+      "detail": "APR-001 (Проверка на налични инструменти в локалната среда (read-only)) -> REVIEW"
+    }
+  ],
+  "emergencyStop": false
+}
