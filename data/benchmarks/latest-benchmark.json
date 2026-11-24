@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-11-24T16:16:55.400Z",
+  "platform": "MARAUDER (BG AI Security Automation)",
+  "metrics": {
+    "assetsTracked": 1,
+    "assetsTargetCapacity": 8000,
+    "missionsAudited": 2,
+    "verifiedFindings": 2,
+    "unverifiedOrBlockedFindings": 0,
+    "falsePositiveRatePct": 0,
+    "meanDetectionTimeMs": 4,
+    "meanRemediationTimeMs": null,
+    "replayConsistencyPct": 100,
+    "missionFailures": 0
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "cycleId": "LOOP-00001",
+  "ts": "2026-11-24T16:37:49.495Z",
+  "profile": "bg-security-profile",
+  "offlineMode": false,
+  "stages": [
+    "REAL_WORLD",
+    "TELEMETRY",
+    "MARAUDER",
+    "DETECT",
+    "LEARN",
+    "VERIFY",
+    "IMPROVE",
+    "REMEDIATE",
+    "SAFE"
+  ],
+  "telemetryCount": 1,
+  "highSignalCount": 1,
+  "verifiedEvidenceCount": 1,
+  "remediationProposal": {
+    "proposalId": "REM-D1A8B3",
+    "requiresApproval": true,
+    "approved": false,
+    "action": "harden-config-and-isolate-anomaly",
+    "verifiedBeforeRemediate": true
+  },
+  "remediationStatus": "AWAITING_OPERATOR_APPROVAL",
+  "policyStatus": "HELD_FOR_APPROVAL",
+  "learnedBaselineThreshold": 44,
+  "digest": "3b2c8830ecf258479a7389732a01877674c1ac53abab54661d92105951949acc"
+}

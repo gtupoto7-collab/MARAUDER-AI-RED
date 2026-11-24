@@ -1,0 +1,146 @@
+{
+  "missionId": "MSN-B8AFB532",
+  "targetScope": "verified-local-lab",
+  "mode": "read-only",
+  "riskAssessment": {
+    "stage": "RISK_CHECK",
+    "level": "LOW",
+    "requiresExtraReview": false
+  },
+  "parliamentDecision": {
+    "stage": "AUTHORIZED",
+    "proposalId": "PRP-04CE1E",
+    "targetScope": "verified-local-lab",
+    "riskLevel": "LOW",
+    "policyReason": "POLICY_PERMITTED",
+    "quorumPassed": true,
+    "evidenceHash": "a4f17b0acb9218e669a7ccb6420e1987150f3d4fef7740b1250a9d03664b5870",
+    "authorized": true
+  },
+  "dependencyAudit": {
+    "hasPkg": true,
+    "hasLock": true,
+    "lockMismatch": false,
+    "auditSummary": {
+      "totalVulns": 0,
+      "highOrCritical": 0,
+      "metadata": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "rawParsed": true
+    },
+    "outdatedCount": 1,
+    "outdatedPackages": [
+      "express"
+    ],
+    "suspiciousDeps": [],
+    "durationMs": 1092
+  },
+  "localListeners": {
+    "platform": "linux",
+    "count": 7,
+    "listeners": [
+      {
+        "bind": "127.0.0.1:45845",
+        "port": 45845,
+        "pid": null,
+        "process": "unknown",
+        "service": "unknown",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      },
+      {
+        "bind": "10.255.255.254:53",
+        "port": 53,
+        "pid": null,
+        "process": "unknown",
+        "service": "unknown",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      },
+      {
+        "bind": "127.0.0.54:53",
+        "port": 53,
+        "pid": null,
+        "process": "unknown",
+        "service": "unknown",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      },
+      {
+        "bind": "127.0.0.1:8118",
+        "port": 8118,
+        "pid": null,
+        "process": "unknown",
+        "service": "unknown",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      },
+      {
+        "bind": "127.0.0.1:11434",
+        "port": 11434,
+        "pid": null,
+        "process": "unknown",
+        "service": "ollama",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      },
+      {
+        "bind": "127.0.0.53%lo:53",
+        "port": 53,
+        "pid": null,
+        "process": "unknown",
+        "service": "unknown",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      },
+      {
+        "bind": "[::1]:8118",
+        "port": 8118,
+        "pid": null,
+        "process": "unknown",
+        "service": "unknown",
+        "configuration": "loopback-or-scoped",
+        "risk": "LOW"
+      }
+    ],
+    "durationMs": 10
+  },
+  "scoredEvents": [
+    {
+      "ts": "2026-11-24T16:18:29.655Z",
+      "source": "dependency-audit",
+      "asset": "/mnt/c/Users/gtupo/marauder-ai-web",
+      "severity": "LOW",
+      "category": "dependencies",
+      "message": "vulns=0, highOrCritical=0, lockMismatch=false, outdated=1, suspicious=0",
+      "dedupHash": "60dcfd022713728b7fd288793d7c6c993cdb775c46e1f0bc40e52c28b1ce1d66",
+      "correlatedCountOnAsset": 1,
+      "correlatedSpike": false,
+      "riskScore": 15
+    },
+    {
+      "ts": "2026-11-24T16:18:29.668Z",
+      "source": "local-listeners",
+      "asset": "localhost",
+      "severity": "LOW",
+      "category": "network-sockets",
+      "message": "listening=7, boundAllInterfaces=0",
+      "dedupHash": "208041aa0dcda9cb858c89c8250da21f02864c77a20acec22e130a9e722ec892",
+      "correlatedCountOnAsset": 1,
+      "correlatedSpike": false,
+      "riskScore": 15
+    }
+  ],
+  "blackBoxDigest": "9fa615b21f4138f2cf04581fcd74de8884b5bd5f9cd9c716a738dc8da4ba8db6",
+  "integrity": {
+    "valid": true,
+    "records": 6,
+    "headHash": "9fa615b21f4138f2cf04581fcd74de8884b5bd5f9cd9c716a738dc8da4ba8db6"
+  }
+}

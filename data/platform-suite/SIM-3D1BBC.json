@@ -1,0 +1,61 @@
+{
+  "runId": "SIM-3D1BBC",
+  "scenario": "full-suite-smoke",
+  "executedAt": "2026-11-24T16:37:02.397Z",
+  "centers": [
+    "Mission Center",
+    "SOC Center",
+    "Asset Center",
+    "Threat Center",
+    "Evidence Center",
+    "Agent Center",
+    "Lab Center",
+    "Risk Center",
+    "Compliance Center",
+    "Research Center"
+  ],
+  "connectorsCount": 4,
+  "chainCheck": {
+    "valid": true,
+    "totalRecords": 2,
+    "monotonicChronology": true,
+    "scores": {
+      "evidenceQualityScore": 100,
+      "evidenceCompletenessScore": 100,
+      "evidenceReliabilityScore": 95
+    },
+    "issues": []
+  },
+  "busStats": {
+    "acceptedCount": 1,
+    "latencyMs": 1,
+    "throughputEventsPerSec": 1000,
+    "queueDepths": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "dlqCount": 1,
+    "metrics": {
+      "ingested": 3,
+      "accepted": 1,
+      "droppedBackpressure": 0,
+      "malformed": 1,
+      "duplicates": 1
+    }
+  },
+  "scores": {
+    "securityScore": 93,
+    "riskScore": 20,
+    "exposureScore": 0,
+    "resilienceScore": 90,
+    "evidenceScore": 92,
+    "maturityScore": 92
+  },
+  "regressionPassed": false
+}

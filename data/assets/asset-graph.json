@@ -1,0 +1,29 @@
+{
+  "updatedAt": "2026-11-24T16:12:56.564Z",
+  "nodes": {
+    "host": {
+      "name": "admiralerror",
+      "platform": "linux",
+      "release": "6.18.58.1-microsoft-standard-WSL2"
+    },
+    "interfaces": [
+      "lo",
+      "eth0",
+      "wg0"
+    ],
+    "repositories": [
+      {
+        "path": "/mnt/c/Users/gtupo/marauder-ai-web",
+        "evidenceId": "EVD-D031F088",
+        "remotes": "origin\thttps://github.com/gtupoto7-collab/MARAUDER-AI-RED.git (fetch)\norigin\thttps://github.com/gtupoto7-collab/MARAUDER-AI-RED.git (push)"
+      }
+    ],
+    "services": [
+      {
+        "name": "node",
+        "version": "v20.20.2",
+        "evidenceId": "EVD-CCE4732F"
+      }
+    ]
+  }
+}

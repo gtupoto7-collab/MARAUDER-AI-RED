@@ -1,0 +1,122 @@
+{
+  "ok": true,
+  "missionId": "MSN-F1263991",
+  "targetScope": "verified-local-lab",
+  "objective": "Assess my infrastructure: dependencies and listening sockets",
+  "status": "COMPLETED",
+  "registryStats": {
+    "total": 500,
+    "healthy": 500,
+    "unhealthy": 0
+  },
+  "selectedAgents": [
+    {
+      "id": "agent-051",
+      "code": "MRD-051",
+      "name": "CTI Director",
+      "capabilities": [
+        "network.observe",
+        "logs.read"
+      ]
+    },
+    {
+      "id": "agent-052",
+      "code": "MRD-052",
+      "name": "IOC Researcher",
+      "capabilities": [
+        "network.observe",
+        "logs.read"
+      ]
+    },
+    {
+      "id": "agent-053",
+      "code": "MRD-053",
+      "name": "Threat Actor Profiler",
+      "capabilities": [
+        "network.observe",
+        "logs.read"
+      ]
+    },
+    {
+      "id": "agent-054",
+      "code": "MRD-054",
+      "name": "Campaign Correlator",
+      "capabilities": [
+        "network.observe",
+        "logs.read"
+      ]
+    }
+  ],
+  "capabilityGrants": [
+    {
+      "granted": true,
+      "agentId": "agent-051",
+      "capability": "network.observe",
+      "targetScope": "verified-local-lab",
+      "mode": "least-privilege",
+      "issuedAt": "2026-11-24T16:33:35.599Z"
+    },
+    {
+      "granted": true,
+      "agentId": "agent-052",
+      "capability": "network.observe",
+      "targetScope": "verified-local-lab",
+      "mode": "least-privilege",
+      "issuedAt": "2026-11-24T16:33:35.599Z"
+    },
+    {
+      "granted": true,
+      "agentId": "agent-053",
+      "capability": "network.observe",
+      "targetScope": "verified-local-lab",
+      "mode": "least-privilege",
+      "issuedAt": "2026-11-24T16:33:35.599Z"
+    },
+    {
+      "granted": true,
+      "agentId": "agent-054",
+      "capability": "network.observe",
+      "targetScope": "verified-local-lab",
+      "mode": "least-privilege",
+      "issuedAt": "2026-11-24T16:33:35.599Z"
+    }
+  ],
+  "parliament": {
+    "risk": {
+      "stage": "RISK_CHECK",
+      "level": "LOW",
+      "requiresExtraReview": false
+    },
+    "policy": {
+      "stage": "POLICY_CHECK",
+      "inScope": true,
+      "allowedCap": true,
+      "allowed": true,
+      "reason": "POLICY_PERMITTED"
+    },
+    "quorum": {
+      "stage": "QUORUM",
+      "approvals": 2,
+      "required": 2,
+      "hasVerifier": true,
+      "passed": true
+    },
+    "decision": {
+      "stage": "AUTHORIZED",
+      "proposalId": "PRP-A6B5D6",
+      "targetScope": "verified-local-lab",
+      "riskLevel": "LOW",
+      "policyReason": "POLICY_PERMITTED",
+      "quorumPassed": true,
+      "evidenceHash": "ccab1c371f5dcfce0b67aa3bf6045e5011961652a08d55671a6ea2d8995fc64d",
+      "authorized": true
+    }
+  },
+  "sliceReportPath": "/mnt/c/Users/gtupo/marauder-ai-web/data/reports/MSN-0EEC1C0F.json",
+  "blackBoxDigest": "d88667d072207a81d617e0e1a66b7f1e273c87e8b646db878a7dc194c2dbdf38",
+  "integrity": {
+    "valid": true,
+    "records": 5,
+    "headHash": "d88667d072207a81d617e0e1a66b7f1e273c87e8b646db878a7dc194c2dbdf38"
+  }
+}

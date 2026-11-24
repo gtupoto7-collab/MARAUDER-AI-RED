@@ -1,0 +1,207 @@
+{
+  "mission": {
+    "missionId": "MSN-F1263991",
+    "targetScope": "verified-local-lab",
+    "objective": "Assess my infrastructure: dependencies and listening sockets",
+    "status": "COMPLETED",
+    "startedAt": "2026-11-24T16:33:35.590Z",
+    "completedAt": "2026-11-24T16:33:37.794Z"
+  },
+  "integrity": {
+    "valid": true,
+    "records": 5,
+    "headHash": "d88667d072207a81d617e0e1a66b7f1e273c87e8b646db878a7dc194c2dbdf38"
+  },
+  "missionDigest": "d88667d072207a81d617e0e1a66b7f1e273c87e8b646db878a7dc194c2dbdf38",
+  "events": [
+    {
+      "index": 0,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "EVENT",
+      "payload": {
+        "type": "TEAM_SELECTED",
+        "neededCaps": [
+          "network.observe",
+          "security.scan",
+          "filesystem.read",
+          "network.observe"
+        ],
+        "selectedIds": [
+          "agent-051",
+          "agent-052",
+          "agent-053",
+          "agent-054"
+        ]
+      },
+      "prevHash": "GENESIS",
+      "hash": "3b9f6084b42b88a3dc309c99394b72878ef148aaa388186355a3c53b72eaf2f8"
+    }
+  ],
+  "evidences": [
+    {
+      "index": 1,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "vertical-slice:dependency-audit",
+        "summary": {
+          "totalVulns": 0,
+          "highOrCritical": 0,
+          "metadata": {
+            "info": 0,
+            "low": 0,
+            "moderate": 0,
+            "high": 0,
+            "critical": 0,
+            "total": 0
+          },
+          "rawParsed": true
+        },
+        "observedAt": "2026-11-24T16:33:37.794Z",
+        "evidenceHash": "ccab1c371f5dcfce0b67aa3bf6045e5011961652a08d55671a6ea2d8995fc64d"
+      },
+      "prevHash": "3b9f6084b42b88a3dc309c99394b72878ef148aaa388186355a3c53b72eaf2f8",
+      "hash": "f112cecb9baac025189f32861d826fde3334dd5b20ce1ff6cd617608d6dd9887"
+    },
+    {
+      "index": 2,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "vertical-slice:local-listeners",
+        "listenersCount": 6,
+        "observedAt": "2026-11-24T16:33:37.794Z",
+        "evidenceHash": "73d37eaa89517be07ad564ccc87b79738f94d4161877294723e62de3b196a0bc"
+      },
+      "prevHash": "f112cecb9baac025189f32861d826fde3334dd5b20ce1ff6cd617608d6dd9887",
+      "hash": "7bc761ef25c6e15200666f6e8e5ec5176dc7f7ea1dba558282e22f0b413cdbfb"
+    }
+  ],
+  "decisions": [
+    {
+      "index": 3,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "DECISION",
+      "payload": {
+        "stage": "AUTHORIZED",
+        "proposalId": "PRP-A6B5D6",
+        "targetScope": "verified-local-lab",
+        "riskLevel": "LOW",
+        "policyReason": "POLICY_PERMITTED",
+        "quorumPassed": true,
+        "evidenceHash": "ccab1c371f5dcfce0b67aa3bf6045e5011961652a08d55671a6ea2d8995fc64d",
+        "authorized": true
+      },
+      "prevHash": "7bc761ef25c6e15200666f6e8e5ec5176dc7f7ea1dba558282e22f0b413cdbfb",
+      "hash": "b250aa96beb3d43707b58be223a9fe5e93d3fe2e3f521951d72c817ed35eeda9"
+    }
+  ],
+  "chain": [
+    {
+      "index": 0,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "EVENT",
+      "payload": {
+        "type": "TEAM_SELECTED",
+        "neededCaps": [
+          "network.observe",
+          "security.scan",
+          "filesystem.read",
+          "network.observe"
+        ],
+        "selectedIds": [
+          "agent-051",
+          "agent-052",
+          "agent-053",
+          "agent-054"
+        ]
+      },
+      "prevHash": "GENESIS",
+      "hash": "3b9f6084b42b88a3dc309c99394b72878ef148aaa388186355a3c53b72eaf2f8"
+    },
+    {
+      "index": 1,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "vertical-slice:dependency-audit",
+        "summary": {
+          "totalVulns": 0,
+          "highOrCritical": 0,
+          "metadata": {
+            "info": 0,
+            "low": 0,
+            "moderate": 0,
+            "high": 0,
+            "critical": 0,
+            "total": 0
+          },
+          "rawParsed": true
+        },
+        "observedAt": "2026-11-24T16:33:37.794Z",
+        "evidenceHash": "ccab1c371f5dcfce0b67aa3bf6045e5011961652a08d55671a6ea2d8995fc64d"
+      },
+      "prevHash": "3b9f6084b42b88a3dc309c99394b72878ef148aaa388186355a3c53b72eaf2f8",
+      "hash": "f112cecb9baac025189f32861d826fde3334dd5b20ce1ff6cd617608d6dd9887"
+    },
+    {
+      "index": 2,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "vertical-slice:local-listeners",
+        "listenersCount": 6,
+        "observedAt": "2026-11-24T16:33:37.794Z",
+        "evidenceHash": "73d37eaa89517be07ad564ccc87b79738f94d4161877294723e62de3b196a0bc"
+      },
+      "prevHash": "f112cecb9baac025189f32861d826fde3334dd5b20ce1ff6cd617608d6dd9887",
+      "hash": "7bc761ef25c6e15200666f6e8e5ec5176dc7f7ea1dba558282e22f0b413cdbfb"
+    },
+    {
+      "index": 3,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "DECISION",
+      "payload": {
+        "stage": "AUTHORIZED",
+        "proposalId": "PRP-A6B5D6",
+        "targetScope": "verified-local-lab",
+        "riskLevel": "LOW",
+        "policyReason": "POLICY_PERMITTED",
+        "quorumPassed": true,
+        "evidenceHash": "ccab1c371f5dcfce0b67aa3bf6045e5011961652a08d55671a6ea2d8995fc64d",
+        "authorized": true
+      },
+      "prevHash": "7bc761ef25c6e15200666f6e8e5ec5176dc7f7ea1dba558282e22f0b413cdbfb",
+      "hash": "b250aa96beb3d43707b58be223a9fe5e93d3fe2e3f521951d72c817ed35eeda9"
+    },
+    {
+      "index": 4,
+      "missionId": "MSN-F1263991",
+      "ts": "2026-11-24T16:33:37.794Z",
+      "kind": "FINALIZE",
+      "payload": {
+        "missionId": "MSN-F1263991",
+        "status": "COMPLETED",
+        "completedAt": "2026-11-24T16:33:37.794Z",
+        "eventCount": 1,
+        "evidenceCount": 2,
+        "decisionCount": 1,
+        "headHash": "b250aa96beb3d43707b58be223a9fe5e93d3fe2e3f521951d72c817ed35eeda9"
+      },
+      "prevHash": "b250aa96beb3d43707b58be223a9fe5e93d3fe2e3f521951d72c817ed35eeda9",
+      "hash": "d88667d072207a81d617e0e1a66b7f1e273c87e8b646db878a7dc194c2dbdf38"
+    }
+  ]
+}

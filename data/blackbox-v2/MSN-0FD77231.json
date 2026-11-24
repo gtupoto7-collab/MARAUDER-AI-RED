@@ -1,0 +1,155 @@
+{
+  "mission": {
+    "missionId": "MSN-0FD77231",
+    "targetScope": "verified-local-lab",
+    "objective": "Audit local baseline and verify evidence",
+    "status": "COMPLETED",
+    "startedAt": "2026-11-24T16:15:58.490Z",
+    "completedAt": "2026-11-24T16:15:58.495Z"
+  },
+  "integrity": {
+    "valid": true,
+    "records": 4,
+    "headHash": "c1b5cf339ed82230c759799cfb83d30de1a50142b9e6f3fae4be38290ebccdc4"
+  },
+  "missionDigest": "c1b5cf339ed82230c759799cfb83d30de1a50142b9e6f3fae4be38290ebccdc4",
+  "events": [
+    {
+      "index": 0,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.493Z",
+      "kind": "EVENT",
+      "payload": {
+        "type": "PROPOSAL",
+        "prop": {
+          "proposalId": "PRP-F0D917",
+          "stage": "PROPOSED",
+          "action": "inspect-local-baseline",
+          "targetScope": "verified-local-lab",
+          "agentId": "MRD-001",
+          "capability": "process.inspect",
+          "proposedAt": "2026-11-24T16:15:58.493Z"
+        },
+        "tiers": {
+          "hotCount": 1,
+          "warmCount": 0,
+          "coldArchiveReady": true
+        }
+      },
+      "prevHash": "GENESIS",
+      "hash": "b58b1b7b778667528ffcd05655f703a8796be243567b8206c9ef6b84ca297991"
+    }
+  ],
+  "evidences": [
+    {
+      "index": 1,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.493Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "observation": "hostname check completed in lab",
+        "ts": "2026-11-24T16:15:58.493Z",
+        "evidenceHash": "824f61e2d79d08d76d0176fcfdaa0383aa6d3aaa529510b51ff3168d1743b1b4"
+      },
+      "prevHash": "b58b1b7b778667528ffcd05655f703a8796be243567b8206c9ef6b84ca297991",
+      "hash": "0d9fddd18fa05b6d8821949d318aec8869c276a06921756840ded6377372b56e"
+    }
+  ],
+  "decisions": [
+    {
+      "index": 2,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.495Z",
+      "kind": "DECISION",
+      "payload": {
+        "stage": "AUTHORIZED",
+        "proposalId": "PRP-F0D917",
+        "targetScope": "verified-local-lab",
+        "riskLevel": "LOW",
+        "policyReason": "POLICY_PERMITTED",
+        "quorumPassed": true,
+        "evidenceHash": "824f61e2d79d08d76d0176fcfdaa0383aa6d3aaa529510b51ff3168d1743b1b4",
+        "authorized": true
+      },
+      "prevHash": "0d9fddd18fa05b6d8821949d318aec8869c276a06921756840ded6377372b56e",
+      "hash": "90240583e627eff56d8eed9d359c3e7f617bf42ccd8a384a318fc9b77abeb85d"
+    }
+  ],
+  "chain": [
+    {
+      "index": 0,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.493Z",
+      "kind": "EVENT",
+      "payload": {
+        "type": "PROPOSAL",
+        "prop": {
+          "proposalId": "PRP-F0D917",
+          "stage": "PROPOSED",
+          "action": "inspect-local-baseline",
+          "targetScope": "verified-local-lab",
+          "agentId": "MRD-001",
+          "capability": "process.inspect",
+          "proposedAt": "2026-11-24T16:15:58.493Z"
+        },
+        "tiers": {
+          "hotCount": 1,
+          "warmCount": 0,
+          "coldArchiveReady": true
+        }
+      },
+      "prevHash": "GENESIS",
+      "hash": "b58b1b7b778667528ffcd05655f703a8796be243567b8206c9ef6b84ca297991"
+    },
+    {
+      "index": 1,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.493Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "observation": "hostname check completed in lab",
+        "ts": "2026-11-24T16:15:58.493Z",
+        "evidenceHash": "824f61e2d79d08d76d0176fcfdaa0383aa6d3aaa529510b51ff3168d1743b1b4"
+      },
+      "prevHash": "b58b1b7b778667528ffcd05655f703a8796be243567b8206c9ef6b84ca297991",
+      "hash": "0d9fddd18fa05b6d8821949d318aec8869c276a06921756840ded6377372b56e"
+    },
+    {
+      "index": 2,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.495Z",
+      "kind": "DECISION",
+      "payload": {
+        "stage": "AUTHORIZED",
+        "proposalId": "PRP-F0D917",
+        "targetScope": "verified-local-lab",
+        "riskLevel": "LOW",
+        "policyReason": "POLICY_PERMITTED",
+        "quorumPassed": true,
+        "evidenceHash": "824f61e2d79d08d76d0176fcfdaa0383aa6d3aaa529510b51ff3168d1743b1b4",
+        "authorized": true
+      },
+      "prevHash": "0d9fddd18fa05b6d8821949d318aec8869c276a06921756840ded6377372b56e",
+      "hash": "90240583e627eff56d8eed9d359c3e7f617bf42ccd8a384a318fc9b77abeb85d"
+    },
+    {
+      "index": 3,
+      "missionId": "MSN-0FD77231",
+      "ts": "2026-11-24T16:15:58.495Z",
+      "kind": "FINALIZE",
+      "payload": {
+        "missionId": "MSN-0FD77231",
+        "status": "COMPLETED",
+        "completedAt": "2026-11-24T16:15:58.495Z",
+        "eventCount": 1,
+        "evidenceCount": 1,
+        "decisionCount": 1,
+        "headHash": "90240583e627eff56d8eed9d359c3e7f617bf42ccd8a384a318fc9b77abeb85d"
+      },
+      "prevHash": "90240583e627eff56d8eed9d359c3e7f617bf42ccd8a384a318fc9b77abeb85d",
+      "hash": "c1b5cf339ed82230c759799cfb83d30de1a50142b9e6f3fae4be38290ebccdc4"
+    }
+  ]
+}

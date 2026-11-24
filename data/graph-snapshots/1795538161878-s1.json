@@ -1,0 +1,41 @@
+{
+  "label": "s1",
+  "takenAt": "2026-11-24T16:36:01.877Z",
+  "nodes": [
+    {
+      "id": "org:mrd",
+      "type": "ORGANIZATION",
+      "name": "MARAUDER",
+      "owner": "admiralerror",
+      "criticality": 100,
+      "lifecycle": "VERIFIED",
+      "tags": [
+        "monitored"
+      ],
+      "metadata": {},
+      "updatedAt": "2026-11-24T16:36:01.857Z"
+    },
+    {
+      "id": "api:main",
+      "type": "API",
+      "name": "/api/os",
+      "owner": "admiralerror",
+      "criticality": 75,
+      "lifecycle": "VERIFIED",
+      "tags": [
+        "monitored"
+      ],
+      "metadata": {},
+      "updatedAt": "2026-11-24T16:36:01.877Z"
+    }
+  ],
+  "edges": [
+    {
+      "fromId": "api:main",
+      "toId": "org:mrd",
+      "relation": "PART_OF",
+      "createdAt": "2026-11-24T16:36:01.858Z"
+    }
+  ],
+  "digest": "d56787cdec0e7e0b9a714c7dc74a421ea8101fa2ec97d3506a8350fc3c7c52b8"
+}

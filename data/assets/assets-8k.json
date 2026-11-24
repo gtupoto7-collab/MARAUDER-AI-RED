@@ -1,0 +1,12 @@
+{
+  "maxAssets": 8000,
+  "items": [
+    {
+      "id": "LAB-01",
+      "kind": "host",
+      "name": "dell-latitude-5320",
+      "lifecycle": "VERIFIED",
+      "updatedAt": "2026-11-24T16:14:42.848Z"
+    }
+  ]
+}

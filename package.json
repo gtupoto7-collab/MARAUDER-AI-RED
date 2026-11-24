@@ -4,7 +4,9 @@
   "description": "MARAUDER-AI by RED-SOFTWARE-TEAM-BG",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "smoke": "node scripts/smoke.js",
+    "test:backlog": "node scripts/backlog-runner.js"
   },
   "dependencies": {
     "express": "^4.19.2",

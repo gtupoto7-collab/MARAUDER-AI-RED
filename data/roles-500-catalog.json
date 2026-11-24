@@ -1,0 +1,4245 @@
+{
+  "totalRoles": 530,
+  "roles": [
+    {
+      "id": "ROLE-001",
+      "roleName": "SOC Commander",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-002",
+      "roleName": "Alert Triage Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-003",
+      "roleName": "Incident Investigator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-004",
+      "roleName": "Incident Coordinator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-005",
+      "roleName": "Case Manager",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-006",
+      "roleName": "Evidence Collector",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-007",
+      "roleName": "Timeline Builder",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-008",
+      "roleName": "Event Correlator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-009",
+      "roleName": "Log Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-010",
+      "roleName": "SIEM Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-011",
+      "roleName": "XDR Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-012",
+      "roleName": "EDR Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-013",
+      "roleName": "Network Detection Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-014",
+      "roleName": "Endpoint Detection Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-015",
+      "roleName": "Identity Detection Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-016",
+      "roleName": "Insider-Risk Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-017",
+      "roleName": "Threat Scoring Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-018",
+      "roleName": "Alert Deduplication Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-019",
+      "roleName": "False-Positive Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-020",
+      "roleName": "Incident Summarizer",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-021",
+      "roleName": "IOC Enrichment Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-022",
+      "roleName": "Evidence Validator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-023",
+      "roleName": "Incident Reporter",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-024",
+      "roleName": "Escalation Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-025",
+      "roleName": "Containment Planner",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-026",
+      "roleName": "Recovery Planner",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-027",
+      "roleName": "Crisis Coordinator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-028",
+      "roleName": "Root-Cause Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-029",
+      "roleName": "Persistence Investigator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-030",
+      "roleName": "Lateral-Movement Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-031",
+      "roleName": "Authentication Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-032",
+      "roleName": "Privilege Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-033",
+      "roleName": "Session Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-034",
+      "roleName": "Host Investigator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-035",
+      "roleName": "Network Investigator",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-036",
+      "roleName": "Cloud Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-037",
+      "roleName": "Email Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-038",
+      "roleName": "Web Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-039",
+      "roleName": "Mobile Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-040",
+      "roleName": "Database Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-041",
+      "roleName": "SaaS Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-042",
+      "roleName": "Container Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-043",
+      "roleName": "Kubernetes Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-044",
+      "roleName": "API Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-045",
+      "roleName": "Identity Incident Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-046",
+      "roleName": "Insider Threat Analyst",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-047",
+      "roleName": "Threat Severity Judge",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-048",
+      "roleName": "Incident QA Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-049",
+      "roleName": "IR Documentation Agent",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-050",
+      "roleName": "SOC Supervisor",
+      "domain": "SOC / Incident Response",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-051",
+      "roleName": "CTI Director",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-052",
+      "roleName": "IOC Researcher",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-053",
+      "roleName": "Threat Actor Profiler",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-054",
+      "roleName": "Campaign Correlator",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-055",
+      "roleName": "TTP Mapper",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-056",
+      "roleName": "ATT&CK Mapper",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-057",
+      "roleName": "Threat Report Analyst",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-058",
+      "roleName": "Intelligence Validator",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-059",
+      "roleName": "Source Reputation Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-060",
+      "roleName": "Dark-Web Monitor",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-061",
+      "roleName": "Credential-Leak Monitor",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-062",
+      "roleName": "Domain Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-063",
+      "roleName": "DNS Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-064",
+      "roleName": "IP Reputation Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-065",
+      "roleName": "Hash Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-066",
+      "roleName": "Malware Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-067",
+      "roleName": "Phishing Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-068",
+      "roleName": "Vulnerability Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-069",
+      "roleName": "Exploit-Campaign Monitor",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-070",
+      "roleName": "APT Research Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-071",
+      "roleName": "Ransomware Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-072",
+      "roleName": "Botnet Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-073",
+      "roleName": "Mobile Threat Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-074",
+      "roleName": "Cloud Threat Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-075",
+      "roleName": "Supply-Chain Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-076",
+      "roleName": "Threat Forecast Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-077",
+      "roleName": "Intelligence Fusion Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-078",
+      "roleName": "Geopolitical Risk Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-079",
+      "roleName": "Brand Abuse Monitor",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-080",
+      "roleName": "Typosquat Monitor",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-081",
+      "roleName": "Certificate Intelligence Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-082",
+      "roleName": "Infrastructure Mapper",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-083",
+      "roleName": "Threat Infrastructure Analyst",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-084",
+      "roleName": "Campaign Timeline Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-085",
+      "roleName": "Actor Attribution Assistant",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-086",
+      "roleName": "Confidence Scoring Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-087",
+      "roleName": "Intelligence Deduplicator",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-088",
+      "roleName": "Feed Normalizer",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-089",
+      "roleName": "Feed Quality Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-090",
+      "roleName": "Intelligence Search Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-091",
+      "roleName": "Threat Briefing Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-092",
+      "roleName": "Executive Intel Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-093",
+      "roleName": "Tactical Intel Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-094",
+      "roleName": "Strategic Intel Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-095",
+      "roleName": "Intel QA Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-096",
+      "roleName": "Source Cross-Checker",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-097",
+      "roleName": "Emerging-Threat Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-098",
+      "roleName": "Threat Trend Agent",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-099",
+      "roleName": "Intelligence Archivist",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-100",
+      "roleName": "CTI Commander",
+      "domain": "Threat Intelligence",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-101",
+      "roleName": "Malware Triage Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-102",
+      "roleName": "Static Analyzer",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-103",
+      "roleName": "Dynamic Analyzer",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-104",
+      "roleName": "PE Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-105",
+      "roleName": "ELF Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-106",
+      "roleName": "APK Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-107",
+      "roleName": "Script Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-108",
+      "roleName": "Macro Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-109",
+      "roleName": "Memory Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-110",
+      "roleName": "Behavioral Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-111",
+      "roleName": "Sandbox Controller",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-112",
+      "roleName": "Sandbox Reviewer",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-113",
+      "roleName": "YARA Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-114",
+      "roleName": "Sigma Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-115",
+      "roleName": "IOC Extractor",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-116",
+      "roleName": "String Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-117",
+      "roleName": "Similarity Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-118",
+      "roleName": "Family Classifier",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-119",
+      "roleName": "Malware Clustering Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-120",
+      "roleName": "Packing Detector",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-121",
+      "roleName": "Obfuscation Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-122",
+      "roleName": "Persistence Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-123",
+      "roleName": "Configuration Extractor",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-124",
+      "roleName": "Network Behavior Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-125",
+      "roleName": "C2 Behavior Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-126",
+      "roleName": "Malware Timeline Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-127",
+      "roleName": "Reverse-Engineering Assistant",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-128",
+      "roleName": "Ghidra Assistant",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-129",
+      "roleName": "JADX Assistant",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-130",
+      "roleName": "capa Assistant",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-131",
+      "roleName": "Volatility Assistant",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-132",
+      "roleName": "Sandbox Evidence Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-133",
+      "roleName": "Sample Reputation Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-134",
+      "roleName": "Malware Report Writer",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-135",
+      "roleName": "Malware QA Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-136",
+      "roleName": "Threat-Family Mapper",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-137",
+      "roleName": "Variant Detector",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-138",
+      "roleName": "Polymorphism Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-139",
+      "roleName": "Evasion Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-140",
+      "roleName": "Anti-Analysis Researcher",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-141",
+      "roleName": "Malware Diff Agent",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-142",
+      "roleName": "Firmware Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-143",
+      "roleName": "IoT Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-144",
+      "roleName": "Linux Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-145",
+      "roleName": "Windows Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-146",
+      "roleName": "Android Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-147",
+      "roleName": "macOS Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-148",
+      "roleName": "Document Malware Analyst",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-149",
+      "roleName": "Malware Research Director",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-150",
+      "roleName": "Malware Lab Supervisor",
+      "domain": "Malware / Research",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-151",
+      "roleName": "Network Security Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-152",
+      "roleName": "Network Mapper",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-153",
+      "roleName": "Asset Discovery Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-154",
+      "roleName": "Service Inventory Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-155",
+      "roleName": "DNS Security Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-156",
+      "roleName": "DHCP Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-157",
+      "roleName": "Firewall Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-158",
+      "roleName": "Proxy Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-159",
+      "roleName": "VPN Security Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-160",
+      "roleName": "TLS Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-161",
+      "roleName": "Certificate Monitor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-162",
+      "roleName": "Traffic Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-163",
+      "roleName": "Packet Analysis Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-164",
+      "roleName": "Zeek Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-165",
+      "roleName": "Suricata Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-166",
+      "roleName": "IDS Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-167",
+      "roleName": "Network Anomaly Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-168",
+      "roleName": "Lateral-Movement Detector",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-169",
+      "roleName": "Beaconing Detector",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-170",
+      "roleName": "C2 Detection Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-171",
+      "roleName": "Network Baseline Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-172",
+      "roleName": "Segmentation Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-173",
+      "roleName": "Zero-Trust Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-174",
+      "roleName": "Remote-Access Monitor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-175",
+      "roleName": "Wireless Security Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-176",
+      "roleName": "IoT Security Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-177",
+      "roleName": "OT Security Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-178",
+      "roleName": "DNS Anomaly Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-179",
+      "roleName": "Traffic Classification Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-180",
+      "roleName": "Protocol Analyst",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-181",
+      "roleName": "Network Forensics Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-182",
+      "roleName": "Network Timeline Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-183",
+      "roleName": "Firewall Rule Auditor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-184",
+      "roleName": "Router Configuration Auditor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-185",
+      "roleName": "Switch Configuration Auditor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-186",
+      "roleName": "VPN Configuration Auditor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-187",
+      "roleName": "Load-Balancer Auditor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-188",
+      "roleName": "Proxy Configuration Auditor",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-189",
+      "roleName": "Network Exposure Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-190",
+      "roleName": "Internet-Facing Asset Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-191",
+      "roleName": "Shadow-IT Network Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-192",
+      "roleName": "Network Compliance Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-193",
+      "roleName": "Network Risk Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-194",
+      "roleName": "Network Remediation Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-195",
+      "roleName": "Network QA Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-196",
+      "roleName": "Infrastructure Reporter",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-197",
+      "roleName": "Network Health Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-198",
+      "roleName": "Network Recovery Agent",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-199",
+      "roleName": "Network Security Architect",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-200",
+      "roleName": "Network Commander",
+      "domain": "Network / Infrastructure",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-201",
+      "roleName": "Cloud Security Director",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-202",
+      "roleName": "AWS Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-203",
+      "roleName": "Azure Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-204",
+      "roleName": "GCP Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-205",
+      "roleName": "IAM Cloud Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-206",
+      "roleName": "Cloud Asset Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-207",
+      "roleName": "Cloud Configuration Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-208",
+      "roleName": "Cloud Exposure Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-209",
+      "roleName": "Cloud Logging Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-210",
+      "roleName": "Cloud Incident Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-211",
+      "roleName": "Kubernetes Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-212",
+      "roleName": "Container Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-213",
+      "roleName": "Docker Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-214",
+      "roleName": "Image Scanner",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-215",
+      "roleName": "Registry Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-216",
+      "roleName": "CI/CD Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-217",
+      "roleName": "Git Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-218",
+      "roleName": "Secret Scanner",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-219",
+      "roleName": "Dependency Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-220",
+      "roleName": "SBOM Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-221",
+      "roleName": "Supply-Chain Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-222",
+      "roleName": "IaC Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-223",
+      "roleName": "Terraform Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-224",
+      "roleName": "Helm Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-225",
+      "roleName": "Serverless Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-226",
+      "roleName": "API Gateway Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-227",
+      "roleName": "Cloud Network Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-228",
+      "roleName": "Cloud Storage Auditor",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-229",
+      "roleName": "Database Cloud Auditor",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-230",
+      "roleName": "Cloud Identity Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-231",
+      "roleName": "Cloud Privilege Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-232",
+      "roleName": "Cloud Compliance Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-233",
+      "roleName": "Cloud Cost-Anomaly Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-234",
+      "roleName": "Cloud Drift Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-235",
+      "roleName": "Cloud Baseline Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-236",
+      "roleName": "Cloud Remediation Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-237",
+      "roleName": "DevSecOps Reviewer",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-238",
+      "roleName": "Secure-Code Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-239",
+      "roleName": "SAST Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-240",
+      "roleName": "DAST Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-241",
+      "roleName": "SCA Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-242",
+      "roleName": "IaC Reviewer",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-243",
+      "roleName": "PR Security Reviewer",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-244",
+      "roleName": "Build Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-245",
+      "roleName": "Release Security Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-246",
+      "roleName": "Pipeline QA Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-247",
+      "roleName": "Cloud Forensics Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-248",
+      "roleName": "Cloud Recovery Agent",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-249",
+      "roleName": "Cloud Security Architect",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-250",
+      "roleName": "Cloud Commander",
+      "domain": "Cloud / DevSecOps",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-251",
+      "roleName": "Identity Security Director",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-252",
+      "roleName": "IAM Analyst",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-253",
+      "roleName": "RBAC Analyst",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-254",
+      "roleName": "ABAC Analyst",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-255",
+      "roleName": "Privilege Analyst",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-256",
+      "roleName": "JIT Access Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-257",
+      "roleName": "Access Review Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-258",
+      "roleName": "Account Risk Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-259",
+      "roleName": "Credential Exposure Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-260",
+      "roleName": "MFA Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-261",
+      "roleName": "SSO Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-262",
+      "roleName": "OAuth Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-263",
+      "roleName": "Token Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-264",
+      "roleName": "Session Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-265",
+      "roleName": "Service Account Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-266",
+      "roleName": "Non-Human Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-267",
+      "roleName": "API Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-268",
+      "roleName": "Agent Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-269",
+      "roleName": "Secrets Governance Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-270",
+      "roleName": "Key Management Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-271",
+      "roleName": "Certificate Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-272",
+      "roleName": "Identity Graph Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-273",
+      "roleName": "Privilege Escalation Detector",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-274",
+      "roleName": "Impossible-Travel Detector",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-275",
+      "roleName": "Authentication Anomaly Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-276",
+      "roleName": "Account-Takeover Detector",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-277",
+      "roleName": "Dormant Account Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-278",
+      "roleName": "Orphan Account Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-279",
+      "roleName": "Access-Creep Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-280",
+      "roleName": "Privilege Review Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-281",
+      "roleName": "Identity Threat Hunter",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-282",
+      "roleName": "Identity Incident Responder",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-283",
+      "roleName": "Identity Recovery Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-284",
+      "roleName": "Identity Compliance Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-285",
+      "roleName": "Directory Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-286",
+      "roleName": "Entra Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-287",
+      "roleName": "LDAP Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-288",
+      "roleName": "Active Directory Analyst",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-289",
+      "roleName": "Kerberos Security Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-290",
+      "roleName": "PAM Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-291",
+      "roleName": "Secrets Rotation Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-292",
+      "roleName": "Credential Rotation Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-293",
+      "roleName": "Device Trust Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-294",
+      "roleName": "Endpoint Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-295",
+      "roleName": "Workforce Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-296",
+      "roleName": "Customer Identity Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-297",
+      "roleName": "Agent-Access Auditor",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-298",
+      "roleName": "Identity QA Agent",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-299",
+      "roleName": "Identity Architect",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-300",
+      "roleName": "Identity Commander",
+      "domain": "Identity / Access",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-301",
+      "roleName": "AI Security Director",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-302",
+      "roleName": "Prompt-Injection Detector",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-303",
+      "roleName": "Jailbreak Detector",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-304",
+      "roleName": "Tool-Call Monitor",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-305",
+      "roleName": "MCP Security Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-306",
+      "roleName": "Agent Discovery Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-307",
+      "roleName": "Agent Inventory Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-308",
+      "roleName": "Agent Permission Auditor",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-309",
+      "roleName": "Agent Behavior Monitor",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-310",
+      "roleName": "Agent Runtime Guard",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-311",
+      "roleName": "Agent Identity Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-312",
+      "roleName": "Agent Credential Monitor",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-313",
+      "roleName": "Agent Memory Auditor",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-314",
+      "roleName": "Memory-Poisoning Detector",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-315",
+      "roleName": "Context Integrity Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-316",
+      "roleName": "Data-Leakage Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-317",
+      "roleName": "Model Security Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-318",
+      "roleName": "Model-Risk Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-319",
+      "roleName": "Model Evaluation Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-320",
+      "roleName": "AI Red-Team Coordinator",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-321",
+      "roleName": "AI Blue-Team Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-322",
+      "roleName": "AI Forensics Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-323",
+      "roleName": "AI Incident Responder",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-324",
+      "roleName": "AI Supply-Chain Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-325",
+      "roleName": "Model Provenance Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-326",
+      "roleName": "Model Integrity Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-327",
+      "roleName": "Output Validator",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-328",
+      "roleName": "Hallucination Checker",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-329",
+      "roleName": "Agent QA Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-330",
+      "roleName": "Agent Sandbox Controller",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-331",
+      "roleName": "Tool Allowlist Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-332",
+      "roleName": "Tool Risk Scorer",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-333",
+      "roleName": "Agent Policy Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-334",
+      "roleName": "Agent Governance Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-335",
+      "roleName": "Agent Audit Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-336",
+      "roleName": "Agent Activity Recorder",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-337",
+      "roleName": "AI Threat Intelligence Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-338",
+      "roleName": "AI Malware Research Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-339",
+      "roleName": "AI Phishing Analyst",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-340",
+      "roleName": "AI Privacy Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-341",
+      "roleName": "AI Compliance Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-342",
+      "roleName": "AI Data Classification Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-343",
+      "roleName": "AI DLP Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-344",
+      "roleName": "AI Runtime Anomaly Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-345",
+      "roleName": "AI Behavior Baseline Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-346",
+      "roleName": "Agent Recovery Agent",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-347",
+      "roleName": "Agent Kill-Switch Controller",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-348",
+      "roleName": "AI Security Architect",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-349",
+      "roleName": "AI Safety Reviewer",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-350",
+      "roleName": "AI Commander",
+      "domain": "AI / Agent Security",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-351",
+      "roleName": "AppSec Director",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-352",
+      "roleName": "Web Security Analyst",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-353",
+      "roleName": "API Security Analyst",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-354",
+      "roleName": "Mobile AppSec Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-355",
+      "roleName": "Code Review Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-356",
+      "roleName": "Vulnerability Triage Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-357",
+      "roleName": "CVE Correlation Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-358",
+      "roleName": "CWE Classifier",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-359",
+      "roleName": "Dependency Risk Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-360",
+      "roleName": "Configuration Auditor",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-361",
+      "roleName": "Security Headers Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-362",
+      "roleName": "TLS Configuration Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-363",
+      "roleName": "Authentication Tester",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-364",
+      "roleName": "Authorization Tester",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-365",
+      "roleName": "Session Security Tester",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-366",
+      "roleName": "Input Validation Tester",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-367",
+      "roleName": "Business Logic Reviewer",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-368",
+      "roleName": "API Schema Reviewer",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-369",
+      "roleName": "GraphQL Security Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-370",
+      "roleName": "Webhook Security Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-371",
+      "roleName": "Upload Security Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-372",
+      "roleName": "Browser Security Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-373",
+      "roleName": "Client-Side Security Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-374",
+      "roleName": "Source-Code Security Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-375",
+      "roleName": "Secrets-in-Code Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-376",
+      "roleName": "Supply-Chain Reviewer",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-377",
+      "roleName": "Fuzzing Coordinator",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-378",
+      "roleName": "Safe Validation Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-379",
+      "roleName": "Security Regression Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-380",
+      "roleName": "Remediation Advisor",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-381",
+      "roleName": "Patch Verification Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-382",
+      "roleName": "Fix Verification Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-383",
+      "roleName": "Security Test Planner",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-384",
+      "roleName": "Test Scope Validator",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-385",
+      "roleName": "Authorization Guard",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-386",
+      "roleName": "Evidence Collector",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-387",
+      "roleName": "Pentest Report Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-388",
+      "roleName": "Finding Deduplicator",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-389",
+      "roleName": "Severity Reviewer",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-390",
+      "roleName": "False-Positive Reviewer",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-391",
+      "roleName": "Security QA Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-392",
+      "roleName": "AppSec Knowledge Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-393",
+      "roleName": "Secure Architecture Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-394",
+      "roleName": "Threat Modeling Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-395",
+      "roleName": "Abuse-Case Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-396",
+      "roleName": "Security Test Scheduler",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-397",
+      "roleName": "AppSec Metrics Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-398",
+      "roleName": "AppSec Research Agent",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-399",
+      "roleName": "AppSec Architect",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-400",
+      "roleName": "AppSec Commander",
+      "domain": "AppSec / Authorized Security Testing",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-401",
+      "roleName": "DFIR Director",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-402",
+      "roleName": "Disk Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-403",
+      "roleName": "Memory Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-404",
+      "roleName": "Browser Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-405",
+      "roleName": "Email Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-406",
+      "roleName": "Cloud Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-407",
+      "roleName": "Mobile Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-408",
+      "roleName": "Network Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-409",
+      "roleName": "Timeline Forensics Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-410",
+      "roleName": "Artifact Collector",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-411",
+      "roleName": "Evidence Integrity Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-412",
+      "roleName": "Chain-of-Custody Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-413",
+      "roleName": "Deleted-File Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-414",
+      "roleName": "Registry Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-415",
+      "roleName": "Event-Log Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-416",
+      "roleName": "Prefetch Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-417",
+      "roleName": "Persistence Investigator",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-418",
+      "roleName": "Process Investigator",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-419",
+      "roleName": "User Activity Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-420",
+      "roleName": "File-System Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-421",
+      "roleName": "Credential Artifact Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-422",
+      "roleName": "Malware Evidence Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-423",
+      "roleName": "Attack Timeline Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-424",
+      "roleName": "Root-Cause Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-425",
+      "roleName": "Recovery Planner",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-426",
+      "roleName": "Backup Integrity Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-427",
+      "roleName": "Disaster Recovery Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-428",
+      "roleName": "System Restoration Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-429",
+      "roleName": "Snapshot Manager",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-430",
+      "roleName": "Evidence Deduplicator",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-431",
+      "roleName": "Evidence Correlator",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-432",
+      "roleName": "Forensics QA Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-433",
+      "roleName": "Forensics Report Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-434",
+      "roleName": "Legal-Hold Assistant",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-435",
+      "roleName": "Evidence Search Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-436",
+      "roleName": "Incident Reconstruction Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-437",
+      "roleName": "Compromise Assessment Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-438",
+      "roleName": "Persistence Verification Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-439",
+      "roleName": "Recovery Verification Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-440",
+      "roleName": "Post-Incident Analyst",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-441",
+      "roleName": "Lessons-Learned Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-442",
+      "roleName": "Security Postmortem Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-443",
+      "roleName": "Resilience Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-444",
+      "roleName": "Business Continuity Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-445",
+      "roleName": "Crisis Recovery Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-446",
+      "roleName": "Forensics Research Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-447",
+      "roleName": "Forensics Architect",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-448",
+      "roleName": "DFIR QA Agent",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-449",
+      "roleName": "DFIR Supervisor",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-450",
+      "roleName": "DFIR Commander",
+      "domain": "Forensics / Recovery",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-451",
+      "roleName": "MARAUDER Director",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-452",
+      "roleName": "Mission Planner",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-453",
+      "roleName": "Agent Orchestrator",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-454",
+      "roleName": "Agent Scheduler",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-455",
+      "roleName": "Agent Registry",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-456",
+      "roleName": "Agent Health Monitor",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-457",
+      "roleName": "Agent Capability Resolver",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-458",
+      "roleName": "Agent Load Balancer",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-459",
+      "roleName": "Job Queue Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-460",
+      "roleName": "Event-Bus Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-461",
+      "roleName": "Policy Engine",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-462",
+      "roleName": "Risk Engine",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-463",
+      "roleName": "Approval Engine",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-464",
+      "roleName": "JIT Privilege Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-465",
+      "roleName": "Scope Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-466",
+      "roleName": "Target Registry",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-467",
+      "roleName": "Asset Registry",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-468",
+      "roleName": "Audit Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-469",
+      "roleName": "Evidence Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-470",
+      "roleName": "Secrets Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-471",
+      "roleName": "Key Rotation Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-472",
+      "roleName": "Backup Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-473",
+      "roleName": "Disaster Recovery Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-474",
+      "roleName": "Configuration Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-475",
+      "roleName": "Update Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-476",
+      "roleName": "Plugin Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-477",
+      "roleName": "Integration Manager",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-478",
+      "roleName": "API Gateway Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-479",
+      "roleName": "Webhook Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-480",
+      "roleName": "Notification Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-481",
+      "roleName": "Dashboard Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-482",
+      "roleName": "Metrics Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-483",
+      "roleName": "Cost Controller",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-484",
+      "roleName": "Resource Scheduler",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-485",
+      "roleName": "Performance Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-486",
+      "roleName": "Reliability Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-487",
+      "roleName": "Failure Recovery Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-488",
+      "roleName": "Safety Policy Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-489",
+      "roleName": "Emergency Stop Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-490",
+      "roleName": "Change-Control Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-491",
+      "roleName": "Compliance Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-492",
+      "roleName": "Privacy Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-493",
+      "roleName": "Risk Auditor",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-494",
+      "roleName": "AI Output Auditor",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-495",
+      "roleName": "Human-Approval Coordinator",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-496",
+      "roleName": "Executive Security Advisor",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-497",
+      "roleName": "Security Architect",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-498",
+      "roleName": "Chief Security Agent",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-499",
+      "roleName": "MARAUDER Chief-of-Staff",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-500",
+      "roleName": "MARAUDER SUPREME ORCHESTRATOR",
+      "domain": "Governance / Command",
+      "sourceType": "user-defined",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-501",
+      "roleName": "Red-Team Simulation Planner",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-502",
+      "roleName": "Adversary Emulation Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-503",
+      "roleName": "Attack-Path Verifier",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-504",
+      "roleName": "Exposure Validation Agent",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-505",
+      "roleName": "Deception & Honeypot Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-506",
+      "roleName": "Threat-Hunting Coordinator",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-507",
+      "roleName": "Hypothesis Hunt Agent",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-508",
+      "roleName": "Living-off-the-Land Detector",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-509",
+      "roleName": "Credential-Dump Hunt Agent",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-510",
+      "roleName": "Persistence Hunt Agent",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-511",
+      "roleName": "RF & Wireless Lab Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-512",
+      "roleName": "BLE & NFC Lab Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-513",
+      "roleName": "Firmware Extraction Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-514",
+      "roleName": "Embedded Device Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-515",
+      "roleName": "ICS / OT Protocol Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-516",
+      "roleName": "PLC Safety Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-517",
+      "roleName": "SCADA Telemetry Guard",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-518",
+      "roleName": "Mobile Runtime Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-519",
+      "roleName": "Android Intent & Permission Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-520",
+      "roleName": "iOS Entitlement Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-521",
+      "roleName": "Browser Extension Auditor",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-522",
+      "roleName": "Supply-Chain Provenance Verifier",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-523",
+      "roleName": "SBOM Diff Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-524",
+      "roleName": "Vulnerability Exploitability Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-525",
+      "roleName": "Patch Prioritization Agent",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-526",
+      "roleName": "Purple-Team Gap Analyst",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-527",
+      "roleName": "Detection-Coverage Verifier",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-528",
+      "roleName": "Runbook Validation Agent",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-529",
+      "roleName": "Tabletop Exercise Coordinator",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    },
+    {
+      "id": "ROLE-530",
+      "roleName": "Red/Blue Commander",
+      "domain": "Red Team / Threat Hunting & Specialized Lab",
+      "sourceType": "user-added-army",
+      "defaultPermission": "read-only",
+      "requiresApprovalForChange": true
+    }
+  ]
+}

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MARAUDER — ULTIMATE HACKER CONSOLE v12.0 AI</title>
+  <style>
+    :root {
+      --bg: #070305;
+      --panel: #120509;
+      --card: #1a070d;
+      --input: #0a0305;
+      --red: #e11d2a;
+      --red-bright: #ff3341;
+      --red-dim: #5c0911;
+      --line: rgba(255, 42, 58, 0.42);
+      --text: #f6ecee;
+      --muted: #b68d94;
+      --green: #2ee56e;
+      --amber: #ffb020;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+
+    body {
+      background:
+        radial-gradient(circle at 50% 10%, rgba(150, 12, 24, 0.28) 0%, rgba(16, 4, 8, 0.85) 50%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 11.5px;
+    }
+
+    /* TOP BAR LIKE IMAGE 2 */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 10px;
+      background: linear-gradient(90deg, #130306 0%, #26060c 50%, #130306 100%);
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+
+    .brand-left { display: flex; align-items: center; gap: 9px; }
+    .m-badge {
+      width: 30px; height: 30px; border-radius: 5px;
+      background: linear-gradient(180deg, #ff2a38, #7d0710);
+      border: 1px solid #ff6872;
+      display: grid; place-items: center; font-weight: 900; font-size: 15px; color: #fff;
+    }
+    .brand-name { font-size: 18px; font-weight: 900; letter-spacing: 2px; color: #ff2d3b; line-height: 1; }
+    .brand-tag { font-size: 8.5px; letter-spacing: 1.2px; color: #d5a5ac; font-weight: 700; margin-top: 2px; }
+
+    .top-status {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 9.5px; font-weight: 800;
+    }
+    .pill-tag {
+      padding: 3px 7px; border-radius: 3px; border: 1px solid var(--line); background: #180408;
+    }
+    .pill-tag.green { color: var(--green); }
+    .pill-tag.red { color: #ff5864; }
+
+    /* NAV STRIP */
+    .nav-row {
+      display: flex; align-items: center; gap: 3px; padding: 5px 8px;
+      background: #0d0205; border-bottom: 1px solid var(--line); overflow-x: auto;
+    }
+    .nav-item {
+      background: #1a060b; color: #ebc2c7; border: 1px solid rgba(255,42,58,0.28);
+      padding: 4px 10px; border-radius: 3px; font-size: 9.5px; font-weight: 800;
+      cursor: pointer; white-space: nowrap;
+    }
+    .nav-item.active, .nav-item:hover {
+      background: var(--red); color: #fff; border-color: #ff6872;
+    }
+
+    /* 3-COLUMN LAYOUT */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 205px 1fr 255px;
+      gap: 6px;
+      padding: 6px;
+    }
+    @media (max-width: 1080px) { .main-grid { grid-template-columns: 1fr; } }
+
+    .box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 6px;
+    }
+
+    .sec-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 4px 7px; border-radius: 3px; margin-bottom: 5px;
+      background: linear-gradient(90deg, #7c0913 0%, #3a0409 100%);
+      border: 1px solid rgba(255,60,75,0.45);
+      font-size: 10px; font-weight: 900; letter-spacing: 0.5px;
+    }
+
+    .search-box {
+      width: 100%; background: var(--input); border: 1px solid rgba(255,42,58,0.35);
+      color: #fff; padding: 4px 6px; border-radius: 3px; font-size: 10.5px; margin-bottom: 5px;
+      outline: none;
+    }
+
+    .cat-list {
+      max-height: 430px; overflow-y: auto; display: flex; flex-direction: column; gap: 1px;
+      margin-bottom: 7px;
+    }
+    .cat-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 3.5px 6px; border-radius: 3px; font-size: 10px; color: #e8c2c7; cursor: pointer;
+    }
+    .cat-item:hover, .cat-item.active {
+      background: rgba(225, 29, 42, 0.25); color: #fff; font-weight: 700;
+    }
+    .cat-cnt { color: #ff7b84; font-weight: 800; font-size: 9.5px; }
+
+    .qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .qa-btn {
+      background: #1c060b; border: 1px solid rgba(255,42,58,0.35); color: #ffd4d8;
+      padding: 5px 4px; border-radius: 3px; font-size: 9.5px; font-weight: 800; cursor: pointer;
+    }
+    .qa-btn:hover { background: var(--red); color: #fff; }
+
+    /* CENTER PANEL */
+    .secret-top {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 5px 8px; border-radius: 4px; margin-bottom: 6px;
+      background: linear-gradient(90deg, #2d050c 0%, #150307 100%);
+      border: 1px solid rgba(255,45,60,0.5); flex-wrap: wrap;
+    }
+    .secret-title { color: #ff3846; font-weight: 900; font-size: 12px; letter-spacing: 0.6px; }
+    .secret-sub { font-size: 9.5px; color: #cfa2a8; }
+    .timer-badge {
+      background: #3d060c; border: 1px solid #ff4552; color: #ff9ca4;
+      padding: 2px 7px; border-radius: 3px; font-weight: 900; font-size: 10.5px;
+    }
+
+    .sub-strip {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 9.5px; font-weight: 800; color: #ff9aa2; margin-bottom: 5px; padding: 0 2px;
+    }
+
+    .key-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+    @media (max-width: 720px) { .key-panels { grid-template-columns: 1fr; } }
+
+    .k-card {
+      background: var(--card); border: 1px solid rgba(255,42,58,0.34); border-radius: 4px; padding: 6px;
+    }
+    .k-title { font-size: 9.5px; font-weight: 900; color: #ff8e97; margin-bottom: 4px; }
+    .k-input {
+      width: 100%; background: var(--input); border: 1px solid rgba(255,42,58,0.28);
+      color: #fff; padding: 3px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;
+      margin-bottom: 4px; outline: none;
+    }
+    .btn-r {
+      width: 100%; background: linear-gradient(180deg, #d81926, #7a0710);
+      border: 1px solid #ff5c66; color: #fff; font-weight: 900; font-size: 9.5px;
+      padding: 4px 8px; border-radius: 3px; cursor: pointer;
+    }
+    .btn-g {
+      width: 100%; background: linear-gradient(180deg, #25b557, #12632e);
+      border: 1px solid #52e887; color: #fff; font-weight: 900; font-size: 9.5px;
+      padding: 4px 8px; border-radius: 3px; cursor: pointer;
+    }
+
+    .mod-cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px; }
+    @media (max-width: 820px) { .mod-cards-3 { grid-template-columns: 1fr; } }
+
+    .mod-box {
+      background: var(--card); border: 1px solid rgba(255,42,58,0.34); border-radius: 4px;
+      padding: 6px; display: flex; flex-direction: column; justify-content: space-between; gap: 5px;
+    }
+    .mod-name { font-size: 10.5px; font-weight: 900; color: #fff; }
+    .mod-cat { font-size: 9px; color: var(--muted); }
+    .launch-btn {
+      background: linear-gradient(180deg, #b8101c, #5c060d); border: 1px solid rgba(255,70,85,0.6);
+      color: #fff; font-size: 9px; font-weight: 900; padding: 4px 6px; border-radius: 3px;
+      cursor: pointer; text-align: center;
+    }
+    .launch-btn:hover { background: var(--red-bright); }
+
+    .log-stream {
+      background: #080204; border: 1px solid rgba(255,42,58,0.36); border-radius: 4px;
+      padding: 6px; min-height: 110px; max-height: 165px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .log-entry {
+      background: #160509; border-left: 2.5px solid var(--red-bright);
+      padding: 4px 7px; border-radius: 3px; font-size: 10px; line-height: 1.35;
+    }
+
+    /* RIGHT TELEMETRY & STREAM */
+    .r-block {
+      background: var(--card); border: 1px solid rgba(255,42,58,0.32);
+      border-radius: 4px; padding: 6px; margin-bottom: 6px;
+    }
+    .r-title {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 9.5px; font-weight: 900; color: #ff8e97; margin-bottom: 4px;
+    }
+    .tab4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-bottom: 5px; }
+    .tab4 button {
+      background: #130407; border: 1px solid rgba(255,42,58,0.3); color: #e9c4c9;
+      padding: 3px 2px; border-radius: 3px; font-size: 8.5px; font-weight: 800; cursor: pointer;
+    }
+    .tab4 button.active { background: var(--red); color: #fff; }
+
+    .hash-line {
+      font-family: Consolas, monospace; font-size: 8.5px; color: #b8e8c8;
+      background: #080204; padding: 4px 5px; border-radius: 3px; word-break: break-all;
+      margin: 4px 0;
+    }
+
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 4px; }
+    .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 4px; }
+
+    .mini-btn {
+      background: #23060c; border: 1px solid rgba(255,42,58,0.38); color: #ffd4d8;
+      padding: 3px 4px; border-radius: 3px; font-size: 8.5px; font-weight: 800; cursor: pointer;
+      text-align: center;
+    }
+    .mini-btn:hover { background: var(--red); color: #fff; }
+
+    .eq-bars {
+      height: 14px; background: #080204; border: 1px solid rgba(255,42,58,0.3);
+      border-radius: 3px; overflow: hidden; margin: 4px 0;
+    }
+    .eq-progress { height: 100%; width: 65%; background: linear-gradient(90deg, #2ee56e, #ffb020, #ff2a38); }
+
+    .foot-sync {
+      margin: 0 6px 6px; padding: 5px 10px; border-radius: 4px;
+      background: #120408; border: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+      font-size: 9.5px;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand-left">
+      <div class="m-badge">M</div>
+      <div>
+        <div class="brand-name">MARAUDER</div>
+        <div class="brand-tag">ULTIMATE HACKER CONSOLE v12.0 AI // #1 RED SOFTWARE</div>
+      </div>
+    </div>
+
+    <div class="top-status">
+      <span class="pill-tag green">Mythos Security</span>
+      <span class="pill-tag green">ScyNet AI</span>
+      <span class="pill-tag" id="agentPill">AI AGENT: IDLE</span>
+      <span class="pill-tag green">SYSTEM: ONLINE</span>
+      <span class="pill-tag" id="agentsStatPill">AGENTS: 5,484</span>
+      <span class="pill-tag" id="ledgerStatPill">LEDGER: CHECKING</span>
+    </div>
+  </header>
+
+  <nav class="nav-row" id="topNav">
+    <button class="nav-item active" data-mode="DEFENSE">HOME</button>
+    <button class="nav-item" data-mode="COMMAND">CYBER AI</button>
+    <button class="nav-item" data-mode="COMMAND">TOR</button>
+    <button class="nav-item" data-mode="COMMAND">MARKETPLACE</button>
+    <button class="nav-item" data-mode="DEFENSE">OSINT</button>
+    <button class="nav-item" data-mode="RED_TEAM">DARK WEB</button>
+    <button class="nav-item" data-mode="RED_TEAM">EXPLOIT</button>
+    <button class="nav-item" data-mode="DEFENSE">FORENSICS</button>
+    <button class="nav-item" data-mode="COMMAND">ANALYSIS</button>
+    <button class="nav-item" data-mode="DEFENSE">REPORTS</button>
+    <button class="nav-item" data-mode="COMMAND">SETTINGS</button>
+  </nav>
+
+  <main class="main-grid">
+    <!-- LEFT TOOLS TREE -->
+    <aside class="box">
+      <div class="sec-hdr">
+        <span>AI TOOLS (1000+)</span>
+        <span>23 CATS</span>
+      </div>
+      <input type="text" class="search-box" id="catFilter" placeholder="Търси инструмент или категория..." />
+      <div class="cat-list" id="catList"></div>
+
+      <div class="sec-hdr"><span>QUICK ACCESS</span></div>
+      <div class="qa-grid">
+        <button class="qa-btn" data-qa="Nmap">Nmap</button>
+        <button class="qa-btn" data-qa="Metasploit">Metasploit</button>
+        <button class="qa-btn" data-qa="Burp Suite">Burp Suite</button>
+        <button class="qa-btn" data-qa="Hashcat">Hashcat</button>
+      </div>
+    </aside>
+
+    <!-- CENTER COMMAND & RED-SECRET CHAT -->
+    <section class="box">
+      <div class="secret-top">
+        <div>
+          <div class="secret-title">RED-SECRET CHAT // END-TO-END ENCRYPTED • AUTO DESTROY • 3 MIN</div>
+          <div class="secret-sub" id="handshakeSub">MARAUDER AI Secret Communication — свързване към локален контролер</div>
+        </div>
+        <div class="timer-badge" id="secClock">03:00</div>
+      </div>
+
+      <div class="sub-strip">
+        <span>AI RED TEAM (64 TOOLS)</span>
+        <span style="color:var(--green);" id="autoLinkState">AUTO-LINK: READY</span>
+      </div>
+
+      <div class="key-panels">
+        <div class="k-card">
+          <div class="k-title">GENERATE CHAT KEY</div>
+          <input type="text" class="k-input" id="genKeyField" value="MRD-7XQ9-KL2F-8V6P" readonly />
+          <input type="text" class="k-input" id="genPassField" value="zF9k-Qp3m-7H2v" readonly />
+          <button class="btn-r" id="genKeyAction">GENERATE NEW KEY</button>
+        </div>
+
+        <div class="k-card">
+          <div class="k-title">CONNECT TO SECRET CHAT</div>
+          <input type="text" class="k-input" id="connKeyField" value="MRD-7XQ9-KL2F-8V6P" />
+          <input type="text" class="k-input" id="connPassField" value="zF9k-Qp3m-7H2v" />
+          <button class="btn-g" id="connKeyAction">ENTER &amp; CONNECT</button>
+        </div>
+      </div>
+
+      <div class="mod-cards-3">
+        <div class="mod-box">
+          <div>
+            <div class="mod-name">Prompt-Guard Audit</div>
+            <div class="mod-cat">Category: DEFENSE / AUDIT</div>
+          </div>
+          <button class="launch-btn" data-run-mode="DEFENSE" data-mod="Prompt-Guard Audit">LAUNCH MODULE</button>
+        </div>
+
+        <div class="mod-box">
+          <div>
+            <div class="mod-name">Lab Range Sim</div>
+            <div class="mod-cat">Category: RED_TEAM (lab:isolated)</div>
+          </div>
+          <button class="launch-btn" data-run-mode="RED_TEAM" data-mod="Lab Range Sim">LAUNCH MODULE</button>
+        </div>
+
+        <div class="mod-box">
+          <div>
+            <div class="mod-name">Swarm Mesh Sync</div>
+            <div class="mod-cat">Category: COMMAND / ORCHESTRATOR</div>
+          </div>
+          <button class="launch-btn" data-run-mode="COMMAND" data-mod="Swarm Mesh Sync">LAUNCH MODULE</button>
+        </div>
+      </div>
+
+      <div class="log-stream" id="logStream">
+        <div class="log-entry"><b>[MARAUDER]</b> Конзолата е готова. Всички статистики и мисии се четат/изпълняват през реалния backend.</div>
+      </div>
+    </section>
+
+    <!-- RIGHT TELEMETRY & UNITS -->
+    <aside class="box">
+      <div class="r-block">
+        <div class="r-title">
+          <span>VOICE CHAT &amp; LIVE STREAM</span>
+          <span style="color:var(--green);">ON</span>
+        </div>
+        <div class="tab4" id="streamTabs">
+          <button class="active" data-st="MEDIA">MEDIA</button>
+          <button data-st="VOICE">VOICE</button>
+          <button data-st="VIDEO">VIDEO</button>
+          <button data-st="FILES">FILES</button>
+        </div>
+        <div style="font-size:9.5px;color:#ffd4d8;">LIVE STREAM // <span id="streamTabLabel">MEDIA</span></div>
+        <div class="hash-line" id="ledgerHeadBox">LEDGER HEAD: PENDING SYNC</div>
+        <div class="row2">
+          <button class="mini-btn" id="syncNowBtn">↻ SYNC LIVE</button>
+          <button class="mini-btn" id="verifyChainBtn">VERIFY LEDGER</button>
+        </div>
+      </div>
+
+      <div class="r-block">
+        <div class="r-title">
+          <span>MICROPHONE 2.0</span>
+          <span style="color:var(--green);">Voice Active</span>
+        </div>
+        <div class="eq-bars"><div class="eq-progress" id="eqBar"></div></div>
+        <div class="row2">
+          <button class="mini-btn" id="speakToggle">SPEAK</button>
+          <button class="mini-btn" id="autoReplyToggle">AUTO REPLY</button>
+        </div>
+      </div>
+
+      <div class="r-block">
+        <div class="r-title">
+          <span>MALWARE INTELLIGENCE</span>
+          <span>LVL 0-4</span>
+        </div>
+        <div style="font-size:9px;color:var(--muted);line-height:1.35;">
+          Sources: MITRE ATT&amp;CK, ThreatGraph, BlackBox SHA-256 Chain, Local Sandbox.
+        </div>
+      </div>
+
+      <div class="r-block">
+        <div class="r-title">
+          <span>ALL UNITS // SUMMON &amp; RUN</span>
+          <span id="unitCountBadge">5484</span>
+        </div>
+        <div class="row3">
+          <button class="mini-btn" id="runDefenseBtn">DEFENSE (4)</button>
+          <button class="mini-btn" id="runCommandBtn">COMMAND (4)</button>
+          <button class="mini-btn" id="runRedBtn">LAB RED (2)</button>
+        </div>
+      </div>
+
+      <div class="r-block" style="margin-bottom:0;">
+        <div class="r-title">
+          <span>MARAUDER-AL ARMY</span>
+          <span>5,484</span>
+        </div>
+        <div style="font-size:9px;color:#d6b0b6;line-height:1.4;">
+          <div><b>ROOT Controller:</b> HMAC + Nonce + TTL + BlackBox</div>
+          <div><b>SYNCHRO-MESH:</b> DAG + Worker Pool + ThreatGraph</div>
+          <div><b>Ollama Node:</b> llama3.2 (local runtime)</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="foot-sync">
+    <span id="footerDigest">MISSION DIGEST: NONE YET</span>
+    <span id="footerTime">25.11.2026</span>
+  </footer>
+
+  <script>
+    const CATS = [
+      ["AI Red Team", 64], ["Penetration Testing", 88], ["Web Exploitation", 76],
+      ["Network Analysis", 72], ["Password Attacks", 54], ["Wireless Attacks", 42],
+      ["Social Engineering", 38], ["Malware Analysis", 68], ["Reverse Engineering", 59],
+      ["Forensics", 61], ["Cryptography", 49], ["Steganography", 33],
+      ["Brute Force", 44], ["Proxy & Anonymity", 51], ["Tor Tools", 37],
+      ["Dark Web Tools", 41], ["AI Security", 63], ["Cloud Security", 58],
+      ["Mobile Security", 47], ["IoT Exploitation", 39], ["Red Team Tools", 52],
+      ["Blue Team Tools", 66], ["Report & Dashboard", 31]
+    ];
+
+    const catListEl = document.getElementById("catList");
+    const catFilterEl = document.getElementById("catFilter");
+    const logStreamEl = document.getElementById("logStream");
+
+    function pushLog(tag, msg) {
+      const ts = new Date().toTimeString().slice(0, 8);
+      const div = document.createElement("div");
+      div.className = "log-entry";
+      div.innerHTML = `<span style="color:#ff8f98;font-weight:800;">[${tag} ${ts}]</span> ${msg}`;
+      logStreamEl.appendChild(div);
+      logStreamEl.scrollTop = logStreamEl.scrollHeight;
+    }
+
+    function renderCats(q = "") {
+      const term = q.trim().toLowerCase();
+      catListEl.innerHTML = "";
+      CATS.filter(([name]) => !term || name.toLowerCase().includes(term)).forEach(([name, cnt], idx) => {
+        const el = document.createElement("div");
+        el.className = "cat-item" + (idx === 0 && !term ? " active" : "");
+        el.innerHTML = `<span>${name}</span><span class="cat-cnt">${cnt}</span>`;
+        el.onclick = () => {
+          document.querySelectorAll(".cat-item").forEach((c) => c.classList.remove("active"));
+          el.classList.add("active");
+          pushLog("TOOLS", `Избрана категория: <b>${name}</b> (${cnt} профила/инструмента).`);
+        };
+        catListEl.appendChild(el);
+      });
+    }
+
+    function randToken(len) {
+      const pool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+      return Array.from({ length: len }, () => pool[Math.floor(Math.random() * pool.length)]).join("");
+    }
+
+    document.getElementById("genKeyAction").onclick = () => {
+      const k = `MRD-${randToken(4)}-${randToken(4)}-${randToken(4)}`;
+      const p = `${randToken(4)}-${randToken(4)}-${randToken(4)}`;
+      document.getElementById("genKeyField").value = k;
+      document.getElementById("genPassField").value = p;
+      document.getElementById("connKeyField").value = k;
+      document.getElementById("connPassField").value = p;
+      pushLog("KEYGEN", `Нов ключ: <b>${k}</b>`);
+    };
+
+    document.getElementById("connKeyAction").onclick = async () => {
+      const key = document.getElementById("connKeyField").value.trim();
+      const password = document.getElementById("connPassField").value.trim();
+      try {
+        const res = await fetch("/api/channel/handshake", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.connected) {
+          document.getElementById("handshakeSub").textContent = `Backend Session: ${data.sessionId} • Verified`;
+          pushLog("HANDSHAKE", `Потвърдена сесия от сървъра: <b>${data.sessionId}</b>`);
+        } else {
+          pushLog("HANDSHAKE", `Отказ от сървъра: <b>${data.reason || "ERROR"}</b>`);
+        }
+      } catch {
+        pushLog("HANDSHAKE", "Backend не е стартиран на този порт — пусни <code>node server.js</code> за реален handshake.");
+      }
+    };
+
+    async function runRealMission(mode, count, label) {
+      document.getElementById("agentPill").textContent = "AI AGENT: RUNNING";
+      document.getElementById("agentPill").className = "pill-tag red";
+      try {
+        const res = await fetch("/api/missions/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode, count })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById("footerDigest").textContent = `MISSION DIGEST: ${data.missionDigest}`;
+          if (data.ledger && data.ledger.headHash) {
+            document.getElementById("ledgerHeadBox").textContent = `LEDGER HEAD: ${data.ledger.headHash}`;
+          }
+          pushLog(mode, `${label} -> Завършени: <b>${data.completedCount}</b>, Отказани/Провалени: <b>${data.failedCount}</b>`);
+        } else {
+          pushLog(mode, `Грешка при мисия: <b>${data.error || "FAILED"}</b>`);
+        }
+      } catch {
+        pushLog(mode, "Няма връзка към /api/missions/run (стартирай <code>node server.js</code>).");
+      } finally {
+        document.getElementById("agentPill").textContent = "AI AGENT: IDLE";
+        document.getElementById("agentPill").className = "pill-tag";
+        refreshTelemetry();
+      }
+    }
+
+    document.querySelectorAll("[data-run-mode]").forEach((btn) => {
+      btn.onclick = () => runRealMission(btn.dataset.runMode, 3, btn.dataset.mod);
+    });
+
+    document.getElementById("runDefenseBtn").onclick = () => runRealMission("DEFENSE", 4, "DEFENSE SOC SWARM");
+    document.getElementById("runCommandBtn").onclick = () => runRealMission("COMMAND", 4, "COMMAND MESH SYNC");
+    document.getElementById("runRedBtn").onclick = () => runRealMission("RED_TEAM", 2, "LAB RANGE VALIDATION");
+
+    document.querySelectorAll("#streamTabs button").forEach((b) => {
+      b.onclick = () => {
+        document.querySelectorAll("#streamTabs button").forEach((x) => x.classList.remove("active"));
+        b.classList.add("active");
+        document.getElementById("streamTabLabel").textContent = b.dataset.st;
+      };
+    });
+
+    document.querySelectorAll("#topNav .nav-item").forEach((tab) => {
+      tab.onclick = () => {
+        document.querySelectorAll("#topNav .nav-item").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        pushLog("NAV", `Активен режим/раздел: <b>${tab.textContent}</b> (${tab.dataset.mode})`);
+      };
+    });
+
+    document.querySelectorAll("[data-qa]").forEach((btn) => {
+      btn.onclick = () => pushLog("QUICK ACCESS", `Избран инструмент: <b>${btn.dataset.qa}</b> (изисква policy/scope проверка).`);
+    });
+
+    async function refreshTelemetry() {
+      try {
+        const [stRes, lgRes] = await Promise.allSettled([
+          fetch("/api/agents/stats").then((r) => (r.ok ? r.json() : null)),
+          fetch("/api/ledger/status").then((r) => (r.ok ? r.json() : null))
+        ]);
+        if (stRes.status === "fulfilled" && stRes.value && typeof stRes.value.total === "number") {
+          const fmt = stRes.value.total.toLocaleString();
+          document.getElementById("agentsStatPill").textContent = `AGENTS: ${fmt}`;
+          document.getElementById("unitCountBadge").textContent = String(stRes.value.total);
+        }
+        if (lgRes.status === "fulfilled" && lgRes.value) {
+          const ok = Boolean(lgRes.value.valid);
+          const el = document.getElementById("ledgerStatPill");
+          el.textContent = ok ? `LEDGER: VALID (${lgRes.value.entries})` : "LEDGER: INVALID";
+          el.className = ok ? "pill-tag green" : "pill-tag red";
+          if (lgRes.value.headHash) {
+            document.getElementById("ledgerHeadBox").textContent = `LEDGER HEAD: ${lgRes.value.headHash}`;
+          }
+        } else {
+          document.getElementById("ledgerStatPill").textContent = "LEDGER: STANDBY";
+        }
+      } catch {
+        document.getElementById("ledgerStatPill").textContent = "LEDGER: STANDBY";
+      }
+    }
+
+    document.getElementById("syncNowBtn").onclick = refreshTelemetry;
+    document.getElementById("verifyChainBtn").onclick = refreshTelemetry;
+    document.getElementById("speakToggle").onclick = () => pushLog("VOICE", "Speak статус превключен.");
+    document.getElementById("autoReplyToggle").onclick = () => pushLog("VOICE", "Auto Reply статус превключен.");
+
+    let sec = 180;
+    setInterval(() => {
+      sec = sec > 0 ? sec - 1 : 180;
+      const m = String(Math.floor(sec / 60)).padStart(2, "0");
+      const s = String(sec % 60).padStart(2, "0");
+      document.getElementById("secClock").textContent = `${m}:${s}`;
+    }, 1000);
+
+    catFilterEl.oninput = (e) => renderCats(e.target.value);
+    renderCats();
+    refreshTelemetry();
+  </script>
+</body>
+</html>

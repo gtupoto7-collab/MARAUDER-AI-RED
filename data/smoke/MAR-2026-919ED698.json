@@ -1,0 +1,193 @@
+{
+  "report": {
+    "missionId": "MAR-2026-919ED698",
+    "correlationId": "CORR-3A06456897D2",
+    "state": "COMPLETED",
+    "transitions": [
+      {
+        "state": "CREATED",
+        "correlationId": "CORR-3A06456897D2",
+        "missionId": "MAR-2026-919ED698",
+        "ts": "2026-11-24T16:41:58.136Z"
+      },
+      {
+        "state": "AUTHORIZED",
+        "correlationId": "CORR-3A06456897D2",
+        "missionId": "MAR-2026-919ED698",
+        "ts": "2026-11-24T16:41:58.136Z"
+      },
+      {
+        "state": "QUEUED",
+        "correlationId": "CORR-3A06456897D2",
+        "missionId": "MAR-2026-919ED698",
+        "ts": "2026-11-24T16:41:58.136Z"
+      },
+      {
+        "state": "RUNNING",
+        "correlationId": "CORR-3A06456897D2",
+        "missionId": "MAR-2026-919ED698",
+        "ts": "2026-11-24T16:41:58.136Z"
+      },
+      {
+        "state": "VERIFYING",
+        "correlationId": "CORR-3A06456897D2",
+        "missionId": "MAR-2026-919ED698",
+        "ts": "2026-11-24T16:41:58.137Z"
+      },
+      {
+        "state": "COMPLETED",
+        "correlationId": "CORR-3A06456897D2",
+        "missionId": "MAR-2026-919ED698",
+        "ts": "2026-11-24T16:41:58.137Z"
+      }
+    ],
+    "objective": "Backlog 100 verification run",
+    "targetScope": "verified-local-lab",
+    "agentSnapshot": {
+      "id": "agent-001",
+      "health": 100,
+      "successRate": 100,
+      "avgLatency": 1
+    },
+    "finding": {
+      "id": "FND-ED2FE3",
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "evidenceId": "EVD-00F41C9E",
+      "lifecycle": [
+        "OBSERVED",
+        "CORRELATED",
+        "VALIDATING",
+        "VERIFIED",
+        "REPORTED"
+      ],
+      "verified": true
+    },
+    "metrics": {
+      "duration": 1,
+      "agentsUsed": [
+        "agent-001"
+      ],
+      "eventsProcessed": 6,
+      "findings": 1,
+      "verifiedFindings": 1,
+      "falsePositives": 0,
+      "errors": 0,
+      "evidenceCount": 1
+    },
+    "blackBoxCount": 6,
+    "blackBoxHeadHash": "558fa36e49b018853b8795c4cafe9f7934573b372748910ba1a6528bce940bba",
+    "generatedAt": "2026-11-24T16:41:58.138Z"
+  },
+  "blackBox": [
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Mission",
+      "ts": "2026-11-24T16:41:58.136Z",
+      "payload": {
+        "state": "CREATED",
+        "objective": "Backlog 100 verification run",
+        "targetScope": "verified-local-lab"
+      },
+      "prevHash": "GENESIS",
+      "hash": "d4a7b6f51a133dcedb665ef8fddfc4ca36087fbd8353e26d7c3b5adb282ed8f1"
+    },
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Agent",
+      "ts": "2026-11-24T16:41:58.136Z",
+      "payload": {
+        "state": "RUNNING",
+        "agentId": "agent-001",
+        "capability": "filesystem.read"
+      },
+      "prevHash": "d4a7b6f51a133dcedb665ef8fddfc4ca36087fbd8353e26d7c3b5adb282ed8f1",
+      "hash": "179ac47d8a65021fbc62429675e02449d9af75fe0e2730869212b68c965903db"
+    },
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Safe Executor",
+      "ts": "2026-11-24T16:41:58.137Z",
+      "payload": {
+        "ok": true,
+        "latencyMs": 1,
+        "mode": "read-only"
+      },
+      "prevHash": "179ac47d8a65021fbc62429675e02449d9af75fe0e2730869212b68c965903db",
+      "hash": "14e97797c3f7fd5a89cc1504978762a5bce99e93b0679b601f791606288c4d9e"
+    },
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Evidence",
+      "ts": "2026-11-24T16:41:58.137Z",
+      "payload": {
+        "id": "EVD-00F41C9E",
+        "missionId": "MAR-2026-919ED698",
+        "assetId": "asset:local-project",
+        "source": "safe-local-executor:read-only",
+        "timestamp": "2026-11-24T16:41:58.137Z",
+        "observation": "package.json present and readable",
+        "severity": "LOW",
+        "confidence": 0.99,
+        "verified": true,
+        "hash": "92a339c7039e690c269401242efd6a40e4942297c83bd07b4af807d9e2678d9a"
+      },
+      "prevHash": "14e97797c3f7fd5a89cc1504978762a5bce99e93b0679b601f791606288c4d9e",
+      "hash": "28d553ec08b4a42c4d5edde4b924cfa83beb064e8df72a7ab6ef0fdffc9d87b9"
+    },
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Parliament",
+      "ts": "2026-11-24T16:41:58.137Z",
+      "payload": {
+        "approved": true,
+        "agentHealth": 100
+      },
+      "prevHash": "28d553ec08b4a42c4d5edde4b924cfa83beb064e8df72a7ab6ef0fdffc9d87b9",
+      "hash": "e1d1ffa14cb5d97156b457d87b4af6d8cacfbac3ef151b9930a0781a589624fd"
+    },
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Verification",
+      "ts": "2026-11-24T16:41:58.137Z",
+      "payload": {
+        "verified": true,
+        "finding": {
+          "id": "FND-ED2FE3",
+          "missionId": "MAR-2026-919ED698",
+          "correlationId": "CORR-3A06456897D2",
+          "evidenceId": "EVD-00F41C9E",
+          "lifecycle": [
+            "OBSERVED",
+            "CORRELATED",
+            "VALIDATING",
+            "VERIFIED",
+            "REPORTED"
+          ],
+          "verified": true
+        }
+      },
+      "prevHash": "e1d1ffa14cb5d97156b457d87b4af6d8cacfbac3ef151b9930a0781a589624fd",
+      "hash": "558fa36e49b018853b8795c4cafe9f7934573b372748910ba1a6528bce940bba"
+    },
+    {
+      "missionId": "MAR-2026-919ED698",
+      "correlationId": "CORR-3A06456897D2",
+      "stage": "Report",
+      "ts": "2026-11-24T16:41:58.138Z",
+      "payload": {
+        "missionId": "MAR-2026-919ED698",
+        "correlationId": "CORR-3A06456897D2",
+        "headHash": "558fa36e49b018853b8795c4cafe9f7934573b372748910ba1a6528bce940bba"
+      },
+      "prevHash": "558fa36e49b018853b8795c4cafe9f7934573b372748910ba1a6528bce940bba",
+      "hash": "4dac24dd35b3c076730b9bf4f1143317d54f7519daebdeef74ae5b576da3078e"
+    }
+  ]
+}

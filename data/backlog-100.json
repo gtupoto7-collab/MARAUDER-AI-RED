@@ -1,0 +1,1540 @@
+{
+  "total": 100,
+  "items": [
+    {
+      "id": "BLK-001",
+      "section": "Core / Orchestration",
+      "title": "Mission UUID",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-002",
+      "section": "Core / Orchestration",
+      "title": "Correlation ID",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-003",
+      "section": "Core / Orchestration",
+      "title": "Idempotency key",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-004",
+      "section": "Core / Orchestration",
+      "title": "Mission state machine",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-005",
+      "section": "Core / Orchestration",
+      "title": "Priority queue",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-006",
+      "section": "Core / Orchestration",
+      "title": "Agent registry",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-007",
+      "section": "Core / Orchestration",
+      "title": "Capability registry",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-008",
+      "section": "Core / Orchestration",
+      "title": "Agent versioning",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-009",
+      "section": "Core / Orchestration",
+      "title": "Agent health score",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-010",
+      "section": "Core / Orchestration",
+      "title": "Agent heartbeat",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-011",
+      "section": "Core / Orchestration",
+      "title": "Agent timeout",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-012",
+      "section": "Core / Orchestration",
+      "title": "Agent retry policy",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-013",
+      "section": "Core / Orchestration",
+      "title": "Agent circuit breaker",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-014",
+      "section": "Core / Orchestration",
+      "title": "Agent quarantine",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-015",
+      "section": "Core / Orchestration",
+      "title": "Agent recovery",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-016",
+      "section": "Core / Orchestration",
+      "title": "Mission cancellation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-017",
+      "section": "Core / Orchestration",
+      "title": "Mission pause/resume",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-018",
+      "section": "Core / Orchestration",
+      "title": "Mission checkpointing",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-019",
+      "section": "Core / Orchestration",
+      "title": "Mission replay",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-020",
+      "section": "Core / Orchestration",
+      "title": "Mission dependency graph",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-021",
+      "section": "Security / Access",
+      "title": "Least-privilege capabilities",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-022",
+      "section": "Security / Access",
+      "title": "JIT capability grants",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-023",
+      "section": "Security / Access",
+      "title": "Automatic capability expiry",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-024",
+      "section": "Security / Access",
+      "title": "Capability revocation",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-025",
+      "section": "Security / Access",
+      "title": "Scope validation",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-026",
+      "section": "Security / Access",
+      "title": "Target ownership validation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-027",
+      "section": "Security / Access",
+      "title": "Environment validation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-028",
+      "section": "Security / Access",
+      "title": "Read-only default",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-029",
+      "section": "Security / Access",
+      "title": "Explicit action approval",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-030",
+      "section": "Security / Access",
+      "title": "Dual approval for sensitive actions",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-031",
+      "section": "Security / Access",
+      "title": "Policy versioning",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-032",
+      "section": "Security / Access",
+      "title": "Policy simulation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-033",
+      "section": "Security / Access",
+      "title": "Policy regression tests",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-034",
+      "section": "Security / Access",
+      "title": "Policy conflict detection",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-035",
+      "section": "Security / Access",
+      "title": "Emergency kill switch",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-036",
+      "section": "Security / Access",
+      "title": "Global maintenance lock",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-037",
+      "section": "Security / Access",
+      "title": "Agent isolation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-038",
+      "section": "Security / Access",
+      "title": "Plugin isolation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-039",
+      "section": "Security / Access",
+      "title": "Connector isolation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-040",
+      "section": "Security / Access",
+      "title": "Secret isolation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-041",
+      "section": "Evidence / Reality Engine",
+      "title": "Universal evidence schema",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-042",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence UUID",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-043",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence hash",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-044",
+      "section": "Evidence / Reality Engine",
+      "title": "Hash chain",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-045",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence provenance",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-046",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence timestamps",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-047",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence freshness",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-048",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence expiration",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-049",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence deduplication",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-050",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence quality score",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-051",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence confidence",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-052",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence source reliability",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-053",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence contradiction detection",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-054",
+      "section": "Evidence / Reality Engine",
+      "title": "Independent verification",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-055",
+      "section": "Evidence / Reality Engine",
+      "title": "Cross-tool verification",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-056",
+      "section": "Evidence / Reality Engine",
+      "title": "Finding verification",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-057",
+      "section": "Evidence / Reality Engine",
+      "title": "Claim/evidence matching",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-058",
+      "section": "Evidence / Reality Engine",
+      "title": "Unsupported-claim detection",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-059",
+      "section": "Evidence / Reality Engine",
+      "title": "Tamper detection",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-060",
+      "section": "Evidence / Reality Engine",
+      "title": "Evidence replay",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-061",
+      "section": "AssetGraph",
+      "title": "Asset UUID",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-062",
+      "section": "AssetGraph",
+      "title": "Asset ownership",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-063",
+      "section": "AssetGraph",
+      "title": "Asset lifecycle",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-064",
+      "section": "AssetGraph",
+      "title": "Asset criticality",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-065",
+      "section": "AssetGraph",
+      "title": "Asset tagging",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-066",
+      "section": "AssetGraph",
+      "title": "Asset dependencies",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-067",
+      "section": "AssetGraph",
+      "title": "Service relationships",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-068",
+      "section": "AssetGraph",
+      "title": "Repository relationships",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-069",
+      "section": "AssetGraph",
+      "title": "Identity relationships",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-070",
+      "section": "AssetGraph",
+      "title": "Vulnerability relationships",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-071",
+      "section": "AssetGraph",
+      "title": "Threat relationships",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-072",
+      "section": "AssetGraph",
+      "title": "Finding relationships",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-073",
+      "section": "AssetGraph",
+      "title": "Graph snapshots",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-074",
+      "section": "AssetGraph",
+      "title": "Graph diff",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-075",
+      "section": "AssetGraph",
+      "title": "Graph search",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-076",
+      "section": "AssetGraph",
+      "title": "Graph anomaly detection",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-077",
+      "section": "AssetGraph",
+      "title": "Exposure scoring",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-078",
+      "section": "AssetGraph",
+      "title": "Blast-radius estimation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-079",
+      "section": "AssetGraph",
+      "title": "Attack-path visualization",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-080",
+      "section": "AssetGraph",
+      "title": "Remediation-path visualization",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-081",
+      "section": "Event / Scale",
+      "title": "Event schema validation",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-082",
+      "section": "Event / Scale",
+      "title": "Event deduplication",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-083",
+      "section": "Event / Scale",
+      "title": "Event normalization",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-084",
+      "section": "Event / Scale",
+      "title": "Event correlation",
+      "dod": {
+        "code": true,
+        "unitTest": true,
+        "integrationTest": true,
+        "smokeTest": true,
+        "blackboxEvent": true,
+        "evidence": true,
+        "verification": true
+      },
+      "status": "VERIFIED_DONE",
+      "lastMissionId": "MAR-2026-7DA15E5E"
+    },
+    {
+      "id": "BLK-085",
+      "section": "Event / Scale",
+      "title": "Hot buffer",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-086",
+      "section": "Event / Scale",
+      "title": "Warm buffer",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-087",
+      "section": "Event / Scale",
+      "title": "Cold archive",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-088",
+      "section": "Event / Scale",
+      "title": "Event prioritization",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-089",
+      "section": "Event / Scale",
+      "title": "Backpressure",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-090",
+      "section": "Event / Scale",
+      "title": "Dead-letter queue",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-091",
+      "section": "Event / Scale",
+      "title": "Event replay",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-092",
+      "section": "Event / Scale",
+      "title": "Event retention",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-093",
+      "section": "Event / Scale",
+      "title": "Event compression",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-094",
+      "section": "Event / Scale",
+      "title": "Event partitioning",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-095",
+      "section": "Event / Scale",
+      "title": "Event indexing",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-096",
+      "section": "Event / Scale",
+      "title": "Event integrity checking",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-097",
+      "section": "Event / Scale",
+      "title": "Queue health monitoring",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-098",
+      "section": "Event / Scale",
+      "title": "Processing-latency metrics",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-099",
+      "section": "Event / Scale",
+      "title": "Throughput metrics",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    },
+    {
+      "id": "BLK-100",
+      "section": "Event / Scale",
+      "title": "Automatic load-shedding",
+      "dod": {
+        "code": false,
+        "unitTest": false,
+        "integrationTest": false,
+        "smokeTest": false,
+        "blackboxEvent": false,
+        "evidence": false,
+        "verification": false
+      },
+      "status": "BACKLOG"
+    }
+  ],
+  "lastRun": {
+    "at": "2026-11-24T16:42:59.427Z",
+    "missionId": "MAR-2026-7DA15E5E",
+    "correlationId": "CORR-6C0F77AFC640",
+    "verifiedCount": 28,
+    "total": 100
+  }
+}

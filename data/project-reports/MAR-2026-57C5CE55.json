@@ -1,0 +1,119 @@
+{
+  "missionId": "MAR-2026-57C5CE55",
+  "prompt": "MARAUDER, анализирай сигурността на моя проект.",
+  "targetDir": "/mnt/c/Users/gtupo/marauder-ai-web",
+  "mode": "read-only",
+  "agentPoolSize": 80,
+  "selectedAgents": [
+    {
+      "id": "MRD80-001",
+      "code": "DEPS-01",
+      "name": "Dependency & Lockfile Auditor #1",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-002",
+      "code": "DEPS-02",
+      "name": "Dependency & Lockfile Auditor #2",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-003",
+      "code": "DEPS-03",
+      "name": "Dependency & Lockfile Auditor #3",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-004",
+      "code": "DEPS-04",
+      "name": "Dependency & Lockfile Auditor #4",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-005",
+      "code": "DEPS-05",
+      "name": "Dependency & Lockfile Auditor #5",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-006",
+      "code": "DEPS-06",
+      "name": "Dependency & Lockfile Auditor #6",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-007",
+      "code": "DEPS-07",
+      "name": "Dependency & Lockfile Auditor #7",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-008",
+      "code": "DEPS-08",
+      "name": "Dependency & Lockfile Auditor #8",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-009",
+      "code": "DEPS-09",
+      "name": "Dependency & Lockfile Auditor #9",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-010",
+      "code": "DEPS-10",
+      "name": "Dependency & Lockfile Auditor #10",
+      "capability": "dependency.audit"
+    },
+    {
+      "id": "MRD80-011",
+      "code": "SECR-01",
+      "name": "Secrets & Env Exposure Inspector #1",
+      "capability": "filesystem.read"
+    },
+    {
+      "id": "MRD80-012",
+      "code": "SECR-02",
+      "name": "Secrets & Env Exposure Inspector #2",
+      "capability": "filesystem.read"
+    }
+  ],
+  "summary": {
+    "inspectedFiles": 90,
+    "npmVulnerabilities": 0,
+    "codeFindings": 0,
+    "verifiedEvidence": true,
+    "reVerifiedAfterCheck": true,
+    "durationMs": 4094
+  },
+  "findings": [],
+  "evidence": [
+    {
+      "id": "EVD-D4E942",
+      "type": "project-static-scan",
+      "verified": true,
+      "inspectedFilesCount": 90,
+      "hasLockfile": true,
+      "observedAt": "2026-11-24T16:46:21.361Z"
+    },
+    {
+      "id": "EVD-007EAE",
+      "type": "npm-audit",
+      "verified": true,
+      "totalVulnerabilities": 0,
+      "bySeverity": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "observedAt": "2026-11-24T16:46:21.361Z"
+    }
+  ],
+  "evidenceBundleHash": "e4bfcdce848c5485ae315c7ccb0a7b7aa930412baf96c615c8cd88aeccdc2bd0",
+  "remediationPlan": [],
+  "startedAt": "2026-11-24T16:46:17.778Z",
+  "completedAt": "2026-11-24T16:46:21.877Z"
+}

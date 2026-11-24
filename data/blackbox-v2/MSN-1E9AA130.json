@@ -1,0 +1,213 @@
+{
+  "mission": {
+    "missionId": "MSN-1E9AA130",
+    "targetScope": "verified-local-lab",
+    "objective": "Read-only dependency and local listener baseline",
+    "status": "COMPLETED",
+    "startedAt": "2026-11-24T16:31:52.975Z",
+    "completedAt": "2026-11-24T16:31:56.567Z"
+  },
+  "integrity": {
+    "valid": true,
+    "records": 6,
+    "headHash": "8088e2a15ee114a7ca905736341361b71cb06256177b6dd4e812c157c39d6a3d"
+  },
+  "missionDigest": "8088e2a15ee114a7ca905736341361b71cb06256177b6dd4e812c157c39d6a3d",
+  "events": [
+    {
+      "index": 0,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.565Z",
+      "kind": "EVENT",
+      "payload": {
+        "ts": "2026-11-24T16:31:56.500Z",
+        "source": "dependency-audit",
+        "asset": "/mnt/c/Users/gtupo/marauder-ai-web",
+        "severity": "LOW",
+        "category": "dependencies",
+        "message": "vulns=0, highOrCritical=0, lockMismatch=false, outdated=1, suspicious=0",
+        "dedupHash": "60dcfd022713728b7fd288793d7c6c993cdb775c46e1f0bc40e52c28b1ce1d66",
+        "correlatedCountOnAsset": 1,
+        "correlatedSpike": false,
+        "riskScore": 15
+      },
+      "prevHash": "GENESIS",
+      "hash": "bc77f0b101d4429a971689a03dae6110cb87609bec9838040afe9cf5e7e9c5f1"
+    },
+    {
+      "index": 1,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.565Z",
+      "kind": "EVENT",
+      "payload": {
+        "ts": "2026-11-24T16:31:56.542Z",
+        "source": "local-listeners",
+        "asset": "localhost",
+        "severity": "LOW",
+        "category": "network-sockets",
+        "message": "listening=6, boundAllInterfaces=0",
+        "dedupHash": "d1a27d840cfd845ab60bd7d12387e872b834cd2953f1c664ba1031bab95ee7d3",
+        "correlatedCountOnAsset": 1,
+        "correlatedSpike": false,
+        "riskScore": 15
+      },
+      "prevHash": "bc77f0b101d4429a971689a03dae6110cb87609bec9838040afe9cf5e7e9c5f1",
+      "hash": "2b8125c26a101db2fcf8e7c6ab765d876ac3d32f99e9e9632296583c63017a77"
+    }
+  ],
+  "evidences": [
+    {
+      "index": 2,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.566Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "npm audit --json + package/lock inspection",
+        "evidenceHash": "bc20f8b90ac0956659022e36764056a458497f8f35aab0122bb735850bad512f",
+        "observedAt": "2026-11-24T16:31:56.501Z"
+      },
+      "prevHash": "2b8125c26a101db2fcf8e7c6ab765d876ac3d32f99e9e9632296583c63017a77",
+      "hash": "50f2712ee96d2036327ecb1e3246a916df2675ca4087cfb47e1ae2f7f92b1b32"
+    },
+    {
+      "index": 3,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.566Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "ss -tlpn",
+        "evidenceHash": "842e7b7c50bb7bbb7182f41bbf0c9f2dfcc3094812d74a11ce5493400ac7f8b4",
+        "observedAt": "2026-11-24T16:31:56.542Z"
+      },
+      "prevHash": "50f2712ee96d2036327ecb1e3246a916df2675ca4087cfb47e1ae2f7f92b1b32",
+      "hash": "48fe49d9d6473384aaffc240016f2d7c01d18570602723fd04caa84c08b71f01"
+    }
+  ],
+  "decisions": [
+    {
+      "index": 4,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.567Z",
+      "kind": "DECISION",
+      "payload": {
+        "stage": "AUTHORIZED",
+        "proposalId": "PRP-D46767",
+        "targetScope": "verified-local-lab",
+        "riskLevel": "LOW",
+        "policyReason": "POLICY_PERMITTED",
+        "quorumPassed": true,
+        "evidenceHash": "bc20f8b90ac0956659022e36764056a458497f8f35aab0122bb735850bad512f",
+        "authorized": true
+      },
+      "prevHash": "48fe49d9d6473384aaffc240016f2d7c01d18570602723fd04caa84c08b71f01",
+      "hash": "ebf6ae53cbf12afa366a6a6db30e28332792aa7e96f1ba42f1d46d6abd520525"
+    }
+  ],
+  "chain": [
+    {
+      "index": 0,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.565Z",
+      "kind": "EVENT",
+      "payload": {
+        "ts": "2026-11-24T16:31:56.500Z",
+        "source": "dependency-audit",
+        "asset": "/mnt/c/Users/gtupo/marauder-ai-web",
+        "severity": "LOW",
+        "category": "dependencies",
+        "message": "vulns=0, highOrCritical=0, lockMismatch=false, outdated=1, suspicious=0",
+        "dedupHash": "60dcfd022713728b7fd288793d7c6c993cdb775c46e1f0bc40e52c28b1ce1d66",
+        "correlatedCountOnAsset": 1,
+        "correlatedSpike": false,
+        "riskScore": 15
+      },
+      "prevHash": "GENESIS",
+      "hash": "bc77f0b101d4429a971689a03dae6110cb87609bec9838040afe9cf5e7e9c5f1"
+    },
+    {
+      "index": 1,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.565Z",
+      "kind": "EVENT",
+      "payload": {
+        "ts": "2026-11-24T16:31:56.542Z",
+        "source": "local-listeners",
+        "asset": "localhost",
+        "severity": "LOW",
+        "category": "network-sockets",
+        "message": "listening=6, boundAllInterfaces=0",
+        "dedupHash": "d1a27d840cfd845ab60bd7d12387e872b834cd2953f1c664ba1031bab95ee7d3",
+        "correlatedCountOnAsset": 1,
+        "correlatedSpike": false,
+        "riskScore": 15
+      },
+      "prevHash": "bc77f0b101d4429a971689a03dae6110cb87609bec9838040afe9cf5e7e9c5f1",
+      "hash": "2b8125c26a101db2fcf8e7c6ab765d876ac3d32f99e9e9632296583c63017a77"
+    },
+    {
+      "index": 2,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.566Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "npm audit --json + package/lock inspection",
+        "evidenceHash": "bc20f8b90ac0956659022e36764056a458497f8f35aab0122bb735850bad512f",
+        "observedAt": "2026-11-24T16:31:56.501Z"
+      },
+      "prevHash": "2b8125c26a101db2fcf8e7c6ab765d876ac3d32f99e9e9632296583c63017a77",
+      "hash": "50f2712ee96d2036327ecb1e3246a916df2675ca4087cfb47e1ae2f7f92b1b32"
+    },
+    {
+      "index": 3,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.566Z",
+      "kind": "EVIDENCE",
+      "payload": {
+        "verified": true,
+        "source": "ss -tlpn",
+        "evidenceHash": "842e7b7c50bb7bbb7182f41bbf0c9f2dfcc3094812d74a11ce5493400ac7f8b4",
+        "observedAt": "2026-11-24T16:31:56.542Z"
+      },
+      "prevHash": "50f2712ee96d2036327ecb1e3246a916df2675ca4087cfb47e1ae2f7f92b1b32",
+      "hash": "48fe49d9d6473384aaffc240016f2d7c01d18570602723fd04caa84c08b71f01"
+    },
+    {
+      "index": 4,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.567Z",
+      "kind": "DECISION",
+      "payload": {
+        "stage": "AUTHORIZED",
+        "proposalId": "PRP-D46767",
+        "targetScope": "verified-local-lab",
+        "riskLevel": "LOW",
+        "policyReason": "POLICY_PERMITTED",
+        "quorumPassed": true,
+        "evidenceHash": "bc20f8b90ac0956659022e36764056a458497f8f35aab0122bb735850bad512f",
+        "authorized": true
+      },
+      "prevHash": "48fe49d9d6473384aaffc240016f2d7c01d18570602723fd04caa84c08b71f01",
+      "hash": "ebf6ae53cbf12afa366a6a6db30e28332792aa7e96f1ba42f1d46d6abd520525"
+    },
+    {
+      "index": 5,
+      "missionId": "MSN-1E9AA130",
+      "ts": "2026-11-24T16:31:56.567Z",
+      "kind": "FINALIZE",
+      "payload": {
+        "missionId": "MSN-1E9AA130",
+        "status": "COMPLETED",
+        "completedAt": "2026-11-24T16:31:56.567Z",
+        "eventCount": 2,
+        "evidenceCount": 2,
+        "decisionCount": 1,
+        "headHash": "ebf6ae53cbf12afa366a6a6db30e28332792aa7e96f1ba42f1d46d6abd520525"
+      },
+      "prevHash": "ebf6ae53cbf12afa366a6a6db30e28332792aa7e96f1ba42f1d46d6abd520525",
+      "hash": "8088e2a15ee114a7ca905736341361b71cb06256177b6dd4e812c157c39d6a3d"
+    }
+  ]
+}

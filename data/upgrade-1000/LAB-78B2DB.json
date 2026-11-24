@@ -1,0 +1,16 @@
+{
+  "experimentId": "LAB-78B2DB",
+  "isolated": true,
+  "sandboxPolicy": "NO_PRODUCTION_MUTATION_AUTO_RESET",
+  "artifactName": "package.json",
+  "sizeBytes": 265,
+  "format": "TEXT_OR_BINARY",
+  "entropy": 4.8108,
+  "highEntropyOrPacked": false,
+  "hashes": {
+    "sha256": "331b6b0e9e54189bce83e29fc1ae74d97cdab292150962dca772c34d0e04bdbc",
+    "md5": "2e153dcdcdd6fddae1984afeebf21dd9"
+  },
+  "chainOfCustodyHash": "938e1672b1338694f7784b20ab6db2d0ebe8e64c1d5c4f5a748cfcbe49627edf",
+  "analyzedAt": "2026-11-24T16:34:29.973Z"
+}
