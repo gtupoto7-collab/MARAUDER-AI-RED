@@ -1,0 +1,87 @@
+{
+  "edition": "MARAUDER SECURITY — APOCALYPSE EDITION",
+  "mission": "BUILD THE NEXT GENERATION OF AI CYBER DEFENSE.",
+  "motto": [
+    "WE DON'T BUILD TOOLS. WE BUILD INTELLIGENCE.",
+    "WE DON'T GUESS. WE VERIFY.",
+    "WE DON'T JUST DETECT THREATS. WE DEFEND."
+  ],
+  "coreEngines": [
+    {
+      "id": "MEGATRON-SECURITY-CORE",
+      "role": "Централен AI защитен мозък и координатор",
+      "capabilities": [
+        "Multi-Agent Intelligence",
+        "Autonomous Security Operations",
+        "AI Threat Correlation",
+        "Security Decision Engine",
+        "Predictive Threat Analysis",
+        "Automated Incident Investigation",
+        "Continuous Security Monitoring",
+        "AI Security Memory"
+      ]
+    },
+    {
+      "id": "MARAUDER-APOCALYPSE-ENGINE",
+      "role": "Malware, Zero-Day и Vulnerability Intelligence лаборатория",
+      "capabilities": [
+        "AI Malware Classification",
+        "Advanced YARA Engine",
+        "Ghidra Integration & Reverse Engineering",
+        "CAPE Sandbox",
+        "REMnux Integration",
+        "ELF/PE/APK Analysis",
+        "Malware Family Intelligence",
+        "Behavioral, Ransomware & Rootkit Detection",
+        "CVE Intelligence & Zero-Day Research",
+        "AI Forensic Reports"
+      ]
+    },
+    {
+      "id": "RED-AUTONOMOUS-SOC",
+      "role": "Автоматизиран конвейер за откриване, анализ, защита и одит",
+      "pipeline": [
+        "1. Откриване на подозрителна активност",
+        "2. Събиране на доказателства от AI агент",
+        "3. Поведенчески анализ от втори агент",
+        "4. Проверка в Threat Intelligence от трети агент",
+        "5. Оценка на риска от MEGATRON",
+        "6. Предложение за защитно действие от BLUE TEAM",
+        "7. Директорско одобрение за критични операции + Audit Log"
+      ]
+    }
+  ],
+  "threatIntelligenceSources": [
+    { "source": "MITRE ATT&CK", "capability": "Анализ на техники" },
+    { "source": "CISA KEV", "capability": "Известни експлоатирани уязвимости" },
+    { "source": "MalwareBazaar", "capability": "Malware intelligence" },
+    { "source": "URLhaus", "capability": "Злонамерени URL адреси" },
+    { "source": "AbuseIPDB", "capability": "IP репутация" },
+    { "source": "AlienVault OTX", "capability": "Threat intelligence" },
+    { "source": "OpenCTI", "capability": "Разузнавателни данни" },
+    { "source": "MISP", "capability": "IOC управление" }
+  ],
+  "coreTechnologies": [
+    "LangGraph",
+    "Wazuh",
+    "OpenCTI",
+    "Velociraptor",
+    "Falco",
+    "Docker Sandbox",
+    "HashiCorp Vault",
+    "Sigma",
+    "YARA-X",
+    "OpenTelemetry"
+  ],
+  "benchmarks": [
+    { "trial": "Malware Detection", "metric": "Откриваемост" },
+    { "trial": "Threat Detection", "metric": "Точност" },
+    { "trial": "False Positives", "metric": "Фалшиви сигнали" },
+    { "trial": "Incident Response", "metric": "Време за реакция" },
+    { "trial": "Vulnerability Analysis", "metric": "Качество на анализа" },
+    { "trial": "AI Security", "metric": "Устойчивост срещу prompt injection" },
+    { "trial": "Agent Reliability", "metric": "Успешно изпълнение" },
+    { "trial": "Infrastructure Security", "metric": "Покритие на системите" }
+  ],
+  "benchmarkRuns": []
+}
