@@ -1,0 +1,44 @@
+{
+  "positioning": "LEGITIMATE_AI_CYBERSECURITY_LAB",
+  "publicMode": "DEFENSIVE_RESEARCH_AND_LAB_OVERVIEW",
+  "privateLab": {
+    "name": "PRIVATE_RED_LAB",
+    "visibility": "NON_PUBLIC",
+    "scope": "AUTHORIZED_TARGETS_AND_ISOLATED_SANDBOXES_ONLY",
+    "focusAreas": [
+      "malware research",
+      "reverse engineering",
+      "vulnerability research",
+      "AI security",
+      "sandbox experiments",
+      "threat intelligence",
+      "controlled red-team testing",
+      "defensive automations"
+    ]
+  },
+  "familyHierarchy": [
+    "RED SOFTWARE TEAM",
+    "MARAUDER DIRECTOR",
+    "MEGATRON CORE",
+    "AI RESEARCH (GPT/Gemini, Llama/Local)",
+    "SECURITY AI (SOC/Defense, Pentest Lab)",
+    "MALWARE AI (Analysis, Forensics)",
+    "CYBER LAB (Windows / Linux / Android / Cloud)"
+  ],
+  "taskPipeline": [
+    "RECON",
+    "ANALYSIS",
+    "DETECTION",
+    "VALIDATION",
+    "DEFENSE",
+    "REPORT"
+  ],
+  "scaleTarget": {
+    "approach": "SPECIALIZED_ROLES_WITH_HANDOFF",
+    "targetRange": "100-200 specialized agents with distinct profession, memory, permissions and audit logs"
+  },
+  "strictRules": {
+    "noSelfEscalationOfUnlimitedPermissions": true,
+    "auditAllHandoffs": true
+  }
+}
