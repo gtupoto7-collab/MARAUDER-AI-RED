@@ -1,0 +1,51 @@
+{
+  "ecosystem": "MARAUDER AI — AUTONOMOUS CYBER DEFENSE ECOSYSTEM",
+  "principle": "NO FAKE AGENTS. REAL TOOLS. REAL INTELLIGENCE. VERIFIED RESULTS.",
+  "priorities": [
+    { "rank": 1, "module": "GOD MODE", "role": "Централен AI Commander и оркестратор" },
+    { "rank": 2, "module": "AGENT ARMORY", "role": "Реални инструменти, права и изолирана среда" },
+    { "rank": 3, "module": "LIVE THREAT RADAR", "role": "Глобална Threat Intelligence и корелация" },
+    { "rank": 4, "module": "AUTONOMOUS SOC", "role": "Автоматизиран анализ и реакция" },
+    { "rank": 5, "module": "LOCAL CONTROL HUB", "role": "Управление на Kali, Ubuntu, WSL, Windows и Termux" }
+  ],
+  "autonomousArmy": [
+    { "name": "MEGATRON", "specialization": "Главен Security Commander", "model": "llama3.2", "permissions": "commander-scoped", "memory": true },
+    { "name": "MARAUDER V12", "specialization": "Advanced Cyber Defense", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "MARAUDER 11.2 QUANTUM", "specialization": "AI Intelligence", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "MARAUDER-8.4", "specialization": "Network Security", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "AKU-AI", "specialization": "Autonomous Assistant", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "MALWARE HUNTER", "specialization": "Malware Analysis", "model": "llama3.2", "permissions": "sandbox-read-only", "memory": true },
+    { "name": "GHOST GUARDIAN", "specialization": "Network Defense", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "ROOT GUARDIAN", "specialization": "Linux Security", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "PHANTOM AI", "specialization": "Threat Intelligence", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "RED SENTINEL", "specialization": "Incident Response", "model": "llama3.2", "permissions": "approval-required", "memory": true },
+    { "name": "BLACKBOX AI", "specialization": "Digital Forensics", "model": "llama3.2", "permissions": "read-only", "memory": true },
+    { "name": "CYBER TITAN", "specialization": "Infrastructure Security", "model": "llama3.2", "permissions": "read-only", "memory": true }
+  ],
+  "radarSources": [
+    "MITRE ATT&CK",
+    "CISA",
+    "AlienVault OTX",
+    "AbuseIPDB",
+    "URLhaus",
+    "MalwareBazaar",
+    "OpenCTI"
+  ],
+  "localTargets": [
+    "Kali Linux",
+    "Ubuntu",
+    "Windows PowerShell",
+    "WSL",
+    "Termux",
+    "Docker"
+  ],
+  "trustControls": [
+    "MFA",
+    "Zero-Trust Architecture",
+    "Data Encryption",
+    "Protected API Keys",
+    "Immutable Audit Logs",
+    "Automated Backups",
+    "24/7 Monitoring"
+  ]
+}
