@@ -1,0 +1,1302 @@
+{
+  "totalUnits": 185,
+  "top100Count": 100,
+  "oldMalwareCount": 85,
+  "units": [
+    {
+      "uid": "AI-1",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Microsoft Security Copilot",
+      "description": "AI анализ и реакция при инциденти"
+    },
+    {
+      "uid": "AI-2",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Security Alert Triage Agent",
+      "description": "Анализира и класифицира security alerts"
+    },
+    {
+      "uid": "AI-3",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Phishing Triage Agent",
+      "description": "Разпознава фишинг съобщения"
+    },
+    {
+      "uid": "AI-4",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Threat Intelligence Briefing Agent",
+      "description": "Събира и анализира threat intelligence"
+    },
+    {
+      "uid": "AI-5",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Threat Hunting Assistant",
+      "description": "Търси подозрителна активност"
+    },
+    {
+      "uid": "AI-6",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Dynamic Threat Detection Agent",
+      "description": "Открива скрити заплахи"
+    },
+    {
+      "uid": "AI-7",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Security Analyst Agent",
+      "description": "Анализира големи количества security данни"
+    },
+    {
+      "uid": "AI-8",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Google SecOps Triage Agent",
+      "description": "Автоматично разследва сигнали"
+    },
+    {
+      "uid": "AI-9",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Google SecOps Threat Hunting Agent",
+      "description": "Проактивно търсене на заплахи"
+    },
+    {
+      "uid": "AI-10",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Google Detection Engineering Agent",
+      "description": "Подпомага създаването на detection правила"
+    },
+    {
+      "uid": "AI-11",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Google Malware Analysis Agent",
+      "description": "Анализира подозрителен код"
+    },
+    {
+      "uid": "AI-12",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "CrowdStrike Charlotte AI",
+      "description": "AI анализатор за корпоративна сигурност"
+    },
+    {
+      "uid": "AI-13",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "SentinelOne Purple AI",
+      "description": "AI разследване и response"
+    },
+    {
+      "uid": "AI-14",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Palo Alto Cortex AgentiX",
+      "description": "Координира специализирани security агенти"
+    },
+    {
+      "uid": "AI-15",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Prophet Security",
+      "description": "Автономно разследване на alerts"
+    },
+    {
+      "uid": "AI-16",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Dropzone AI",
+      "description": "AI SOC анализатор"
+    },
+    {
+      "uid": "AI-17",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "7AI",
+      "description": "Автоматизирано разследване и реакция"
+    },
+    {
+      "uid": "AI-18",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Torq HyperSOC",
+      "description": "AI автоматизация на SOC операции"
+    },
+    {
+      "uid": "AI-19",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Intezer",
+      "description": "Malware анализ и threat investigation"
+    },
+    {
+      "uid": "AI-20",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Radiant Security",
+      "description": "AI автоматизация на security операции"
+    },
+    {
+      "uid": "AI-21",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Exaforce",
+      "description": "AI detection и investigation"
+    },
+    {
+      "uid": "AI-22",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "D3 Security",
+      "description": "AI security orchestration"
+    },
+    {
+      "uid": "AI-23",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Simbian",
+      "description": "Автономен SOC"
+    },
+    {
+      "uid": "AI-24",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Qevlar AI",
+      "description": "Автоматизирано разследване на заплахи"
+    },
+    {
+      "uid": "AI-25",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Command Zero",
+      "description": "AI cyber investigations"
+    },
+    {
+      "uid": "AI-26",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Conifers",
+      "description": "AI SOC платформа"
+    },
+    {
+      "uid": "AI-27",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Crogl",
+      "description": "AI security investigation"
+    },
+    {
+      "uid": "AI-28",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Legion Security",
+      "description": "Автоматизация на security анализи"
+    },
+    {
+      "uid": "AI-29",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Mate Security",
+      "description": "AI SOC анализатор"
+    },
+    {
+      "uid": "AI-30",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Nebulock",
+      "description": "AI security платформа"
+    },
+    {
+      "uid": "AI-31",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Vega Security",
+      "description": "AI detection и response"
+    },
+    {
+      "uid": "AI-32",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "tenex.ai",
+      "description": "Автоматизирани SOC операции"
+    },
+    {
+      "uid": "AI-33",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "BlinkOps",
+      "description": "AI security automation"
+    },
+    {
+      "uid": "AI-34",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Swimlane Turbine",
+      "description": "AI orchestration"
+    },
+    {
+      "uid": "AI-35",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "ReliaQuest GreyMatter",
+      "description": "Threat detection и response"
+    },
+    {
+      "uid": "AI-36",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Darktrace Cyber AI Analyst",
+      "description": "Автоматичен анализ на инциденти"
+    },
+    {
+      "uid": "AI-37",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Vectra AI",
+      "description": "Откриване на мрежови заплахи"
+    },
+    {
+      "uid": "AI-38",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Stellar Cyber",
+      "description": "Open XDR с AI анализ"
+    },
+    {
+      "uid": "AI-39",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Hunters",
+      "description": "Threat detection и investigation"
+    },
+    {
+      "uid": "AI-40",
+      "group": "TOP 100 AI",
+      "category": "I. AI SOC",
+      "name": "Arctic Wolf Aurora",
+      "description": "AI-подпомогната защита и мониторинг"
+    },
+    {
+      "uid": "AI-41",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "XBOW",
+      "description": "Автономно AI тестване на уеб приложения"
+    },
+    {
+      "uid": "AI-42",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "horizon3.ai NodeZero",
+      "description": "Автоматизирано валидиране на уязвимости"
+    },
+    {
+      "uid": "AI-43",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Pentera",
+      "description": "Automated security validation"
+    },
+    {
+      "uid": "AI-44",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Escape",
+      "description": "API и web application security testing"
+    },
+    {
+      "uid": "AI-45",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Aikido Attack",
+      "description": "Автоматизирано тестване на приложения"
+    },
+    {
+      "uid": "AI-46",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "RunSybil",
+      "description": "AI penetration testing"
+    },
+    {
+      "uid": "AI-47",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Hadrian",
+      "description": "Attack surface intelligence"
+    },
+    {
+      "uid": "AI-48",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Terra Security",
+      "description": "AI security testing"
+    },
+    {
+      "uid": "AI-49",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Ethiack",
+      "description": "Автоматизирано security testing"
+    },
+    {
+      "uid": "AI-50",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "PentAGI",
+      "description": "Open-source AI pentesting система"
+    },
+    {
+      "uid": "AI-51",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Strix",
+      "description": "AI-powered application security testing"
+    },
+    {
+      "uid": "AI-52",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Shannon",
+      "description": "Автономно тестване на уеб приложения"
+    },
+    {
+      "uid": "AI-53",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "PentestGPT",
+      "description": "AI помощник за penetration testing"
+    },
+    {
+      "uid": "AI-54",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "HexStrike AI",
+      "description": "MCP интеграция между AI агенти и security инструменти"
+    },
+    {
+      "uid": "AI-55",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "Nebula",
+      "description": "AI pentesting CLI помощник"
+    },
+    {
+      "uid": "AI-56",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "DarkMoon",
+      "description": "Multi-agent security testing"
+    },
+    {
+      "uid": "AI-57",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "CAI – Cybersecurity AI",
+      "description": "AI framework за cybersecurity агенти"
+    },
+    {
+      "uid": "AI-58",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "AutoPentest-DRL",
+      "description": "Изследователска система за автоматизиран pentesting"
+    },
+    {
+      "uid": "AI-59",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "PentestAgent",
+      "description": "AI агент за security testing"
+    },
+    {
+      "uid": "AI-60",
+      "group": "TOP 100 AI",
+      "category": "II. AI Pentesting",
+      "name": "CyberStrikeAI",
+      "description": "AI-assisted security testing"
+    },
+    {
+      "uid": "AI-61",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "GitHub Copilot Autofix",
+      "description": "Предлага поправки на уязвимости в кода"
+    },
+    {
+      "uid": "AI-62",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Snyk DeepCode AI",
+      "description": "AI анализ на source code"
+    },
+    {
+      "uid": "AI-63",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Semgrep Assistant",
+      "description": "Анализ и обяснение на code vulnerabilities"
+    },
+    {
+      "uid": "AI-64",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Checkmarx One",
+      "description": "Application security"
+    },
+    {
+      "uid": "AI-65",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Veracode Fix",
+      "description": "Автоматизирани предложения за поправки"
+    },
+    {
+      "uid": "AI-66",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "GitLab Duo Security",
+      "description": "AI помощ при code security"
+    },
+    {
+      "uid": "AI-67",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Amazon Q Developer",
+      "description": "AI помощ за разработка и security анализ"
+    },
+    {
+      "uid": "AI-68",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "SonarQube AI CodeFix",
+      "description": "Анализ и поправка на проблеми в кода"
+    },
+    {
+      "uid": "AI-69",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Qwiet AI",
+      "description": "Application security intelligence"
+    },
+    {
+      "uid": "AI-70",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Endor Labs",
+      "description": "Software supply-chain security"
+    },
+    {
+      "uid": "AI-71",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Apiiro",
+      "description": "Application security posture"
+    },
+    {
+      "uid": "AI-72",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Cycode",
+      "description": "Software supply-chain protection"
+    },
+    {
+      "uid": "AI-73",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "mend.io",
+      "description": "Dependency и application security"
+    },
+    {
+      "uid": "AI-74",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "socket.dev",
+      "description": "Откриване на рискови software dependencies"
+    },
+    {
+      "uid": "AI-75",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "ArmorCode",
+      "description": "Application security management"
+    },
+    {
+      "uid": "AI-76",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Wiz AI",
+      "description": "Cloud security анализ"
+    },
+    {
+      "uid": "AI-77",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Orca Security",
+      "description": "Cloud threat detection"
+    },
+    {
+      "uid": "AI-78",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Tenable Hexa AI",
+      "description": "AI security и exposure management"
+    },
+    {
+      "uid": "AI-79",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Sysdig Sage",
+      "description": "AI cloud security assistant"
+    },
+    {
+      "uid": "AI-80",
+      "group": "TOP 100 AI",
+      "category": "III. AI Application & Cloud Security",
+      "name": "Upwind AI Agents",
+      "description": "Автоматизиран cloud security анализ"
+    },
+    {
+      "uid": "AI-81",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Palo Alto Prisma AIRS",
+      "description": "AI application и agent security"
+    },
+    {
+      "uid": "AI-82",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Prompt Security",
+      "description": "Контролира AI взаимодействия и инструменти"
+    },
+    {
+      "uid": "AI-83",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Zenity",
+      "description": "Защита и управление на AI агенти"
+    },
+    {
+      "uid": "AI-84",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Noma Security",
+      "description": "AI security posture management"
+    },
+    {
+      "uid": "AI-85",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Straiker",
+      "description": "Защита на AI агенти и приложения"
+    },
+    {
+      "uid": "AI-86",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Pillar Security",
+      "description": "AI application security"
+    },
+    {
+      "uid": "AI-87",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Lakera Guard",
+      "description": "Защита от prompt injection и AI атаки"
+    },
+    {
+      "uid": "AI-88",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Check Point AI Security",
+      "description": "Защита на AI инфраструктура"
+    },
+    {
+      "uid": "AI-89",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Cisco AI Defense",
+      "description": "AI security testing и защита"
+    },
+    {
+      "uid": "AI-90",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "HiddenLayer",
+      "description": "Защита на machine learning модели"
+    },
+    {
+      "uid": "AI-91",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Protect AI",
+      "description": "ML supply-chain security"
+    },
+    {
+      "uid": "AI-92",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Robust Intelligence",
+      "description": "AI model security testing"
+    },
+    {
+      "uid": "AI-93",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "WitnessAI",
+      "description": "AI governance и runtime security"
+    },
+    {
+      "uid": "AI-94",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "CalypsoAI",
+      "description": "AI security и red teaming"
+    },
+    {
+      "uid": "AI-95",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Arthur AI",
+      "description": "AI model monitoring"
+    },
+    {
+      "uid": "AI-96",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Fiddler AI",
+      "description": "AI observability и model security"
+    },
+    {
+      "uid": "AI-97",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Patronus AI",
+      "description": "AI evaluation и testing"
+    },
+    {
+      "uid": "AI-98",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Giskard",
+      "description": "AI model vulnerability testing"
+    },
+    {
+      "uid": "AI-99",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Promptfoo",
+      "description": "LLM security testing"
+    },
+    {
+      "uid": "AI-100",
+      "group": "TOP 100 AI",
+      "category": "IV. AI Agent Security",
+      "name": "Garak",
+      "description": "LLM vulnerability scanner"
+    },
+    {
+      "uid": "OLD-1",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "LAMEHUG / PROMPTSTEAL",
+      "description": "AI-assisted information stealer"
+    },
+    {
+      "uid": "OLD-2",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "PROMPTFLUX",
+      "description": "Experimental dropper using AI code regeneration"
+    },
+    {
+      "uid": "OLD-3",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "PROMPTLOCK",
+      "description": "Ransomware PoC with dynamic AI script generation"
+    },
+    {
+      "uid": "OLD-4",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "QUIETVAULT",
+      "description": "Uses AI and local AI tooling during credential discovery"
+    },
+    {
+      "uid": "OLD-5",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "s1ngularity",
+      "description": "Abuses AI developer tooling in supply-chain context"
+    },
+    {
+      "uid": "OLD-6",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "LazyWiper",
+      "description": "Reported as likely AI-generated destructive malware"
+    },
+    {
+      "uid": "OLD-7",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "MiniFast",
+      "description": "Suspected AI-assisted development"
+    },
+    {
+      "uid": "OLD-8",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "MiniJunk",
+      "description": "Persistence and remote execution behavior"
+    },
+    {
+      "uid": "OLD-9",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "VoidLink",
+      "description": "Reported as heavily AI-developed Linux framework"
+    },
+    {
+      "uid": "OLD-10",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "PromptSpy",
+      "description": "Researched in agentic malware context"
+    },
+    {
+      "uid": "OLD-11",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "HONESTCUE",
+      "description": "Researched as LLM-querying proof of concept"
+    },
+    {
+      "uid": "OLD-12",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "FRUITSHELL",
+      "description": "Associated with AI-assisted campaigns"
+    },
+    {
+      "uid": "OLD-13",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "CANFAIL",
+      "description": "Associated with AI-generated decoy code"
+    },
+    {
+      "uid": "OLD-14",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "LONGSTREAM",
+      "description": "Associated with AI-generated code and decoys"
+    },
+    {
+      "uid": "OLD-15",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "BACKUPOSINT v9.0 APEX PREDATOR",
+      "description": "Reported as AI-developed toolset"
+    },
+    {
+      "uid": "OLD-16",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "WannaCry",
+      "description": "Widespread ransomware propagation"
+    },
+    {
+      "uid": "OLD-17",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "NotPetya",
+      "description": "Destructive operations disguised as ransomware"
+    },
+    {
+      "uid": "OLD-18",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "LockBit",
+      "description": "Ransomware operations"
+    },
+    {
+      "uid": "OLD-19",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "BlackCat / ALPHV",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-20",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Black Basta",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-21",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Ryuk",
+      "description": "Enterprise ransomware operations"
+    },
+    {
+      "uid": "OLD-22",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Conti",
+      "description": "Organized ransomware operations"
+    },
+    {
+      "uid": "OLD-23",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "REvil / Sodinokibi",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-24",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Cl0p",
+      "description": "Large-scale campaigns against organizations"
+    },
+    {
+      "uid": "OLD-25",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Akira",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-26",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Qilin",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-27",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Hive",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-28",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Ragnar Locker",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-29",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "DarkSide",
+      "description": "Ransomware"
+    },
+    {
+      "uid": "OLD-30",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "HermeticWiper",
+      "description": "Data destruction"
+    },
+    {
+      "uid": "OLD-31",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "RedLine",
+      "description": "Information stealer"
+    },
+    {
+      "uid": "OLD-32",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Lumma",
+      "description": "Information stealer"
+    },
+    {
+      "uid": "OLD-33",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Vidar",
+      "description": "Information stealer"
+    },
+    {
+      "uid": "OLD-34",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "StealC",
+      "description": "Information stealer"
+    },
+    {
+      "uid": "OLD-35",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Raccoon Stealer",
+      "description": "Information stealer"
+    },
+    {
+      "uid": "OLD-36",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Agent Tesla",
+      "description": "Spyware and credential stealer"
+    },
+    {
+      "uid": "OLD-37",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "FormBook",
+      "description": "Information stealer"
+    },
+    {
+      "uid": "OLD-38",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "XLoader",
+      "description": "Loader malware"
+    },
+    {
+      "uid": "OLD-39",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Snake Keylogger",
+      "description": "Keylogger"
+    },
+    {
+      "uid": "OLD-40",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "HawkEye",
+      "description": "Credential stealer"
+    },
+    {
+      "uid": "OLD-41",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Remcos",
+      "description": "Remote access software abused in intrusions"
+    },
+    {
+      "uid": "OLD-42",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "DarkComet",
+      "description": "Remote access trojan"
+    },
+    {
+      "uid": "OLD-43",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "AsyncRAT",
+      "description": "Remote access trojan"
+    },
+    {
+      "uid": "OLD-44",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "njRAT",
+      "description": "Remote access trojan"
+    },
+    {
+      "uid": "OLD-45",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Quasar RAT",
+      "description": "Remote administration tool abused in attacks"
+    },
+    {
+      "uid": "OLD-46",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Pegasus",
+      "description": "Mobile spyware"
+    },
+    {
+      "uid": "OLD-47",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Predator",
+      "description": "Mobile spyware"
+    },
+    {
+      "uid": "OLD-48",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Cerberus",
+      "description": "Android banking trojan"
+    },
+    {
+      "uid": "OLD-49",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Anubis",
+      "description": "Android banking malware"
+    },
+    {
+      "uid": "OLD-50",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Hydra",
+      "description": "Android banking trojan"
+    },
+    {
+      "uid": "OLD-51",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "FluBot",
+      "description": "Android malware"
+    },
+    {
+      "uid": "OLD-52",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Joker",
+      "description": "Android spyware and subscription fraud"
+    },
+    {
+      "uid": "OLD-53",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "SpyNote",
+      "description": "Android RAT"
+    },
+    {
+      "uid": "OLD-54",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Triada",
+      "description": "Android malware"
+    },
+    {
+      "uid": "OLD-55",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Octo",
+      "description": "Android banking trojan"
+    },
+    {
+      "uid": "OLD-56",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "EventBot",
+      "description": "Android banking trojan"
+    },
+    {
+      "uid": "OLD-57",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Escobar",
+      "description": "Android banking trojan"
+    },
+    {
+      "uid": "OLD-58",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Mirai",
+      "description": "IoT botnet"
+    },
+    {
+      "uid": "OLD-59",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Mozi",
+      "description": "IoT botnet"
+    },
+    {
+      "uid": "OLD-60",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Qbot / QakBot",
+      "description": "Modular malware platform"
+    },
+    {
+      "uid": "OLD-61",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Emotet",
+      "description": "Malware and botnet infrastructure"
+    },
+    {
+      "uid": "OLD-62",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "TrickBot",
+      "description": "Modular malware platform"
+    },
+    {
+      "uid": "OLD-63",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Dridex",
+      "description": "Banking malware"
+    },
+    {
+      "uid": "OLD-64",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Zeus",
+      "description": "Banking trojan"
+    },
+    {
+      "uid": "OLD-65",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "IcedID",
+      "description": "Banking malware and loader"
+    },
+    {
+      "uid": "OLD-66",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "BazarLoader",
+      "description": "Loader"
+    },
+    {
+      "uid": "OLD-67",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "SmokeLoader",
+      "description": "Loader"
+    },
+    {
+      "uid": "OLD-68",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "SystemBC",
+      "description": "Proxy and malware component"
+    },
+    {
+      "uid": "OLD-69",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "VPNFilter",
+      "description": "Network device malware"
+    },
+    {
+      "uid": "OLD-70",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Cyclops Blink",
+      "description": "Network device malware"
+    },
+    {
+      "uid": "OLD-71",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "PlugX",
+      "description": "Modular malware"
+    },
+    {
+      "uid": "OLD-72",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "ShadowPad",
+      "description": "Modular backdoor"
+    },
+    {
+      "uid": "OLD-73",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Snake / Uroburos",
+      "description": "Espionage malware"
+    },
+    {
+      "uid": "OLD-74",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Turla malware tools",
+      "description": "Espionage operations tooling"
+    },
+    {
+      "uid": "OLD-75",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Lazarus malware",
+      "description": "Diverse malware families"
+    },
+    {
+      "uid": "OLD-76",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "EquationDrug",
+      "description": "Advanced espionage malware"
+    },
+    {
+      "uid": "OLD-77",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Regin",
+      "description": "Espionage platform"
+    },
+    {
+      "uid": "OLD-78",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "FinFisher",
+      "description": "Surveillance software"
+    },
+    {
+      "uid": "OLD-79",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "DarkHotel malware",
+      "description": "Targeted espionage"
+    },
+    {
+      "uid": "OLD-80",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Dacls",
+      "description": "Cross-platform malware"
+    },
+    {
+      "uid": "OLD-81",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "CrossRAT",
+      "description": "Multi-platform RAT"
+    },
+    {
+      "uid": "OLD-82",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "BendyBear",
+      "description": "Advanced implant"
+    },
+    {
+      "uid": "OLD-83",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Winnti",
+      "description": "Malware family and espionage"
+    },
+    {
+      "uid": "OLD-84",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "Kimsuky malware",
+      "description": "Espionage tooling"
+    },
+    {
+      "uid": "OLD-85",
+      "group": "OLD MALWARE",
+      "category": "Legacy / Threat Family",
+      "name": "APT29 malware",
+      "description": "Espionage components"
+    }
+  ]
+}

@@ -271,6 +271,88 @@
       </main>
     `;
     document.body.appendChild(app);
+// Страничен панел: Всеки стар malware и всеки от 100-те AI агента поотделно с описание и бутон за призоваване
+    const rightAside = document.querySelector(".mrd-grid aside:last-of-type");
+    if (rightAside && !document.getElementById("mrd-side-summon-box")) {
+      const summonBox = document.createElement("div");
+      summonBox.id = "mrd-side-summon-box";
+      summonBox.style.cssText = "border-top:1px solid #2b1016;padding-top:8px;display:flex;flex-direction:column;gap:6px";
+      summonBox.innerHTML = `
+        <div class="mrd-box-title">
+          <span>ALL UNITS // SUMMON & RUN</span>
+          <span id="mrd-summon-count" style="color:#4ade80">0</span>
+        </div>
+        <input id="mrd-summon-search" class="mrd-search" type="text" placeholder="Търси сред 100 AI + старите malware..." />
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+          <button class="mrd-qbtn" data-grp="">ВСИЧКИ</button>
+          <button class="mrd-qbtn" data-grp="TOP 100 AI">100 AI</button>
+          <button class="mrd-qbtn" data-grp="OLD MALWARE">OLD MALWARE</button>
+        </div>
+        <div id="mrd-summon-list" style="max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:5px"></div>
+      `;
+      rightAside.appendChild(summonBox);
+
+      let unifiedUnits = [];
+      let activeGroup = "";
+
+      function summonUnit(u) {
+        const titleEl = document.getElementById("mrd-center-title");
+        if (titleEl) titleEl.textContent = "ACTIVE UNIT // " + u.name.toUpperCase() + " [" + u.group + "]";
+        if (typeof appendMsg === "function") {
+          appendMsg(
+            "ai",
+            "SUMMON ENGINE",
+            "Призован <strong>" + u.name + "</strong> (" + u.group + " • " + u.category + ") — <em>" + u.description + "</em>. Стартиран в работен поток."
+          );
+        }
+      }
+
+      function renderSummonList() {
+        const q = (document.getElementById("mrd-summon-search").value || "").trim().toLowerCase();
+        const listEl = document.getElementById("mrd-summon-list");
+        const countEl = document.getElementById("mrd-summon-count");
+        if (!listEl) return;
+
+        const filtered = unifiedUnits.filter((u) => {
+          if (activeGroup && u.group !== activeGroup) return false;
+          if (!q) return true;
+          return (u.uid + " " + u.name + " " + u.group + " " + u.category + " " + u.description).toLowerCase().includes(q);
+        });
+
+        if (countEl) countEl.textContent = String(filtered.length);
+        listEl.innerHTML = filtered.slice(0, 40).map((u, i) => `
+          <div style="border:1px solid #2b1016;border-radius:7px;padding:6px 8px;background:#0c101a;display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:4px">
+              <strong style="font-size:11px;color:#fff">${u.name}</strong>
+              <span style="font-size:9px;color:#fca5a5">${u.group}</span>
+            </div>
+            <div style="font-size:10px;color:#cbd5e1;line-height:1.3">${u.description}</div>
+            <button class="mrd-btn" style="padding:4px 8px;font-size:10px" data-sum-idx="${i}">ПРИЗОВИ ДА БАЧКА</button>
+          </div>
+        `).join("");
+
+        listEl.querySelectorAll("[data-sum-idx]").forEach((btn) => {
+          btn.onclick = () => {
+            const idx = Number(btn.dataset.sumIdx);
+            if (filtered[idx]) summonUnit(filtered[idx]);
+          };
+        });
+      }
+
+      document.getElementById("mrd-summon-search").addEventListener("input", renderSummonList);
+      summonBox.querySelectorAll("[data-grp]").forEach((b) => {
+        b.onclick = () => { activeGroup = b.dataset.grp; renderSummonList(); };
+      });
+
+      fetch("/data/unified-units-catalog.json", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (!d || !Array.isArray(d.units)) return;
+          unifiedUnits = d.units;
+          renderSummonList();
+        })
+        .catch(() => {});
+    }
 // TOP 100 AI CYBERSECURITY AGENTS панел
     if (!document.getElementById("mrd-top100-section")) {
       const agentsSection = document.createElement("section");
