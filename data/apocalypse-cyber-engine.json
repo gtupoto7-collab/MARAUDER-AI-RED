@@ -1,0 +1,78 @@
+{
+  "engine": "MARAUDER APOCALYPSE CYBER ENGINE",
+  "labSection": "APOCALYPSE LAB",
+  "scopePolicy": "ONLY_OWN_OR_EXPLICITLY_AUTHORIZED_TARGETS",
+  "malwareCreationPolicy": "ANALYSIS_AND_CLASSIFICATION_ONLY_NO_MALWARE_CREATION",
+  "divisions": [
+    "HACKING LAB",
+    "MALWARE LAB",
+    "REVERSE ENGINEERING",
+    "RED TEAM / BLUE TEAM",
+    "AUTONOMOUS CYBER AI"
+  ],
+  "hackingDivision": [
+    { "id": 1, "division": "HACKING LAB", "module": "Recon Intelligence", "tools": ["Nmap", "Amass"] },
+    { "id": 2, "division": "HACKING LAB", "module": "Network Analysis", "tools": ["Wireshark", "Zeek"] },
+    { "id": 3, "division": "HACKING LAB", "module": "Vulnerability Hunter", "tools": ["Greenbone", "Nuclei"] },
+    { "id": 4, "division": "HACKING LAB", "module": "Web Security", "tools": ["Burp Suite", "OWASP ZAP"] },
+    { "id": 5, "division": "HACKING LAB", "module": "API Security", "tools": ["OWASP ZAP"] },
+    { "id": 6, "division": "HACKING LAB", "module": "Active Directory Audit", "tools": ["BloodHound"] },
+    { "id": 7, "division": "HACKING LAB", "module": "Linux Security Audit", "tools": ["Lynis"] },
+    { "id": 8, "division": "HACKING LAB", "module": "Windows Security Audit", "tools": ["Sysmon"] },
+    { "id": 9, "division": "HACKING LAB", "module": "Cloud Security", "tools": ["Prowler", "ScoutSuite"] },
+    { "id": 10, "division": "HACKING LAB", "module": "Attack Surface Intelligence", "tools": ["OWASP Amass"] },
+    { "id": 11, "division": "HACKING LAB", "module": "Container Security", "tools": ["Trivy", "Falco"] },
+    { "id": 12, "division": "HACKING LAB", "module": "Wireless Security Audit", "tools": ["Kismet"] },
+    { "id": 13, "division": "HACKING LAB", "module": "Password Security Audit", "tools": ["John the Ripper"] },
+    { "id": 14, "division": "HACKING LAB", "module": "Security Validation", "tools": ["Metasploit Framework"] },
+    { "id": 15, "division": "HACKING LAB", "module": "Attack Simulation", "tools": ["MITRE Caldera"] }
+  ],
+  "malwareApocalypse": [
+    { "id": 1, "division": "MALWARE LAB", "module": "Malware Reverse Engineering", "tools": ["Ghidra"] },
+    { "id": 2, "division": "REVERSE ENGINEERING", "module": "Binary Analysis", "tools": ["IDA Free"] },
+    { "id": 3, "division": "MALWARE LAB", "module": "Malware Classification", "tools": ["capa"] },
+    { "id": 4, "division": "MALWARE LAB", "module": "YARA Intelligence", "tools": ["YARA-X"] },
+    { "id": 5, "division": "MALWARE LAB", "module": "Windows Malware Lab", "tools": ["FLARE-VM"] },
+    { "id": 6, "division": "MALWARE LAB", "module": "Linux Malware Lab", "tools": ["REMnux"] },
+    { "id": 7, "division": "MALWARE LAB", "module": "Dynamic Sandbox", "tools": ["CAPE Sandbox"] },
+    { "id": 8, "division": "MALWARE LAB", "module": "Memory Forensics", "tools": ["Volatility 3"] },
+    { "id": 9, "division": "MALWARE LAB", "module": "Android Malware Analysis", "tools": ["MobSF"] },
+    { "id": 10, "division": "REVERSE ENGINEERING", "module": "APK Reverse Engineering", "tools": ["JADX"] },
+    { "id": 11, "division": "REVERSE ENGINEERING", "module": "PE Analyzer", "tools": ["PE-bear"] },
+    { "id": 12, "division": "REVERSE ENGINEERING", "module": "ELF Analyzer", "tools": ["Ghidra"] },
+    { "id": 13, "division": "MALWARE LAB", "module": "Malware Behavior", "tools": ["Sysmon"] },
+    { "id": 14, "division": "MALWARE LAB", "module": "IOC Extraction", "tools": ["MISP"] },
+    { "id": 15, "division": "MALWARE LAB", "module": "Malware Intelligence", "tools": ["MalwareBazaar"] }
+  ],
+  "malwareSpecialists": [
+    "MALWARE HUNTER",
+    "RANSOMWARE ANALYST",
+    "ROOTKIT DETECTOR",
+    "TROJAN INTELLIGENCE",
+    "SPYWARE ANALYST",
+    "ANDROID MALWARE HUNTER",
+    "APT INVESTIGATOR",
+    "REVERSE ENGINEERING AI",
+    "BINARY ANALYST",
+    "FORENSIC MASTER"
+  ],
+  "redBluePurple": {
+    "redTeam": ["Разрешено penetration testing", "Attack Surface Discovery", "Vulnerability Validation", "Adversary Emulation", "Security Configuration Testing", "Attack Path Analysis"],
+    "blueTeam": ["EDR Intelligence", "SIEM Correlation", "Malware Detection", "Network Defense", "Incident Response", "Threat Hunting"],
+    "purpleTeam": ["Сравнява резултатите от Red и Blue Team", "Проверява дали защитите реално издържат тестовете"]
+  },
+  "autonomousCyberAgents": [
+    { "name": "MEGATRON", "mission": "Главен координатор" },
+    { "name": "PHANTOM-X", "mission": "Разузнаване на разрешени активи" },
+    { "name": "ZERO-HUNTER", "mission": "Анализ на уязвимости" },
+    { "name": "MALWARE-X", "mission": "Malware анализ" },
+    { "name": "ROOT-REAPER", "mission": "Linux защита" },
+    { "name": "WINDOWS TITAN", "mission": "Windows защита" },
+    { "name": "NETWORK GHOST", "mission": "Мрежов анализ" },
+    { "name": "WEB DESTROYER", "mission": "Web security testing" },
+    { "name": "APT HUNTER", "mission": "Threat intelligence" },
+    { "name": "BLACKBOX", "mission": "Digital forensics" },
+    { "name": "RED SENTINEL", "mission": "Incident response" },
+    { "name": "QUANTUM SHIELD", "mission": "AI security" }
+  ]
+}
