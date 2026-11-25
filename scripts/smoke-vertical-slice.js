@@ -104,3 +104,47 @@ if (!warfareRun || !warfareRun.runId || warfareRun.automaticWeaponsRelease !== f
   throw new Error("Warfare simulation smoke check failed");
 }
 console.log("WARFARE SMOKE PASS |", warfareRun.runId, "| risk=", warfareRun.blueAssessment.riskScore, "| mc=", warfareRun.monteCarlo.expectedRiskScore);
+
+
+async function runReasonAndRouteSmokeChecks() {
+  const { MarauderAICore, GatewayModelAdapter } = require("../modules/marauder-ai-core");
+  const { MarauderModelGateway } = require("../modules/model-gateway");
+
+  const fbCore = new MarauderAICore({
+    modelAdapter: new GatewayModelAdapter({
+      gateway: new MarauderModelGateway({ ollamaUrl: "http://127.0.0.1:1", timeoutMs: 400 })
+    })
+  });
+  const fbRes = await fbCore.reasonWithGateway({ prompt: "Smoke fallback check", task: "smoke-fallback" });
+  if (fbRes.usedModel !== false || fbRes.executionMode !== "FALLBACK_NO_MODEL") {
+    throw new Error("Smoke failed: expected FALLBACK_NO_MODEL with usedModel=false");
+  }
+
+  const liveCore = new MarauderAICore({
+    modelAdapter: new GatewayModelAdapter({
+      gateway: new MarauderModelGateway({
+        ollamaUrl: "http://127.0.0.1:11434",
+        timeoutMs: 1000,
+        fetchFn: async () => ({
+          ok: true,
+          async json() {
+            return { model: "llama3.2", message: { content: "Smoke live model verified." } };
+          }
+        })
+      })
+    })
+  });
+  const liveRes = await liveCore.reasonWithGateway({ prompt: "Smoke live check", task: "smoke-live" });
+  if (liveRes.usedModel !== true || liveRes.executionMode !== "LIVE_MODEL") {
+    throw new Error("Smoke failed: expected LIVE_MODEL with usedModel=true");
+  }
+
+  const serverSrc = fs.readFileSync(require("path").resolve(__dirname, "../server.js"), "utf8");
+  if (!serverSrc.includes("/api/core/reason")) {
+    throw new Error("Smoke failed: /api/core/reason route missing in server.js");
+  }
+
+  console.log("SMOKE REASON & ROUTE CHECKS PASS | fallbackUsedModel=", fbRes.usedModel, "| liveUsedModel=", liveRes.usedModel, "| route=/api/core/reason");
+}
+
+runReasonAndRouteSmokeChecks().catch((err) => { console.error(err); process.exit(1); });

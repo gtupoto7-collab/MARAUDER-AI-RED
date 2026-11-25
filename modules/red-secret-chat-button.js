@@ -340,17 +340,7 @@ function mountRedSecretChatButton(container, apiBase = "/api/secret-chat") {
   return { getCurrentRoom: () => currentRoom, syncAndDecryptMessages };
 }
 
-module.exports = {
-  GROUP_TIERS,
-  MESSAGE_LIFETIMES,
-  ROOM_DELETE_MODES,
-  PRIVACY_CHECKLIST,
-  createRedSecretChatState,
-  mountRedSecretChatButton
-};
-
-
-<div id="marauder-full-account-wallet-chat" style="margin-top:14px;padding:12px;border:1px solid #38bdf8;border-radius:10px;background:#0b111d;">
+const MARAUDER_FULL_HUB_WALLET_CHAT_HTML = `<div id="marauder-full-account-wallet-chat" style="margin-top:14px;padding:12px;border:1px solid #38bdf8;border-radius:10px;background:#0b111d;">
   <div style="font-weight:700;margin-bottom:8px;color:#7dd3fc;">MARAUDER-AI Hub: Registraciya, Realen Crypto Portofeil (Keeper / TON) i Plashtaniya</div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;">
     <div style="padding:8px;border:1px solid #1e293b;border-radius:8px;">
@@ -446,4 +436,43 @@ module.exports = {
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
   else wire();
 })();
-</script>
+</script>`;
+
+function mountFullHubWalletChat(targetEl) {
+  if (typeof document === "undefined") return false;
+  const host = targetEl || document.body;
+  if (!host) return false;
+  if (document.getElementById("marauder-full-account-wallet-chat")) return true;
+  const wrap = document.createElement("div");
+  wrap.innerHTML = MARAUDER_FULL_HUB_WALLET_CHAT_HTML;
+  while (wrap.firstChild) {
+    host.appendChild(wrap.firstChild);
+  }
+  return true;
+}
+
+const MARAUDER_FULL_HUB_WALLET_CHAT_HTML = ``;
+
+function mountFullHubWalletChat(targetEl) {
+  if (typeof document === "undefined") return false;
+  const host = targetEl || document.body;
+  if (!host) return false;
+  if (document.getElementById("marauder-full-account-wallet-chat")) return true;
+  const wrap = document.createElement("div");
+  wrap.innerHTML = MARAUDER_FULL_HUB_WALLET_CHAT_HTML;
+  while (wrap.firstChild) {
+    host.appendChild(wrap.firstChild);
+  }
+  return true;
+}
+
+module.exports = {
+  GROUP_TIERS,
+  MESSAGE_LIFETIMES,
+  ROOM_DELETE_MODES,
+  PRIVACY_CHECKLIST,
+  createRedSecretChatState,
+  mountRedSecretChatButton,
+  MARAUDER_FULL_HUB_WALLET_CHAT_HTML,
+  mountFullHubWalletChat
+};

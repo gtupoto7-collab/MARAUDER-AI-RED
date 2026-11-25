@@ -131,6 +131,188 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+
+function readJsonBody(req) {
+  return new Promise((resolve, reject) => {
+    let raw = "";
+    req.on("data", (chunk) => {
+      raw += chunk;
+      if (raw.length > 2 * 1024 * 1024) {
+        reject(new Error("PAYLOAD_TOO_LARGE"));
+        req.destroy();
+      }
+    });
+    req.on("end", () => {
+      if (!raw.trim()) return resolve({});
+      try {
+        resolve(JSON.parse(raw));
+      } catch (err) {
+        reject(new Error("INVALID_JSON"));
+      }
+    });
+    req.on("error", reject);
+  });
+}
+
+function sendStatusJson(res, code, payload) {
+  res.writeHead(code, { "Content-Type": "application/json; charset=utf-8" });
+  res.end(JSON.stringify(payload));
+}
+
+const { SensorBusFusionEngine } = require("./modules/anti-drone/sensor-bus-fusion");
+const marauderSensorFusion = new SensorBusFusionEngine();
+marauderSensorFusion.ingestObservation({
+  trackId: "BS-01",
+  sensor: "RADAR",
+  confidence: 0.85,
+  distanceM: 260,
+  speedKmh: 75,
+  altitudeM: 60,
+  zone: "BLACK_SEA_COAST"
+});
+marauderSensorFusion.ingestObservation({
+  trackId: "BS-01",
+  sensor: "EO_IR",
+  confidence: 0.92,
+  distanceM: 250,
+  speedKmh: 74,
+  altitudeM: 58,
+  zone: "BLACK_SEA_COAST"
+});
+
+const { MarauderWarfareSimulator } = require("./modules/warfare/warfare-simulator");
+
+function resolveMarauderRootController() {
+  if (typeof globalThis.__MARAUDER_ROOT_CONTROLLER__ !== "undefined" && globalThis.__MARAUDER_ROOT_CONTROLLER__) {
+    return globalThis.__MARAUDER_ROOT_CONTROLLER__;
+  }
+  try {
+    const rootMod = require("./modules/marauder-root-controller");
+    const Ctor = rootMod.MarauderRootController || rootMod.default || rootMod;
+    if (typeof Ctor === "function") {
+      const inst = new Ctor();
+      globalThis.__MARAUDER_ROOT_CONTROLLER__ = inst;
+      return inst;
+    }
+    if (rootMod && typeof rootMod.authorizeAndPrepare === "function") {
+      return rootMod;
+    }
+  } catch (_) {}
+  return null;
+}
+
+const marauderWarfareSim = new MarauderWarfareSimulator({
+  rootController: resolveMarauderRootController(),
+  blackbox: typeof blackbox !== "undefined" ? blackbox : null
+});
+
+function resolveMarauderCoreForRoute() {
+  if (typeof globalThis.__MARAUDER_AI_CORE__ !== "undefined" && globalThis.__MARAUDER_AI_CORE__ && typeof globalThis.__MARAUDER_AI_CORE__.reasonWithGateway === "function") {
+    return globalThis.__MARAUDER_AI_CORE__;
+  }
+  if (typeof marauderCore !== "undefined" && marauderCore && typeof marauderCore.reasonWithGateway === "function") {
+    return marauderCore;
+  }
+  const { MarauderAICore, GatewayModelAdapter } = require("./modules/marauder-ai-core");
+  const { MarauderModelGateway } = require("./modules/model-gateway");
+  const gw = new MarauderModelGateway();
+  const coreInst = new MarauderAICore({ modelAdapter: new GatewayModelAdapter({ gateway: gw }) });
+  globalThis.__MARAUDER_AI_CORE__ = coreInst;
+  return coreInst;
+}
+
+if (req.method === "GET" && urlPath === "/api/defense/fusion/status") {
+  return sendStatusJson(res, 200, {
+    ok: true,
+    tracks: Array.from(marauderSensorFusion.tracks.values()).map((t) => ({
+      ...t,
+      sensors: Array.from(t.sensors)
+    })),
+    evidenceCount: marauderSensorFusion.evidenceLog.length,
+    latestEvidence: marauderSensorFusion.evidenceLog[marauderSensorFusion.evidenceLog.length - 1] || null
+  });
+}
+
+if (req.method === "POST" && urlPath === "/api/defense/fusion/ingest") {
+  try {
+    const body = await readJsonBody(req);
+    const out = marauderSensorFusion.ingestObservation(body || {});
+    if (!out.ok) return sendStatusJson(res, 400, out);
+    return sendStatusJson(res, 200, out);
+  } catch (err) {
+    return sendStatusJson(res, 400, { ok: false, error: err.message });
+  }
+}
+
+if (req.method === "GET" && urlPath === "/api/warfare/status") {
+  return sendStatusJson(res, 200, {
+    ok: true,
+    version: marauderWarfareSim.version,
+    simulationOnly: true,
+    automaticWeaponsRelease: false,
+    runsCount: marauderWarfareSim.history.length,
+    proposalsCount: marauderWarfareSim.proposedAgents.length,
+    latestRun: marauderWarfareSim.history[marauderWarfareSim.history.length - 1] || null
+  });
+}
+
+if (req.method === "POST" && urlPath === "/api/warfare/run-scenario") {
+  try {
+    const body = await readJsonBody(req);
+    const result = marauderWarfareSim.runScenario(body || {});
+    return sendStatusJson(res, 200, { ok: true, simulation: result });
+  } catch (err) {
+    return sendStatusJson(res, 400, { ok: false, error: err.message });
+  }
+}
+
+if (req.method === "POST" && urlPath === "/api/core/reason") {
+  try {
+    const body = await readJsonBody(req);
+    const prompt = String(body.prompt || body.input || body.task || "").trim();
+    if (!prompt) {
+      return sendStatusJson(res, 400, {
+        ok: false,
+        error: "MISSING_PROMPT",
+        usedModel: false,
+        executionMode: "FALLBACK_NO_MODEL"
+      });
+    }
+
+    const core = resolveMarauderCoreForRoute();
+    const result = await core.reasonWithGateway({
+      prompt,
+      system: body.system,
+      task: body.task || "api-reason",
+      model: body.model,
+      provider: body.provider,
+      timeoutMs: body.timeoutMs,
+      temperature: body.temperature
+    });
+
+    return sendStatusJson(res, 200, {
+      ok: Boolean(result.ok),
+      engine: result.engine || "MARAUDER-AI-CORE",
+      usedModel: Boolean(result.usedModel),
+      fallbackUsed: Boolean(result.fallbackUsed),
+      executionMode: result.executionMode,
+      provider: result.provider,
+      model: result.model,
+      latencyMs: result.latencyMs || 0,
+      fallbackReason: result.fallbackReason || null,
+      task: result.task,
+      output: result.output
+    });
+  } catch (err) {
+    return sendStatusJson(res, 500, {
+      ok: false,
+      error: err && err.message ? err.message : "CORE_REASON_ERROR",
+      usedModel: false,
+      executionMode: "FALLBACK_NO_MODEL"
+    });
+  }
+}
+
   // Статично обслужване на public/command-center.html по подразбиране
   const targetFile =
     urlPath === "/" || urlPath === "/command-center"
@@ -166,65 +348,3 @@ server.listen(PORT, "0.0.0.0", () => {
 });
 
 
-const { SensorBusFusionEngine } = require("./modules/anti-drone/sensor-bus-fusion");
-const marauderSensorFusion = new SensorBusFusionEngine();
-marauderSensorFusion.ingestObservation({
-  trackId: "BS-01",
-  sensor: "RADAR",
-  confidence: 0.85,
-  distanceM: 260,
-  speedKmh: 75,
-  altitudeM: 60,
-  zone: "BLACK_SEA_COAST"
-});
-marauderSensorFusion.ingestObservation({
-  trackId: "BS-01",
-  sensor: "EO_IR",
-  confidence: 0.92,
-  distanceM: 250,
-  speedKmh: 74,
-  altitudeM: 58,
-  zone: "BLACK_SEA_COAST"
-});
-
-app.get("/api/defense/fusion/status", (_req, res) => {
-  res.json({
-    ok: true,
-    tracks: Array.from(marauderSensorFusion.tracks.values()).map((t) => ({
-      ...t,
-      sensors: Array.from(t.sensors)
-    })),
-    evidenceCount: marauderSensorFusion.evidenceLog.length,
-    latestEvidence: marauderSensorFusion.evidenceLog[marauderSensorFusion.evidenceLog.length - 1] || null
-  });
-});
-
-app.post("/api/defense/fusion/ingest", (req, res) => {
-  const out = marauderSensorFusion.ingestObservation(req.body || {});
-  if (!out.ok) return res.status(400).json(out);
-  return res.json(out);
-});
-
-
-const { MarauderWarfareSimulator } = require("./modules/warfare/warfare-simulator");
-const marauderWarfareSim = new MarauderWarfareSimulator({
-  rootController: typeof rootController !== "undefined" ? rootController : null,
-  blackbox: typeof blackbox !== "undefined" ? blackbox : null
-});
-
-app.get("/api/warfare/status", (_req, res) => {
-  res.json({
-    ok: true,
-    version: marauderWarfareSim.version,
-    simulationOnly: true,
-    automaticWeaponsRelease: false,
-    runsCount: marauderWarfareSim.history.length,
-    proposalsCount: marauderWarfareSim.proposedAgents.length,
-    latestRun: marauderWarfareSim.history[marauderWarfareSim.history.length - 1] || null
-  });
-});
-
-app.post("/api/warfare/run-scenario", (req, res) => {
-  const result = marauderWarfareSim.runScenario(req.body || {});
-  res.json({ ok: true, simulation: result });
-});

@@ -1,5 +1,8 @@
 "use strict";
 
+const { MarauderModelGateway } = require("./model-gateway");
+
+
 const crypto = require("crypto");
 
 class MarauderModelAdapter {
@@ -9,6 +12,20 @@ class MarauderModelAdapter {
 
   async generate(_request) {
     throw new Error("MODEL_ADAPTER_NOT_IMPLEMENTED");
+  }
+}
+
+
+class GatewayModelAdapter extends MarauderModelAdapter {
+  constructor(opts = {}) {
+    super(opts.name || "GatewayModelAdapter");
+    this.gateway = opts.gateway instanceof MarauderModelGateway
+      ? opts.gateway
+      : new MarauderModelGateway(opts);
+  }
+
+  async generate(request = {}) {
+    return this.gateway.generate(request);
   }
 }
 
@@ -167,6 +184,46 @@ class KnowledgeFabric {
 }
 
 class MarauderAICore {
+  ensureModelGateway(options = {}) {
+    if (!this.modelGateway) {
+      this.modelGateway = new MarauderModelGateway(options);
+    }
+    return this.modelGateway;
+  }
+
+  async reasonWithGateway(input = {}) {
+    const gw = (this.modelAdapter && this.modelAdapter.gateway instanceof MarauderModelGateway) ? this.modelAdapter.gateway : ((this.modelAdapter && typeof this.modelAdapter.generate === "function") ? this.modelAdapter : this.ensureModelGateway(input.gatewayOptions || {}));
+    const prompt = typeof input === "string" ? input : String(input.prompt || input.task || "");
+    const system = typeof input === "object" && input.system ? String(input.system) : "You are MARAUDER AI CORE reasoning engine. Be factual, concise, and explicit about uncertainty.";
+    const task = typeof input === "object" && input.task ? String(input.task) : "core-reasoning";
+
+    const gwResult = await gw.generate({
+      prompt,
+      system,
+      task,
+      model: input.model,
+      provider: input.provider,
+      timeoutMs: input.timeoutMs,
+      temperature: input.temperature
+    });
+
+    const isLiveModel = gwResult.usedModel === true && gwResult.provider !== "fallback";
+    return {
+      ok: Boolean(gwResult.ok),
+      engine: "MARAUDER-AI-CORE",
+      executionMode: isLiveModel ? "LIVE_MODEL" : "FALLBACK_NO_MODEL",
+      usedModel: isLiveModel,
+      fallbackUsed: !isLiveModel,
+      provider: gwResult.provider,
+      model: gwResult.model,
+      latencyMs: gwResult.latencyMs || 0,
+      fallbackReason: isLiveModel ? null : (gwResult.fallbackReason || "NO_LIVE_MODEL"),
+      task,
+      output: gwResult.text,
+      rawGateway: gwResult
+    };
+  }
+
   constructor(opts = {}) {
     if (!opts.modelAdapter || !(opts.modelAdapter instanceof MarauderModelAdapter)) {
       throw new Error("VALID_MARAUDER_MODEL_ADAPTER_REQUIRED");
@@ -238,6 +295,8 @@ class MarauderAICore {
 
 module.exports = {
   MarauderModelAdapter,
+  GatewayModelAdapter,
+  
   LocalModelAdapter,
   RemoteModelAdapter,
   MarauderNativeAdapter,
