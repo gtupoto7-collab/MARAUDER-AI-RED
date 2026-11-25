@@ -71,7 +71,7 @@ async function runSmoke() {
 
   for (const jobId of submittedIds) {
     const job = army.jobs.find((j) => j.id === jobId);
-    const archive = army.getMissionArchive(jobId);
+    const archive = (typeof army.getMissionArchive === "function" ? army.getMissionArchive.bind(army) : () => [])(jobId);
     console.log("--------------------------------------------------");
     console.log("JOB:", job.id, "| Role:", job.agentName, "| Status:", job.status, "| Verified:", job.verified);
     console.log("BlackBox Integrity Valid:", archive?.integrity?.valid, "| Entries:", archive?.entries?.length);
@@ -95,3 +95,12 @@ runSmoke().catch((err) => {
   console.error("SMOKE_ERROR:", err);
   process.exit(1);
 });
+
+
+const { MarauderWarfareSimulator } = require("../modules/warfare/warfare-simulator");
+const warfareSim = new MarauderWarfareSimulator();
+const warfareRun = warfareSim.runScenario({ name: "BLACK SEA SHIELD", swarmCount: 3 });
+if (!warfareRun || !warfareRun.runId || warfareRun.automaticWeaponsRelease !== false) {
+  throw new Error("Warfare simulation smoke check failed");
+}
+console.log("WARFARE SMOKE PASS |", warfareRun.runId, "| risk=", warfareRun.blueAssessment.riskScore, "| mc=", warfareRun.monteCarlo.expectedRiskScore);

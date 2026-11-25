@@ -1,0 +1,193 @@
+{
+  "report": {
+    "missionId": "MAR-2026-45DD1826",
+    "correlationId": "CORR-7C92816E4948",
+    "state": "COMPLETED",
+    "transitions": [
+      {
+        "state": "CREATED",
+        "correlationId": "CORR-7C92816E4948",
+        "missionId": "MAR-2026-45DD1826",
+        "ts": "2026-11-25T03:22:15.459Z"
+      },
+      {
+        "state": "AUTHORIZED",
+        "correlationId": "CORR-7C92816E4948",
+        "missionId": "MAR-2026-45DD1826",
+        "ts": "2026-11-25T03:22:15.462Z"
+      },
+      {
+        "state": "QUEUED",
+        "correlationId": "CORR-7C92816E4948",
+        "missionId": "MAR-2026-45DD1826",
+        "ts": "2026-11-25T03:22:15.462Z"
+      },
+      {
+        "state": "RUNNING",
+        "correlationId": "CORR-7C92816E4948",
+        "missionId": "MAR-2026-45DD1826",
+        "ts": "2026-11-25T03:22:15.462Z"
+      },
+      {
+        "state": "VERIFYING",
+        "correlationId": "CORR-7C92816E4948",
+        "missionId": "MAR-2026-45DD1826",
+        "ts": "2026-11-25T03:22:15.466Z"
+      },
+      {
+        "state": "COMPLETED",
+        "correlationId": "CORR-7C92816E4948",
+        "missionId": "MAR-2026-45DD1826",
+        "ts": "2026-11-25T03:22:15.466Z"
+      }
+    ],
+    "objective": "Smoke test full safe pipeline",
+    "targetScope": "verified-local-lab",
+    "agentSnapshot": {
+      "id": "agent-001",
+      "health": 100,
+      "successRate": 100,
+      "avgLatency": 1
+    },
+    "finding": {
+      "id": "FND-9A1784",
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "evidenceId": "EVD-7558FC4F",
+      "lifecycle": [
+        "OBSERVED",
+        "CORRELATED",
+        "VALIDATING",
+        "VERIFIED",
+        "REPORTED"
+      ],
+      "verified": true
+    },
+    "metrics": {
+      "duration": 7,
+      "agentsUsed": [
+        "agent-001"
+      ],
+      "eventsProcessed": 6,
+      "findings": 1,
+      "verifiedFindings": 1,
+      "falsePositives": 0,
+      "errors": 0,
+      "evidenceCount": 1
+    },
+    "blackBoxCount": 6,
+    "blackBoxHeadHash": "29ff12ae8184be4f8e514e0b055d065d0590c82cdb6a32bae894e2404e0aac13",
+    "generatedAt": "2026-11-25T03:22:15.466Z"
+  },
+  "blackBox": [
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Mission",
+      "ts": "2026-11-25T03:22:15.459Z",
+      "payload": {
+        "state": "CREATED",
+        "objective": "Smoke test full safe pipeline",
+        "targetScope": "verified-local-lab"
+      },
+      "prevHash": "GENESIS",
+      "hash": "cfc1efeea8f13d6e900c65904ae35ff88fba3cf43150fce37ed60492d9c749f2"
+    },
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Agent",
+      "ts": "2026-11-25T03:22:15.463Z",
+      "payload": {
+        "state": "RUNNING",
+        "agentId": "agent-001",
+        "capability": "filesystem.read"
+      },
+      "prevHash": "cfc1efeea8f13d6e900c65904ae35ff88fba3cf43150fce37ed60492d9c749f2",
+      "hash": "2d623689eb2ae3f11f0db951e78a4fba1f8703583460595dff0777b43bb24fbf"
+    },
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Safe Executor",
+      "ts": "2026-11-25T03:22:15.465Z",
+      "payload": {
+        "ok": true,
+        "latencyMs": 1,
+        "mode": "read-only"
+      },
+      "prevHash": "2d623689eb2ae3f11f0db951e78a4fba1f8703583460595dff0777b43bb24fbf",
+      "hash": "083752fce54412bdf0931bd2adc1d33c74999ff82673d24a7ffe1255e49b76a8"
+    },
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Evidence",
+      "ts": "2026-11-25T03:22:15.465Z",
+      "payload": {
+        "id": "EVD-7558FC4F",
+        "missionId": "MAR-2026-45DD1826",
+        "assetId": "asset:local-project",
+        "source": "safe-local-executor:read-only",
+        "timestamp": "2026-11-25T03:22:15.465Z",
+        "observation": "package.json present and readable",
+        "severity": "LOW",
+        "confidence": 0.99,
+        "verified": true,
+        "hash": "5052be9f0a62674d0c404c385be36de3a005ecaac62370aaf1a289c6a30d655a"
+      },
+      "prevHash": "083752fce54412bdf0931bd2adc1d33c74999ff82673d24a7ffe1255e49b76a8",
+      "hash": "ec3572e9c763013a778a3756d01b13732cb0fb199816582c78b92b280324135c"
+    },
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Parliament",
+      "ts": "2026-11-25T03:22:15.466Z",
+      "payload": {
+        "approved": true,
+        "agentHealth": 100
+      },
+      "prevHash": "ec3572e9c763013a778a3756d01b13732cb0fb199816582c78b92b280324135c",
+      "hash": "800a336651017903eedca3c2f55dfd7851eeb8f7cd700c05a9a083abec85b5d0"
+    },
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Verification",
+      "ts": "2026-11-25T03:22:15.466Z",
+      "payload": {
+        "verified": true,
+        "finding": {
+          "id": "FND-9A1784",
+          "missionId": "MAR-2026-45DD1826",
+          "correlationId": "CORR-7C92816E4948",
+          "evidenceId": "EVD-7558FC4F",
+          "lifecycle": [
+            "OBSERVED",
+            "CORRELATED",
+            "VALIDATING",
+            "VERIFIED",
+            "REPORTED"
+          ],
+          "verified": true
+        }
+      },
+      "prevHash": "800a336651017903eedca3c2f55dfd7851eeb8f7cd700c05a9a083abec85b5d0",
+      "hash": "29ff12ae8184be4f8e514e0b055d065d0590c82cdb6a32bae894e2404e0aac13"
+    },
+    {
+      "missionId": "MAR-2026-45DD1826",
+      "correlationId": "CORR-7C92816E4948",
+      "stage": "Report",
+      "ts": "2026-11-25T03:22:15.466Z",
+      "payload": {
+        "missionId": "MAR-2026-45DD1826",
+        "correlationId": "CORR-7C92816E4948",
+        "headHash": "29ff12ae8184be4f8e514e0b055d065d0590c82cdb6a32bae894e2404e0aac13"
+      },
+      "prevHash": "29ff12ae8184be4f8e514e0b055d065d0590c82cdb6a32bae894e2404e0aac13",
+      "hash": "90074b6c048854c606720f897cf8a146c468632a036c06ea82072f1a16bfd930"
+    }
+  ]
+}

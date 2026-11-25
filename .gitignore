@@ -17,3 +17,9 @@ data/portfolio-ledger.json
 .env
 /tmp/marauder_server.log
 public/downloads/Termux-FDroid.apk
+
+# MARAUDER runtime logs, smoke tests & local artifacts
+data/smoke/
+data/real-execution/*.jsonl
+*.apk
+public/downloads/*.apk

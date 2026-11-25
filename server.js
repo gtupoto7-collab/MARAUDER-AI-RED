@@ -1,6 +1,9 @@
 const crypto = require("crypto");
 const fs = require("fs");
 const http = require("http");
+const { AntiDroneDefenseEngine } = require("./modules/anti-drone-defense");
+const defenseEngine = new AntiDroneDefenseEngine();
+defenseEngine.ingestSensorFrame({ trackId: "UAS-01", freqMhz: 2450, rssiDbm: -58, distanceM: 420, speedKmh: 54, altitudeM: 90, swarmCount: 1 });
 const path = require("path");
 const { MarauderRootController, sha256 } = require("./modules/marauder-root-controller");
 const { SynchroMeshOrchestrator } = require("./modules/synchro-mesh");
@@ -160,4 +163,68 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`MARAUDER_BACKEND_LISTENING on http://127.0.0.1:${PORT}`);
+});
+
+
+const { SensorBusFusionEngine } = require("./modules/anti-drone/sensor-bus-fusion");
+const marauderSensorFusion = new SensorBusFusionEngine();
+marauderSensorFusion.ingestObservation({
+  trackId: "BS-01",
+  sensor: "RADAR",
+  confidence: 0.85,
+  distanceM: 260,
+  speedKmh: 75,
+  altitudeM: 60,
+  zone: "BLACK_SEA_COAST"
+});
+marauderSensorFusion.ingestObservation({
+  trackId: "BS-01",
+  sensor: "EO_IR",
+  confidence: 0.92,
+  distanceM: 250,
+  speedKmh: 74,
+  altitudeM: 58,
+  zone: "BLACK_SEA_COAST"
+});
+
+app.get("/api/defense/fusion/status", (_req, res) => {
+  res.json({
+    ok: true,
+    tracks: Array.from(marauderSensorFusion.tracks.values()).map((t) => ({
+      ...t,
+      sensors: Array.from(t.sensors)
+    })),
+    evidenceCount: marauderSensorFusion.evidenceLog.length,
+    latestEvidence: marauderSensorFusion.evidenceLog[marauderSensorFusion.evidenceLog.length - 1] || null
+  });
+});
+
+app.post("/api/defense/fusion/ingest", (req, res) => {
+  const out = marauderSensorFusion.ingestObservation(req.body || {});
+  if (!out.ok) return res.status(400).json(out);
+  return res.json(out);
+});
+
+
+const { MarauderWarfareSimulator } = require("./modules/warfare/warfare-simulator");
+const marauderWarfareSim = new MarauderWarfareSimulator({
+  rootController: typeof rootController !== "undefined" ? rootController : null,
+  blackbox: typeof blackbox !== "undefined" ? blackbox : null
+});
+
+app.get("/api/warfare/status", (_req, res) => {
+  res.json({
+    ok: true,
+    version: marauderWarfareSim.version,
+    simulationOnly: true,
+    automaticWeaponsRelease: false,
+    runsCount: marauderWarfareSim.history.length,
+    proposalsCount: marauderWarfareSim.proposedAgents.length,
+    latestRun: marauderWarfareSim.history[marauderWarfareSim.history.length - 1] || null
+  });
+});
+
+app.post("/api/warfare/run-scenario", (req, res) => {
+  const result = marauderWarfareSim.runScenario(req.body || {});
+  res.json({ ok: true, simulation: result });
 });

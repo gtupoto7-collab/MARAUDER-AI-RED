@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-11-25T01:16:31.458Z",
+  "headlineAgents": 5484,
+  "modeledWorkforceTotal": 5484,
+  "controlPlanePrinciple": "Role -> Execution -> Evidence -> Verification -> Reproducible Result",
+  "specializations": [
+    {
+      "role": "SECURITY ANALYSTS",
+      "count": 1240,
+      "sharePct": 22.6
+    },
+    {
+      "role": "CODE SECURITY",
+      "count": 840,
+      "sharePct": 15.3
+    },
+    {
+      "role": "THREAT INTELLIGENCE",
+      "count": 620,
+      "sharePct": 11.3
+    },
+    {
+      "role": "CLOUD SECURITY",
+      "count": 510,
+      "sharePct": 9.3
+    },
+    {
+      "role": "NETWORK SECURITY",
+      "count": 430,
+      "sharePct": 7.8
+    },
+    {
+      "role": "INCIDENT RESPONSE",
+      "count": 380,
+      "sharePct": 6.9
+    },
+    {
+      "role": "MALWARE ANALYSIS",
+      "count": 290,
+      "sharePct": 5.3
+    },
+    {
+      "role": "GRC / COMPLIANCE",
+      "count": 240,
+      "sharePct": 4.4
+    },
+    {
+      "role": "FORENSICS",
+      "count": 220,
+      "sharePct": 4
+    },
+    {
+      "role": "VERIFICATION",
+      "count": 184,
+      "sharePct": 3.4
+    },
+    {
+      "role": "ANTI-DRONE & TELEMETRY",
+      "count": 250,
+      "sharePct": 4.6
+    },
+    {
+      "role": "SPECIALIZED OPERATIONS",
+      "count": 280,
+      "sharePct": 5.1
+    }
+  ]
+}

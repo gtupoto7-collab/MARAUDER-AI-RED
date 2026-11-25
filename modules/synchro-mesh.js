@@ -247,9 +247,6 @@ class SynchroMeshOrchestrator {
       missionDigest
     };
   }
-}
-
-
   async runOllamaAnalysis({
     missionId = "MISSION-SWARM-OLLAMA-01",
     agentId,
@@ -355,5 +352,6 @@ class SynchroMeshOrchestrator {
       clearTimeout(timer);
     }
   }
+}
 
 module.exports = { SynchroMeshOrchestrator, ThreatGraph };

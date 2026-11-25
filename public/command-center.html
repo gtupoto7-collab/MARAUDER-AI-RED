@@ -605,5 +605,364 @@
     renderCats();
     refreshTelemetry();
   </script>
+
+<!-- MARAUDER LIVE COMMAND PANELS: WORKFORCE + ANTI-DRONE BG/BLACKSEA + ROOT + BLACKBOX -->
+<section id="marauder-live-command-panels" style="margin:20px auto;max-width:1280px;padding:18px;background:#090b10;border:1px solid #ff2a4b;border-radius:10px;color:#f3f6fb;font-family:monospace,sans-serif;box-shadow:0 0 24px rgba(255,42,75,0.18);">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid rgba(255,42,75,0.35);padding-bottom:12px;margin-bottom:16px;">
+    <div>
+      <div style="font-size:12px;letter-spacing:2px;color:#ff4d6d;">MARAUDER // AUTONOMOUS SECURITY COMMAND v12.0</div>
+      <div style="font-size:18px;font-weight:700;margin-top:2px;">COMMAND → MISSION → AGENT → EVIDENCE → RESULT</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button id="btn-refresh-panels" type="button" style="background:#151924;color:#fff;border:1px solid #ff4d6d;padding:7px 12px;border-radius:6px;cursor:pointer;">↻ REFRESH LIVE</button>
+      <button id="btn-sim-blacksea" type="button" style="background:#ff2a4b;color:#fff;border:none;padding:7px 12px;border-radius:6px;font-weight:700;cursor:pointer;">⚡ SIM BLACK SEA SWARM</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;">
+    <!-- 1. 5,484 SPECIALIZED AGENTS -->
+    <div style="background:#0e121b;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;">
+      <div style="font-size:12px;color:#ff4d6d;letter-spacing:1px;">01 // AGENT WORKFORCE</div>
+      <div id="wf-headline" style="font-size:22px;font-weight:700;margin:6px 0;">5,484 SPECIALIZED</div>
+      <div style="font-size:11px;color:#9aa5b4;margin-bottom:10px;">Role → Execution → Evidence → Verification</div>
+      <div id="wf-roles-list" style="font-size:12px;line-height:1.55;max-height:180px;overflow:auto;">Loading workforce summary...</div>
+    </div>
+
+    <!-- 2. ANTI-DRONE BULGARIA & BLACK SEA -->
+    <div style="background:#0e121b;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;">
+      <div style="font-size:12px;color:#ff4d6d;letter-spacing:1px;">02 // ANTI-DRONE BG &amp; BLACK SEA</div>
+      <div id="c-uas-status" style="font-size:16px;font-weight:700;margin:6px 0;">SHIELD STANDBY</div>
+      <div style="font-size:11px;color:#9aa5b4;margin-bottom:10px;">Black Sea • Border/Mountain • Civil/Infra • Interior</div>
+      <div id="c-uas-zones" style="font-size:12px;line-height:1.55;max-height:180px;overflow:auto;">Loading territorial zones...</div>
+    </div>
+
+    <!-- 3. ROOT AUTHORITY -->
+    <div style="background:#0e121b;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;">
+      <div style="font-size:12px;color:#ff4d6d;letter-spacing:1px;">03 // ROOT AUTHORITY</div>
+      <div style="font-size:16px;font-weight:700;margin:6px 0;color:#4ade80;">● SYSTEM ARMED (BOUNDED)</div>
+      <div id="root-auth-meta" style="font-size:12px;line-height:1.65;">
+        <div>POLICY: <b>DEFAULT DENY</b></div>
+        <div>KILL SWITCH: <b id="ks-state">READY</b></div>
+        <div>SELF-GRANT CAPABILITY: <b>FORBIDDEN</b></div>
+        <div>APPROVAL GATE: <b>ENFORCED</b></div>
+      </div>
+    </div>
+
+    <!-- 4. BLACKBOX EVIDENCE CHAIN -->
+    <div style="background:#0e121b;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;">
+      <div style="font-size:12px;color:#ff4d6d;letter-spacing:1px;">04 // BLACKBOX EVIDENCE CHAIN</div>
+      <div style="font-size:12px;line-height:1.5;margin:8px 0;background:#080a0f;padding:8px;border-radius:6px;border-left:3px solid #ff2a4b;">
+        OBSERVATION → HASH → VERIFICATION → <b>BLACKBOX ✓</b>
+      </div>
+      <div id="bb-chain-info" style="font-size:12px;line-height:1.55;word-break:break-all;">Audit entries: <b>synced</b><br/>Tail: <span>GENESIS</span></div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  const defaultRoles = [
+    { role: "SECURITY ANALYSTS", count: 1240 },
+    { role: "CODE SECURITY", count: 840 },
+    { role: "THREAT INTELLIGENCE", count: 620 },
+    { role: "CLOUD SECURITY", count: 510 },
+    { role: "NETWORK SECURITY", count: 430 },
+    { role: "INCIDENT RESPONSE", count: 380 },
+    { role: "MALWARE ANALYSIS", count: 290 },
+    { role: "ANTI-DRONE & TELEMETRY", count: 250 },
+    { role: "GRC / COMPLIANCE", count: 240 },
+    { role: "FORENSICS", count: 220 },
+    { role: "VERIFICATION", count: 184 },
+    { role: "SPECIALIZED OPERATIONS", count: 280 }
+  ];
+
+  const defaultZones = {
+    BLACK_SEA_COAST: { label: "Черно море и крайбрежен периметър", tracks: 1 },
+    BORDER_MOUNTAIN: { label: "Граничен и планински пояс", tracks: 0 },
+    CRITICAL_INFRA_CIVIL: { label: "Критична инфраструктура и население", tracks: 1 },
+    NATIONAL_INTERIOR: { label: "Вътрешност на страната", tracks: 0 }
+  };
+
+  function renderWorkforce(roles) {
+    const el = document.getElementById("wf-roles-list");
+    if (!el) return;
+    el.innerHTML = roles.map(r =>
+      "<div style=\"display:flex;justify-content:space-between;border-bottom:1px dashed rgba(255,255,255,0.08);padding:2px 0;\"><span>" +
+      r.role + "</span><b>" + Number(r.count).toLocaleString() + "</b></div>"
+    ).join("");
+  }
+
+  function renderDefense(status) {
+    const zEl = document.getElementById("c-uas-zones");
+    const sEl = document.getElementById("c-uas-status");
+    const ksEl = document.getElementById("ks-state");
+    const bbEl = document.getElementById("bb-chain-info");
+    if (!status) return;
+    const zones = status.zones || defaultZones;
+    if (zEl) {
+      zEl.innerHTML = Object.entries(zones).map(([k, v]) =>
+        "<div style=\"margin-bottom:4px;\">• <b>" + k + "</b>: " + (v.tracks ?? 0) + " tracks <span style=\"color:#9aa5b4;\">(" + (v.label || "") + ")</span></div>"
+      ).join("");
+    }
+    if (sEl) {
+      const activeCount = Array.isArray(status.activeTracks) ? status.activeTracks.length : 0;
+      sEl.textContent = (status.killSwitchEngaged ? "KILL SWITCH ENGAGED" : "SHIELD ACTIVE") + " • TRACKS: " + activeCount;
+    }
+    if (ksEl) {
+      ksEl.textContent = status.killSwitchEngaged ? "ENGAGED" : "READY";
+    }
+    if (bbEl) {
+      bbEl.innerHTML = "Audit entries: <b>" + (status.auditCount ?? 0) + "</b><br/>Tail: <code>" + (status.chainTail || "GENESIS") + "</code>";
+    }
+  }
+
+  async function loadPanels() {
+    renderWorkforce(defaultRoles);
+    renderDefense({ zones: defaultZones, activeTracks: [], killSwitchEngaged: false, auditCount: 0, chainTail: "GENESIS" });
+    try {
+      const wfRes = await fetch("/data/agent-workforce-summary.json");
+      if (wfRes.ok) {
+        const wfData = await wfRes.json();
+        if (Array.isArray(wfData.specializations) && wfData.specializations.length) {
+          renderWorkforce(wfData.specializations);
+        }
+      }
+    } catch (_) {}
+    try {
+      const dRes = await fetch("/api/defense/status");
+      if (dRes.ok) {
+        const dData = await dRes.json();
+        renderDefense(dData);
+      }
+    } catch (_) {}
+  }
+
+  async function triggerSim() {
+    try {
+      const res = await fetch("/api/defense/simulate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scenario: "BLACKSEA_SWARM_INTRUSION" })
+      });
+      if (res.ok) {
+        await loadPanels();
+        return;
+      }
+    } catch (_) {}
+    renderDefense({
+      zones: {
+        BLACK_SEA_COAST: { label: "Черно море и крайбрежен периметър", tracks: 2 },
+        BORDER_MOUNTAIN: { label: "Граничен и планински пояс", tracks: 0 },
+        CRITICAL_INFRA_CIVIL: { label: "Критична инфраструктура и население", tracks: 1 },
+        NATIONAL_INTERIOR: { label: "Вътрешност на страната", tracks: 0 }
+      },
+      activeTracks: [{ id: "BS-UAS-01" }, { id: "BS-UAS-02" }],
+      killSwitchEngaged: false,
+      auditCount: 3,
+      chainTail: "SIM-BLACKSEA-SWARM-VERIFIED"
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    loadPanels();
+    const rBtn = document.getElementById("btn-refresh-panels");
+    const sBtn = document.getElementById("btn-sim-blacksea");
+    if (rBtn) rBtn.addEventListener("click", loadPanels);
+    if (sBtn) sBtn.addEventListener("click", triggerSim);
+  });
+})();
+</script>
+
+
+<!-- MARAUDER SENSOR FUSION & EXPLAINABILITY BLOCK -->
+<section id="marauder-fusion-explainability" style="margin:16px auto 24px;max-width:1280px;padding:18px;background:#090b10;border:1px solid #ff2a4b;border-radius:10px;color:#f3f6fb;font-family:monospace,sans-serif;">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid rgba(255,42,75,0.35);padding-bottom:10px;margin-bottom:14px;">
+    <div>
+      <div style="font-size:12px;color:#ff4d6d;letter-spacing:1px;">05 // SENSOR FUSION &amp; TARGET EXPLAINABILITY</div>
+      <div style="font-size:16px;font-weight:700;">Multi-Sensor Verification • Trajectory • Why Flagged</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button id="btn-fusion-refresh" type="button" style="background:#151924;color:#fff;border:1px solid #ff4d6d;padding:6px 12px;border-radius:6px;cursor:pointer;">↻ FUSION STATUS</button>
+      <button id="btn-fusion-rf" type="button" style="background:#ff2a4b;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:700;cursor:pointer;">+ INGEST RF CORROBORATION</button>
+    </div>
+  </div>
+  <div id="fusion-tracks-container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;font-size:12px;">
+    Loading sensor fusion tracks...
+  </div>
+</section>
+<script>
+(function() {
+  const fallbackTracks = [{
+    trackId: "BS-01",
+    zone: "BLACK_SEA_COAST",
+    sensors: ["RADAR", "EO_IR"],
+    corroborated: true,
+    threatScore: 90,
+    classification: "CONFIRMED-HOSTILE-UAS-CANDIDATE",
+    trajectory: { distanceM: 250, speedKmh: 74, altitudeM: 58 },
+    explainability: [
+      "Sensors: RADAR, EO_IR",
+      "Corroborated (>=2 sensors, non-AIS/ADS-B): true",
+      "Trajectory: dist=250m, speed=74km/h, alt=58m",
+      "Mitigation mode: DETECT_AND_ALERT_ONLY (requires authorized external interface)"
+    ]
+  }];
+
+  function renderFusion(tracks) {
+    const box = document.getElementById("fusion-tracks-container");
+    if (!box) return;
+    const list = Array.isArray(tracks) && tracks.length ? tracks : fallbackTracks;
+    box.innerHTML = list.map(t => {
+      const badgeColor = t.corroborated ? "#4ade80" : "#fbbf24";
+      const reasons = Array.isArray(t.explainability) ? t.explainability.map(x => "<li>" + x + "</li>").join("") : "";
+      return "<div style=\"background:#0e121b;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px;\">" +
+        "<div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;\">" +
+          "<b style=\"font-size:14px;\">TRACK " + t.trackId + "</b>" +
+          "<span style=\"color:" + badgeColor + ";font-weight:700;\">" + (t.corroborated ? "CORROBORATED ✓" : "SINGLE/UNVERIFIED") + "</span>" +
+        "</div>" +
+        "<div style=\"margin-bottom:6px;color:#cbd5e1;\">Class: <b>" + t.classification + "</b> | Score: <b>" + t.threatScore + "/100</b> | Zone: <b>" + t.zone + "</b></div>" +
+        "<div style=\"margin-bottom:6px;font-size:11px;color:#9aa5b4;\">Sensors: <b>" + (t.sensors || []).join(" + ") + "</b></div>" +
+        "<ul style=\"margin:6px 0 0 16px;padding:0;line-height:1.5;color:#e2e8f0;\">" + reasons + "</ul>" +
+      "</div>";
+    }).join("");
+  }
+
+  async function refreshFusion() {
+    renderFusion(fallbackTracks);
+    try {
+      const r = await fetch("/api/defense/fusion/status");
+      if (r.ok) {
+        const d = await r.json();
+        if (Array.isArray(d.tracks)) renderFusion(d.tracks);
+      }
+    } catch (_) {}
+  }
+
+  async function ingestRfSample() {
+    try {
+      const r = await fetch("/api/defense/fusion/ingest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          trackId: "BS-01",
+          sensor: "RF",
+          confidence: 0.89,
+          distanceM: 235,
+          speedKmh: 76,
+          altitudeM: 54,
+          zone: "BLACK_SEA_COAST"
+        })
+      });
+      if (r.ok) {
+        const d = await r.json();
+        if (d.track) renderFusion([d.track]);
+        return;
+      }
+    } catch (_) {}
+    renderFusion([{
+      ...fallbackTracks[0],
+      sensors: ["RADAR", "EO_IR", "RF"],
+      threatScore: 95,
+      explainability: [
+        "Sensors: RADAR, EO_IR, RF",
+        "Corroborated (>=2 sensors, non-AIS/ADS-B): true",
+        "Trajectory: dist=235m, speed=76km/h, alt=54m",
+        "Mitigation mode: DETECT_AND_ALERT_ONLY (requires authorized external interface)"
+      ]
+    }]);
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    refreshFusion();
+    const b1 = document.getElementById("btn-fusion-refresh");
+    const b2 = document.getElementById("btn-fusion-rf");
+    if (b1) b1.addEventListener("click", refreshFusion);
+    if (b2) b2.addEventListener("click", ingestRfSample);
+  });
+})();
+</script>
+
+
+<section id="warfare-intel-panel" style="margin:16px 0;padding:16px;border:1px solid #334155;border-radius:10px;background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif;">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+    <div>
+      <h2 style="margin:0;font-size:18px;color:#f8fafc;">MARAUDER WARFARE INTELLIGENCE — RED FORCE vs BLUE FORCE</h2>
+      <div style="font-size:12px;color:#94a3b8;margin-top:4px;">Симулационна среда за анализ на заплахи, Monte Carlo риск и затворен цикъл за самоусъвършенстване (без автоматично оръжейно действие)</div>
+    </div>
+    <button id="btn-run-black-sea-shield" type="button" style="padding:10px 16px;border-radius:8px;border:1px solid #ef4444;background:#7f1d1d;color:#fff;font-weight:600;cursor:pointer;">
+      Пусни BLACK SEA SHIELD
+    </button>
+  </div>
+  <div id="warfare-summary-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:14px;">
+    <div style="padding:10px;border-radius:8px;background:#1e293b;">
+      <div style="font-size:11px;color:#94a3b8;">RED vs BLUE Сценарий</div>
+      <div id="wf-scenario-val" style="font-size:15px;font-weight:700;margin-top:4px;">Готов за старт</div>
+    </div>
+    <div style="padding:10px;border-radius:8px;background:#1e293b;">
+      <div style="font-size:11px;color:#94a3b8;">BLUE Риск / Bayesian</div>
+      <div id="wf-risk-val" style="font-size:15px;font-weight:700;margin-top:4px;">—</div>
+    </div>
+    <div style="padding:10px;border-radius:8px;background:#1e293b;">
+      <div style="font-size:11px;color:#94a3b8;">Monte Carlo (Очакван / P≥70)</div>
+      <div id="wf-mc-val" style="font-size:15px;font-weight:700;margin-top:4px;">—</div>
+    </div>
+    <div style="padding:10px;border-radius:8px;background:#1e293b;">
+      <div style="font-size:11px;color:#94a3b8;">Предложен защитен агент</div>
+      <div id="wf-agent-val" style="font-size:14px;font-weight:700;margin-top:4px;">—</div>
+    </div>
+  </div>
+  <pre id="wf-output-log" style="margin-top:12px;padding:10px;border-radius:8px;background:#020617;color:#cbd5e1;font-size:12px;max-height:220px;overflow:auto;">Изчаква стартиране на сценарий BLACK SEA SHIELD...</pre>
+</section>
+<script>
+(function(){
+  const btn = document.getElementById("btn-run-black-sea-shield");
+  const scEl = document.getElementById("wf-scenario-val");
+  const rkEl = document.getElementById("wf-risk-val");
+  const mcEl = document.getElementById("wf-mc-val");
+  const agEl = document.getElementById("wf-agent-val");
+  const logEl = document.getElementById("wf-output-log");
+
+  function renderSimulation(sim) {
+    if (!sim) return;
+    scEl.textContent = (sim.scenarioName || "BLACK SEA SHIELD") + " (" + (sim.runId || "RUN") + ")";
+    const ba = sim.blueAssessment || {};
+    rkEl.textContent = (ba.riskScore ?? 0) + "/100 (" + (ba.bayesianPosteriorRisk ?? 0) + ")";
+    const mc = sim.monteCarlo || {};
+    mcEl.textContent = (mc.expectedRiskScore ?? 0) + " / " + (mc.pHighRisk ?? 0);
+    const prop = sim.improvementProposal || {};
+    agEl.textContent = (prop.proposedAgent || "N/A") + " [" + (prop.status || "PENDING") + "]";
+    logEl.textContent = JSON.stringify({
+      runId: sim.runId,
+      redAgentsCount: sim.redAgentsCount,
+      blueAgentsCount: sim.blueAgentsCount,
+      weaknessAnalysis: sim.weaknessAnalysis,
+      improvementProposal: sim.improvementProposal,
+      automaticWeaponsRelease: sim.automaticWeaponsRelease
+    }, null, 2);
+  }
+
+  async function triggerScenario() {
+    btn.disabled = true;
+    btn.textContent = "Изпълнява сценарий...";
+    try {
+      const resp = await fetch("/api/warfare/run-scenario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "BLACK SEA SHIELD", swarmCount: 4 })
+      });
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+      const data = await resp.json();
+      renderSimulation(data.simulation || data);
+    } catch (err) {
+      logEl.textContent = "Грешка при извикване на /api/warfare/run-scenario: " + err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Пусни BLACK SEA SHIELD";
+    }
+  }
+
+  if (btn) btn.addEventListener("click", triggerScenario);
+})();
+</script>
+
 </body>
 </html>

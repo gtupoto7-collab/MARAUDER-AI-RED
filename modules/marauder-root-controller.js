@@ -200,6 +200,15 @@ class MarauderRootController {
     this.lastHash = hash;
     return fullRecord;
   }
+  setKillSwitch(active, reason = "OWNER_COMMAND") {
+    this.killSwitchActive = Boolean(active);
+    const audit = this._appendBlackBox(
+      this.killSwitchActive ? "KILL_SWITCH_ENABLED" : "KILL_SWITCH_DISABLED",
+      { reason, killSwitchActive: this.killSwitchActive }
+    );
+    return { killSwitchActive: this.killSwitchActive, audit };
+  }
+
 
   grantPrivilegeMode({ agentIds = [], ttlMs = 300000, reason = "OWNER_COMMAND" } = {}) {
     const now = Date.now();
